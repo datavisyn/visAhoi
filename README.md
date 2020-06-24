@@ -1,2 +1,2 @@
-# onboarding-prototype
-Onboarding Hackathon Prototype
+# Semi-Automated Generation of Visualization Onboarding Using High-Level Grammar
+
