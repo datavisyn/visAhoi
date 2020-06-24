@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "name": "onboarding-prototype",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "Semi-Automated Generation of Visualization Onboarding Using High-Level Grammar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "keywords": [
+    "onboarding",
+    "visualization",
+    "vega",
+    "echarts",
+    "plotly"
+  ],
+  "author": "FFG SEVA Consortium",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype#readme"
+}
