@@ -1,0 +1,31 @@
+{
+  "name": "onboarding-adapter-echarts",
+  "version": "1.0.0",
+  "description": "Echarts adapter for the visualization onboarding library",
+  "keywords": [
+    "visualization",
+    "onboarding",
+    "echarts"
+  ],
+  "author": "FFG SEVA Consortium",
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/onboarding-adapter-echarts#readme",
+  "license": "MIT",
+  "main": "lib/onboarding-adapter-echarts.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  }
+}
