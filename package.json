@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
   },
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype#readme"
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype#readme",
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
 }
