@@ -1,6 +1,6 @@
 'use strict';
 
-const onboardingCore = require('../lib/onboarding-core');
+const onboardingCore = require('..');
 
 describe('onboarding-core', () => {
     it('needs tests');
