@@ -1,0 +1,31 @@
+{
+  "name": "onboarding-vega",
+  "version": "1.0.0",
+  "description": "Vega adapter for the visualization onboarding library",
+  "keywords": [
+    "visualization",
+    "onboarding",
+    "vega"
+  ],
+  "author": "FFG SEVA Consortium",
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/onboarding-vega#readme",
+  "license": "MIT",
+  "main": "lib/onboarding-vega.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  }
+}
