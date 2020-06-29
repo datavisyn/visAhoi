@@ -44,21 +44,36 @@ const generateChartAnchors = (anchors) => {
 
   // We use for each as we want to control each element individually
   anchors.forEach(el => {
+    // Return if the el is empty
     if (el === null) return;
     
-    const elToAppendTo = d3.select(el.sel);
-    const elRect = elToAppendTo.node().getBoundingClientRect();
-    const elBox = elToAppendTo.node().getBBox();
-    console.log('elRect: ', elRect, ' elBox: ', elBox);
+    let settings = {};
 
-    const settings = {
-      cx: elRect.x,
-      cy: elRect.y,
-      r: r,
-      x: elRect.x,
-      y: elRect.y + textOffset,
-    };
+    // Find the positioning only if we profied no coords
+    if (el.coords === null || typeof(el.coords) == 'undefined') {      
+      const elToAppendTo = d3.select(el.sel);
+      const elRect = elToAppendTo.node().getBoundingClientRect();
+      const elBox = elToAppendTo.node().getBBox();
+      console.log('elRect: ', elRect, ' elBox: ', elBox);
+  
+       settings = {
+        cx: elRect.x,
+        cy: elRect.y,
+        r,
+        x: elRect.x,
+        y: elRect.y + textOffset,
+      };
+    } else { // If we have coords we can use them
+      settings = {
+        cx: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
+        cy: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2, 
+        r,
+        x: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
+        y: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2 + textOffset,
+      }
+    }
 
+    // Create the respective anchor
     createHint(el.sel, settings, el.nr);
   });
 }

@@ -53,7 +53,7 @@ const render = async () => {
   // ONBOARDING
   const onbordingSpec = generateOnboardingSpec(vegaSpec, values);
   console.log('Generated Spec: ', onbordingSpec);
-  const onboardingMsg = generateOnboardingMessages(onbordingSpec);
+  const onboardingMsg = generateOnboardingMessages(onbordingSpec, barsData);
 
   const onboardingLegend = d3
     .select('#onboarding')
@@ -105,11 +105,12 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
     },
     anchors: {
       chartTitle_anchor: '.role-title-text',
+      type_anchor: 'svg',
     },
   };
 };
 
-const generateOnboardingMessages = ({ spec, anchors }) => {
+const generateOnboardingMessages = ({ spec, anchors }, elems = []) => {
   const messages = [
     {
       anchor: { sel: anchors.chartTitle_anchor, nr: 1 },
@@ -117,7 +118,7 @@ const generateOnboardingMessages = ({ spec, anchors }) => {
       legend: `The chart shows the ${spec.chartTitle}.`,
     },
     {
-      anchor: null,
+      anchor: { sel: anchors.type_anchor, nr: 2, coords: elems[4]},
       requires: ['type'],
       legend: `Each ${spec.type} represents a data item.`,
     },
