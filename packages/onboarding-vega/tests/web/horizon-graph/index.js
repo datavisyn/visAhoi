@@ -54,7 +54,10 @@ const opt = {
       .enter()
       .append('div')
       .classed('vizHint', true)
-      .html((d) => d);
+      .append('div')
+      .attr('id', (d, i) => `$hint-${i + 1}`)
+      .html((d) => d)
+      .each(createAnchor);
   
     onboardingLegend.exit().remove();
   };
