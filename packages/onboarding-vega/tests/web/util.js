@@ -15,6 +15,7 @@ font-size: 4vh;
 const css2 = `
 background-color: lemonchiffon;
 color: #003366;
+font-weight: bolder;
 `;
 
 const getAllNodes = (vis) => {

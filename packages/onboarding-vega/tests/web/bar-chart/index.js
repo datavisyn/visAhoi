@@ -53,11 +53,12 @@ const render = async () => {
   // ONBOARDING
   const onbordingSpec = generateOnboardingSpec(vegaSpec, values);
   console.log('Generated Spec: ', onbordingSpec);
+  const onboardingMsg = generateOnboardingMessages(onbordingSpec);
 
   const onboardingLegend = d3
     .select('#onboarding')
     .selectAll('div.vizHint')
-    .data(generateOnboardingMessages(onbordingSpec).map((d) => d.legend));
+    .data(onboardingMsg.map((d) => d.legend));
 
   onboardingLegend
     .enter()
@@ -69,6 +70,8 @@ const render = async () => {
     .each(createAnchor);
 
   onboardingLegend.exit().remove();
+
+  generateChartAnchors(onboardingMsg.map(d => d.anchor));
 };
 
 render();
@@ -101,7 +104,7 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
       yAxisTitle: v.axes[2].title,
     },
     anchors: {
-      chartTitle_anchor: '.role-title-text'
+      chartTitle_anchor: '.role-title-text',
     },
   };
 };
@@ -109,12 +112,7 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
 const generateOnboardingMessages = ({ spec, anchors }) => {
   const messages = [
     {
-      anchor: null,
-      requires: ['undefinedTemplateVariable'],
-      legend: `Legend that is filtered out, because it requires an undefined template variable.`,
-    },
-    {
-      anchor: null, // TODO: Set and extract anchors
+      anchor: { sel: anchors.chartTitle_anchor, nr: 1 },
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle}.`,
     },
