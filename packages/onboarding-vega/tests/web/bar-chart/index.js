@@ -6,7 +6,7 @@
 
 // Options for the vega embed
 const opt = {
-  theme: 'dark',
+  theme: 'default',
   actions: false,
   renderer: 'svg',
 };
@@ -63,7 +63,10 @@ const render = async () => {
     .enter()
     .append('div')
     .classed('vizHint', true)
-    .html((d) => d);
+    .append('div')
+    .attr('id', (d, i) => `$hint-${i + 1}`)
+    .html((d) => d)
+    .each(createAnchor);
 
   onboardingLegend.exit().remove();
 };
@@ -79,26 +82,31 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
   const v = vegaSpec;
   const a = aggregatedValues;
 
-  const {x, y, b} = getOrientation(v.scales);
+  const { x, y, b } = getOrientation(v.scales);
   const axesMinMax = getMinMax(a);
 
   return {
-    chartTitle: v.title.text,
-    type: v.marks[0].style,
-    orientation: '',
-    xAxisOrientation: x,
-    yAxisOrientation: y,
-    barLength: b,
-    xMin: axesMinMax[1].min,
-    xMax: axesMinMax[1].max,
-    yMin: axesMinMax[0].min,
-    yMax: axesMinMax[0].max,
-    xAxisTitle: v.axes[1].title,
-    yAxisTitle: v.axes[2].title,
+    spec: {
+      chartTitle: v.title.text,
+      type: v.marks[0].style,
+      orientation: '',
+      xAxisOrientation: x,
+      yAxisOrientation: y,
+      barLength: b,
+      xMin: axesMinMax[1].min,
+      xMax: axesMinMax[1].max,
+      yMin: axesMinMax[0].min,
+      yMax: axesMinMax[0].max,
+      xAxisTitle: v.axes[1].title,
+      yAxisTitle: v.axes[2].title,
+    },
+    anchors: {
+      chartTitle_anchor: '.role-title-text'
+    },
   };
 };
 
-const generateOnboardingMessages = (spec) => {
+const generateOnboardingMessages = ({ spec, anchors }) => {
   const messages = [
     {
       anchor: null,

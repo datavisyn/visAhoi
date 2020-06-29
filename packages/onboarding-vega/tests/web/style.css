@@ -54,3 +54,9 @@ body {
     display: none;
     outline: none;
 }
+
+/* ANNOTATIONS */
+.vizHint {
+    display: grid;
+    grid-template-columns: minmax(4%, 4%) 1fr 1fr;
+  }
