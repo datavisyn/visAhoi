@@ -2,6 +2,10 @@ body {
     font-family: sans-serif;
 }
 
+svg {
+    overflow: visible;
+}
+
 .vizHint {
     font-size: 0.9em;
     line-height: 1.9;

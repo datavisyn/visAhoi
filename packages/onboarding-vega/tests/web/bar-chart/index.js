@@ -71,6 +71,7 @@ const render = async () => {
 
   onboardingLegend.exit().remove();
 
+  d3.select('svg').append('g').classed('onboardingAnnotations', true);
   generateChartAnchors(onboardingMsg.map(d => d.anchor));
 };
 
@@ -117,6 +118,7 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = [], elems = []) => 
       yAxis_anchor: {
         sel: d3.selectAll('.role-axis-title').nodes()[1],
         nr: 3,
+        useDOMRect: true
       },
       xAxis_anchor: {
         sel: '.role-axis-title',

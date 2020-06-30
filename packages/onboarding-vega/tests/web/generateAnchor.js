@@ -84,20 +84,19 @@ const generateChartAnchors = (anchors) => {
     }
 
     // Create the respective anchor
-    createHint(el.sel, settings, el.nr);
+    createHint(settings, el.nr);
   });
 }
 
 /**
  * Somewhat generic function to create a annotation based on some properties that can vary. 
- * @param {*} parentEl where the annotation should be attached to if not specified its svg
  * @param {*} settings where all the positions for the annotation are passed
  * @param {*} text of the annotation to show
  */
-const createHint = (parentEl = 'svg', settings, text) => {
+const createHint = (settings, text) => {
   const { cx, cy, r, x, y } = settings;
   
-  const hG = d3.select(parentEl)
+  const hG = d3.select('.onboardingAnnotations')
     .append('g')
     .classed('chartAnnotation', true);
 
