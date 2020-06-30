@@ -121,6 +121,16 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = [], elems = []) => 
       xAxis_anchor: {
         sel: '.role-axis-title',
         nr: 4
+      },
+      yMin_anchor: {
+        sel: 'svg',
+        nr: 5,
+        coords: elems[2]
+      },
+      yMax_anchor: {
+        sel: 'svg',
+        nr: 6,
+        coords: elems[7]
       }
     },
   };
@@ -149,12 +159,12 @@ const generateOnboardingMessages = ({ spec, anchors }) => {
       legend: `The ${spec.xAxisOrientation} position of each ${spec.type} represents the <span class="hT">${spec.xAxisTitle} (x-axis)</span>.`,
     },
     {
-      anchor: null,
+      anchor: anchors.yMin_anchor,
       requires: ['yAxisTitle', 'yMin'],
       legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle} is ${spec.yMin}.`,
     },
     {
-      anchor: null,
+      anchor: anchors.yMax_anchor,
       requires: ['yAxisTitle', 'yMax'],
       legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle} is ${spec.yMax}.`,
     },
