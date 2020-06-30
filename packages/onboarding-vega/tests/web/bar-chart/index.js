@@ -51,9 +51,9 @@ const render = async () => {
   console.log('- - - - - - - - - -');
 
   // ONBOARDING
-  const onbordingSpec = generateOnboardingSpec(vegaSpec, values);
+  const onbordingSpec = generateOnboardingSpec(vegaSpec, values, barsData);
   console.log('Generated Spec: ', onbordingSpec);
-  const onboardingMsg = generateOnboardingMessages(onbordingSpec, barsData);
+  const onboardingMsg = generateOnboardingMessages(onbordingSpec);
 
   const onboardingLegend = d3
     .select('#onboarding')
@@ -81,7 +81,7 @@ render();
  * ONBOARDING FUNCTIONS
  * =======================
  */
-const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
+const generateOnboardingSpec = (vegaSpec, aggregatedValues = [], elems = []) => {
   const v = vegaSpec;
   const a = aggregatedValues;
 
@@ -104,31 +104,47 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
       yAxisTitle: v.axes[2].title,
     },
     anchors: {
-      chartTitle_anchor: '.role-title-text',
-      type_anchor: 'svg',
+      chartTitle_anchor: {
+        sel: '.role-title-text',
+        nr: 1,
+        useDOMRect: true
+      },
+      type_anchor: {
+        sel: 'svg',
+        nr: 2,
+        coords: elems[4]
+      },
+      yAxis_anchor: {
+        sel: d3.selectAll('.role-axis-title').nodes()[1],
+        nr: 3,
+      },
+      xAxis_anchor: {
+        sel: '.role-axis-title',
+        nr: 4
+      }
     },
   };
 };
 
-const generateOnboardingMessages = ({ spec, anchors }, elems = []) => {
+const generateOnboardingMessages = ({ spec, anchors }) => {
   const messages = [
     {
-      anchor: { sel: anchors.chartTitle_anchor, nr: 1 },
+      anchor: anchors.chartTitle_anchor,
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle}.`,
     },
     {
-      anchor: { sel: anchors.type_anchor, nr: 2, coords: elems[4]},
+      anchor: anchors.type_anchor,
       requires: ['type'],
       legend: `Each ${spec.type} represents a data item.`,
     },
     {
-      anchor: null,
+      anchor: anchors.yAxis_anchor,
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
       legend: `The ${spec.barLength} of each ${spec.type} shows e.g., the <span class="hT">${spec.yAxisTitle} (y-axis)</span> for a certain ${spec.xAxisTitle}.`,
     },
     {
-      anchor: null,
+      anchor: anchors.xAxis_anchor,
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
       legend: `The ${spec.xAxisOrientation} position of each ${spec.type} represents the <span class="hT">${spec.xAxisTitle} (x-axis)</span>.`,
     },

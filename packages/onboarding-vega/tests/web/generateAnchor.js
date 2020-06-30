@@ -54,22 +54,32 @@ const generateChartAnchors = (anchors) => {
       const elToAppendTo = d3.select(el.sel);
       const elRect = elToAppendTo.node().getBoundingClientRect();
       const elBox = elToAppendTo.node().getBBox();
-      console.log('elRect: ', elRect, ' elBox: ', elBox);
+      console.log('FOR ', el.sel ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
   
        settings = {
-        cx: elRect.x,
-        cy: elRect.y,
+        cx: el.useDOMRect ? elRect.x : elBox.x,
+        cy: el.useDOMRect ? elRect.y : elBox.y,
         r,
-        x: elRect.x,
-        y: elRect.y + textOffset,
+        x: el.useDOMRect ? elRect.x : elBox.x,
+        y: (el.useDOMRect ? elRect.y : elBox.y) + textOffset,
       };
     } else { // If we have coords we can use them
-      settings = {
-        cx: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
-        cy: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2, 
-        r,
-        x: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
-        y: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2 + textOffset,
+      if (el.coords.hasOwnProperty('bounds')) { // This means we use th coords of a bar chart or anything with x1 and x2
+        settings = {
+          cx: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
+          cy: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2, 
+          r,
+          x: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
+          y: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2 + textOffset,
+        };
+      } else  { // Otherwise we need to use the passed coords if there are some which require x and y
+        settings = {
+          cx: el.coords.x,
+          cy: el.coords.y,
+          r,
+          x: el.coords.x,
+          y: el.coords.y + textOffset
+        };
       }
     }
 
