@@ -1,4 +1,3 @@
-
 const locations = ["Tallin", "Oslo", "Munich"];
 
 const data = [
@@ -47,7 +46,6 @@ function makePlot() {
 }
 
 function createPlot(x, y) {
-  console.log(y.length);
   // Create an echarts instance
   const vis = document.getElementById("vis");
   const chart = echarts.init(vis);
@@ -64,7 +62,10 @@ function createPlot(x, y) {
     },
     yAxis: {
       type: "category",
-      data: location
+      data: locations,
+      name: "City",
+      nameLocation: "middle",
+      nameGap: 35
     },
     xAxis: {
       type: "category",
@@ -74,7 +75,10 @@ function createPlot(x, y) {
           var date = new Date(value);
           return date.getMonth();
         }
-      }
+      },
+      name: "Month",
+      nameLocation: "middle",
+      nameGap: 30
     },
     series: [
       {
@@ -92,7 +96,8 @@ function createPlot(x, y) {
       orient: "horizontal",
       left: "center",
       bottom: "15%",
-      color: ["#D2B48C", "#FDFDFD", "steelblue"]
+      color: ["#D2B48C", "#FDFDFD", "#4682b4"],
+      text: ["High", "Low"]
     }
   };
 
@@ -124,13 +129,13 @@ function processData(allRows) {
   createPlot(x, averagedYValues);
 }
 
+makePlot();
+
+
 function generateOnboarding(chart) {
   const barNodesData = chart._chartsViews[0].__model;
   const options = chart._model.option;
-  console.log("options: ", options);
-  console.log("data: ", barNodesData);
 
-  // console.log(chart._model.option, chart._chartsViews[0]._data);
   const spec = generateOnboardingSpec(barNodesData, options);
   const onboardingLegend = d3
     .select("#onboarding")
@@ -145,33 +150,13 @@ function generateOnboarding(chart) {
 }
 
 function generateOnboardingSpec(data, options) {
-  function getMainAxis(xType, yType) {
-    if (xType === "value" && yType === "category") {
-      return "y";
-    } else if (yType === "value" && xType === "category") {
-      return "x";
-    }
-  }
-  const mainAxis = getMainAxis(options.xAxis[0].type, options.yAxis[0].type);
-  // console.log(internalPlotlyTrace);
-  console.log(data);
-
-  // model.option.title
   return {
     chartTitle: options.title[0].text,
     type: data.option.type,
-    orientation: mainAxis && (mainAxis === "x" ? "horizontal" : "vertical"),
-    yAxisOrientation:
-      mainAxis && (mainAxis === "x" ? "horizontal" : "vertical"),
-    xAxisOrientation:
-      mainAxis && (mainAxis === "x" ? "horizontal" : "vertical"),
-    barLength: mainAxis && (mainAxis === "x" ? "height" : "width"),
-    // yMin: data._rawExtent.y[0],
-    // yMax: data._rawExtent.y[1],
-    // xMin: data._rawExtent.x[0],
-    // xMax: data._rawExtent.x[1],
-    xAxisTitle: options.xAxis[0].name,
-    yAxisTitle: options.yAxis[0].name
+    legendMin: options.visualMap[0].text[1],
+    legendMax: options.visualMap[0].text[0],
+    xAxis: options.xAxis[0].name,
+    yAxis: options.yAxis[0].name
   };
 }
 
@@ -188,39 +173,26 @@ function generateOnboardingMessages(spec) {
       legend: `The chart shows the ${spec.chartTitle}.`
     },
     {
-      anchor: null,
+      anchor: null, // TODO: Set and extract anchors
       requires: ["type"],
-      legend: `Each ${spec.type} represents a data item.`
-    },
-    {
-      anchor: null,
-      requires: ["type", "barLength", "yAxisTitle", "xAxisTitle"],
-      legend: `The ${spec.barLength} of each ${
+      legend: `The chart Is based on colored <span class="hT">${
         spec.type
-      } shows e.g., the <span class="hT">${
-        spec.yAxisTitle
-      } (y-axis)</span> for a certain ${spec.xAxisTitle}.`
+      }</span> elements.`
     },
     {
       anchor: null,
-      requires: ["type", "xAxisOrientation", "xAxisTitle"],
-      legend: `The ${spec.xAxisOrientation} position of each ${
-        spec.type
-      } represents the <span class="hT">${spec.xAxisTitle} (x-axis)</span>.`
+      requires: ["legendMin", "legendMax"],
+      legend: `The legend shows the <span class="hT">value change</span>
+        for the chart. The colors range from <span class="hT">blue (${
+          spec.legendMin
+        }) to white and brown (${spec.legendMax})</span>.`
     },
     {
       anchor: null,
-      requires: ["yAxisTitle", "yMin"],
-      legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle} is ${
-        spec.yMin
-      }.`
-    },
-    {
-      anchor: null,
-      requires: ["yAxisTitle", "yMax"],
-      legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle} is ${
-        spec.yMax
-      }.`
+      requires: ["xAxis", "yAxis"],
+      legend: `The columns show the <span class="hT">${
+        spec.xAxis
+      }</span>, while the rows show the <span class="hT">${spec.yAxis}</span>.`
     }
   ];
 
@@ -229,5 +201,3 @@ function generateOnboardingMessages(spec) {
     message.requires.every(tplVars => spec[tplVars])
   );
 }
-
-makePlot();
