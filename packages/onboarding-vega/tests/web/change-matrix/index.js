@@ -51,7 +51,7 @@ const opt = {
     console.log('- - - - - - - - - -');
   
     // ONBOARDING
-    const onbordingSpec = generateOnboardingSpec(vegaSpec, values);
+    const onbordingSpec = generateOnboardingSpec(vegaSpec, values, cellData);
     console.log('Generated Spec: ', onbordingSpec);
     const onboardingMsg = generateOnboardingMessages(onbordingSpec);
   
@@ -87,10 +87,9 @@ const opt = {
    * ONBOARDING FUNCTIONS
    * =======================
    */
-  const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
+  const generateOnboardingSpec = (vegaSpec, aggregatedValues = [], elems = []) => {
     const v = vegaSpec;
     const a = aggregatedValues;
-  
     return {
       chartTitle: {
         value: v.title.text,
@@ -101,11 +100,16 @@ const opt = {
       },
       type: {
         value: v.marks[0].style,
-        anchor: null,
+        anchor: {
+          coords: elems[elems.length - 1],
+        },
       },
       legendTitle: {
         value: v.legends[0].title.toLowerCase(),
-        anchor: null,
+        anchor: {
+          sel: '.role-legend-title',
+          useDOMRect: true
+        },
       },
       xAxis: {
         value: v.axes[2].title.toLowerCase(),
@@ -126,12 +130,12 @@ const opt = {
         legend: `The chart shows the ${spec.chartTitle.value}.`,
       },
       {
-        anchor: null,
+        anchor: spec.type.anchor,
         requires: ['type'],
         legend: `The chart Is based on colored <span class="hT">${spec.type.value}</span> elements.`,
       },
       {
-        anchor: null,
+        anchor: spec.legendTitle.anchor,
         requires: ['legendTitle'],
         legend: `The legend shows the <span class="hT">${spec.legendTitle.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
       },
