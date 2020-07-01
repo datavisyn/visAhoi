@@ -45,13 +45,13 @@ const generateChartAnchors = (anchors) => {
   // We use for each as we want to control each element individually
   anchors.forEach(el => {    
     // Return if the el is empty
-    if (el === null) return;
+    if (el.anchor === null) return;
     
     let settings = {};
     const a = el.anchor;
     const i = el.index;
 
-    // Find the positioning only if we profied no coords
+    // Find the positioning only if we provided no coords
     if (a.coords === null || typeof(a.coords) == 'undefined') {      
       const elToAppendTo = d3.select(a.sel);
       const elRect = elToAppendTo.node().getBoundingClientRect();
