@@ -43,48 +43,50 @@ const generateChartAnchors = (anchors) => {
   console.log(`%c Anchors we want to create`, css2, anchors);
 
   // We use for each as we want to control each element individually
-  anchors.forEach(el => {
+  anchors.forEach(el => {    
     // Return if the el is empty
     if (el === null) return;
     
     let settings = {};
+    const a = el.anchor;
+    const i = el.index;
 
     // Find the positioning only if we profied no coords
-    if (el.coords === null || typeof(el.coords) == 'undefined') {      
-      const elToAppendTo = d3.select(el.sel);
+    if (a.coords === null || typeof(a.coords) == 'undefined') {      
+      const elToAppendTo = d3.select(a.sel);
       const elRect = elToAppendTo.node().getBoundingClientRect();
       const elBox = elToAppendTo.node().getBBox();
-      console.log('FOR ', el.sel ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
+      console.log('FOR ', a.sel ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
   
        settings = {
-        cx: el.useDOMRect ? elRect.x : elBox.x,
-        cy: el.useDOMRect ? elRect.y : elBox.y,
+        cx: a.useDOMRect ? elRect.x : elBox.x,
+        cy: a.useDOMRect ? elRect.y : elBox.y,
         r,
-        x: el.useDOMRect ? elRect.x : elBox.x,
-        y: (el.useDOMRect ? elRect.y : elBox.y) + textOffset,
+        x: a.useDOMRect ? elRect.x : elBox.x,
+        y: (a.useDOMRect ? elRect.y : elBox.y) + textOffset,
       };
     } else { // If we have coords we can use them
-      if (el.coords.hasOwnProperty('bounds')) { // This means we use th coords of a bar chart or anything with x1 and x2
+      if (a.coords.hasOwnProperty('bounds')) { // This means we use th coords of a bar chart or anything with x1 and x2
         settings = {
-          cx: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
-          cy: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2, 
+          cx: (a.coords.bounds.x1 + a.coords.bounds.x2) / 2, 
+          cy: (a.coords.bounds.y1 + a.coords.bounds.y2) / 2, 
           r,
-          x: (el.coords.bounds.x1 + el.coords.bounds.x2) / 2, 
-          y: (el.coords.bounds.y1 + el.coords.bounds.y2) / 2 + textOffset,
+          x: (a.coords.bounds.x1 + a.coords.bounds.x2) / 2, 
+          y: (a.coords.bounds.y1 + a.coords.bounds.y2) / 2 + textOffset,
         };
       } else  { // Otherwise we need to use the passed coords if there are some which require x and y
         settings = {
-          cx: el.coords.x,
-          cy: el.coords.y,
+          cx: a.coords.x,
+          cy: a.coords.y,
           r,
-          x: el.coords.x,
-          y: el.coords.y + textOffset
+          x: a.coords.x,
+          y: a.coords.y + textOffset
         };
       }
     }
 
     // Create the respective anchor
-    createHint(settings, el.nr);
+    createHint(settings, i);
   });
 }
 

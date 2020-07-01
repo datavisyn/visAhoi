@@ -72,7 +72,12 @@ const render = async () => {
   onboardingLegend.exit().remove();
 
   d3.select('svg').append('g').classed('onboardingAnnotations', true);
-  generateChartAnchors(onboardingMsg.map(d => d.anchor));
+  generateChartAnchors(onboardingMsg.map((d, i) => {
+    return {
+      anchor: d.anchor,
+      index: i + 1
+    }
+  }));
 };
 
 render();
@@ -90,85 +95,105 @@ const generateOnboardingSpec = (vegaSpec, aggregatedValues = [], elems = []) => 
   const axesMinMax = getMinMax(a);
 
   return {
-    spec: {
-      chartTitle: v.title.text,
-      type: v.marks[0].style,
-      orientation: '',
-      xAxisOrientation: x,
-      yAxisOrientation: y,
-      barLength: b,
-      xMin: axesMinMax[1].min,
-      xMax: axesMinMax[1].max,
-      yMin: axesMinMax[0].min,
-      yMax: axesMinMax[0].max,
-      xAxisTitle: v.axes[1].title,
-      yAxisTitle: v.axes[2].title,
-    },
-    anchors: {
-      chartTitle_anchor: {
+    chartTitle: {
+      value: v.title.text,
+      anchor: {
         sel: '.role-title-text',
-        nr: 1,
-        useDOMRect: true
+        useDOMRect: true,
       },
-      type_anchor: {
+    },
+    type: {
+      value: v.marks[0].style,
+      anchor: {
         sel: 'svg',
-        nr: 2,
-        coords: elems[4]
+        coords: elems[4],
       },
-      yAxis_anchor: {
-        sel: d3.selectAll('.role-axis-title').nodes()[1],
-        nr: 3,
-        useDOMRect: true
+    },
+    orientation: {
+      value: null,
+      anchor: null,
+    },
+    xAxisOrientation: {
+      value: x,
+      anchor: null,
+    },
+    yAxisOrientation: {
+      value: y,
+      anchor: null,
+    },
+    barLength: {
+      value: b,
+      anchor: null,
+    },
+    xMin: {
+      value: axesMinMax[1].min,
+      anchor: null,
+    },
+    xMax: {
+      value: axesMinMax[1].max,
+      anchor: null,
+    },
+    yMin: {
+      value: axesMinMax[0].min,
+      anchor: {
+        sel: 'svg',
+        coords: elems[2],
       },
-      xAxis_anchor: {
+    },
+    yMax: {
+      value: axesMinMax[0].max,
+      anchor: {
+        sel: 'svg',
+        coords: elems[7],
+      },
+    },
+    xAxisTitle: {
+      value: v.axes[1].title,
+      anchor: {
         sel: '.role-axis-title',
-        nr: 4
       },
-      yMin_anchor: {
-        sel: 'svg',
-        nr: 5,
-        coords: elems[2]
+    },
+    yAxisTitle: {
+      value: v.axes[2].title,
+      anchor: {
+        sel: d3.selectAll('.role-axis-title').nodes()[1],
+        useDOMRect: true,
       },
-      yMax_anchor: {
-        sel: 'svg',
-        nr: 6,
-        coords: elems[7]
-      }
     },
   };
 };
 
-const generateOnboardingMessages = ({ spec, anchors }) => {
+const generateOnboardingMessages = (spec) => {
   const messages = [
     {
-      anchor: anchors.chartTitle_anchor,
+      anchor: spec.chartTitle.anchor,
       requires: ['chartTitle'],
-      legend: `The chart shows the ${spec.chartTitle}.`,
+      legend: `The chart shows the ${spec.chartTitle.value}.`,
     },
     {
-      anchor: anchors.type_anchor,
+      anchor: spec.type.anchor,
       requires: ['type'],
-      legend: `Each ${spec.type} represents a data item.`,
+      legend: `Each ${spec.type.value} represents a data item.`,
     },
     {
-      anchor: anchors.yAxis_anchor,
+      anchor: spec.yAxisTitle.anchor,
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
-      legend: `The ${spec.barLength} of each ${spec.type} shows e.g., the <span class="hT">${spec.yAxisTitle} (y-axis)</span> for a certain ${spec.xAxisTitle}.`,
+      legend: `The ${spec.barLength.value} of each ${spec.type.value} shows e.g., the <span class="hT">${spec.yAxisTitle.value} (y-axis)</span> for a certain ${spec.xAxisTitle.value}.`,
     },
     {
-      anchor: anchors.xAxis_anchor,
+      anchor: spec.xAxisTitle.anchor,
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
-      legend: `The ${spec.xAxisOrientation} position of each ${spec.type} represents the <span class="hT">${spec.xAxisTitle} (x-axis)</span>.`,
+      legend: `The ${spec.xAxisOrientation.value} position of each ${spec.type.value} represents the <span class="hT">${spec.xAxisTitle.value} (x-axis)</span>.`,
     },
     {
-      anchor: anchors.yMin_anchor,
+      anchor: spec.yMin.anchor,
       requires: ['yAxisTitle', 'yMin'],
-      legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle} is ${spec.yMin}.`,
+      legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle.value} is ${spec.yMin.value}.`,
     },
     {
-      anchor: anchors.yMax_anchor,
+      anchor: spec.yMax.anchor,
       requires: ['yAxisTitle', 'yMax'],
-      legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle} is ${spec.yMax}.`,
+      legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle.value} is ${spec.yMax.value}.`,
     },
   ];
 
