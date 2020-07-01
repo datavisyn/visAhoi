@@ -10,22 +10,23 @@
   "author": "FFG SEVA Consortium",
   "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/onboarding-vega#readme",
   "license": "MIT",
-  "main": "lib/onboarding-vega.js",
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "onboarding-core": "1.0.0"
   }
 }
