@@ -113,7 +113,9 @@ const opt = {
       },
       xAxis: {
         value: v.axes[2].title.toLowerCase(),
-        anchor: null,
+        anchor: {
+          coords: elems[0],
+        },
       },
       yAxis: {
         value: v.axes[3].title.toLowerCase(),
@@ -140,7 +142,7 @@ const opt = {
         legend: `The legend shows the <span class="hT">${spec.legendTitle.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
       },
       {
-        anchor: null,
+        anchor: spec.xAxis.anchor,
         requires: ['xAxis', 'yAxis'],
         legend: `The columns show the <span class="hT">${spec.xAxis.value}</span>, while the rows show the <span class="hT">${spec.yAxis.value}</span>.`,
       },
