@@ -32,6 +32,7 @@ const opt = {
   
     // Vega-lite spec after all rendering happend and the aggregations
     const vegaSpec = vegaLite.vgSpec;
+    const origSpec = vegaLite.spec;
   
     console.log('%cNECESSARY DATA', css);
     console.log(
@@ -42,7 +43,7 @@ const opt = {
     );
   
     // ONBOARDING
-    const onbordingSpec = generateOnboardingSpec(vegaSpec);
+    const onbordingSpec = generateOnboardingSpec({ vegaSpec, origSpec });
     console.log('Generated Spec: ', onbordingSpec);
   
     const onboardingLegend = d3
@@ -70,25 +71,24 @@ const opt = {
    * =======================
    */
   const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
-    const v = vegaSpec;
+    let v = null;
+    let o = null;
     const a = aggregatedValues;
-  
-    // const {x, y, b} = getOrientation(v.scales);
-    // const axesMinMax = getMinMax(a);
+
+    if (typeof(vegaSpec) === 'object') {
+      v = vegaSpec.vegaSpec;
+      o = vegaSpec.origSpec;
+    } else {
+      v = vegaSpec;
+    }
   
     return {
       chartTitle: v.title.text,
       xAxis: v.axes[1].title.toLowerCase(),
       yAxis: v.axes[2].title.toLowerCase(),
       type: v.marks[0].type,
-      // legendTitle: v.legends[0].title.toLowerCase(),
-      // barLength: b,
-      // xMin: axesMinMax[1].min,
-      // xMax: axesMinMax[1].max,
-      // yMin: axesMinMax[0].min,
-      // yMax: axesMinMax[0].max,
-      // xAxisTitle: v.axes[1].title,
-      // yAxisTitle: v.axes[2].title,
+      positiveColor: o.layer[0].mark.color, 
+      negativeColor: o.layer[2].mark.color
     };
   };
   
@@ -117,12 +117,13 @@ const opt = {
       {
         anchor: null, // TODO: Set and extract anchors
         requires: ['yAxis'],
-        legend: `Light green areas indicate a moderate positive <span class="hT">${spec.yAxis}</span> and dark green areas a high positive <span class="hT">${spec.yAxis}</span>.`,
+        legend: `Light ${createCR(spec.positiveColor)} areas indicate a moderate positive <span class="hT">${spec.yAxis}</span> and dark 
+        ${createCR(spec.positiveColor)} areas a high positive <span class="hT">${spec.yAxis}</span>.`,
       },
       {
         anchor: null, // TODO: Set and extract anchors
         requires: ['yAxis'],
-        legend: `Dark blue areas indicate a very low negative <span class="hT">${spec.yAxis}</span>.`,
+        legend: `${createCR(spec.negativeColor)} areas indicate a very low negative <span class="hT">${spec.yAxis}</span>.`,
       }
     ];
   

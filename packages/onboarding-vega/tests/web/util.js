@@ -60,3 +60,7 @@ const getPropertyValues = (arr) => {
 
   return res;
 }
+
+const createCR = (color = 'white') => {
+  return `<div class="colorRect" style="background: ${color}"></div>`
+}
