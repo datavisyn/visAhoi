@@ -19,7 +19,7 @@ font-weight: bolder;
 `;
 
 const getAllNodes = (vis) => {
-  return vis.select('.role-mark').selectAll('path').nodes();
+  return vis.selectAll('.role-mark').selectAll('path').nodes();
 };
 
 const getOrientation = (scales) => {
