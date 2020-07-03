@@ -1,4 +1,11 @@
-
+/**
+ * Supported chart types
+ */
+export enum EChartType {
+  barChart = 'bar-chart',
+  changeMatrix = 'change-matrix',
+  horizonGraph = 'horizon-graph'
+}
 
 export interface OnboardingMessages {
   anchor: any;
