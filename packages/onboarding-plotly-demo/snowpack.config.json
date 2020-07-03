@@ -1,0 +1,13 @@
+{
+  "devOptions": {
+    "bundle": false
+  },
+  "scripts": {
+    "mount:public": "mount public --to /",
+    "mount:src": "mount src --to /_dist_",
+    "bundle:*": "@snowpack/plugin-webpack"
+  },
+  "plugins": [
+    ["@snowpack/plugin-webpack", { }]
+  ]
+}
