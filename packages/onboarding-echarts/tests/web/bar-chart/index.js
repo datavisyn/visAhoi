@@ -37,7 +37,8 @@ function createPlot(x, y) {
     series: [
       {
         data: y,
-        type: "bar"
+        type: "bar",
+        color: "steelblue"
       }
     ]
   };
@@ -76,21 +77,45 @@ makePlot();
 function generateOnboarding(chart) {
   const barNodesData = chart._chartsViews[0]._data;
   const options = chart._model.option;
+  const coords = chart._chartsViews[0]._data._itemLayouts;
 
-  const spec = generateOnboardingSpec(barNodesData, options);
+  const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;
+  // console.log(chart._componentsMap["_ec_\u0000Month\u00000_xAxis.category"].__model.axis.grid._axesList[0].model.axis.grid._coordsList[0].grid._axesList[1].toLocalCoord())
+  coords.push({coords: {x: chartTitlePosition[0], y: chartTitlePosition[1], width: 0, height: 50}});
+  coords.push({x: 108.7, y: 60, width: (869/2), height: 300});
+
+  const spec = generateOnboardingSpec(barNodesData, options, coords);
+  const onboardingMessages = generateOnboardingMessages(spec);
   const onboardingLegend = d3
     .select("#onboarding")
     .selectAll("div.vizHint")
-    .data(generateOnboardingMessages(spec).map(d => d.legend));
+    .data(onboardingMessages.map(d => d.legend));
 
   onboardingLegend
     .enter()
     .append("div")
     .classed("vizHint", true)
-    .html(d => d);
+    .append('div')
+    .attr('id', (d, i) => `$hint-${i + 1}`)
+    .html(d => d)
+    .each(createAnchor);
+
+    d3.select('#vis')
+      .append('svg')
+      .classed('onboardingAnnotations', true)
+      .style('width', '100%')
+      .style('height', '400px');
+
+    
+    generateChartAnchors(onboardingMessages.map((d, i) => {
+      return {
+        anchor: d.anchor,
+        index: i + 1
+      }
+    }));
 }
 
-function generateOnboardingSpec(data, options) {
+function generateOnboardingSpec(data, options, coords) {
   function getMainAxis(xType, yType) {
     if (xType === "value" && yType === "category") {
       return "y";
@@ -102,20 +127,55 @@ function generateOnboardingSpec(data, options) {
 
   // model.option.title
   return {
-    chartTitle: options.title[0].text,
-    type: data.hostModel.option.type,
-    orientation: mainAxis && (mainAxis === "x" ? "horizontal" : "vertical"),
-    yAxisOrientation:
-      mainAxis && (mainAxis === "x" ? "horizontal" : "vertical"),
-    xAxisOrientation:
-      mainAxis && (mainAxis === "x" ? "horizontal" : "vertical"),
-    barLength: mainAxis && (mainAxis === "x" ? "height" : "width"),
-    yMin: data._rawExtent.y[0],
-    yMax: data._rawExtent.y[1],
-    xMin: data._rawExtent.x[0],
-    xMax: data._rawExtent.x[1],
-    xAxisTitle: options.xAxis[0].name,
-    yAxisTitle: options.yAxis[0].name
+    chartTitle: {
+      value: options.title[0].text,
+      anchor: coords[12]
+    },
+    yMin: {
+      value: data._rawExtent.y[0],
+      anchor: {
+        coords: coords[1]
+      }
+    },
+    type: {
+      value: data.hostModel.option.type,
+      anchor: {
+        coords: coords[3]
+      }
+    },
+    yMax: {
+      value: data._rawExtent.y[1],
+      anchor: {
+        coords: coords[6]
+      }
+    },
+    orientation: {
+      value: mainAxis && (mainAxis === "x" ? "horizontal" : "vertical")
+    },
+    yAxisOrientation: {
+      value: mainAxis && (mainAxis === "x" ? "horizontal" : "vertical")
+    },
+    xAxisOrientation: {
+      value: mainAxis && (mainAxis === "x" ? "horizontal" : "vertical") 
+    },
+    barLength: {
+      value: mainAxis && (mainAxis === "x" ? "height" : "width")
+    },
+    xMin: {
+      value: data._rawExtent.x[0]
+    },
+    xMax: {
+      value: data._rawExtent.x[1]
+    },
+    xAxisTitle: {
+      value: options.xAxis[0].name
+    },
+    yAxisTitle: {
+      value: options.yAxis[0].name,
+      anchor: {
+        coords: coords[13]
+      }
+    }
   };
 }
 
@@ -127,43 +187,43 @@ function generateOnboardingMessages(spec) {
       legend: `Legend that is filtered out, because it requires an undefined template variable.`
     },
     {
-      anchor: null, // TODO: Set and extract anchors
+      anchor: spec.chartTitle.anchor, // TODO: Set and extract anchors
       requires: ["chartTitle"],
-      legend: `The chart shows the ${spec.chartTitle}.`
+      legend: `The chart shows the ${spec.chartTitle.value}.`
     },
     {
-      anchor: null,
+      anchor: spec.type.anchor,
       requires: ["type"],
-      legend: `Each ${spec.type} represents a data item.`
+      legend: `Each ${spec.type.value} represents a data item.`
     },
     {
-      anchor: null,
+      anchor: spec.yAxisTitle.anchor,
       requires: ["type", "barLength", "yAxisTitle", "xAxisTitle"],
-      legend: `The ${spec.barLength} of each ${
-        spec.type
+      legend: `The ${spec.barLength.value} of each ${
+        spec.type.value
       } shows e.g., the <span class="hT">${
-        spec.yAxisTitle
-      } (y-axis)</span> for a certain ${spec.xAxisTitle}.`
+        spec.yAxisTitle.value
+      } (y-axis)</span> for a certain ${spec.xAxisTitle.value}.`
     },
     {
       anchor: null,
       requires: ["type", "xAxisOrientation", "xAxisTitle"],
-      legend: `The ${spec.xAxisOrientation} position of each ${
-        spec.type
-      } represents the <span class="hT">${spec.xAxisTitle} (x-axis)</span>.`
+      legend: `The ${spec.xAxisOrientation.value} position of each ${
+        spec.type.value
+      } represents the <span class="hT">${spec.xAxisTitle.value} (x-axis)</span>.`
     },
     {
-      anchor: null,
+      anchor: spec.yMin.anchor,
       requires: ["yAxisTitle", "yMin"],
-      legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle} is ${
-        spec.yMin
+      legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle.value} is ${
+        spec.yMin.value
       }.`
     },
     {
-      anchor: null,
+      anchor: spec.yMax.anchor,
       requires: ["yAxisTitle", "yMax"],
-      legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle} is ${
-        spec.yMax
+      legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle.value} is ${
+        spec.yMax.value
       }.`
     }
   ];

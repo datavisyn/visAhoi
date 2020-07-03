@@ -54,3 +54,15 @@ body {
     display: none;
     outline: none;
 }
+
+.onboardingAnnotations {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* ANNOTATIONS */
+.vizHint {
+    display: grid;
+    grid-template-columns: minmax(4%, 4%) 1fr 1fr;
+}
