@@ -14,7 +14,7 @@ const render = async () => {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  onboarding(vegaLite);
+  onboarding('bar-chart', vegaLite);
 };
 
 render();
