@@ -9,8 +9,6 @@ import * as d3 from 'd3';
 import { css, css2, getAllNodes, createCR } from './util';
 import { createAnchor, generateChartAnchors } from './generate-anchor';
 
-import json from './data/horizonGraphOslo2018.json';
-
 // Options for the vega embed
 const opt = {
   theme: 'default',
@@ -24,8 +22,8 @@ const opt = {
  * ========================
  */
 const render = async () => {
-  // const response = await fetch('./horizonGraphOslo2018.spec.json');
-  // const json = await response.json();
+  const response = await fetch('./data/horizonGraphOslo2018.json');
+  const json = await response.json();
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
   let evaluated = await vegaLite.view.evaluate();

@@ -6,11 +6,11 @@
 
 
 import vegaEmbed from 'vega-embed';
+import { onboarding } from 'onboarding-vega';
+
 import * as d3 from 'd3';
 import { css2, css, getAllNodes } from './util';
 import { createAnchor, generateChartAnchors } from './generate-anchor';
-
-import json from './data/changeMatrix.json';
 
 // Options for the vega embed
 const opt = {
@@ -19,12 +19,21 @@ const opt = {
   renderer: 'svg',
 };
 
+const render = async () => {
+  const response = await fetch('./changeMatrix.json');
+  const json = await response.json();
+
+  let vegaLite = await vegaEmbed('#vis', json, opt);
+
+  onboarding('change-matrix', vegaLite);
+};
+
 /**
  * ========================
  * MAGIC HAPPENS
  * ========================
  */
-const render = async () => {
+const render2 = async () => {
   // const response = await fetch('./changeMatrix.json');
   // const json = await response.json();
 
