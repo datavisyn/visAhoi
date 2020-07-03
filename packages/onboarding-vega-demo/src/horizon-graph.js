@@ -6,7 +6,7 @@
 
 import vegaEmbed from 'vega-embed';
 import * as d3 from 'd3';
-import { css } from './util';
+import { css, css2, getAllNodes, createCR } from './util';
 import { createAnchor, generateChartAnchors } from './generate-anchor';
 
 import json from './data/horizonGraphOslo2018.json';

@@ -18,11 +18,11 @@ background-color: lemonchiffon;
 color: #003366;
 `;
 
-export const getAllNodes = (vis) => {
-  return vis.select('.role-mark').selectAll('path').nodes();
+export function getAllNodes(vis) {
+  return vis.selectAll('.role-mark').selectAll('path').nodes();
 };
 
-export const getOrientation = (scales) => {
+export function getOrientation(scales) {
     const [s1, s2] = scales;
     const {name: s1Name, type: s1Type} = s1;
     const {name: s2Name, type: s2Type} = s2;
@@ -34,7 +34,7 @@ export const getOrientation = (scales) => {
     };
 }
 
-export const getMinMax = (data) => {
+export function getMinMax (data) {
   const values = getPropertyValues(data);
   const keys = Object.keys(values);
   const res = [];
@@ -50,7 +50,7 @@ export const getMinMax = (data) => {
   return res;
 };
 
-const getPropertyValues = (arr) => {
+function getPropertyValues(arr) {
   const res = {};
   const keys = Object.keys(arr[0]);
 
@@ -59,4 +59,8 @@ const getPropertyValues = (arr) => {
   });
 
   return res;
+}
+
+export function createCR(color = 'white') {
+  return `<div class="colorRect" style="background: ${color}"></div>`
 }

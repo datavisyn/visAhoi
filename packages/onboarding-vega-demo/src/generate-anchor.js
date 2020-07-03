@@ -1,3 +1,6 @@
+import * as d3 from 'd3';
+import { css2 } from './util';
+
 // Reused constants that should be change here to make it uniform
 const r = 10;
 const w = 30;
