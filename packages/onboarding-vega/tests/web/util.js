@@ -15,10 +15,11 @@ font-size: 4vh;
 const css2 = `
 background-color: lemonchiffon;
 color: #003366;
+font-weight: bolder;
 `;
 
 const getAllNodes = (vis) => {
-  return vis.select('.role-mark').selectAll('path').nodes();
+  return vis.selectAll('.role-mark').selectAll('path').nodes();
 };
 
 const getOrientation = (scales) => {
@@ -58,4 +59,8 @@ const getPropertyValues = (arr) => {
   });
 
   return res;
+}
+
+const createCR = (color = 'white') => {
+  return `<div class="colorRect" style="background: ${color}"></div>`
 }
