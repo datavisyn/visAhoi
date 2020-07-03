@@ -5,9 +5,10 @@
  */
 
 
-import { css2, css, getAllNodes } from './util';
 import vegaEmbed from 'vega-embed';
 import * as d3 from 'd3';
+import { css2, css, getAllNodes } from './util';
+import { createAnchor, generateChartAnchors } from './generate-anchor';
 
 import json from './data/changeMatrix.json';
 
@@ -58,8 +59,9 @@ const render = async () => {
   console.log('- - - - - - - - - -');
 
   // ONBOARDING
-  const onbordingSpec = generateOnboardingSpec(vegaSpec, values);
+  const onbordingSpec = generateOnboardingSpec(vegaSpec, values, cellData);
   console.log('Generated Spec: ', onbordingSpec);
+  const onboardingMsg = generateOnboardingMessages(onbordingSpec);
 
   const onboardingLegend = d3
     .select('#onboarding')
@@ -70,9 +72,20 @@ const render = async () => {
     .enter()
     .append('div')
     .classed('vizHint', true)
-    .html((d) => d);
+    .append('div')
+    .attr('id', (d, i) => `$hint-${i + 1}`)
+    .html((d) => d)
+    .each(createAnchor);
 
   onboardingLegend.exit().remove();
+
+  d3.select('svg').append('g').classed('onboardingAnnotations', true);
+  generateChartAnchors(onboardingMsg.map((d, i) => {
+    return {
+      anchor: d.anchor,
+      index: i + 1
+    }
+  }));
 };
 
 render();
@@ -82,55 +95,64 @@ render();
  * ONBOARDING FUNCTIONS
  * =======================
  */
-const generateOnboardingSpec = (vegaSpec, aggregatedValues = []) => {
+const generateOnboardingSpec = (vegaSpec, aggregatedValues = [], elems = []) => {
   const v = vegaSpec;
   const a = aggregatedValues;
-
-  // const {x, y, b} = getOrientation(v.scales);
-  // const axesMinMax = getMinMax(a);
-
   return {
-    chartTitle: v.title.text,
-    type: v.marks[0].style,
-    legendTitle: v.legends[0].title.toLowerCase(),
-    xAxis: v.axes[2].title.toLowerCase(),
-    yAxis: v.axes[3].title.toLowerCase(),
-    // barLength: b,
-    // xMin: axesMinMax[1].min,
-    // xMax: axesMinMax[1].max,
-    // yMin: axesMinMax[0].min,
-    // yMax: axesMinMax[0].max,
-    // xAxisTitle: v.axes[1].title,
-    // yAxisTitle: v.axes[2].title,
+    chartTitle: {
+      value: v.title.text,
+      anchor: {
+        sel: '.role-title-text',
+        useDOMRect: true,
+      },
+    },
+    type: {
+      value: v.marks[0].style,
+      anchor: {
+        coords: elems[elems.length - 1],
+      },
+    },
+    legendTitle: {
+      value: v.legends[0].title.toLowerCase(),
+      anchor: {
+        sel: '.role-legend-title',
+        useDOMRect: true
+      },
+    },
+    xAxis: {
+      value: v.axes[2].title.toLowerCase(),
+      anchor: {
+        coords: elems[0],
+      },
+    },
+    yAxis: {
+      value: v.axes[3].title.toLowerCase(),
+      anchor: null,
+    },
   };
 };
 
 const generateOnboardingMessages = (spec) => {
   const messages = [
     {
-      anchor: null,
-      requires: ['undefinedTemplateVariable'],
-      legend: `Legend that is filtered out, because it requires an undefined template variable.`,
-    },
-    {
-      anchor: null, // TODO: Set and extract anchors
+      anchor: spec.chartTitle.anchor,
       requires: ['chartTitle'],
-      legend: `The chart shows the ${spec.chartTitle}.`,
+      legend: `The chart shows the ${spec.chartTitle.value}.`,
     },
     {
-      anchor: null, // TODO: Set and extract anchors
+      anchor: spec.type.anchor,
       requires: ['type'],
-      legend: `The chart Is based on colored <span class="hT">${spec.type}</span> elements.`,
+      legend: `The chart Is based on colored <span class="hT">${spec.type.value}</span> elements.`,
     },
     {
-      anchor: null,
+      anchor: spec.legendTitle.anchor,
       requires: ['legendTitle'],
-      legend: `The legend shows the <span class="hT">${spec.legendTitle}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
+      legend: `The legend shows the <span class="hT">${spec.legendTitle.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
     },
     {
-      anchor: null,
+      anchor: spec.xAxis.anchor,
       requires: ['xAxis', 'yAxis'],
-      legend: `The columns show the <span class="hT">${spec.xAxis}</span>, while the rows show the <span class="hT">${spec.yAxis}</span>.`,
+      legend: `The columns show the <span class="hT">${spec.xAxis.value}</span>, while the rows show the <span class="hT">${spec.yAxis.value}</span>.`,
     },
   ];
 
