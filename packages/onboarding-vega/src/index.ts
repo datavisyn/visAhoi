@@ -4,7 +4,8 @@ import { EChartType, displayOnboardingMessages } from 'onboarding-core';
 import {
   css2, css, getAllNodes,
 } from './util';
-import { messageFactory } from './bar-chart';
+import { barChartFactory } from './bar-chart';
+import { changeMatrixFactory } from './change-matrix';
 
 export async function onboarding(chartType: EChartType, vegaResult: Result) {
 
@@ -40,12 +41,18 @@ export async function onboarding(chartType: EChartType, vegaResult: Result) {
   let onboardingMessages;
 
   switch(chartType) {
-    case EChartType.barChart:
-      onboardingMessages = messageFactory(vegaSpec, values, barsData);
+    case EChartType.BAR_CHART:
+      onboardingMessages = barChartFactory(vegaSpec, values, barsData);
+      break;
+
+    case EChartType.CHANGE_MATRIX:
+      onboardingMessages = changeMatrixFactory(vegaSpec, values, barsData);
+      break;
+
   }
 
   if(!onboardingMessages) {
-    throw new Error('Undefined visualization onboarding for given chart type.');
+    throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
   }
 
   displayOnboardingMessages(onboardingMessages);

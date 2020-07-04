@@ -1,4 +1,4 @@
-import {OnboardingMessages, OnboardingBarChartSpec, generateOnboardingMessages} from 'onboarding-core';
+import { EChartType, OnboardingMessages, OnboardingBarChartSpec, generateOnboardingMessages} from 'onboarding-core';
 import { Spec } from 'vega-typings';
 import { getOrientation, getMinMax } from './util';
 
@@ -71,8 +71,9 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues = [], elems = [
     },
   };
 }
-export function messageFactory(vegaSpec: Spec, aggregatedValues = [], elems = []): OnboardingMessages[] {
+
+export function barChartFactory(vegaSpec: Spec, aggregatedValues = [], elems = []): OnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
   // console.log('Generated Spec: ', onbordingSpec);
-  return generateOnboardingMessages(onbordingSpec);
+  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
 }

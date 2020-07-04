@@ -2,9 +2,9 @@
  * Supported chart types
  */
 export enum EChartType {
-  barChart = 'bar-chart',
-  changeMatrix = 'change-matrix',
-  horizonGraph = 'horizon-graph'
+  BAR_CHART = 'bar-chart',
+  CHANGE_MATRIX = 'change-matrix',
+  HORIZON_GRAPH = 'horizon-graph'
 }
 
 export interface OnboardingMessages {
@@ -14,7 +14,7 @@ export interface OnboardingMessages {
 }
 
 interface OnboardingCoordsAnchor {
-  sel: string;
+  sel?: string;
   coords: number[];
 }
 

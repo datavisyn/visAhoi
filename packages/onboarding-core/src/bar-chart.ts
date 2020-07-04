@@ -15,8 +15,7 @@ export interface OnboardingBarChartSpec extends OnboardingSpec {
   yAxisTitle: SpecProp;
 }
 
-
-export function generateOnboardingMessages(spec: OnboardingBarChartSpec): OnboardingMessages[] {
+function generateOnboardingMessages(spec: OnboardingBarChartSpec): OnboardingMessages[] {
   const messages = [
     {
       anchor: spec.chartTitle.anchor,
@@ -53,3 +52,9 @@ export function generateOnboardingMessages(spec: OnboardingBarChartSpec): Onboar
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 };
+
+
+
+export const barChart = {
+  generateOnboardingMessages
+}
