@@ -25,5 +25,9 @@
   },
   "devDependencies": {
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@types/d3": "^5.0.0",
+    "d3": "^5.16.0"
   }
 }

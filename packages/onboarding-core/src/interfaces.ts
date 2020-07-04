@@ -23,27 +23,11 @@ interface OnboardingDOMAnchor {
   useDOMRect?: boolean;
 }
 
-interface SpecProp {
+export interface SpecProp {
   value: any;
   anchor?: OnboardingCoordsAnchor | OnboardingDOMAnchor;
 }
 
-interface OnboardingSpec {
+export interface OnboardingSpec {
   [key: string]: SpecProp
 }
-
-export interface OnboardingBarChartSpec extends OnboardingSpec {
-  chartTitle: SpecProp;
-  type: SpecProp;
-  orientation: SpecProp;
-  xAxisOrientation: SpecProp;
-  yAxisOrientation: SpecProp;
-  barLength: SpecProp;
-  xMin: SpecProp;
-  xMax: SpecProp;
-  yMin: SpecProp;
-  yMax: SpecProp;
-  xAxisTitle: SpecProp;
-  yAxisTitle: SpecProp;
-}
-

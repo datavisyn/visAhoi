@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import { css2 } from './util';
 
 // Reused constants that should be change here to make it uniform
 const r = 10;
@@ -43,32 +42,21 @@ export function createAnchor(d, i, nodes) {
 };
 
 export function generateChartAnchors(anchors) {
-  console.log(`%c Anchors we want to create`, css2, anchors);
+  console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
   anchors.forEach(el => {
     // Return if the el is empty
-    if (el.anchor === null) return;
+    if (!el.anchor) {
+      return;
+    }
 
     let settings = {};
     const a = el.anchor;
     const i = el.index;
 
-    // Find the positioning only if we provided no coords
-    if (a.coords === null || typeof(a.coords) == 'undefined') {
-      const elToAppendTo = d3.select(a.sel);
-      const elRect = elToAppendTo.node().getBoundingClientRect();
-      const elBox = elToAppendTo.node().getBBox();
-      console.log('FOR ', a.sel ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
-
-       settings = {
-        cx: a.useDOMRect ? elRect.x : elBox.x,
-        cy: a.useDOMRect ? elRect.y : elBox.y,
-        r,
-        x: a.useDOMRect ? elRect.x : elBox.x,
-        y: (a.useDOMRect ? elRect.y : elBox.y) + textOffset,
-      };
-    } else { // If we have coords we can use them
+    // If we have coords we can use them
+    if (a.coords) {
       if (a.coords.hasOwnProperty('bounds')) { // This means we use th coords of a bar chart or anything with x1 and x2
         settings = {
           cx: (a.coords.bounds.x1 + a.coords.bounds.x2) / 2,
@@ -86,6 +74,27 @@ export function generateChartAnchors(anchors) {
           y: a.coords.y + textOffset
         };
       }
+
+    // Find the positioning only if we provided no coords
+    } else {
+      const elToAppendTo = d3.select(a.sel);
+
+      if(!elToAppendTo.node()) {
+        console.error('No element found for selector', a.sel);
+        return;
+      }
+
+      const elRect = elToAppendTo.node().getBoundingClientRect();
+      const elBox = elToAppendTo.node().getBBox();
+      console.log('FOR ', a.sel ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
+
+       settings = {
+        cx: a.useDOMRect ? elRect.x : elBox.x,
+        cy: a.useDOMRect ? elRect.y : elBox.y,
+        r,
+        x: a.useDOMRect ? elRect.x : elBox.x,
+        y: (a.useDOMRect ? elRect.y : elBox.y) + textOffset,
+      };
     }
 
     // Create the respective anchor
