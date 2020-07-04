@@ -1,8 +1,51 @@
-import { EChartType, OnboardingMessages, OnboardingBarChartSpec, generateOnboardingMessages} from 'onboarding-core';
-import { Spec } from 'vega-typings';
-import { getOrientation, getMinMax } from './util';
+import {
+  EChartType,
+  OnboardingMessages,
+  OnboardingBarChartSpec,
+  generateOnboardingMessages,
+} from "onboarding-core";
+import { Spec } from "vega-typings";
 
-function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues = [], elems = []): OnboardingBarChartSpec {
+function getOrientation(scales) {
+  const [s1, s2] = scales;
+  const { name: s1Name, type: s1Type } = s1;
+  const { name: s2Name, type: s2Type } = s2;
+
+  return {
+    x: s1Type === "band" ? "horizontal" : "vertical",
+    y: s2Type === "band" ? "horizontal" : "vertical",
+    b: s1Type === "band" ? "height" : "width",
+  };
+}
+
+function getMinMax(data) {
+  const values = getPropertyValues(data);
+  const keys = Object.keys(values);
+  const res: {key: string, min: number, max: number}[] = [];
+
+  keys.forEach((k) => {
+    res.push({
+      key: k,
+      min: Math.min(...values[k]),
+      max: Math.max(...values[k]),
+    });
+  });
+
+  return res;
+}
+
+function getPropertyValues(arr) {
+  const res = {};
+  const keys = Object.keys(arr[0]);
+
+  keys.forEach((k) => {
+    res[k] = arr.map((e) => e[k]);
+  });
+
+  return res;
+}
+
+function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): OnboardingBarChartSpec {
   const v = vegaSpec;
   const a = aggregatedValues;
 
@@ -11,16 +54,16 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues = [], elems = [
 
   return {
     chartTitle: {
-      value: (typeof(v.title) === 'string') ? v.title : v.title?.text,
+      value: typeof v.title === "string" ? v.title : v.title?.text,
       anchor: {
-        sel: '.role-title-text',
+        sel: ".role-title-text",
         useDOMRect: true,
       },
     },
     type: {
       value: (<any>v.marks![0]).style,
       anchor: {
-        sel: 'svg',
+        sel: "svg",
         coords: elems[4],
       },
     },
@@ -45,34 +88,34 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues = [], elems = [
     yMin: {
       value: axesMinMax[0].min,
       anchor: {
-        sel: 'svg',
+        sel: "svg",
         coords: elems[2],
       },
     },
     yMax: {
       value: axesMinMax[0].max,
       anchor: {
-        sel: 'svg',
+        sel: "svg",
         coords: elems[7],
       },
     },
     xAxisTitle: {
       value: (<any>v.axes![1]).title,
       anchor: {
-        sel: '.role-axis-title',
+        sel: ".role-axis-title",
       },
     },
     yAxisTitle: {
       value: (<any>v.axes![2]).title,
       anchor: {
-        sel: '.role-axis-title:nth-child(2)', // TODO: :nth-child(2) does not return the 2nd child from querySelectorAll
+        sel: ".role-axis-title:nth-child(2)", // TODO: :nth-child(2) does not return the 2nd child from querySelectorAll
         useDOMRect: true,
       },
     },
   };
 }
 
-export function barChartFactory(vegaSpec: Spec, aggregatedValues = [], elems = []): OnboardingMessages[] {
+export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): OnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
   // console.log('Generated Spec: ', onbordingSpec);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);

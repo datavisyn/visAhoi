@@ -13,9 +13,14 @@ export interface OnboardingMessages {
   legend: string;
 }
 
+interface Point {
+  x: number;
+  y: number;
+}
+
 interface OnboardingCoordsAnchor {
   sel?: string;
-  coords: number[];
+  coords: Point | number[];
 }
 
 interface OnboardingDOMAnchor {
