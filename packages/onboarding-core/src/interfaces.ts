@@ -34,5 +34,5 @@ export interface SpecProp {
 }
 
 export interface OnboardingSpec {
-  [key: string]: SpecProp
+  [key: string]: SpecProp | undefined
 }
