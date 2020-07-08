@@ -8,7 +8,7 @@ const opt = {
   renderer: 'svg',
 };
 
-const render = async () => {
+async function render() {
   const response = await fetch('./data/horizonGraphOslo2018.json');
   const json = await response.json();
 

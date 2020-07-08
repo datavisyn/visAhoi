@@ -8,7 +8,7 @@ const opt = {
   renderer: 'svg',
 };
 
-const render = async () => {
+async function render() {
   const response = await fetch('./data/changeMatrix.json');
   const json = await response.json();
 

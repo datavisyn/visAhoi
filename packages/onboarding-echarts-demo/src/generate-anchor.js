@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import { css2 } from './util';
 
 // Reused constants that should be change here to make it uniform
 const r = 10;
@@ -43,7 +42,10 @@ export function createAnchor(d, i, nodes) {
 };
 
 export function generateChartAnchors(anchors) {
-  console.log(`%c Anchors we want to create`, css2, anchors);
+  console.log(`%c Anchors we want to create`, `
+  background-color: lemonchiffon;
+  color: #003366;
+  `, anchors);
 
   // We use for each as we want to control each element individually
   anchors.forEach(el => {
