@@ -132,7 +132,7 @@ function processData(allRows) {
     }, 0);
     return Math.round(sum / tempArray.length, 2);
   });
-  createPlot(x, averagedYValues);
+  return {x, y: averagedYValues};
 }
 
 const createChart = (renderer = 'svg') => {

@@ -55,13 +55,6 @@ body {
   outline: none;
 }
 
-.onboardingAnnotations {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-
 /* ANNOTATIONS */
 .vizHint {
   display: grid;
