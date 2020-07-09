@@ -2,12 +2,10 @@ import echarts from 'echarts';
 import * as d3 from 'd3';
 import { onboarding } from 'onboarding-echarts';
 
-// Create an echarts instance
-const vis = document.getElementById("vis");
-const chart = echarts.init(vis);
+let chart = null;
 
 function render() {
-  d3.csv("./data/oslo-2018.csv").then(rows => {
+  d3.csv("../data/oslo-2018.csv").then(rows => {
     const {x, y} = processData(rows);
     const chart = createPlot(x, y);
     onboarding('bar-chart', chart);
@@ -77,4 +75,11 @@ function createPlot(x, y) {
   return chart;
 }
 
-render();
+
+const createChart = (renderer = 'svg') => {
+  const vis = document.getElementById("vis");
+  chart = echarts.init(vis, null, {renderer})
+  render();
+}
+
+export default createChart;
