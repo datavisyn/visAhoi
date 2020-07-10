@@ -22,7 +22,7 @@ function generateOnboardingMessages(spec: OnboardingHorizonGraphSpec): Onboardin
     },
     {
       anchor: spec.type?.anchor,
-      requires: ['chartTitle'],
+      requires: ['type'],
       legend: `The chart is made out of <span class="hT">${spec.type?.value}</span> elements.`,
     },
     {
