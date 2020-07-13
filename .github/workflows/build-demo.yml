@@ -45,13 +45,12 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: demos
-          working-directory: /etc/demos
-      - name: Move demos to public directory
-        run: mv /etc/demos/* ./public
+          working-directory: ./public/demos
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           enable_jekyll: true
+          #keep_files: true
       
