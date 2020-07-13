@@ -1,1 +1,1 @@
-exclude: ["demos"]
+keep_files: ["demos"]
