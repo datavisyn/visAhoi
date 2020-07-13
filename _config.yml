@@ -1,2 +1,16 @@
-keep_files: ["_dist_", "__snowpack__"]
-includes: ["_dist_", "__snowpack__"]
+keep_files: [
+  "./demos/onboarding-echarts-demo/build/_dist_",
+  "./demos/onboarding-echarts-demo/build/__snowpack__",
+  "./demos/onboarding-plotly-demo/build/_dist_",
+  "./demos/onboarding-plotly-demo/build/__snowpack__",
+  "./demos/onboarding-vega-demo/build/_dist_",
+  "./demos/onboarding-vega-demo/build/__snowpack__"
+]
+includes: [
+  "./demos/onboarding-echarts-demo/build/_dist_",
+  "./demos/onboarding-echarts-demo/build/__snowpack__",
+  "./demos/onboarding-plotly-demo/build/_dist_",
+  "./demos/onboarding-plotly-demo/build/__snowpack__",
+  "./demos/onboarding-vega-demo/build/_dist_",
+  "./demos/onboarding-vega-demo/build/__snowpack__"
+]
