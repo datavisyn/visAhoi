@@ -102,13 +102,14 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
     xAxisTitle: {
       value: (<any>v.axes![1]).title,
       anchor: {
-        sel: ".role-axis-title",
+        sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
+        useDOMRect: true,
       },
     },
     yAxisTitle: {
       value: (<any>v.axes![2]).title,
       anchor: {
-        sel: ".role-axis-title:nth-child(2)", // TODO: :nth-child(2) does not return the 2nd child from querySelectorAll
+        sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
         useDOMRect: true,
       },
     },
