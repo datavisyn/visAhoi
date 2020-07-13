@@ -5773,13 +5773,14 @@ function generateOnboardingSpec(vegaSpec, aggregatedValues, elems) {
         xAxisTitle: {
             value: v.axes[1].title,
             anchor: {
-                sel: ".role-axis-title",
+                sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
+                useDOMRect: true,
             },
         },
         yAxisTitle: {
             value: v.axes[2].title,
             anchor: {
-                sel: ".role-axis-title:nth-child(2)",
+                sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
                 useDOMRect: true,
             },
         },
