@@ -1,2 +1,2 @@
-keep_files: ["demos"]
-includes: ["demos"]
+keep_files: ["_dist_", "__snowpack__"]
+includes: ["_dist_", "__snowpack__"]
