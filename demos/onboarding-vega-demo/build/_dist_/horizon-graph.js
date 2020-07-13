@@ -1,5 +1,5 @@
-import vegaEmbed from "/web_modules/vega-embed.js";
-import {onboarding} from "/web_modules/onboarding-vega.js";
+import vegaEmbed from "../web_modules/vega-embed.js";
+import {onboarding} from "../web_modules/onboarding-vega.js";
 const opt = {
   theme: "default",
   actions: false,

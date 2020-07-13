@@ -1,4 +1,4 @@
-import {onboarding} from "/web_modules/onboarding-plotly.js";
+import {onboarding} from "../web_modules/onboarding-plotly.js";
 function render() {
   Plotly.d3.json("./data/matrix.json", function(data) {
     const {x, y, z} = processData(data);

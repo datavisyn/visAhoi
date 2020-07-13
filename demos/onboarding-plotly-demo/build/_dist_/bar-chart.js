@@ -1,4 +1,4 @@
-import {onboarding} from "/web_modules/onboarding-plotly.js";
+import {onboarding} from "../web_modules/onboarding-plotly.js";
 function render() {
   Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
     const {x, y} = processData(data);

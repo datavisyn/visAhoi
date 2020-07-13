@@ -1,6 +1,6 @@
-import echarts2 from "/web_modules/echarts.js";
-import * as d3 from "/web_modules/d3.js";
-import {onboarding} from "/web_modules/onboarding-echarts.js";
+import echarts2 from "../web_modules/echarts.js";
+import * as d3 from "../web_modules/d3.js";
+import {onboarding} from "../web_modules/onboarding-echarts.js";
 let chart = null;
 function render() {
   d3.csv("../data/oslo-2018.csv").then((rows) => {
