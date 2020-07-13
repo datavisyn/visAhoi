@@ -2,9 +2,15 @@
 // See https://github.com/ffg-seva/onboarding-prototype/issues/7
 // import * as Plotly from 'plotly.js';
 
-function makeplot() {
-  Plotly.d3.csv("../../data/oslo-2018.csv", function(data) {
-    processData(data);
+import { onboarding } from 'onboarding-plotly';
+
+function render() {
+  Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
+    const {x, y} = processData(data);
+
+    makePlotly(x, y).then((chart) => {
+      onboarding('horizon-graph', chart);
+    });
   });
 }
 
@@ -37,8 +43,8 @@ function processData(allRows) {
     return sum / tempArray.length;
   });
 
-  //makePlotly(allX, allY);
-  makePlotly(x, averagedYValues);
+  // console.log("date", x, "temp", y);
+  return {x, y: averagedYValues};
 }
 
 function makePlotly(x, y) {
@@ -103,132 +109,7 @@ function makePlotly(x, y) {
     showlegend: false
   };
 
-  Plotly.newPlot("vis", traces, layout).then(onboarding);
+  return Plotly.newPlot("vis", traces, layout);
 }
 
-function onboarding(value) {
-  /*console.log("Main Plotly object", Plotly);
-
-  console.log("----------------");
-
-  console.log("DOM element", value);
-  console.log("traces", value.data);
-  console.log("layout", value.layout);
-
-  console.log("----------------");*/
-
-  // adapted from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
-  function getAllTraceNodes(node) {
-    return node.querySelectorAll("g.fills");
-  }
-
-  function getAllPathNodes(node) {
-    return node.querySelectorAll("path.js-fill");
-  }
-
-  const traceNodes = getAllTraceNodes(value);
-  const areaNodes = getAllPathNodes(traceNodes[0]);
-
-  // console.log("getAllTraceNodes", traceNodes);
-  // console.log("getAllAreaNodes", areaNodes);
-
-  const areaNodesData = Array.from(areaNodes).map(point => point.__data__);
-  // const traceNodesData = Array.from(traceNodes).map(point => point.__data__);
-
-  // console.log("traceNodesData", traceNodesData);
-  // console.log("areaNodesData", areaNodesData);
-
-  // console.log("----------------");
-
-  /*areaNodesData.forEach((data, index) => {
-    console.log(index, data);
-  });
-
-  console.log("----------------");*/
-
-  function generateOnboardingSpec(internalPlotlyTrace, layout) {
-    console.log(internalPlotlyTrace);
-    // console.log(layout);
-    const t = internalPlotlyTrace;
-    return {
-      chartTitle: layout.title.text,
-      type: "area", //t.type,
-      yMin: t._extremes.y.min[0].val, // 0 = first trace
-      yMax: t._extremes.y.max[0].val,
-      xMin: t._extremes.x.min[0].val, // 0 = first trace
-      xMax: t._extremes.x.max[0].val,
-      xAxis: layout.xaxis.title.text,
-      yAxis: layout.yaxis.title.text
-      // xAxisLabel (e.g. 01, 02, …)
-      // yAxisLabel (e.g. -5, 0, 5, ...)
-      // Title (Average Temperature in Oslo)
-    };
-  }
-
-  function generateOnboardingMessages(spec) {
-    const messages = [
-      {
-        anchor: null,
-        requires: ["undefinedTemplateVariable"],
-        legend: `Legend that is filtered out, because it requires an undefined template variable.`
-      },
-      {
-        anchor: null, // TODO: Set and extract anchors
-        requires: ["chartTitle"],
-        legend: `The chart shows the ${spec.chartTitle}.`
-      },
-      {
-        anchor: null, // TODO: Set and extract anchors
-        requires: ["chartTitle"],
-        legend: `The chart is made out of <span class="hT">${
-          spec.type
-        }</span> elements.`
-      },
-      {
-        anchor: null, // TODO: Set and extract anchors
-        requires: ["xAxis", "yAxis"],
-        legend: `The areas illustrate the <span class="hT">${
-          spec.yAxis
-        } (y-axis)</span> over <span class="hT">${spec.xAxis} (x-axis)</span>.`
-      },
-      {
-        anchor: null, // TODO: Set and extract anchors
-        requires: ["yAxis"],
-        legend: `Light green areas indicate a moderate positive <span class="hT">${
-          spec.yAxis
-        }</span> and dark green areas a high positive <span class="hT">${
-          spec.yAxis
-        }</span>.`
-      },
-      {
-        anchor: null, // TODO: Set and extract anchors
-        requires: ["yAxis"],
-        legend: `Dark blue areas indicate a very low negative <span class="hT">${
-          spec.yAxis
-        }</span>.`
-      }
-    ];
-
-    // filter for messages where all template variables are available in the spec
-    return messages.filter(message =>
-      message.requires.every(tplVars => spec[tplVars] !== undefined)
-    );
-  }
-
-  const spec = generateOnboardingSpec(areaNodesData[0][0].trace, value.layout);
-
-  const onboardingLegend = Plotly.d3
-    .select("#onboarding")
-    .selectAll("div.vizHint")
-    .data(generateOnboardingMessages(spec).map(d => d.legend));
-
-  onboardingLegend
-    .enter()
-    .append("div")
-    .classed("vizHint", true)
-    .html(d => d);
-
-  onboardingLegend.exit().remove();
-}
-
-makeplot();
+render();
