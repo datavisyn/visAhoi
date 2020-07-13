@@ -9,15 +9,29 @@ import {
 function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
   const heatmapData = (<any>Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]).__data__;
   const t = heatmapData[0].trace;
+
+  //console.log(t);
+
   return {
     chartTitle: {
       value: chart.layout.title.text,
+      anchor: {
+        sel: '.infolayer .gtitle'
+      }
     },
     type: {
       value: t.type,
+      anchor: {
+        sel: '.heatmaplayer > .hm > image',
+        useDOMRect: true
+      }
     },
     legendTitle: {
       value: t.colorbar.title.text,
+      anchor: {
+        sel: '.infolayer > .colorbar',
+        useDOMRect: true
+      },
     },
     yMin: {
       value: t._extremes.y.min[0].val, // 0 = first trace
@@ -33,9 +47,16 @@ function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
     },
     xAxis: {
       value: chart.layout.xaxis.title.text,
+      anchor: {
+        sel: '.infolayer .xtitle'
+      }
     },
     yAxis: {
-      value: chart.layout.yaxis.title.text
+      value: chart.layout.yaxis.title.text,
+      anchor: {
+        sel: '.infolayer .ytitle',
+        useDOMRect: true,
+      }
     },
     // xAxisLabel (e.g. 01, 02, …)
     // yAxisLabel (e.g. -5, 0, 5, ...)
