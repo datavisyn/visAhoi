@@ -2,15 +2,13 @@ import echarts from 'echarts';
 import * as d3 from 'd3';
 import { onboarding } from 'onboarding-echarts';
 
-// Create an echarts instance
-const vis = document.getElementById("vis");
-const chart = echarts.init(vis);
+let chart = null;
 
 function render() {
-  d3.csv("./data/oslo-2018.csv").then(rows => {
+  d3.csv("../data/oslo-2018.csv").then(rows => {
     const {x, y} = processData(rows);
     const chart = createPlot(x, y);
-    onboarding('bar-chart', chart);
+    onboarding('horizon-graph', chart);
   });
 }
 
@@ -35,7 +33,7 @@ function processData(allRows) {
     }, 0);
     return Math.round(sum / tempArray.length, 2);
   });
-  createPlot(x, averagedYValues);
+  return {x, y: averagedYValues};
 }
 
 function createPlot(x, y) {
@@ -133,4 +131,10 @@ function createPlot(x, y) {
   return chart;
 }
 
-render();
+const createChart = (renderer = 'svg') => {
+  const vis = document.getElementById("vis");
+  chart = echarts.init(vis, null, {renderer})
+  render();
+}
+
+export default createChart;

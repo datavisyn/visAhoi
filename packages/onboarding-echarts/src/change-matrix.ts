@@ -5,48 +5,46 @@ import {
   OnboardingChangeMatrixSpec,
 } from "onboarding-core";
 
-function generateOnboardingSpec(data, options, coords): OnboardingChangeMatrixSpec {
+function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
+  // const dataCoords = chart._chartsViews[0]._data._itemLayouts;
+  const legendPosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_visualMap.continuous"].group.position;
+  const legendTitle = {x: legendPosition[0], y: legendPosition[1] + 20};
+  const options = chart._model.option;
   return {
     chartTitle: {
       value: options.title[0].text,
       anchor: {
-        coords: coords[36]
+        coords: coords.chartTitle
       }
     },
-    type: {
-      value: data.option.type,
-      anchor: {
-        coords: coords[3]
-      }
-    },
-    legendMin: {
+    // type: {
+    //   value: "cell",
+    //   anchor: {
+    //     coords: {x: 20, y: 20}
+    //   }
+    // },
+    legendTitle: {
       value: options.visualMap[0].text[1],
       anchor: {
-        coords: coords[37]
+        coords: legendTitle
       }
     },
-    legendMax: {
-      value: options.visualMap[0].text[0],
-      anchor: {
-        coords: coords[6]
-      }
-    },
-    xAxis: {
-      value: options.xAxis[0].name,
-      anchor: {
-        coords: coords[0]
-      }
-    },
-    yAxis: {
-      value: options.yAxis[0].name,
-      anchor: {
-        coords: coords[0]
-      }
-    }
+    // xAxis: {
+    //   value: options.xAxis[0].name,
+    //   anchor: {
+    //     coords: dataCoords[1]
+    //   }
+    // },
+    // yAxis: {
+    //   value: options.yAxis[0].name,
+    //   anchor: {
+    //     coords: dataCoords[0]
+    //   }
+    // }
   }
 }
 
-export function changeMatrixFactory(data, options, coords): OnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(data, options, coords);
+export function changeMatrixFactory(chart, coords): OnboardingMessages[] {
+  const onbordingSpec = generateOnboardingSpec(chart, coords);
   return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
 }

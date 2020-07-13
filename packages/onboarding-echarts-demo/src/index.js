@@ -1,16 +1,28 @@
 
 const demos = [
   {
-    title: 'Bar Chart',
-    link: './bar-chart.html'
+    title: 'Bar Chart SVG',
+    link: './svg/bar-chart.html'
   },
   {
-    title: 'Change Matrix',
-    link: './change-matrix.html'
+    title: 'Change Matrix SVG',
+    link: './svg/change-matrix.html'
   },
   {
-    title: 'Horizon Graph',
-    link: './horizon-graph.html'
+    title: 'Horizon Graph SVG',
+    link: './svg/horizon-graph.html'
+  },
+  {
+    title: 'Bar Chart Canvas',
+    link: './canvas/bar-chart.html'
+  },
+  {
+    title: 'Change Matrix Canvas',
+    link: './canvas/change-matrix.html'
+  },
+  {
+    title: 'Horizon Graph Canvas',
+    link: './canvas/horizon-graph.html'
   }
 ];
 

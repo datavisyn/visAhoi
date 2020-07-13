@@ -13,4 +13,3 @@ lerna-debug.log
 /packages/*/LICENSE
 dist
 tsconfig.tsbuildinfo
-package-lock.json
