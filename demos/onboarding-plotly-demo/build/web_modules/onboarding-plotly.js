@@ -2947,12 +2947,15 @@ function generateOnboardingSpec(chart) {
         chartTitle: {
             value: chart.layout.title.text,
             anchor: {
-                sel: '.infolayer .gtitle',
-                useDOMRect: true
+                sel: '.infolayer .gtitle'
             }
         },
         type: {
             value: t.type,
+            anchor: {
+                sel: '.bars > .points > .point:nth-child(4)',
+                useDOMRect: true
+            }
         },
         orientation: {
             value: t.orientation === "v" ? "vertical" : "horizontal",
@@ -2968,9 +2971,17 @@ function generateOnboardingSpec(chart) {
         },
         yMin: {
             value: t._extremes.y.min[0].val,
+            anchor: {
+                sel: '.bars > .points > .point:nth-child(2)',
+                useDOMRect: true
+            }
         },
         yMax: {
             value: t._extremes.y.max[0].val,
+            anchor: {
+                sel: '.bars > .points > .point:nth-child(7)',
+                useDOMRect: true
+            }
         },
         xMin: {
             value: t._extremes.x.min[0].val,
@@ -2980,9 +2991,16 @@ function generateOnboardingSpec(chart) {
         },
         xAxisTitle: {
             value: chart.layout.xaxis.title.text,
+            anchor: {
+                sel: '.infolayer .xtitle'
+            }
         },
         yAxisTitle: {
-            value: chart.layout.yaxis.title.text
+            value: chart.layout.yaxis.title.text,
+            anchor: {
+                sel: '.infolayer .ytitle',
+                useDOMRect: true,
+            }
         },
     };
 }
@@ -2994,15 +3012,27 @@ function barChartFactory(chart) {
 function generateOnboardingSpec$1(chart) {
     const heatmapData = Array.from(chart.querySelectorAll(".hm"))[0].__data__;
     const t = heatmapData[0].trace;
+    //console.log(t);
     return {
         chartTitle: {
             value: chart.layout.title.text,
+            anchor: {
+                sel: '.infolayer .gtitle'
+            }
         },
         type: {
             value: t.type,
+            anchor: {
+                sel: '.heatmaplayer > .hm > image',
+                useDOMRect: true
+            }
         },
         legendTitle: {
             value: t.colorbar.title.text,
+            anchor: {
+                sel: '.infolayer > .colorbar',
+                useDOMRect: true
+            },
         },
         yMin: {
             value: t._extremes.y.min[0].val,
@@ -3018,9 +3048,16 @@ function generateOnboardingSpec$1(chart) {
         },
         xAxis: {
             value: chart.layout.xaxis.title.text,
+            anchor: {
+                sel: '.infolayer .xtitle'
+            }
         },
         yAxis: {
-            value: chart.layout.yaxis.title.text
+            value: chart.layout.yaxis.title.text,
+            anchor: {
+                sel: '.infolayer .ytitle',
+                useDOMRect: true,
+            }
         },
     };
 }
@@ -3035,12 +3072,22 @@ function generateOnboardingSpec$2(chart) {
     const areaNodes = traceNodes[0].querySelectorAll("path.js-fill");
     const areaNodesData = Array.from(areaNodes).map((point) => point.__data__);
     const t = areaNodesData[0][0].trace;
+    // console.log(t);
     return {
         chartTitle: {
             value: chart.layout.title.text,
+            anchor: {
+                sel: '.infolayer .gtitle'
+            }
         },
         type: {
             value: "area",
+            anchor: {
+                coords: {
+                    x: (t._polygons[0].xmax / 2),
+                    y: t._polygons[0].ymax,
+                }
+            },
         },
         yMin: {
             value: t._extremes.y.min[0].val,
@@ -3056,9 +3103,16 @@ function generateOnboardingSpec$2(chart) {
         },
         xAxis: {
             value: chart.layout.xaxis.title.text,
+            anchor: {
+                sel: '.infolayer .xtitle'
+            }
         },
         yAxis: {
-            value: chart.layout.yaxis.title.text
+            value: chart.layout.yaxis.title.text,
+            anchor: {
+                sel: '.infolayer .ytitle',
+                useDOMRect: true,
+            }
         },
     };
 }
