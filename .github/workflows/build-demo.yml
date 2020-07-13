@@ -38,6 +38,7 @@ jobs:
             /packages/onboarding-plotly-demo/build/
             /packages/onboarding-vega-demo/build/
   deploy:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
