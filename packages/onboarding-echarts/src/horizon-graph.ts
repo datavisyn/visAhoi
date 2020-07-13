@@ -1,4 +1,4 @@
-import {OnboardingHorizonGraphSpec} from '../../onboarding-core/dist/horizon-graph';
+import {OnboardingHorizonGraphSpec} from 'onboarding-core/dist/horizon-graph';
 import {
   EChartType,
   OnboardingMessages,

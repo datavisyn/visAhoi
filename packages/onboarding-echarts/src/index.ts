@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import { EChartType, displayOnboardingMessages } from 'onboarding-core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
-import {horizonGraphFactory} from './horizen-graph';
+import {horizonGraphFactory} from './horizon-graph';
 
 export async function onboarding(chartType: EChartType, chart: any) {
   console.log("---> ", chart);
