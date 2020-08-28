@@ -14,4 +14,4 @@ font-size: 4vh;
 `,css2=`
 background-color: lemonchiffon;
 color: #003366;
-`,getAllNodes=n=>n.select(".role-mark").selectAll("path").nodes(),getOrientation=n=>{const[e,t]=n,{name:p,type:o}=e,{name:r,type:x}=t;return{x:o==="band"?"horizontal":"vertical",y:x==="band"?"horizontal":"vertical",b:o==="band"?"height":"width"}},getMinMax=n=>{const e=c(n),t=Object.keys(e),p=[];return t.forEach(o=>{p.push({key:o,min:Math.min(...e[o]),max:Math.max(...e[o])})}),p};const c=n=>{const e={};return Object.keys(n[0]).forEach(t=>{e[t]=n.map(p=>p[t])}),e};
+`,getAllNodes=e=>e.select(".role-mark").selectAll("path").nodes(),getOrientation=e=>{const[t,p]=e,{name:s,type:o}=t,{name:x,type:n}=p;return{x:o==="band"?"horizontal":"vertical",y:n==="band"?"horizontal":"vertical",b:o==="band"?"height":"width"}},getMinMax=e=>{const t=c(e),p=Object.keys(t),s=[];return p.forEach(o=>{s.push({key:o,min:Math.min(...t[o]),max:Math.max(...t[o])})}),s};const c=e=>{const t={},p=Object.keys(e[0]);return p.forEach(s=>{t[s]=e.map(o=>o[s])}),t};
