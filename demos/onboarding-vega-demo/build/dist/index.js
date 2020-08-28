@@ -1,0 +1,1 @@
+const demos=[{title:"Bar Chart",link:"./bar-chart.html"},{title:"Change Matrix",link:"./change-matrix.html"},{title:"Horizon Graph",link:"./horizon-graph.html"}],ul=document.createElement("ul");demos.forEach(t=>{const e=document.createElement("li");e.innerHTML=`<a href="${t.link}">${t.title}</a>`,ul.append(e)}),document.getElementById("app").append(ul);

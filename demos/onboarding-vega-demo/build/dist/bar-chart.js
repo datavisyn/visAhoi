@@ -1,0 +1,1 @@
+import t from"../web_modules/vega-embed.js";import{onboarding as r}from"../web_modules/onboarding-vega.js";const n={theme:"default",actions:!1,renderer:"svg"};async function s(){const a=await fetch("./data/barChartOslo2018.json"),e=await a.json();let o=await t("#vis",e,n);r("bar-chart",o)}s();
