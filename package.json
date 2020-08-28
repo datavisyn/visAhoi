@@ -5,7 +5,8 @@
   "description": "Semi-Automated Generation of Visualization Onboarding Using High-Level Grammar",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "npm i && lerna bootstrap --ignore-scripts && npm run build"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build"
   },
   "repository": {
     "type": "git",
