@@ -8,9 +8,6 @@ import {
 function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
 
-  const yAxisTitle = {x: 108.7, y: 60, width: (869/2), height: 300}
-  const xAxisTitle = {x: dataCoords[6].x, y: dataCoords[6].y + 60};
-
   const data = chart._chartsViews[0]._data;
   const options = chart._model.option;
 
@@ -26,8 +23,9 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
+      findDomNodeByValue: true,
       anchor: {
-        coords: coords.chartTitle
+        useDOMRect: true
       }
     },
     yMin: {
@@ -68,14 +66,16 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
     // },
     xAxisTitle: {
       value: options.xAxis[0].name,
+      findDomNodeByValue: true,
       anchor: {
-        coords: xAxisTitle
+        useDOMRect: true
       }
     },
     yAxisTitle: {
       value: options.yAxis[0].name,
+      findDomNodeByValue: true,
       anchor: {
-        coords: yAxisTitle
+        useDOMRect: true
       }
     }
   };

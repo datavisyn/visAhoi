@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import {isOnboardingElementAnchor} from './interfaces';
 
 // Reused constants that should be change here to make it uniform
 const r = 10;
@@ -77,18 +78,21 @@ export function generateChartAnchors(anchors) {
 
     // Find the positioning only if we provided no coords
     } else {
-      const elToAppendTo = d3.select(a.sel);
-
-      if(!elToAppendTo.node()) {
-        console.error('No element found for selector', a.sel);
-        return;
+      let node;
+      if(isOnboardingElementAnchor(a)) {
+        node = a.element;
+      } else {
+        const elToAppendTo = d3.select(a.sel);
+        if(!elToAppendTo.node()) {
+          console.error('No element found for selector', a.sel);
+          return;
+        }
+        node = elToAppendTo.node()
       }
-
-      const elRect = elToAppendTo.node().getBoundingClientRect();
-      const elBox = elToAppendTo.node().getBBox();
-      console.log('FOR ', a.sel ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
-
-       settings = {
+      const elRect = node.getBoundingClientRect();
+      const elBox = node.getBBox();
+      console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
+      settings = {
         cx: a.useDOMRect ? elRect.x : elBox.x,
         cy: a.useDOMRect ? elRect.y : elBox.y,
         r,
@@ -96,14 +100,13 @@ export function generateChartAnchors(anchors) {
         y: (a.useDOMRect ? elRect.y : elBox.y) + textOffset,
       };
     }
-
     // Create the respective anchor
     createHint(settings, i);
   });
 }
 
 /**
- * Somewhat generic function to create a annotation based on some properties that can vary.
+ * Somewhat generic function to create an annotation based on some properties that can vary.
  * @param {*} settings where all the positions for the annotation are passed
  * @param {*} text of the annotation to show
  */

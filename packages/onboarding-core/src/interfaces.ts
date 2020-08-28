@@ -28,9 +28,21 @@ interface OnboardingDOMAnchor {
   useDOMRect?: boolean;
 }
 
+interface OnboardingElementAnchor {
+  element?: HTMLElement;
+  useDOMRect?: boolean;
+}
+
+export type OnboardingAnchor = OnboardingCoordsAnchor | OnboardingDOMAnchor | OnboardingElementAnchor;
+
+export const isOnboardingElementAnchor = (element: OnboardingAnchor): element is OnboardingElementAnchor => {
+  return (element as OnboardingElementAnchor).element !== undefined;
+}
+
 export interface SpecProp {
   value: any;
-  anchor?: OnboardingCoordsAnchor | OnboardingDOMAnchor;
+  anchor?: OnboardingAnchor;
+  findDomNodeByValue?: boolean;
 }
 
 export interface OnboardingSpec {
