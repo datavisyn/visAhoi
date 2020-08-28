@@ -43,12 +43,22 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: gh-pages
+      - name: Remove old demos
+        run: rm -rf ./demos
       - uses: actions/download-artifact@v2
         with:
           name: demos
           path: ./demos
-      - name: Git status
+      - name: git status
         run: git status
+      - name: git add
+        run: git add --all
+      - name: git commit
+        run: git commit -m "Update demos by Github Actions with $GITHUB_SHA"
+      - name: git status
+        run: git status
+      - name: git push
+        run: git push
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
       #   with:
