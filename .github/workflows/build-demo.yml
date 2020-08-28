@@ -41,6 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: 'gh-pages'
       - uses: actions/download-artifact@v2
         with:
           name: demos
@@ -51,7 +53,8 @@ jobs:
       - name: Display structure of the repo
         run: ls -R
         working-directory: .
-
+      - name: Git status
+        run: git status
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
       #   with:
