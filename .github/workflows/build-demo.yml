@@ -43,12 +43,18 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: demos
-          working-directory: ./public/demos
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          enable_jekyll: true
-          #keep_files: true
-      
+          path: ./public/demos
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./public/demos
+      - name: Display structure of the repo
+        run: ls -R
+        working-directory: .
+
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./public
+      #     enable_jekyll: true
+      #     #keep_files: true
