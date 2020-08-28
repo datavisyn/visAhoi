@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "onboarding-vega": "./onboarding-vega.js",
-    "vega-embed": "./vega-embed.js"
-  }
-}
