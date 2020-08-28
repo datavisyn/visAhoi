@@ -42,17 +42,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: 'gh-pages'
+          ref: gh-pages
       - uses: actions/download-artifact@v2
         with:
           name: demos
-          path: ./public/demos
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ./public/demos
-      - name: Display structure of the repo
-        run: ls -R
-        working-directory: .
+          path: ./demos
       - name: Git status
         run: git status
       # - name: Deploy
