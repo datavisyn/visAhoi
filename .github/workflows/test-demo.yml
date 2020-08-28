@@ -5,7 +5,10 @@
 # no build errors from snowpack means everything should be fine
 name: Test demos
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - develop # ignored since the branch is tested by the build-demo workflow
 
 jobs:
   build:
