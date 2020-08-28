@@ -9,7 +9,7 @@ on:
       - master
       - develop
   pull_request:
-    branches: 
+    branches:
       - master
       - deploy
 
@@ -21,14 +21,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Install lerna.js
-        run: npm install -g lerna
       - name: Install workspace dependencies
         run: npm install
       - name: Bootstrap lerna workspace
-        run: lerna bootstrap
+        run: npm run bootstrap
       - name: Build packages in workspace
-        run: lerna run build
+        run: npm run build
       - name: Upload demo build artifcats
         uses: actions/upload-artifact@v2
         with:
