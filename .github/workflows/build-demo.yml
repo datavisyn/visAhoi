@@ -3,15 +3,16 @@
 
 name: Build demos
 
-on:
-  push:
-    branches:
-      - master
-      - develop
-  pull_request:
-    branches:
-      - master
-      - deploy
+on: [push, pull_request]
+# on:
+#   push:
+#     branches:
+#       - master
+#       - develop
+#   pull_request:
+#     branches:
+#       - master
+#       - deploy
 
 jobs:
   build:
