@@ -51,24 +51,11 @@ jobs:
           path: ./demos
       - name: git status
         run: git status
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          # Required
-          commit_message: Update demos with build of commit $GITHUB_SHA
-          # Optional branch to push to, defaults to the current branch
-          branch: gh-pages
-      # - name: git add
-      #   run: git add --all
-      # - name: git commit
-      #   run: git commit -m "Update demos by Github Actions with $GITHUB_SHA"
-      # - name: git status
-      #   run: git status
-      # - name: git push
-      #   run: git push
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
+      - name: Print $GITHUB_SHA
+        run: echo $GITHUB_SHA
+      # - uses: stefanzweifel/git-auto-commit-action@v4
       #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./public
-      #     enable_jekyll: true
-      #     #keep_files: true
+      #     # Required
+      #     commit_message: Update demos with build of commit $GITHUB_SHA
+      #     # Optional branch to push to, defaults to the current branch
+      #     branch: gh-pages
