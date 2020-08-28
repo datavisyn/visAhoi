@@ -49,13 +49,9 @@ jobs:
         with:
           name: demos
           path: ./demos
-      - name: git status
-        run: git status
-      - name: Print $GITHUB_SHA
-        run: echo $GITHUB_SHA
-      # - uses: stefanzweifel/git-auto-commit-action@v4
-      #   with:
-      #     # Required
-      #     commit_message: Update demos with build of commit $GITHUB_SHA
-      #     # Optional branch to push to, defaults to the current branch
-      #     branch: gh-pages
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          # Required
+          commit_message: Update demo files # from source of commit $GITHUB_SHA
+          # Optional branch to push to, defaults to the current branch
+          branch: gh-pages
