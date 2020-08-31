@@ -24,7 +24,8 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     yMin: {
@@ -67,14 +68,16 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
       value: options.xAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {top: 20}
       }
     },
     yAxisTitle: {
       value: options.yAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     }
   };

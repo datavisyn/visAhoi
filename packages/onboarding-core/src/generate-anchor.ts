@@ -14,7 +14,7 @@ const textOffset = 5;
  * @param {*} i index of the current selection
  * @param {*} nodes all nodes
  */
-export function createAnchor(d, i, nodes) {
+export function createAnchor(d, i: number, nodes) {
   const currentEl = nodes[i];
   const parentEl = d3.select(currentEl).node().parentNode;
 
@@ -23,8 +23,8 @@ export function createAnchor(d, i, nodes) {
     .insert('svg', ':first-child')
     .attr('width', w)
     .attr('height', h)
-        .append('g')
-        .classed('textAnnotation', true);
+    .append('g')
+    .classed('textAnnotation', true);
 
   hintGroup
     .append('circle')
@@ -52,28 +52,28 @@ export function generateChartAnchors(anchors) {
       return;
     }
 
-    let settings = {};
     const a = el.anchor;
     const i = el.index;
+    let settings = Object.assign({}, a.offset || {});
 
     // If we have coords we can use them
     if (a.coords) {
       if (a.coords.hasOwnProperty('bounds')) { // This means we use th coords of a bar chart or anything with x1 and x2
-        settings = {
+        Object.assign(settings, {
           cx: (a.coords.bounds.x1 + a.coords.bounds.x2) / 2,
           cy: (a.coords.bounds.y1 + a.coords.bounds.y2) / 2,
           r,
           x: (a.coords.bounds.x1 + a.coords.bounds.x2) / 2,
-          y: (a.coords.bounds.y1 + a.coords.bounds.y2) / 2 + textOffset,
-        };
+          y: (a.coords.bounds.y1 + a.coords.bounds.y2) / 2 + textOffset
+        });
       } else  { // Otherwise we need to use the passed coords if there are some which require x and y
-        settings = {
+        Object.assign(settings, {
           cx: a.coords.x,
           cy: a.coords.y,
           r,
           x: a.coords.x,
           y: a.coords.y + textOffset
-        };
+        });
       }
 
     // Find the positioning only if we provided no coords
@@ -92,13 +92,13 @@ export function generateChartAnchors(anchors) {
       const elRect = node.getBoundingClientRect();
       const elBox = node.getBBox();
       console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
-      settings = {
+      Object.assign(settings, {
         cx: a.useDOMRect ? elRect.x : elBox.x,
         cy: a.useDOMRect ? elRect.y : elBox.y,
         r,
         x: a.useDOMRect ? elRect.x : elBox.x,
         y: (a.useDOMRect ? elRect.y : elBox.y) + textOffset,
-      };
+      });
     }
     // Create the respective anchor
     createHint(settings, i);
@@ -111,18 +111,22 @@ export function generateChartAnchors(anchors) {
  * @param {*} text of the annotation to show
  */
 function createHint(settings, text) {
-  const { cx, cy, r, x, y } = settings;
+  let { cx, cy, r, x, y, left, right, top, bottom } = settings;
 
   const hG = d3.select('.onboardingAnnotations')
     .append('g')
     .classed('chartAnnotation', true);
+  if(left) { cx += left; x += left; }
+  if(right) { cx -= right; x -= right; }
+  if(top) { cy += top; y += top; }
+  if(bottom) { cy -= bottom; y -= bottom; }
 
   hG.append('circle')
     .attr('r', r)
     .attr('cx', cx)
     .attr('cy', cy)
     .style('stroke', '#C51B7D')
-    .style('fill', '#C51B7D');
+    .style('fill', '#C51B7D')
   hG.append('text')
     .attr('x', x)
     .attr('y', y)

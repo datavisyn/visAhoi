@@ -18,17 +18,21 @@ interface Point {
   y: number;
 }
 
-interface OnboardingCoordsAnchor {
+interface onboardingAnchorBase {
+  offset?: {left?: number, top?: number, right?: number, bottom?: number}
+}
+
+interface OnboardingCoordsAnchor extends onboardingAnchorBase {
   sel?: string;
   coords: Point | number[];
 }
 
-interface OnboardingDOMAnchor {
+interface OnboardingDOMAnchor extends onboardingAnchorBase {
   sel: string;
   useDOMRect?: boolean;
 }
 
-interface OnboardingElementAnchor {
+interface OnboardingElementAnchor extends onboardingAnchorBase {
   element?: HTMLElement;
   useDOMRect?: boolean;
 }
