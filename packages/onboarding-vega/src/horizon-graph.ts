@@ -1,17 +1,17 @@
-import { EChartType, OnboardingMessages, OnboardingHorizonGraphSpec, generateOnboardingMessages} from 'onboarding-core';
+import { EChartType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateOnboardingMessages} from 'onboarding-core';
 import { Spec } from 'vega-typings';
 import { VisualizationSpec } from 'vega-embed';
 
-function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[]): OnboardingHorizonGraphSpec {
+function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[]): IOnboardingHorizonGraphSpec {
   const v = vegaSpec;
   const o = visualizationSpec;
-
   return {
     chartTitle: {
       value: (typeof(v.title) === 'string') ? v.title : v.title?.text,
       anchor: {
         sel: '.role-title-text',
         useDOMRect: true,
+        offset: {left: -20}
       },
     },
     xAxis: {
@@ -56,7 +56,7 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
   };
 }
 
-export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[]): OnboardingMessages[] {
+export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[]): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, visualizationSpec, elems);
   // console.log('Generated Spec: ', onbordingSpec);
   return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);

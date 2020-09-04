@@ -1,11 +1,11 @@
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingBarChartSpec,
+  IOnboardingMessages,
+  IOnboardingBarChartSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
+function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const data = chart._chartsViews[0]._data;
   const options = chart._model.option;
@@ -24,7 +24,8 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     yMin: {
@@ -67,20 +68,22 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
       value: options.xAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     yAxisTitle: {
       value: options.yAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     }
   };
 }
 
-export function barChartFactory(chart, coords): OnboardingMessages[] {
+export function barChartFactory(chart, coords): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
 }

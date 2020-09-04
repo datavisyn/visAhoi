@@ -1,12 +1,12 @@
 
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingHorizonGraphSpec,
+  IOnboardingMessages,
+  IOnboardingHorizonGraphSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart: any): OnboardingHorizonGraphSpec {
+function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.fills");
   const areaNodes = traceNodes[0].querySelectorAll("path.js-fill");
@@ -20,7 +20,8 @@ function generateOnboardingSpec(chart: any): OnboardingHorizonGraphSpec {
     chartTitle: {
       value: chart.layout.title.text,
       anchor: {
-        sel: '.infolayer .gtitle'
+        sel: '.infolayer .gtitle',
+        offset: {left: -15, top: 5}
       }
     },
     type: {
@@ -47,7 +48,8 @@ function generateOnboardingSpec(chart: any): OnboardingHorizonGraphSpec {
     xAxis: {
       value: chart.layout.xaxis.title.text,
       anchor: {
-        sel: '.infolayer .xtitle'
+        sel: '.infolayer .xtitle',
+        offset: {left: -15, top: 5}
       }
     },
     yAxis: {
@@ -63,7 +65,7 @@ function generateOnboardingSpec(chart: any): OnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart): OnboardingMessages[] {
+export function horizonGraphFactory(chart): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
   return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);
 }

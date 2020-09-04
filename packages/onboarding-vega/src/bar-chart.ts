@@ -1,7 +1,7 @@
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingBarChartSpec,
+  IOnboardingMessages,
+  IOnboardingBarChartSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 import { Spec } from "vega-typings";
@@ -45,7 +45,7 @@ function getPropertyValues(arr) {
   return res;
 }
 
-function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): OnboardingBarChartSpec {
+function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingBarChartSpec {
   const v = vegaSpec;
   const a = aggregatedValues;
 
@@ -58,6 +58,7 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       anchor: {
         sel: ".role-title-text",
         useDOMRect: true,
+        offset: {left: -20}
       },
     },
     type: {
@@ -104,6 +105,7 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
         useDOMRect: true,
+        offset: {left: -30}
       },
     },
     yAxisTitle: {
@@ -111,12 +113,13 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       anchor: {
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
         useDOMRect: true,
+        offset: {top: -30}
       },
     },
   };
 }
 
-export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): OnboardingMessages[] {
+export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
   // console.log('Generated Spec: ', onbordingSpec);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);

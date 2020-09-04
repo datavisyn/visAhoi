@@ -1,8 +1,8 @@
 import { Spec } from "vega";
-import { EChartType, OnboardingMessages, generateOnboardingMessages, OnboardingChangeMatrixSpec } from "onboarding-core";
+import { EChartType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "onboarding-core";
 
 
-function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeMatrixSpec {
+function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
   const v = vegaSpec;
   return {
     chartTitle: {
@@ -10,6 +10,7 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeM
       anchor: {
         sel: '.role-title-text',
         useDOMRect: true,
+        offset: {left: -20}
       },
     },
     type: {
@@ -22,7 +23,8 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeM
       value: (<any>v.legends![0]).title.toLowerCase(),
       anchor: {
         sel: '.role-legend-title',
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {top: -20}
       },
     },
     xAxis: {
@@ -37,7 +39,7 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeM
   };
 }
 
-export function changeMatrixFactory(vegaSpec: Spec, elems: any[]): OnboardingMessages[] {
+export function changeMatrixFactory(vegaSpec: Spec, elems: any[]): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, elems);
   // console.log('Generated Spec: ', onbordingSpec);
   return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);

@@ -1,12 +1,12 @@
 
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingChangeMatrixSpec,
+  IOnboardingMessages,
+  IOnboardingChangeMatrixSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
+function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   const heatmapData = (<any>Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]).__data__;
   const t = heatmapData[0].trace;
 
@@ -16,7 +16,8 @@ function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
     chartTitle: {
       value: chart.layout.title.text,
       anchor: {
-        sel: '.infolayer .gtitle'
+        sel: '.infolayer .gtitle',
+        offset: {left: -15, top: 5}
       }
     },
     type: {
@@ -30,7 +31,8 @@ function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
       value: t.colorbar.title.text,
       anchor: {
         sel: '.infolayer > .colorbar',
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {top: -10}
       },
     },
     yMin: {
@@ -48,7 +50,8 @@ function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
     xAxis: {
       value: chart.layout.xaxis.title.text,
       anchor: {
-        sel: '.infolayer .xtitle'
+        sel: '.infolayer .xtitle',
+        offset: {left: -15, top: 5}
       }
     },
     yAxis: {
@@ -64,7 +67,7 @@ function generateOnboardingSpec(chart: any): OnboardingChangeMatrixSpec {
   };
 }
 
-export function changeMatrixFactory(chart): OnboardingMessages[] {
+export function changeMatrixFactory(chart): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
   return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
 }

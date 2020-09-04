@@ -1,22 +1,22 @@
-import {SpecProp, OnboardingSpec, OnboardingMessages} from './interfaces';
+import {ISpecProp, IOnboardingSpec, IOnboardingMessages} from './interfaces';
 import {getAnchor} from './utils';
 
-export interface OnboardingBarChartSpec extends OnboardingSpec {
-  chartTitle?: SpecProp;
-  type?: SpecProp;
-  orientation?: SpecProp;
-  xAxisOrientation?: SpecProp;
-  yAxisOrientation?: SpecProp;
-  barLength?: SpecProp;
-  xMin?: SpecProp;
-  xMax?: SpecProp;
-  yMin?: SpecProp;
-  yMax?: SpecProp;
-  xAxisTitle?: SpecProp;
-  yAxisTitle?: SpecProp;
+export interface IOnboardingBarChartSpec extends IOnboardingSpec {
+  chartTitle?: ISpecProp;
+  type?: ISpecProp;
+  orientation?: ISpecProp;
+  xAxisOrientation?: ISpecProp;
+  yAxisOrientation?: ISpecProp;
+  barLength?: ISpecProp;
+  xMin?: ISpecProp;
+  xMax?: ISpecProp;
+  yMin?: ISpecProp;
+  yMax?: ISpecProp;
+  xAxisTitle?: ISpecProp;
+  yAxisTitle?: ISpecProp;
 }
 
-function generateOnboardingMessages(spec: OnboardingBarChartSpec): OnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingBarChartSpec): IOnboardingMessages[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle),

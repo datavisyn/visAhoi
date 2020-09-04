@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
-import { OnboardingMessages } from "./interfaces";
+import { IOnboardingMessages } from "./interfaces";
 import { createAnchor, generateChartAnchors } from './generate-anchor';
 
-export function displayOnboardingMessages(messages: OnboardingMessages[]) {
+export function displayOnboardingMessages(messages: IOnboardingMessages[]) {
   const onboardingLegend: any = d3
     .select('#onboarding')
     .selectAll('div.vizHint')

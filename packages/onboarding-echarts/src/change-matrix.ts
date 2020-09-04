@@ -1,11 +1,11 @@
 import {
   EChartType,
-  OnboardingMessages,
+  IOnboardingMessages,
+  IOnboardingChangeMatrixSpec,
   generateOnboardingMessages,
-  OnboardingChangeMatrixSpec,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
+function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
   // const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const legendPosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_visualMap.continuous"].group.position;
   const legendTitle = {x: legendPosition[0], y: legendPosition[1] + 20};
@@ -15,7 +15,8 @@ function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     // type: {
@@ -34,7 +35,8 @@ function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
       value: options.xAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     yAxis: {
@@ -45,16 +47,18 @@ function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
       }
     },
     type: {
-      value: options.yAxis[0].data[2],
+      value: "area",
       findDomNodeByValue: true,
+      domNodeValue: options.yAxis[0].data[2],
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {top: -10, left: 60}
       }
     },
   }
 }
 
-export function changeMatrixFactory(chart, coords): OnboardingMessages[] {
+export function changeMatrixFactory(chart, coords): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
   return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
 }

@@ -1,11 +1,11 @@
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingBarChartSpec,
+  IOnboardingMessages,
+  IOnboardingBarChartSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
+function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.points");
   const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -17,7 +17,8 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
     chartTitle: {
       value: chart.layout.title.text,
       anchor: {
-        sel: '.infolayer .gtitle'
+        sel: '.infolayer .gtitle',
+        offset: {left: -15, top: 5}
       }
     },
     type: {
@@ -62,7 +63,8 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
     xAxisTitle: {
       value: chart.layout.xaxis.title.text,
       anchor: {
-        sel: '.infolayer .xtitle'
+        sel: '.infolayer .xtitle',
+        offset: {left: -15, top: 5}
       }
     },
     yAxisTitle: {
@@ -70,6 +72,7 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
       anchor: {
         sel: '.infolayer .ytitle',
         useDOMRect: true,
+        offset: {top: -25}
       }
     },
     // xAxisLabel (e.g. 01, 02, …)
@@ -78,7 +81,7 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart): OnboardingMessages[] {
+export function barChartFactory(chart): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
 }
