@@ -5,13 +5,13 @@ import { VisualizationSpec } from 'vega-embed';
 function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[]): OnboardingHorizonGraphSpec {
   const v = vegaSpec;
   const o = visualizationSpec;
-
   return {
     chartTitle: {
       value: (typeof(v.title) === 'string') ? v.title : v.title?.text,
       anchor: {
         sel: '.role-title-text',
         useDOMRect: true,
+        offset: {left: -20}
       },
     },
     xAxis: {

@@ -10,6 +10,7 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeM
       anchor: {
         sel: '.role-title-text',
         useDOMRect: true,
+        offset: {left: -20}
       },
     },
     type: {
@@ -22,7 +23,8 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeM
       value: (<any>v.legends![0]).title.toLowerCase(),
       anchor: {
         sel: '.role-legend-title',
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {top: -20}
       },
     },
     xAxis: {

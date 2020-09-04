@@ -17,7 +17,8 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
     chartTitle: {
       value: chart.layout.title.text,
       anchor: {
-        sel: '.infolayer .gtitle'
+        sel: '.infolayer .gtitle',
+        offset: {left: -15, top: 5}
       }
     },
     type: {
@@ -62,7 +63,8 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
     xAxisTitle: {
       value: chart.layout.xaxis.title.text,
       anchor: {
-        sel: '.infolayer .xtitle'
+        sel: '.infolayer .xtitle',
+        offset: {left: -15, top: 5}
       }
     },
     yAxisTitle: {
@@ -70,6 +72,7 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
       anchor: {
         sel: '.infolayer .ytitle',
         useDOMRect: true,
+        offset: {top: -25}
       }
     },
     // xAxisLabel (e.g. 01, 02, …)

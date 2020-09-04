@@ -20,7 +20,8 @@ function generateOnboardingSpec(chart: any): OnboardingHorizonGraphSpec {
     chartTitle: {
       value: chart.layout.title.text,
       anchor: {
-        sel: '.infolayer .gtitle'
+        sel: '.infolayer .gtitle',
+        offset: {left: -15, top: 5}
       }
     },
     type: {
@@ -47,7 +48,8 @@ function generateOnboardingSpec(chart: any): OnboardingHorizonGraphSpec {
     xAxis: {
       value: chart.layout.xaxis.title.text,
       anchor: {
-        sel: '.infolayer .xtitle'
+        sel: '.infolayer .xtitle',
+        offset: {left: -15, top: 5}
       }
     },
     yAxis: {

@@ -69,7 +69,7 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
       findDomNodeByValue: true,
       anchor: {
         useDOMRect: true,
-        offset: {top: 20}
+        offset: {left: -20}
       }
     },
     yAxisTitle: {

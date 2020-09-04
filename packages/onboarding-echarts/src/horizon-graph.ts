@@ -18,7 +18,8 @@ function generateOnboardingSpec(chart, coords): OnboardingHorizonGraphSpec {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     xAxis: {

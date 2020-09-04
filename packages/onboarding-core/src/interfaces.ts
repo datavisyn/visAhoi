@@ -47,6 +47,7 @@ export interface SpecProp {
   value: any;
   anchor?: OnboardingAnchor;
   findDomNodeByValue?: boolean;
+  domNodeValue?: string;
 }
 
 export interface OnboardingSpec {
