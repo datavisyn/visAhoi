@@ -1,11 +1,11 @@
-import {OnboardingHorizonGraphSpec} from 'onboarding-core/dist/horizon-graph';
 import {
   EChartType,
-  OnboardingMessages,
+  IOnboardingMessages,
+  IOnboardingHorizonGraphSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart, coords): OnboardingHorizonGraphSpec {
+function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
 
   const xAxis = chart._chartsViews[1]._data._itemLayouts[3];
@@ -56,7 +56,7 @@ function generateOnboardingSpec(chart, coords): OnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart, coords): OnboardingMessages[] {
+export function horizonGraphFactory(chart, coords): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
   return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);
 }

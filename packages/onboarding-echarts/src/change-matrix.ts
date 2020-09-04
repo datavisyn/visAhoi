@@ -1,11 +1,11 @@
 import {
   EChartType,
-  OnboardingMessages,
+  IOnboardingMessages,
+  IOnboardingChangeMatrixSpec,
   generateOnboardingMessages,
-  OnboardingChangeMatrixSpec,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
+function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
   // const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const legendPosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_visualMap.continuous"].group.position;
   const legendTitle = {x: legendPosition[0], y: legendPosition[1] + 20};
@@ -58,7 +58,7 @@ function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
   }
 }
 
-export function changeMatrixFactory(chart, coords): OnboardingMessages[] {
+export function changeMatrixFactory(chart, coords): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
   return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
 }

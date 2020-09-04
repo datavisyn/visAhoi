@@ -1,8 +1,8 @@
 import { Spec } from "vega";
-import { EChartType, OnboardingMessages, generateOnboardingMessages, OnboardingChangeMatrixSpec } from "onboarding-core";
+import { EChartType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "onboarding-core";
 
 
-function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeMatrixSpec {
+function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
   const v = vegaSpec;
   return {
     chartTitle: {
@@ -39,7 +39,7 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): OnboardingChangeM
   };
 }
 
-export function changeMatrixFactory(vegaSpec: Spec, elems: any[]): OnboardingMessages[] {
+export function changeMatrixFactory(vegaSpec: Spec, elems: any[]): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, elems);
   // console.log('Generated Spec: ', onbordingSpec);
   return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);

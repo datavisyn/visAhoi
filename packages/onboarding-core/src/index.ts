@@ -5,9 +5,9 @@ import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
 
 export * from './injector';
 export * from './interfaces';
-export { IOnboardingBarChartSpec as OnboardingBarChartSpec } from './bar-chart';
-export { IOnboardingChangeMatrixSpec as OnboardingChangeMatrixSpec } from './change-matrix';
-export { IOnboardingHorizonGraphSpec as OnboardingHorizonGraphSpec } from './horizon-graph';
+export { IOnboardingBarChartSpec } from './bar-chart';
+export { IOnboardingChangeMatrixSpec } from './change-matrix';
+export { IOnboardingHorizonGraphSpec } from './horizon-graph';
 
 export function generateOnboardingMessages(chartType: EChartType, spec: IOnboardingSpec): IOnboardingMessages[] {
   switch(chartType) {

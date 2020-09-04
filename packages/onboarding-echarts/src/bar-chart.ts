@@ -1,11 +1,11 @@
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingBarChartSpec,
+  IOnboardingMessages,
+  IOnboardingBarChartSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
+function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const data = chart._chartsViews[0]._data;
   const options = chart._model.option;
@@ -83,7 +83,7 @@ function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart, coords): OnboardingMessages[] {
+export function barChartFactory(chart, coords): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
 }

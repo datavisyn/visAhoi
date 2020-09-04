@@ -1,11 +1,11 @@
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingBarChartSpec,
+  IOnboardingMessages,
+  IOnboardingBarChartSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 
-function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
+function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.points");
   const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -81,7 +81,7 @@ function generateOnboardingSpec(chart: any): OnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart): OnboardingMessages[] {
+export function barChartFactory(chart): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
 }

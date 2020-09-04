@@ -1,7 +1,7 @@
 import {
   EChartType,
-  OnboardingMessages,
-  OnboardingBarChartSpec,
+  IOnboardingMessages,
+  IOnboardingBarChartSpec,
   generateOnboardingMessages,
 } from "onboarding-core";
 import { Spec } from "vega-typings";
@@ -45,7 +45,7 @@ function getPropertyValues(arr) {
   return res;
 }
 
-function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): OnboardingBarChartSpec {
+function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingBarChartSpec {
   const v = vegaSpec;
   const a = aggregatedValues;
 
@@ -119,7 +119,7 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
   };
 }
 
-export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): OnboardingMessages[] {
+export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
   // console.log('Generated Spec: ', onbordingSpec);
   return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
