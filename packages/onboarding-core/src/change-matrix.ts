@@ -1,16 +1,16 @@
-import { SpecProp, OnboardingSpec, OnboardingMessages } from "./interfaces";
+import { ISpecProp, IOnboardingSpec, IOnboardingMessages } from "./interfaces";
 import {getAnchor} from './utils';
 
-export interface OnboardingChangeMatrixSpec extends OnboardingSpec {
-  chartTitle?: SpecProp;
-  type?: SpecProp;
-  legendTitle?: SpecProp;
-  xAxis?: SpecProp;
-  yAxis?: SpecProp;
+export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
+  chartTitle?: ISpecProp;
+  type?: ISpecProp;
+  legendTitle?: ISpecProp;
+  xAxis?: ISpecProp;
+  yAxis?: ISpecProp;
 }
 
 
-function generateOnboardingMessages(spec: OnboardingChangeMatrixSpec): OnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec): IOnboardingMessages[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle),

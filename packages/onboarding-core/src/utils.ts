@@ -1,4 +1,4 @@
-import {SpecProp, OnboardingAnchor} from './interfaces';
+import {ISpecProp, OnboardingAnchor} from './interfaces';
 
 /**
  * Returns the dom node which contains the passed text
@@ -20,7 +20,7 @@ const getDomNodeByTextContent = (textContent: string): HTMLElement | null => doc
  * Returns undefined if the passed property is undefined.
  * @param prop: the property from the onboarding spec for which the anchor should be returned
  */
-export const getAnchor = (prop: SpecProp | undefined): OnboardingAnchor | undefined => {
+export const getAnchor = (prop: ISpecProp | undefined): OnboardingAnchor | undefined => {
   if(!prop) { // if prop is undefined -> return
     return;
   } else if(prop.findDomNodeByValue) { // the dom node should be found by it's content

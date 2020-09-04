@@ -1,20 +1,20 @@
-import { SpecProp, OnboardingSpec, OnboardingMessages } from "./interfaces";
+import { ISpecProp, IOnboardingSpec, IOnboardingMessages } from "./interfaces";
 import {getAnchor} from './utils';
 
-export interface OnboardingHorizonGraphSpec extends OnboardingSpec {
-  chartTitle?: SpecProp;
-  type?: SpecProp;
-  xAxis?: SpecProp;
-  yAxis?: SpecProp;
-  positiveColor?: SpecProp;
-  negativeColor?: SpecProp;
+export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
+  chartTitle?: ISpecProp;
+  type?: ISpecProp;
+  xAxis?: ISpecProp;
+  yAxis?: ISpecProp;
+  positiveColor?: ISpecProp;
+  negativeColor?: ISpecProp;
 }
 
 function createColorRect(color = 'white') {
   return `<div class="colorRect" style="background: ${color}"></div>`;
 }
 
-function generateOnboardingMessages(spec: OnboardingHorizonGraphSpec): OnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec): IOnboardingMessages[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle),
