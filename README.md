@@ -1,4 +1,4 @@
-<p align="center"><img src="/docs/img/logo.png" alt="AboardVis" width="20%" /></p>
+<p align="center"><img src="/docs/img/logo.png" alt="AboardVis" width="35%" /></p>
 <p align="center">
   <a href="https://github.com/ffg-seva/onboarding-prototype/actions">
     <img src="https://github.com/ffg-seva/onboarding-prototype/workflows/Build%20and%20deploy%20demos/badge.svg?branch=develop" alt="CI" />
