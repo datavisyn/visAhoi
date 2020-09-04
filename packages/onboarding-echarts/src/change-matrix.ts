@@ -13,8 +13,9 @@ function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
+      findDomNodeByValue: true,
       anchor: {
-        coords: coords.chartTitle
+        useDOMRect: true
       }
     },
     // type: {
@@ -29,18 +30,27 @@ function generateOnboardingSpec(chart, coords): OnboardingChangeMatrixSpec {
         coords: legendTitle
       }
     },
-    // xAxis: {
-    //   value: options.xAxis[0].name,
-    //   anchor: {
-    //     coords: dataCoords[1]
-    //   }
-    // },
-    // yAxis: {
-    //   value: options.yAxis[0].name,
-    //   anchor: {
-    //     coords: dataCoords[0]
-    //   }
-    // }
+    xAxis: {
+      value: options.xAxis[0].name,
+      findDomNodeByValue: true,
+      anchor: {
+        useDOMRect: true
+      }
+    },
+    yAxis: {
+      value: options.yAxis[0].name,
+      findDomNodeByValue: true,
+      anchor: {
+        useDOMRect: true
+      }
+    },
+    type: {
+      value: options.yAxis[0].data[2],
+      findDomNodeByValue: true,
+      anchor: {
+        useDOMRect: true
+      }
+    },
   }
 }
 

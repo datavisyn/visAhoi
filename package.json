@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "start": "lerna run start"
   },
   "repository": {
     "type": "git",

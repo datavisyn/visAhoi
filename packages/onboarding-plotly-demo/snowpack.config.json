@@ -1,6 +1,7 @@
 {
   "devOptions": {
-    "bundle": false
+    "bundle": false,
+    "port": 8083
   },
   "mount": {
     "public": "/",

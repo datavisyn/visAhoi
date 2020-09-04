@@ -1,4 +1,5 @@
 import { SpecProp, OnboardingSpec, OnboardingMessages } from "./interfaces";
+import {getAnchor} from './utils';
 
 export interface OnboardingChangeMatrixSpec extends OnboardingSpec {
   chartTitle?: SpecProp;
@@ -12,12 +13,12 @@ export interface OnboardingChangeMatrixSpec extends OnboardingSpec {
 function generateOnboardingMessages(spec: OnboardingChangeMatrixSpec): OnboardingMessages[] {
   const messages = [
     {
-      anchor: spec.chartTitle?.anchor,
+      anchor: getAnchor(spec.chartTitle),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
     },
     {
-      anchor: spec.type?.anchor,
+      anchor: getAnchor(spec.type),
       requires: ['type'],
       legend: `The chart Is based on colored <span class="hT">${spec.type?.value}</span> elements.`,
     },
@@ -27,7 +28,7 @@ function generateOnboardingMessages(spec: OnboardingChangeMatrixSpec): Onboardin
       legend: `The legend shows the <span class="hT">${spec.legendTitle?.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
     },
     {
-      anchor: spec.xAxis?.anchor,
+      anchor: getAnchor(spec.xAxis),
       requires: ['xAxis', 'yAxis'],
       legend: `The columns show the <span class="hT">${spec.xAxis?.value}</span>, while the rows show the <span class="hT">${spec.yAxis?.value}</span>.`,
     },

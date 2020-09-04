@@ -5,7 +5,6 @@ import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
 
 export async function onboarding(chartType: EChartType, chart: any) {
-  console.log("---> ", chart);
   const coords = {};
 
   const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;

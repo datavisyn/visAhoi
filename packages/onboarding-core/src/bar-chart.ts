@@ -1,4 +1,5 @@
-import { SpecProp, OnboardingSpec, OnboardingMessages } from "./interfaces";
+import {SpecProp, OnboardingSpec, OnboardingMessages} from './interfaces';
+import {getAnchor} from './utils';
 
 export interface OnboardingBarChartSpec extends OnboardingSpec {
   chartTitle?: SpecProp;
@@ -18,7 +19,7 @@ export interface OnboardingBarChartSpec extends OnboardingSpec {
 function generateOnboardingMessages(spec: OnboardingBarChartSpec): OnboardingMessages[] {
   const messages = [
     {
-      anchor: spec.chartTitle?.anchor,
+      anchor: getAnchor(spec.chartTitle),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
     },
@@ -28,12 +29,12 @@ function generateOnboardingMessages(spec: OnboardingBarChartSpec): OnboardingMes
       legend: `Each ${spec.type?.value} represents a data item.`,
     },
     {
-      anchor: spec.yAxisTitle?.anchor,
+      anchor: getAnchor(spec.yAxisTitle),
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
       legend: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the <span class="hT">${spec.yAxisTitle?.value} (y-axis)</span> for a certain ${spec.xAxisTitle?.value}.`,
     },
     {
-      anchor: spec.xAxisTitle?.anchor,
+      anchor: getAnchor(spec.xAxisTitle),
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
       legend: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the <span class="hT">${spec.xAxisTitle?.value} (x-axis)</span>.`,
     },
@@ -52,8 +53,6 @@ function generateOnboardingMessages(spec: OnboardingBarChartSpec): OnboardingMes
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 };
-
-
 
 export const barChart = {
   generateOnboardingMessages

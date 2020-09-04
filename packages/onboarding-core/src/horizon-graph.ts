@@ -1,4 +1,5 @@
 import { SpecProp, OnboardingSpec, OnboardingMessages } from "./interfaces";
+import {getAnchor} from './utils';
 
 export interface OnboardingHorizonGraphSpec extends OnboardingSpec {
   chartTitle?: SpecProp;
@@ -16,7 +17,7 @@ function createColorRect(color = 'white') {
 function generateOnboardingMessages(spec: OnboardingHorizonGraphSpec): OnboardingMessages[] {
   const messages = [
     {
-      anchor: spec.chartTitle?.anchor,
+      anchor: getAnchor(spec.chartTitle),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
     },
