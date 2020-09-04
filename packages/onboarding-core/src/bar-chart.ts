@@ -1,4 +1,4 @@
-import {SpecProp, OnboardingSpec, OnboardingMessages, OnboardingAnchor} from './interfaces';
+import {SpecProp, OnboardingSpec, OnboardingMessages} from './interfaces';
 import {getAnchor} from './utils';
 
 export interface OnboardingBarChartSpec extends OnboardingSpec {

@@ -10,14 +10,15 @@ function generateOnboardingSpec(chart, coords): OnboardingHorizonGraphSpec {
 
   const xAxis = chart._chartsViews[1]._data._itemLayouts[3];
   const positiveColor = chart._chartsViews[1]._data._itemLayouts[5];
-  const negativeColor = chart._chartsViews[2]._data._itemLayouts[2];
+  const negativeColor = chart._chartsViews[2]._data._itemLayouts[1];
 
   const options = chart._model.option;
   return {
     chartTitle: {
       value: options.title[0].text,
+      findDomNodeByValue: true,
       anchor: {
-        coords: coords.chartTitle
+        useDOMRect: true
       }
     },
     xAxis: {
@@ -28,6 +29,10 @@ function generateOnboardingSpec(chart, coords): OnboardingHorizonGraphSpec {
     },
     yAxis: {
       value: options.yAxis[0].name,
+      findDomNodeByValue: true,
+      anchor: {
+        useDOMRect: true
+      }
     },
     positiveColor: {
       value: chart._chartsViews[0].__model.option.color,
@@ -39,6 +44,12 @@ function generateOnboardingSpec(chart, coords): OnboardingHorizonGraphSpec {
       value: chart._chartsViews[2].__model.option.color,
       anchor: {
         coords: {x: negativeColor[0], y: negativeColor[1]}
+      }
+    },
+    type: {
+      value: "area",
+      anchor: {
+        coords: {x: chart._chartsViews[0]._data._itemLayouts[9][0], y: chart._chartsViews[0]._data._itemLayouts[3][1]}
       }
     }
   };

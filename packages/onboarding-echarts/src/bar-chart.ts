@@ -7,7 +7,6 @@ import {
 
 function generateOnboardingSpec(chart, coords): OnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
-
   const data = chart._chartsViews[0]._data;
   const options = chart._model.option;
 
