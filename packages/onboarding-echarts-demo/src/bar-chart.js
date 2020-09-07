@@ -8,7 +8,7 @@ function render() {
   d3.csv("../data/oslo-2018.csv").then(rows => {
     const {x, y} = processData(rows);
     const chart = createPlot(x, y);
-    onboarding('bar-chart', chart);
+    onboarding('bar-chart', chart, 'onboarding');
   });
 }
 

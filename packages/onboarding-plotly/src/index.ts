@@ -1,9 +1,15 @@
-import { EChartType, displayOnboardingMessages } from 'onboarding-core';
+import {EChartType, generateOnboarding} from 'onboarding-core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
 
-export function onboarding(chartType: EChartType, chart: any) {
+/**
+ *
+ * @param chartType
+ * @param chart
+ * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ */
+export function onboarding(chartType: EChartType, chart: any, onboardingElement: string) {
     let onboardingMessages;
 
     switch(chartType) {
@@ -23,5 +29,5 @@ export function onboarding(chartType: EChartType, chart: any) {
         throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
     }
 
-    displayOnboardingMessages(onboardingMessages);
+    generateOnboarding(onboardingMessages, onboardingElement);
 }

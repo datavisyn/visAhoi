@@ -4,6 +4,7 @@ import { changeMatrix, IOnboardingChangeMatrixSpec } from './change-matrix';
 import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
 
 export * from './injector';
+export * from './onboarding';
 export * from './interfaces';
 export { IOnboardingBarChartSpec } from './bar-chart';
 export { IOnboardingChangeMatrixSpec } from './change-matrix';

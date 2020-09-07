@@ -1,11 +1,27 @@
+@import "./onboarding-annotation.css";
+
 body {
   font-family: sans-serif;
+}
+
+#vis {
+  width: 50%;
+  height: 400px;
 }
 
 .vizHint {
   font-size: 0.9em;
   line-height: 1.9;
   font-weight: normal;
+  opacity: 0.5;
+}
+
+.vizHint:hover {
+  cursor: pointer;
+}
+
+.vizHint.active {
+  opacity: 1;
 }
 
 /* hT --> highlight Text */
@@ -58,7 +74,7 @@ body {
 /* ANNOTATIONS */
 .vizHint {
   display: grid;
-  grid-template-columns: minmax(4%, 4%) 1fr 1fr;
+  grid-template-columns: 50px 1fr;
 }
 
 /* Used to show a color */

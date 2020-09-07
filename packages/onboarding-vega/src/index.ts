@@ -1,11 +1,17 @@
 import * as d3 from 'd3';
 import { Result } from 'vega-embed';
-import { EChartType, displayOnboardingMessages } from 'onboarding-core';
+import {EChartType, displayOnboardingMessages, generateOnboarding} from 'onboarding-core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
 
-export async function onboarding(chartType: EChartType, vegaResult: Result) {
+/**
+ *
+ * @param chartType
+ * @param vegaResult
+ * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ */
+export async function onboarding(chartType: EChartType, vegaResult: Result, onboardingElement: string) {
   const evaluated = await (<any>vegaResult.view).evaluate(); // TODO: `evaluate()` is not an officially supported Vega API
 
   // Vega-lite spec after all rendering happend and the aggregations
@@ -43,7 +49,7 @@ export async function onboarding(chartType: EChartType, vegaResult: Result) {
       throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
   }
 
-  displayOnboardingMessages(onboardingMessages);
+  generateOnboarding(onboardingMessages, onboardingElement);
 }
 
 export default onboarding;

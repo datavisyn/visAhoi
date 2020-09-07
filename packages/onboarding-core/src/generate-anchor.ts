@@ -42,7 +42,7 @@ export function createAnchor(d, i: number, nodes) {
     .text(`${i + 1}`);
 };
 
-export function generateChartAnchors(anchors) {
+export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean) {
   console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
@@ -78,6 +78,9 @@ export function generateChartAnchors(anchors) {
 
     // Find the positioning only if we provided no coords
     } else {
+      const svg = document.getElementById('vis') as HTMLElement;
+      const svgPosition = svg.getBoundingClientRect();
+
       let node;
       if(isOnboardingElementAnchor(a)) {
         node = a.element;
@@ -93,15 +96,15 @@ export function generateChartAnchors(anchors) {
       const elBox = node.getBBox();
       console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
       Object.assign(settings, {
-        cx: a.useDOMRect ? elRect.x : elBox.x,
-        cy: a.useDOMRect ? elRect.y : elBox.y,
+        cx: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
+        cy: a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top,
         r,
-        x: a.useDOMRect ? elRect.x : elBox.x,
-        y: (a.useDOMRect ? elRect.y : elBox.y) + textOffset,
+        x: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
+        y: (a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top) + textOffset,
       });
     }
     // Create the respective anchor
-    createHint(settings, i);
+    createHint(settings, i, activeStep, showAllHints);
   });
 }
 
@@ -110,12 +113,16 @@ export function generateChartAnchors(anchors) {
  * @param {*} settings where all the positions for the annotation are passed
  * @param {*} text of the annotation to show
  */
-function createHint(settings, text) {
+function createHint(settings, text, activeStep: number, showAllHints: boolean) {
   let { cx, cy, r, x, y, left, right, top, bottom } = settings;
-
-  const hG = d3.select('.onboardingAnnotations')
+  const hG = d3
+    .select('.onboardingAnnotations')
+    // .html(null)
     .append('g')
-    .classed('chartAnnotation', true);
+    .classed('chartAnnotation', true)
+    .classed('active', activeStep === text-1 ? true : false)
+    .attr('id', `anchor-${text}`);
+
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
   if(top) { cy += top; y += top; }

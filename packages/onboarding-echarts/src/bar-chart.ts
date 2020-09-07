@@ -18,20 +18,19 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
     }
   }
   const mainAxis = getMainAxis(options.xAxis[0].type, options.yAxis[0].type);
-
   return {
     chartTitle: {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
         useDOMRect: true,
-        offset: {left: -20}
+        offset: {left: -20, top: 10}
       }
     },
     yMin: {
       value: data._rawExtent.y[0],
       anchor: {
-        coords: dataCoords[1]
+        coords: {x: dataCoords[1].x + dataCoords[1].width/2, y: dataCoords[1].y + dataCoords[1].height}
       }
     },
     type: {
@@ -43,7 +42,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
     yMax: {
       value: data._rawExtent.y[1],
       anchor: {
-        coords: dataCoords[6]
+        coords: {x: dataCoords[6].x + dataCoords[6].width/2, y: dataCoords[6].y + dataCoords[6].height}
       }
     },
     // orientation: {
@@ -69,7 +68,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       findDomNodeByValue: true,
       anchor: {
         useDOMRect: true,
-        offset: {left: -20}
+        offset: {left: -20, top: 5}
       }
     },
     yAxisTitle: {

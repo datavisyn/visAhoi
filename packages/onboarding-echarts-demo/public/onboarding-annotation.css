@@ -1,0 +1,13 @@
+.demo-wrapper {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.onboardingAnnotations .chartAnnotation {
+  opacity: 0;
+}
+
+.onboardingAnnotations .chartAnnotation.active {
+  opacity: 1;
+}
