@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {OnboardingMessages} from './interfaces';
+import {IOnboardingMessages} from './interfaces';
 import {displayOnboardingMessages} from './injector';
 
 interface onboardingState {
@@ -9,8 +9,8 @@ interface onboardingState {
 
 export default class Onboarding {
   private state: onboardingState;
-  private onboardingMessages: OnboardingMessages[];
-  constructor(onboardingMessages: OnboardingMessages[]) {
+  private onboardingMessages: IOnboardingMessages[];
+  constructor(onboardingMessages: IOnboardingMessages[]) {
     this.state = {
       activeStep: 0,
       showAllHints: false
@@ -35,7 +35,7 @@ export default class Onboarding {
   }
 }
 
-export const generateOnboarding = (onboardingMessages: OnboardingMessages[], onboardingElement: string) => {
+export const generateOnboarding = (onboardingMessages: IOnboardingMessages[], onboardingElement: string) => {
   const onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any> = d3
     .select(`#${onboardingElement}`)
 
@@ -52,7 +52,7 @@ export const generateOnboarding = (onboardingMessages: OnboardingMessages[], onb
 }
 
 
-const generateOnboardingStepper = (onboardingMessages: OnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) => {
+const generateOnboardingStepper = (onboardingMessages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) => {
   const onNextBtnClick = () => {
     if(onboardingMessages.length -1 > activeStep) {
       setOnboardingState("activeStep", activeStep+1);
