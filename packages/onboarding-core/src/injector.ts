@@ -3,9 +3,10 @@ import { IOnboardingMessages } from "./interfaces";
 import { createAnchor, generateChartAnchors } from './generate-anchor';
 import {active} from 'd3';
 
-export function displayOnboardingMessages(messages: IOnboardingMessages[], onboardingElement: string, activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) {
+export function displayOnboardingMessages(messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) {
+  // TODO: only look for #onboardingLegend within onboardingElement
   const onboardingLegend: any = d3
-    .select(`#${onboardingElement}`)
+    .select(`#onboardingLegend`)
     .html(null)
     .selectAll('div.vizHint')
     .data(messages.map((d) => d.legend));
