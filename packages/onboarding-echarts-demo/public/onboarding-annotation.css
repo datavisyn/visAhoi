@@ -1,7 +1,8 @@
 .demo-wrapper {
   margin-top: 50px;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #readingTheChart {
@@ -34,11 +35,17 @@
 #onboardingStepper input[type="button"] {
   padding: 5px 10px;
   background-color: rgb(197, 27, 125);
-  border: none;
+  border: 1px solid rgb(197, 27, 125);
   border-radius: 3px;
   color: white;
   font-weight: 800;
   transition: background-color 0.3s;
+}
+#onboardingStepper input[type="button"]:disabled,
+#onboardingStepper input[type="button"]:disabled:hover {
+  background-color: #eee;
+  color: #999;
+  border: 1px solid #ccc;
 }
 
 #onboardingStepper input[type="button"], label {
@@ -53,7 +60,6 @@
 
 
 #onboardingStepper input[type="button"]:focus {
-  border: none;
   outline: none;
 }
 

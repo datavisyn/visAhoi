@@ -20,7 +20,7 @@ export default class Onboarding {
 
   private setOnboardingState = (attr: string, value: any) => {
     this.state[attr] = value;
-    if(attr === "activeStep") {
+    if(attr === "activeStep" || attr === "showAllHints") {
       this.generateOnboardingStepper();
       this.displayOnboardingMessages();
     }
@@ -54,12 +54,12 @@ export const generateOnboarding = (onboardingMessages: IOnboardingMessages[], on
 
 const generateOnboardingStepper = (onboardingMessages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) => {
   const onNextBtnClick = () => {
-    if(onboardingMessages.length -1 > activeStep) {
+    if(onboardingMessages.length -1 > activeStep && !showAllHints) {
       setOnboardingState("activeStep", activeStep+1);
     }
   }
   const onPrevBtnClick = () => {
-    if(activeStep > 0) {
+    if(activeStep > 0 && !showAllHints) {
       setOnboardingState("activeStep", activeStep - 1)
     }
   }
@@ -71,6 +71,7 @@ const generateOnboardingStepper = (onboardingMessages: IOnboardingMessages[], ac
     toggle.append("input").attr("class", "toggle-checkbox").attr("type", "checkbox").on("click", function() {
       setOnboardingState("showAllHints", !showAllHints);
     })
+    .property("checked", showAllHints)
     toggle.append("div").attr("class", "toggle-switch")
     toggle.append("span").attr("class", "toggle-label").html("Show / Hide All Hints")
 
@@ -79,13 +80,13 @@ const generateOnboardingStepper = (onboardingMessages: IOnboardingMessages[], ac
     .attr("name", "previous")
     .attr("value", "PREVIOUS")
     .on("click", onPrevBtnClick)
-    // .property("disabled", showAllHints)
+    .property("disabled", showAllHints)
 
   stepper.append("input")
     .attr("type", "button")
     .attr("name", "next")
     .attr("value", "NEXT")
     .on("click", onNextBtnClick)
-    // .property("disabled", showAllHints)
+    .property("disabled", showAllHints)
 
 }

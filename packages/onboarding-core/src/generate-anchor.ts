@@ -120,7 +120,7 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
     // .html(null)
     .append('g')
     .classed('chartAnnotation', true)
-    .classed('active', activeStep === text-1 ? true : false)
+    .classed('active', showAllHints || activeStep === text-1 ? true : false)
     .attr('id', `anchor-${text}`);
 
   if(left) { cx += left; x += left; }

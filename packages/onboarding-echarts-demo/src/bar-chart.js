@@ -66,7 +66,7 @@ function createPlot(x, y) {
       {
         data: y,
         type: "bar",
-        color: "steelblue"
+        color: "lightgrey"
       }
     ]
   };

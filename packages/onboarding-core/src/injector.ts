@@ -21,8 +21,6 @@ export function displayOnboardingMessages(messages: IOnboardingMessages[], activ
 
   const onVizHintClick = function (this: HTMLElement, text: string, index: number) {
     if(!showAllHints) {
-      // d3.select(this).classed('active', d3.select(this).classed('active') ? false : true);
-      // d3.select(`#anchor-${index+1}`).classed('active', d3.select(`#anchor-${index+1}`).classed('active') ? false : true);
       setOnboardingState("activeStep", index);
       this.classList.add("active");
     }
@@ -32,7 +30,8 @@ export function displayOnboardingMessages(messages: IOnboardingMessages[], activ
     .append('div')
     .classed('vizHint', true)
     .on('click', onVizHintClick)
-    .classed('active', (d, i) => activeStep === i ? true : false)
+    .classed('active', (d, i) => (showAllHints || activeStep === i) ? true : false)
+    .style('cursor', () => showAllHints ? 'default' : 'pointer')
     .append('div')
     .attr('id', (d, i) => `$hint-${i + 1}`)
     .html((d) => d)
