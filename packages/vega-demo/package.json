@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@visahoi/vega-demo",
   "version": "1.0.0",
   "description": "Visualization onboarding for Vega",
