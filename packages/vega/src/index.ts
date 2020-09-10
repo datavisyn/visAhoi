@@ -11,7 +11,7 @@ import { horizonGraphFactory } from './horizon-graph';
  * @param vegaResult
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function onboarding(chartType: EChartType, vegaResult: Result, onboardingElement: string) {
+export async function ahoi(chartType: EChartType, vegaResult: Result, onboardingElement: string) {
   const evaluated = await (<any>vegaResult.view).evaluate(); // TODO: `evaluate()` is not an officially supported Vega API
 
   // Vega-lite spec after all rendering happend and the aggregations

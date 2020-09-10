@@ -9,7 +9,7 @@ import {horizonGraphFactory} from './horizon-graph';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export function onboarding(chartType: EChartType, chart: any, onboardingElement: string) {
+export async function ahoi(chartType: EChartType, chart: any, onboardingElement: string) {
     let onboardingMessages;
 
     switch(chartType) {

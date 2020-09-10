@@ -2,14 +2,14 @@
 // See https://github.com/ffg-seva/onboarding-prototype/issues/7
 // import * as Plotly from 'plotly.js';
 
-import { onboarding } from '@visahoi/plotly';
+import { ahoi } from '@visahoi/plotly';
 
 function render() {
   Plotly.d3.json("./data/matrix.json", function(data) {
     const {x, y, z} = processData(data);
 
     makePlotly(x, y, z).then((chart) => {
-      onboarding('change-matrix', chart, 'onboarding');
+      ahoi('change-matrix', chart, 'onboarding');
     });
   });
 }

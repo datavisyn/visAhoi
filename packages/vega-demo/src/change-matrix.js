@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed';
-import { onboarding } from '@visahoi/vega';
+import { ahoi } from '@visahoi/vega';
 
 // Options for the vega embed
 const opt = {
@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  onboarding('change-matrix', vegaLite, 'onboarding');
+  ahoi('change-matrix', vegaLite, 'onboarding');
 };
 
 render();

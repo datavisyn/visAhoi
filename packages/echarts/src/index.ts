@@ -9,7 +9,7 @@ import {horizonGraphFactory} from './horizon-graph';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function onboarding(chartType: EChartType, chart: any, onboardingElement: string) {
+export async function ahoi(chartType: EChartType, chart: any, onboardingElement: string) {
   const coords = {};
 
   const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;
