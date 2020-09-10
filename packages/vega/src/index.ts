@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { Result } from 'vega-embed';
-import {EChartType, displayOnboardingMessages, generateOnboarding} from '../../plotly/dist/node_modules/@visahoi/core';
+import {EChartType, generateOnboarding} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';

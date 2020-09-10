@@ -1,4 +1,4 @@
-import { EChartType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateOnboardingMessages} from '../../plotly/dist/node_modules/@visahoi/core';
+import { EChartType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateOnboardingMessages} from '@visahoi/core';
 import { Spec } from 'vega-typings';
 import { VisualizationSpec } from 'vega-embed';
 

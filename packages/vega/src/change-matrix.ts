@@ -1,5 +1,5 @@
-import { Spec } from "vega";
-import { EChartType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "../../plotly/dist/node_modules/@visahoi/core";
+import { Spec } from "vega-typings";
+import { EChartType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
 
 
 function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
