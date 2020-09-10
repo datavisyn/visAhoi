@@ -1,11 +1,11 @@
-# `onboarding-vega`
+# `@visahoi/vega`
 
 > TODO: description
 
 ## Usage
 
 ```
-const onboardingVega = require('onboarding-vega');
+const onboardingVega = require('@visahoi/vega');
 
 // TODO: DEMONSTRATE API
 ```

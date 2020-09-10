@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "d3": "^5.16.0",
-    "onboarding-vega": "^1.0.0",
+    "@visahoi/vega": "^1.0.0",
     "vega": "^5.13.0",
     "vega-embed": "^6.9.0",
     "vega-lite": "^4.13.1"

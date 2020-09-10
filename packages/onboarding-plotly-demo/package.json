@@ -24,7 +24,7 @@
     "lint": "prettier --check \"src/**/*.js\""
   },
   "dependencies": {
-    "onboarding-plotly": "^1.0.0",
+    "@visahoi/plotly": "^1.0.0",
     "plotly.js": "^1.54.5"
   },
   "devDependencies": {

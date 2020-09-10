@@ -4,7 +4,7 @@ import {
   IOnboardingMessages,
   IOnboardingChangeMatrixSpec,
   generateOnboardingMessages,
-} from "onboarding-core";
+} from "@visahoi/core";
 
 function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   const heatmapData = (<any>Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]).__data__;

@@ -1,5 +1,5 @@
 {
-  "name": "onboarding-plotly",
+  "name": "@visahoi/plotly",
   "version": "1.0.0",
   "description": "Plotly adapter for the visualization onboarding library",
   "keywords": [
@@ -28,6 +28,6 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "onboarding-core": "1.0.0"
+    "@visahoi/core": "1.0.0"
   }
 }

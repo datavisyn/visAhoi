@@ -1,11 +1,11 @@
-# `onboarding-core`
+# `@visahoi/core`
 
 > TODO: description
 
 ## Usage
 
 ```
-const onboardingCore = require('onboarding-core');
+const onboardingCore = require('@visahoi/core');
 
 // TODO: DEMONSTRATE API
 ```

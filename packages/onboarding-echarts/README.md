@@ -1,11 +1,11 @@
-# `onboarding-echarts`
+# `@visahoi/echarts`
 
 > TODO: description
 
 ## Usage
 
 ```
-const onboardingEcharts = require('onboarding-echarts');
+const onboardingEcharts = require('@visahoi/echarts');
 
 // TODO: DEMONSTRATE API
 ```

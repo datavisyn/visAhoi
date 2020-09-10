@@ -1,11 +1,11 @@
-# `onboarding-plotly`
+# `@visahoi/plotly`
 
 > TODO: description
 
 ## Usage
 
 ```
-const onboardingPlotly = require('onboarding-plotly');
+const onboardingPlotly = require('@visahoi/plotly');
 
 // TODO: DEMONSTRATE API
 ```

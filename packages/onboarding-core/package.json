@@ -1,5 +1,5 @@
 {
-  "name": "onboarding-core",
+  "name": "@visahoi/core",
   "version": "1.0.0",
   "description": "Core library for the visualization onboarding",
   "keywords": [

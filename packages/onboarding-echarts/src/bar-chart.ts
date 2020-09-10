@@ -3,7 +3,7 @@ import {
   IOnboardingMessages,
   IOnboardingBarChartSpec,
   generateOnboardingMessages,
-} from "onboarding-core";
+} from "@visahoi/core";
 
 function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;

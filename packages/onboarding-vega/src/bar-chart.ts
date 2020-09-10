@@ -3,7 +3,7 @@ import {
   IOnboardingMessages,
   IOnboardingBarChartSpec,
   generateOnboardingMessages,
-} from "onboarding-core";
+} from "@visahoi/core";
 import { Spec } from "vega-typings";
 
 function getOrientation(scales) {

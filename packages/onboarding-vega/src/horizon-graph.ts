@@ -1,4 +1,4 @@
-import { EChartType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateOnboardingMessages} from 'onboarding-core';
+import { EChartType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateOnboardingMessages} from '@visahoi/core';
 import { Spec } from 'vega-typings';
 import { VisualizationSpec } from 'vega-embed';
 

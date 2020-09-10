@@ -1,9 +1,7 @@
-import * as d3 from 'd3';
-import {EChartType, generateOnboarding} from 'onboarding-core';
+import {EChartType, generateOnboarding, IOnboardingMessages} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
-import {IOnboardingMessages} from '../../onboarding-core/dist/interfaces';
 
 /**
  *

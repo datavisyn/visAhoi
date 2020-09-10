@@ -1,4 +1,4 @@
-import {EChartType, generateOnboarding} from 'onboarding-core';
+import {EChartType, generateOnboarding} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
