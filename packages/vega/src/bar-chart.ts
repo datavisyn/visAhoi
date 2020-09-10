@@ -3,7 +3,7 @@ import {
   IOnboardingMessages,
   IOnboardingBarChartSpec,
   generateOnboardingMessages,
-} from "@visahoi/core";
+} from "../../plotly/dist/node_modules/@visahoi/core";
 import { Spec } from "vega-typings";
 
 function getOrientation(scales) {
