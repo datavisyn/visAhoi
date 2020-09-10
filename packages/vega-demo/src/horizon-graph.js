@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed';
-import { onboarding } from 'onboarding-vega';
+import { onboarding } from '@visahoi/vega';
 
 // Options for the vega embed
 const opt = {

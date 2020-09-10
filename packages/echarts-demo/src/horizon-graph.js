@@ -1,6 +1,6 @@
 import echarts from 'echarts';
 import * as d3 from 'd3';
-import { onboarding } from 'onboarding-echarts';
+import { onboarding } from '@visahoi/echarts';
 
 let chart = null;
 
