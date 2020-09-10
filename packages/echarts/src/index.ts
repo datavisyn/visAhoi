@@ -1,4 +1,4 @@
-import {EChartType, generateOnboarding, IOnboardingMessages} from '../../core/dist';
+import {EChartType, generateOnboarding, IOnboardingMessages} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
