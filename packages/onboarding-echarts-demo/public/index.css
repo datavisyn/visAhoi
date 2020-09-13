@@ -13,11 +13,25 @@ h1 {
   height: 400px;
 }
 
+#onboarding {
+  width: 100%;
+}
+
+.demo-wrapper {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 @media(min-width: 950px) {
   #vis {
-    width: 50%;
+    width: 47%;
+    height: 400px;
   }
-
+  #onboarding {
+    width: 47%;
+  }
   .demo-wrapper {
     display: flex;
     flex-direction: row;
@@ -25,11 +39,6 @@ h1 {
 }
 
 @media(min-width: 1650px) {
-  #vis {
-    width: 50%;
-    height: 400px;
-  }
-
   .demo-wrapper {
     width: 80%;
     margin: 0 10%;

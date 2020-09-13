@@ -19,7 +19,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
       findDomNodeByValue: true,
       anchor: {
         useDOMRect: true,
-        offset: {left: -20}
+        offset: {left: -20, top: 10}
       }
     },
     xAxis: {
@@ -50,7 +50,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
     type: {
       value: "area",
       anchor: {
-        coords: {x: chart._chartsViews[0]._data._itemLayouts[9][0], y: chart._chartsViews[0]._data._itemLayouts[3][1]}
+        coords: {x: chart._chartsViews[0]._data._itemLayouts[7][0], y: chart._chartsViews[0]._data._itemLayouts[3][1]}
       }
     }
   };

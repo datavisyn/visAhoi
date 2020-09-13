@@ -16,7 +16,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
       findDomNodeByValue: true,
       anchor: {
         useDOMRect: true,
-        offset: {left: -20}
+        offset: {left: -20, top: 10}
       }
     },
     // type: {
