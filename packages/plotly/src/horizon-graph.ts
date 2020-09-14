@@ -19,9 +19,10 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   return {
     chartTitle: {
       value: chart.layout.title.text,
+      findDomNodeByValue: true,
       anchor: {
-        sel: '.infolayer .gtitle',
-        offset: {left: -15, top: 5}
+        useDOMRect: true,
+        offset: {left: -20, top: 10}
       }
     },
     type: {
