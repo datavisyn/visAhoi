@@ -13,7 +13,7 @@ export interface IOnboardingMessages {
   anchor: any;
   requires: string[];
   legend: string;
-  onboardingStage:EOnboardingStages;
+  onboardingStage: EOnboardingStages;
 }
 
 interface IPoint {
