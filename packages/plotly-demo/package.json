@@ -1,0 +1,37 @@
+{
+  "private": true,
+  "name": "@visahoi/plotly-demo",
+  "version": "1.0.0",
+  "description": "Visualization onboarding for Plotly.js",
+  "keywords": [
+    "visualization",
+    "onboarding",
+    "plotly"
+  ],
+  "author": "FFG SEVA Consortium",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "scripts": {
+    "start": "snowpack dev --reload",
+    "build": "snowpack build",
+    "test": "echo \"This template does not include a test runner by default.\" && exit 1",
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "prettier --check \"src/**/*.js\""
+  },
+  "dependencies": {
+    "@visahoi/plotly": "^1.0.0",
+    "plotly.js": "^1.54.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "prettier": "^2.1.1",
+    "snowpack": "^2.9.3"
+  }
+}

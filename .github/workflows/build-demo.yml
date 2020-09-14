@@ -31,9 +31,9 @@ jobs:
         with:
           name: demos
           path: |
-            packages/onboarding-echarts-demo/build/
-            packages/onboarding-plotly-demo/build/
-            packages/onboarding-vega-demo/build/
+            packages/echarts-demo/build/
+            packages/plotly-demo/build/
+            packages/vega-demo/build/
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
