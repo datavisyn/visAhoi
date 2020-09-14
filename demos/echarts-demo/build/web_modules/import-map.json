@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "@visahoi/echarts": "./@visahoi/echarts.js",
+    "d3": "./d3.js",
+    "echarts": "./echarts.js"
+  }
+}

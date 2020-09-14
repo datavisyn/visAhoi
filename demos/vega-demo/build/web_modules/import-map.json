@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@visahoi/vega": "./@visahoi/vega.js",
+    "vega-embed": "./vega-embed.js"
+  }
+}

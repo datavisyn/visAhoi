@@ -1,0 +1,1 @@
+import s from"../web_modules/vega-embed.js";import{ahoi as t}from"../web_modules/@visahoi/vega.js";const n={theme:"default",actions:!1,renderer:"svg"};async function i(){const e=await fetch("./data/horizonGraphOslo2018.json"),o=await e.json();let a=await s("#vis",o,n);t("horizon-graph",a,"onboarding")}i();

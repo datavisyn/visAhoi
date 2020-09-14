@@ -1,5 +1,0 @@
-{
-  "imports": {
-    "onboarding-plotly": "./onboarding-plotly.js"
-  }
-}

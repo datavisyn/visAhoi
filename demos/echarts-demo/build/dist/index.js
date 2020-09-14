@@ -1,0 +1,1 @@
+const demos=[{title:"Bar Chart SVG",link:"./svg/bar-chart.html"},{title:"Change Matrix SVG",link:"./svg/change-matrix.html"},{title:"Horizon Graph SVG",link:"./svg/horizon-graph.html"}],ul=document.createElement("ul");demos.forEach(a=>{const t=document.createElement("li");t.innerHTML=`<a href="${a.link}">${a.title}</a>`,ul.append(t)}),document.getElementById("app").append(ul);
