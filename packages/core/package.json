@@ -1,0 +1,33 @@
+{
+  "name": "@visahoi/core",
+  "version": "1.0.0",
+  "description": "Core library for the visualization onboarding",
+  "keywords": [
+    "visualization",
+    "onboarding"
+  ],
+  "author": "FFG SEVA Consortium",
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/core#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@types/d3": "^5.0.0",
+    "d3": "^5.16.0"
+  }
+}

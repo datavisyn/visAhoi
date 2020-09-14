@@ -54,7 +54,7 @@ render();
 
 Please note that VisAhoi supports currently only the SVG renderer.
 
-📊 See the [entire source code of the bar chart example](./packages/onboarding-echarts-demo/src/bar-chart.js) or explore the other [ECharts demos](https://ffg-seva.github.io/onboarding-prototype/demos/onboarding-echarts-demo/build/).
+📊 See the [entire source code of the bar chart example](./packages/echarts-demo/src/bar-chart.js) or explore the other [ECharts demos](https://ffg-seva.github.io/onboarding-prototype/demos/echarts-demo/build/).
 
 
 ## VisAhoi for Plotly.js
@@ -84,7 +84,7 @@ async function render() {
 render();
 ```
 
-📊 See the [entire source code of the bar chart example](./packages/onboarding-plotly-demo/src/bar-chart.js) or explore the other [Plotly.js demos](https://ffg-seva.github.io/onboarding-prototype/demos/onboarding-plotly-demo/build/).
+📊 See the [entire source code of the bar chart example](./packages/plotly-demo/src/bar-chart.js) or explore the other [Plotly.js demos](https://ffg-seva.github.io/onboarding-prototype/demos/plotly-demo/build/).
 
 
 ## VisAhoi for Vega-Lite
@@ -116,7 +116,7 @@ render();
 
 Please note that VisAhoi supports currently only the SVG renderer.
 
-📊 See the [entire source code of the bar chart example](./packages/onboarding-vega-demo/src/bar-chart.js) or explore the other [Vega-Lite demos](https://ffg-seva.github.io/onboarding-prototype/demos/onboarding-vega-demo/build/).
+📊 See the [entire source code of the bar chart example](./packages/vega-demo/src/bar-chart.js) or explore the other [Vega-Lite demos](https://ffg-seva.github.io/onboarding-prototype/demos/vega-demo/build/).
 
 
 # Supported Visualization Types

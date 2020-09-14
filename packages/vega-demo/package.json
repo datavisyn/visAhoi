@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "name": "@visahoi/vega-demo",
+  "version": "1.0.0",
+  "description": "Visualization onboarding for Vega",
+  "keywords": [
+    "visualization",
+    "onboarding",
+    "vega"
+  ],
+  "author": "FFG SEVA Consortium",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "scripts": {
+    "start": "snowpack dev --reload",
+    "build": "snowpack build",
+    "test": "echo \"This template does not include a test runner by default.\" && exit 1",
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "prettier --check \"src/**/*.js\""
+  },
+  "dependencies": {
+    "d3": "^5.16.0",
+    "@visahoi/vega": "^1.0.0",
+    "vega": "^5.13.0",
+    "vega-embed": "^6.9.0",
+    "vega-lite": "^4.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "prettier": "^2.1.1",
+    "snowpack": "^2.9.3"
+  }
+}
