@@ -14,7 +14,7 @@ const textOffset = 5;
  * @param {*} i index of the current selection
  * @param {*} nodes all nodes
  */
-export function createAnchor(d, i: number, nodes) {
+export function createAnchor(d, i: number, nodes, stepNumber) {
   const currentEl = nodes[i];
   const parentEl = d3.select(currentEl).node().parentNode;
 
@@ -39,11 +39,11 @@ export function createAnchor(d, i: number, nodes) {
     .attr('y', h / 2 + textOffset)
     .attr('text-anchor', 'middle')
     .style('fill', 'white')
-    .text(`${i + 1}`);
+    .text(`${stepNumber + 1}`);
 };
 
 export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean) {
-  console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
+  // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
   anchors.forEach(el => {
@@ -94,7 +94,7 @@ export function generateChartAnchors(anchors, activeStep: number, showAllHints: 
       }
       const elRect = node.getBoundingClientRect();
       const elBox = node.getBBox();
-      console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
+      // console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
       Object.assign(settings, {
         cx: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
         cy: a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top,

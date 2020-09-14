@@ -1,6 +1,7 @@
-#readingTheChart {
+.onboardingStages {
   border: 1px solid #c9d6df;
   padding: 20px;
+  margin-top: 30px;
 }
 
 .onboardingAnnotations .chartAnnotation {
@@ -18,7 +19,7 @@
   margin-left: 5px;
 }
 
-#onboardingHeadline {
+.onboardingHeadline {
   color: #6c757d;
   font-weight: normal;
   margin: -35px 20px 20px 20px;

@@ -1,3 +1,5 @@
+import {OnboardingStages} from "./onboarding";
+
 /**
  * Supported chart types
  */
@@ -11,6 +13,7 @@ export interface IOnboardingMessages {
   anchor: any;
   requires: string[];
   legend: string;
+  onboardingStage: OnboardingStages;
 }
 
 interface IPoint {

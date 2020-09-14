@@ -2,6 +2,11 @@ import * as d3 from 'd3';
 import {IOnboardingMessages} from './interfaces';
 import {displayOnboardingMessages} from './injector';
 
+export enum OnboardingStages {
+  reading = "reading-the-chart",
+  using = "using-the-chart"
+}
+
 interface onboardingState {
   activeStep: number;
   showAllHints: boolean;
@@ -10,12 +15,15 @@ interface onboardingState {
 export default class Onboarding {
   private state: onboardingState;
   private onboardingMessages: IOnboardingMessages[];
-  constructor(onboardingMessages: IOnboardingMessages[]) {
+  private onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
+  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: string) {
     this.state = {
       activeStep: 0,
       showAllHints: false
     }
     this.onboardingMessages = onboardingMessages;
+    this.onboardingWrapper = d3.select(`#${onboardingElement}`)
+    this.onboardingWrapper.append('div').attr('id', 'onboardingStepper')
   }
 
   private setOnboardingState = (attr: string, value: any) => {
@@ -31,22 +39,12 @@ export default class Onboarding {
   }
 
   displayOnboardingMessages() {
-    displayOnboardingMessages(this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState);
+    displayOnboardingMessages(this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
   }
 }
 
 export const generateOnboarding = (onboardingMessages: IOnboardingMessages[], onboardingElement: string) => {
-  const onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any> = d3
-    .select(`#${onboardingElement}`)
-
-  onboardingWrapper.append('div').attr('id', 'onboardingStepper')
-  const readingTheChart = onboardingWrapper.append("div").attr("id", "readingTheChart")
-  readingTheChart.append("h2")
-    .attr("id", "onboardingHeadline")
-    .html("Reading the Chart")
-    readingTheChart.append('div').attr('id', 'onboardingLegend')
-
-  const onboarding = new Onboarding(onboardingMessages);
+  const onboarding = new Onboarding(onboardingMessages, onboardingElement);
   onboarding.generateOnboardingStepper();
   onboarding.displayOnboardingMessages()
 }
