@@ -50,9 +50,10 @@ function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
     },
     xAxis: {
       value: chart.layout.xaxis.title.text,
+      findDomNodeByValue: true,
       anchor: {
-        sel: '.infolayer .xtitle',
-        offset: {left: -15, top: 5}
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     yAxis: {

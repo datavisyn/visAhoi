@@ -1,24 +1,24 @@
 import * as d3 from 'd3';
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
 import { createAnchor, generateChartAnchors } from './generate-anchor';
-import {OnboardingStages} from './onboarding';
+import {EOnboardingStages} from './onboarding';
 
 export function displayOnboardingMessages(messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
   let reading: [number, IOnboardingMessages][] = [];
   let using: [number, IOnboardingMessages][] = [];
   messages.forEach((message, index) => {
-    if(message.onboardingStage === OnboardingStages.reading) {
+    if(message.onboardingStage ===EOnboardingStages.READING) {
       reading.push([index, message])
-    } else if(message.onboardingStage === OnboardingStages.using) {
+    } else if(message.onboardingStage ===EOnboardingStages.USING) {
       using.push([index, message])
     }
   })
 
   if(reading.length > 0) {
-    createOnboardingStages(activeStep, showAllHints, setOnboardingState, reading, OnboardingStages.reading, onboardingWrapper);
+    createOnboardingStages(activeStep, showAllHints, setOnboardingState, reading,EOnboardingStages.READING, onboardingWrapper);
   }
   if(using.length > 0) {
-    createOnboardingStages(activeStep, showAllHints, setOnboardingState, using, OnboardingStages.using, onboardingWrapper);
+    createOnboardingStages(activeStep, showAllHints, setOnboardingState, using,EOnboardingStages.USING, onboardingWrapper);
   }
   generateChartAnchors(messages.map((d, i) => ({
     anchor: d.anchor,
@@ -26,7 +26,7 @@ export function displayOnboardingMessages(messages: IOnboardingMessages[], activ
   })), activeStep, showAllHints);
 }
 
-const createOnboardingStages = (activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, messages: [number, IOnboardingMessages][], step: OnboardingStages, onboardingWrapper: any) => {
+const createOnboardingStages = (activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, messages: [number, IOnboardingMessages][], step:EOnboardingStages, onboardingWrapper: any) => {
 
   let onboardingStep = d3.select(`#${step}`)
   if(d3.select(`#${step}`).size() === 0) {

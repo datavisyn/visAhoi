@@ -2,9 +2,9 @@ import * as d3 from 'd3';
 import {IOnboardingMessages} from './interfaces';
 import {displayOnboardingMessages} from './injector';
 
-export enum OnboardingStages {
-  reading = "reading-the-chart",
-  using = "using-the-chart"
+export enum EOnboardingStages {
+  READING = "reading-the-chart",
+  USING = "using-the-chart"
 }
 
 interface onboardingState {

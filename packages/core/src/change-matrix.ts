@@ -1,6 +1,6 @@
 import { ISpecProp, IOnboardingSpec, IOnboardingMessages } from "./interfaces";
 import {getAnchor} from './utils';
-import {OnboardingStages} from './onboarding';
+import {EOnboardingStages} from './onboarding';
 
 export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -17,25 +17,25 @@ function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec): IOnboard
       anchor: getAnchor(spec.chartTitle),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
-      onboardingStage: OnboardingStages.reading
+      onboardingStage:EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.type),
       requires: ['type'],
       legend: `The chart Is based on colored <span class="hT">${spec.type?.value}</span> elements.`,
-      onboardingStage: OnboardingStages.reading
+      onboardingStage:EOnboardingStages.READING
     },
     {
       anchor: spec.legendTitle?.anchor,
       requires: ['legendTitle'],
       legend: `The legend shows the <span class="hT">${spec.legendTitle?.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
-      onboardingStage: OnboardingStages.reading
+      onboardingStage:EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.xAxis),
       requires: ['xAxis', 'yAxis'],
       legend: `The columns show the <span class="hT">${spec.xAxis?.value}</span>, while the rows show the <span class="hT">${spec.yAxis?.value}</span>.`,
-      onboardingStage: OnboardingStages.reading
+      onboardingStage:EOnboardingStages.READING
     },
   ];
 

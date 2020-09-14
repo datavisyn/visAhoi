@@ -63,9 +63,10 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
     },
     xAxisTitle: {
       value: chart.layout.xaxis.title.text,
+      findDomNodeByValue: true,
       anchor: {
-        sel: '.infolayer .xtitle',
-        offset: {left: -15, top: 5}
+        useDOMRect: true,
+        offset: {left: -20}
       }
     },
     yAxisTitle: {
