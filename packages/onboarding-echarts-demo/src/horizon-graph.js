@@ -63,11 +63,6 @@ function createPlot(x, y) {
         return result;
       }
     },
-    grid: {
-      height: "50%",
-      top: "10%"
-    },
-    width: 800,
     xAxis: {
       type: "category",
       boundaryGap: false,

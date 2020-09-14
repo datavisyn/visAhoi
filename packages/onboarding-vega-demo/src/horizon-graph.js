@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  onboarding('horizon-graph', vegaLite);
+  onboarding('horizon-graph', vegaLite, 'onboarding');
 };
 
 render();

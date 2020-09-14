@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  onboarding('change-matrix', vegaLite);
+  onboarding('change-matrix', vegaLite, 'onboarding');
 };
 
 render();

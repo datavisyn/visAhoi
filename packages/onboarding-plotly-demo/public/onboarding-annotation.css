@@ -1,0 +1,122 @@
+#readingTheChart {
+  border: 1px solid #c9d6df;
+  padding: 20px;
+}
+
+.onboardingAnnotations .chartAnnotation {
+  opacity: 0;
+}
+
+.onboardingAnnotations .chartAnnotation.active {
+  opacity: 1;
+}
+
+#onboardingStepper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+#onboardingHeadline {
+  color: #6c757d;
+  font-weight: normal;
+  margin: -35px 20px 20px 20px;
+  background-color: white;
+}
+
+#onboardingStepper input[type="button"] {
+  padding: 5px 10px;
+  background-color: rgb(197, 27, 125);
+  border: 1px solid rgb(197, 27, 125);
+  border-radius: 3px;
+  color: white;
+  font-weight: 800;
+  transition: background-color 0.3s;
+}
+#onboardingStepper input[type="button"]:disabled,
+#onboardingStepper input[type="button"]:disabled:hover {
+  background-color: #eee;
+  color: #999;
+  border: 1px solid #ccc;
+}
+
+#onboardingStepper input[type="button"], label {
+  margin-right: 10px;
+}
+
+#onboardingStepper input[type="button"]:hover {
+  cursor: pointer;
+  background-color: rgba(197, 27, 125, 0.8);
+  border-color: rgba(197, 27, 125, 0.8);
+}
+
+
+#onboardingStepper input[type="button"]:focus {
+  outline: none;
+}
+
+.textAnnotation, .chartAnnotation {
+  font-weight: 800;
+  font-size: 0.95em;
+}
+
+/* start: styles of onboarding toggle */
+.onboarding-toggle {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.toggle-switch {
+  display: inline-block;
+  background: #ccc;
+  border-radius: 16px;
+  width: 45px;
+  height: 25px;
+  position: relative;
+  vertical-align: middle;
+  transition: background 0.25s;
+}
+.toggle-switch:before, .toggle-switch:after {
+  content: "";
+}
+.toggle-switch:before {
+  display: block;
+  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: left 0.25s;
+}
+.toggle:hover .toggle-switch:before {
+  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.toggle-checkbox:checked + .toggle-switch {
+  background: rgba(197, 27, 125, 0.8);
+}
+.toggle-checkbox:checked + .toggle-switch:before {
+  left: 24px;
+}
+
+.toggle-checkbox {
+  position: absolute;
+  visibility: hidden;
+}
+
+.toggle-label {
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+  color: #6c757d;
+  font-size: 0.85em;
+  margin-right: 5px;
+}
+/* end: styles of onboarding toggle */
+
+/* #c9d6df bar color */

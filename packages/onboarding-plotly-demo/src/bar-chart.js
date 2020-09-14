@@ -9,7 +9,7 @@ function render() {
     const {x, y} = processData(data);
 
     makePlotly(x, y).then((chart) => {
-      onboarding('bar-chart', chart);
+      onboarding('bar-chart', chart, 'onboarding');
     });
   });
 }

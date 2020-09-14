@@ -76,7 +76,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       findDomNodeByValue: true,
       anchor: {
         useDOMRect: true,
-        offset: {left: -20}
+        offset: {top: -20}
       }
     }
   };

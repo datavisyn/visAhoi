@@ -9,7 +9,7 @@ function render() {
     const {x, y} = processData(data);
 
     makePlotly(x, y).then((chart) => {
-      onboarding('horizon-graph', chart);
+      onboarding('horizon-graph', chart, 'onboarding');
     });
   });
 }
