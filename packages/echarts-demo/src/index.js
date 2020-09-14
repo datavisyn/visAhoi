@@ -12,18 +12,18 @@ const demos = [
     title: 'Horizon Graph SVG',
     link: './svg/horizon-graph.html'
   },
-  {
-    title: 'Bar Chart Canvas',
-    link: './canvas/bar-chart.html'
-  },
-  {
-    title: 'Change Matrix Canvas',
-    link: './canvas/change-matrix.html'
-  },
-  {
-    title: 'Horizon Graph Canvas',
-    link: './canvas/horizon-graph.html'
-  }
+  // {
+  //   title: 'Bar Chart Canvas',
+  //   link: './canvas/bar-chart.html'
+  // },
+  // {
+  //   title: 'Change Matrix Canvas',
+  //   link: './canvas/change-matrix.html'
+  // },
+  // {
+  //   title: 'Horizon Graph Canvas',
+  //   link: './canvas/horizon-graph.html'
+  // }
 ];
 
 const ul = document.createElement('ul');
