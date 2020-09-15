@@ -4,8 +4,8 @@
         "text": "Average temperature change in °C between 1990 and 1991",
         "offset": 20
     },
-    "height": 150,
-    "width": 500,
+    "height": "container",
+    "width": "container",
     "data": {
         "values": [
             {
