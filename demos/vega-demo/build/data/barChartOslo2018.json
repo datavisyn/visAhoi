@@ -2,7 +2,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
     "description": "A simple bar chart with embedded data.",
     "title": "Average temperature in Oslo, Norway in 2018",
-    "width": 500,
+    "width": "container",
     "data": {
         "values": [
             {
@@ -72,7 +72,8 @@
             "field": "temp",
             "type": "quantitative",
             "title": "Average temperature in °C"
-        }
+        },
+        "color": {"value": "#D3D3D3"}
     },
     "config": {}
 }

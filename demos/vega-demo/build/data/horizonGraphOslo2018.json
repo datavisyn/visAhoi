@@ -1,8 +1,8 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
     "description": "Horizon Graph with 2 layers. (See https://idl.cs.washington.edu/papers/horizon/ for more details on Horizon Graphs.)",
-    "height": 150,
-    "width": 610,
+    "height": "container",
+    "width": "container",
     "title": "Average temperature in Oslo, Norway in 2018",
     "data": {
         "values": [
