@@ -27,13 +27,13 @@ export function displayOnboardingMessages(messages: IOnboardingMessages[], activ
 }
 
 const createOnboardingStages = (activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, messages: [number, IOnboardingMessages][], step: EOnboardingStages, onboardingWrapper: any) => {
-
+  const headline = step.split("-").join(" ");
   let onboardingStep = d3.select(`#${step}`)
   if(d3.select(`#${step}`).size() === 0) {
     onboardingStep = onboardingWrapper.append("div").attr("id", step).attr("class", "onboardingStages");
     onboardingStep.append("h2")
       .attr("class", "onboardingHeadline")
-      .html(step)
+      .html(headline.charAt(0).toUpperCase() + headline.slice(1))
     onboardingStep.append('div').attr('id', `${step}-onboardingLegend`)
   }
 
