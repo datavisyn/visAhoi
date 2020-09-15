@@ -18,7 +18,7 @@ function getOrientation(scales) {
   };
 }
 
-function getMinMax(data) {
+export function getMinMax(data) {
   const values = getPropertyValues(data);
   const keys = Object.keys(values);
   const res: {key: string, min: number, max: number}[] = [];
@@ -87,14 +87,14 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: axesMinMax[1].max,
     },
     yMin: {
-      value: axesMinMax[0].min,
+      value: axesMinMax[0].min.toFixed(1),
       anchor: {
         sel: "svg",
         coords: elems[2],
       },
     },
     yMax: {
-      value: axesMinMax[0].max,
+      value: axesMinMax[0].max.toFixed(1),
       anchor: {
         sel: "svg",
         coords: elems[7],

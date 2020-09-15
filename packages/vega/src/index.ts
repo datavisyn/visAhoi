@@ -42,7 +42,11 @@ export async function ahoi(chartType: EChartType, vegaResult: Result, onboarding
       break;
 
     case EChartType.HORIZON_GRAPH:
-      onboardingMessages = horizonGraphFactory(vegaSpec, origSpec, d3Data);
+      // data_0 contains the input, output and values which are the aggregated data values
+      const { data_1 } = evaluated._runtime.data;
+      // Use the aggregated data values
+      const v = data_1.values.value;
+      onboardingMessages = horizonGraphFactory(vegaSpec, origSpec, d3Data, v);
       break;
 
     default:
