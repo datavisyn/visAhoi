@@ -49,8 +49,10 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
     xAxis: {
       value: chart.layout.xaxis.title.text,
       anchor: {
-        sel: '.infolayer .xtitle',
-        offset: {left: -15, top: 5}
+        coords: {
+          x: (t._polygons[0].xmax / 3*2),
+          y: (t._polygons[0].ymax / 3*2),
+        }
       }
     },
     yAxis: {
