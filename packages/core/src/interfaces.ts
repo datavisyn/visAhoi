@@ -23,6 +23,7 @@ interface IPoint {
 
 interface IOnboardingAnchorBase {
   offset?: {left?: number, top?: number, right?: number, bottom?: number}
+  findDomNodeByValue?: boolean;
 }
 
 interface IOnboardingCoordsAnchor extends IOnboardingAnchorBase {
@@ -32,12 +33,10 @@ interface IOnboardingCoordsAnchor extends IOnboardingAnchorBase {
 
 interface IOnboardingDOMAnchor extends IOnboardingAnchorBase {
   sel: string;
-  useDOMRect?: boolean;
 }
 
 interface IOnboardingElementAnchor extends IOnboardingAnchorBase {
   element?: HTMLElement;
-  useDOMRect?: boolean;
 }
 
 export type OnboardingAnchor = IOnboardingCoordsAnchor | IOnboardingDOMAnchor | IOnboardingElementAnchor;
@@ -49,7 +48,6 @@ export const isOnboardingElementAnchor = (element: OnboardingAnchor): element is
 export interface ISpecProp {
   value: any;
   anchor?: OnboardingAnchor;
-  findDomNodeByValue?: boolean;
   domNodeValue?: string;
 }
 

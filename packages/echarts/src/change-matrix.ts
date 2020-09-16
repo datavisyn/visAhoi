@@ -13,9 +13,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -33,32 +32,29 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
     },
     xAxis: {
       value: options.xAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20}
       }
     },
     yAxis: {
       value: options.yAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        findDomNodeByValue: true,
       }
     },
     type: {
       value: "area",
-      findDomNodeByValue: true,
       domNodeValue: options.yAxis[0].data[2],
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {top: -10, left: 60}
       }
     },
   }
 }
 
-export function changeMatrixFactory(chart, coords): IOnboardingMessages[] {
+export function changeMatrixFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
+  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

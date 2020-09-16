@@ -21,9 +21,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -65,24 +64,22 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
     // },
     xAxisTitle: {
       value: options.xAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 5}
       }
     },
     yAxisTitle: {
       value: options.yAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {top: -20}
       }
     }
   };
 }
 
-export function barChartFactory(chart, coords): IOnboardingMessages[] {
+export function barChartFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
+  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
 }

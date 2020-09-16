@@ -16,18 +16,15 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   return {
     chartTitle: {
       value: chart.layout.title.text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
     type: {
       value: t.type,
       anchor: {
-        sel: '.bars > .points > .point:nth-child(4)',
-        useDOMRect: true
-      }
+        sel: '.bars > .points > .point:nth-child(4)',      }
     },
     orientation: {
       value: t.orientation === "v" ? "vertical" : "horizontal",
@@ -44,16 +41,12 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
     yMin: {
       value: t._extremes.y.min[0].val, // 0 = first trace
       anchor: {
-        sel: '.bars > .points > .point:nth-child(2)',
-        useDOMRect: true
-      }
+        sel: '.bars > .points > .point:nth-child(2)',      }
     },
     yMax: {
       value: t._extremes.y.max[0].val,
       anchor: {
-        sel: '.bars > .points > .point:nth-child(7)',
-        useDOMRect: true
-      }
+        sel: '.bars > .points > .point:nth-child(7)',      }
     },
     xMin: {
       value: t._extremes.x.min[0].val, // 0 = first trace
@@ -63,9 +56,8 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
     },
     xAxisTitle: {
       value: chart.layout.xaxis.title.text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20}
       }
     },
@@ -73,7 +65,6 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
       value: chart.layout.yaxis.title.text,
       anchor: {
         sel: '.infolayer .ytitle',
-        useDOMRect: true,
         offset: {top: -25}
       }
     },
@@ -83,7 +74,7 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart): IOnboardingMessages[] {
+export function barChartFactory(chart, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
+  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
 }

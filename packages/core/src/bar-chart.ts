@@ -17,40 +17,40 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
 }
 
-function generateOnboardingMessages(spec: IOnboardingBarChartSpec): IOnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingBarChartSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
-      anchor: getAnchor(spec.chartTitle),
+      anchor: getAnchor(spec.chartTitle, visElementId),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: spec.type?.anchor,
+      anchor: getAnchor(spec.type, visElementId),
       requires: ['type'],
       legend: `Each ${spec.type?.value} represents a data item.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.yAxisTitle),
+      anchor: getAnchor(spec.yAxisTitle, visElementId),
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
       legend: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the <span class="hT">${spec.yAxisTitle?.value} (y-axis)</span> for a certain ${spec.xAxisTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.xAxisTitle),
+      anchor: getAnchor(spec.xAxisTitle, visElementId),
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
       legend: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the <span class="hT">${spec.xAxisTitle?.value} (x-axis)</span>.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: spec.yMin?.anchor,
+      anchor: getAnchor(spec.yMin, visElementId),
       requires: ['yAxisTitle', 'yMin'],
       legend: `The <span class="hT">minimum</span> ${spec.yAxisTitle?.value} is ${spec.yMin?.value}.`,
       onboardingStage: EOnboardingStages.USING
     },
     {
-      anchor: spec.yMax?.anchor,
+      anchor: getAnchor(spec.yMax, visElementId),
       requires: ['yAxisTitle', 'yMax'],
       legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle?.value} is ${spec.yMax?.value}.`,
       onboardingStage: EOnboardingStages.USING

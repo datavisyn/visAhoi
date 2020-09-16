@@ -42,7 +42,7 @@ export function createAnchor(d, i: number, nodes, stepNumber) {
     .text(`${stepNumber + 1}`);
 };
 
-export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean) {
+export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean, visElementId: string) {
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
@@ -78,7 +78,7 @@ export function generateChartAnchors(anchors, activeStep: number, showAllHints: 
 
     // Find the positioning only if we provided no coords
     } else {
-      const svg = document.getElementById('vis') as HTMLElement;
+      const svg = document.getElementById(visElementId) as HTMLElement;
       const svgPosition = svg.getBoundingClientRect();
 
       let node;
@@ -96,11 +96,11 @@ export function generateChartAnchors(anchors, activeStep: number, showAllHints: 
       const elBox = node.getBBox();
       // console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
       Object.assign(settings, {
-        cx: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
-        cy: a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top,
+        cx: elRect.x - svgPosition.left,
+        cy: elRect.y - svgPosition.top,
         r,
-        x: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
-        y: (a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top) + textOffset,
+        x: elRect.x - svgPosition.left,
+        y: (elRect.y - svgPosition.top) + textOffset,
       });
     }
     // Create the respective anchor

@@ -15,24 +15,21 @@ function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   return {
     chartTitle: {
       value: chart.layout.title.text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
     type: {
       value: t.type,
       anchor: {
-        sel: '.heatmaplayer > .hm > image',
-        useDOMRect: true
+        sel: '.heatmaplayer > .hm > image'
       }
     },
     legendTitle: {
       value: t.colorbar.title.text,
       anchor: {
         sel: '.infolayer > .colorbar',
-        useDOMRect: true,
         offset: {top: -10}
       },
     },
@@ -50,17 +47,15 @@ function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
     },
     xAxis: {
       value: chart.layout.xaxis.title.text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20}
       }
     },
     yAxis: {
       value: chart.layout.yaxis.title.text,
       anchor: {
-        sel: '.infolayer .ytitle',
-        useDOMRect: true,
+        sel: '.infolayer .ytitle'
       }
     },
     // xAxisLabel (e.g. 01, 02, …)
@@ -69,7 +64,7 @@ function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   };
 }
 
-export function changeMatrixFactory(chart): IOnboardingMessages[] {
+export function changeMatrixFactory(chart, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
+  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

@@ -16,7 +16,8 @@ export default class Onboarding {
   private state: onboardingState;
   private onboardingMessages: IOnboardingMessages[];
   private onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
-  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: string) {
+  private visElementId: string;
+  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: string, visElementId: string) {
     this.state = {
       activeStep: 0,
       showAllHints: false
@@ -24,6 +25,7 @@ export default class Onboarding {
     this.onboardingMessages = onboardingMessages;
     this.onboardingWrapper = d3.select(`#${onboardingElement}`)
     this.onboardingWrapper.append('div').attr('id', 'onboardingStepper')
+    this.visElementId = visElementId;
   }
 
   private setOnboardingState = (attr: string, value: any) => {
@@ -39,12 +41,12 @@ export default class Onboarding {
   }
 
   displayOnboardingMessages() {
-    displayOnboardingMessages(this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
+    displayOnboardingMessages(this.visElementId, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
   }
 }
 
-export const generateOnboarding = (onboardingMessages: IOnboardingMessages[], onboardingElement: string) => {
-  const onboarding = new Onboarding(onboardingMessages, onboardingElement);
+export const generateOnboarding = (onboardingMessages: IOnboardingMessages[], onboardingElement: string, visElementId: string) => {
+  const onboarding = new Onboarding(onboardingMessages, onboardingElement, visElementId);
   onboarding.generateOnboardingStepper();
   onboarding.displayOnboardingMessages()
 }

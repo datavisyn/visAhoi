@@ -35,9 +35,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -49,9 +48,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
     },
     yAxis: {
       value: options.yAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
+        findDomNodeByValue: true,
       }
     },
     yMin: {
@@ -94,7 +92,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart, coords): IOnboardingMessages[] {
+export function horizonGraphFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);
+  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

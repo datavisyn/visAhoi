@@ -19,9 +19,8 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   return {
     chartTitle: {
       value: chart.layout.title.text,
-      findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -34,12 +33,12 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
         }
       },
     },
-    yMin: {
-      value: t._extremes.y.min[0].val, // 0 = first trace
-    },
-    yMax: {
-      value: t._extremes.y.max[0].val,
-    },
+    // yMin: {
+    //   value: t._extremes.y.min[0].val,
+    // },
+    // yMax: {
+    //   value: t._extremes.y.max[0].val,
+    // },
     xMin: {
       value: t._extremes.x.min[0].val, // 0 = first trace
     },
@@ -59,7 +58,6 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
       value: chart.layout.yaxis.title.text,
       anchor: {
         sel: '.infolayer .ytitle',
-        useDOMRect: true,
       }
     },
     // xAxisLabel (e.g. 01, 02, …)
@@ -68,7 +66,7 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart): IOnboardingMessages[] {
+export function horizonGraphFactory(chart, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);
+  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

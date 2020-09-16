@@ -9,7 +9,6 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChange
       value: (typeof(v.title) === 'string') ? v.title : v.title?.text,
       anchor: {
         sel: '.role-title-text',
-        useDOMRect: true,
         offset: {left: -20}
       },
     },
@@ -23,7 +22,6 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChange
       value: (<any>v.legends![0]).title.toLowerCase(),
       anchor: {
         sel: '.role-legend-title',
-        useDOMRect: true,
         offset: {top: -20}
       },
     },
@@ -39,8 +37,7 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChange
   };
 }
 
-export function changeMatrixFactory(vegaSpec: Spec, elems: any[]): IOnboardingMessages[] {
+export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, elems);
-  // console.log('Generated Spec: ', onbordingSpec);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
+  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }
