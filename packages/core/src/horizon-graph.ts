@@ -30,7 +30,7 @@ function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec): IOnboard
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: spec.xAxis?.anchor,
+      anchor: getAnchor(spec.xAxis),
       requires: ['xAxis', 'yAxis'],
       legend: `The areas illustrate the <span class="hT">${spec.yAxis?.value} (y-axis)</span> over <span class="hT">${spec.xAxis?.value} (x-axis)</span>.`,
       onboardingStage: EOnboardingStages.READING
@@ -47,6 +47,18 @@ function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec): IOnboard
       requires: ['yAxis', 'negativeColor'],
       legend: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative <span class="hT">${spec.yAxis?.value}</span>.`,
       onboardingStage: EOnboardingStages.READING
+    },
+    {
+      anchor: spec.yMin?.anchor,
+      requires: ['yAxis', 'yMin'],
+      legend: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
+      onboardingStage: EOnboardingStages.USING
+    },
+    {
+      anchor: spec.yMax?.anchor,
+      requires: ['yAxis', 'yMax'],
+      legend: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
+      onboardingStage: EOnboardingStages.USING
     },
   ];
 
