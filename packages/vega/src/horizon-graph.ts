@@ -7,19 +7,18 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
   const v = vegaSpec;
   const o = visualizationSpec;
   const axesMinMax = getMinMax(aggregatedValues);
-
   return {
     chartTitle: {
       value: (typeof(v.title) === 'string') ? v.title : v.title?.text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 5}
       }
     },
     xAxis: {
       value: (<any>v.axes![1]).title,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 5}
       }
     },
@@ -27,20 +26,20 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
       value: axesMinMax[0].min.toFixed(1),
       anchor: {
         coords: {
-          x: elems[1].mark.items[2].x,
-          y: elems[1].mark.items[2].y,
+          x: elems[2].mark.items[1].x,
+          y: elems[2].mark.items[1].y,
         },
-        offset: {left: -10, top: -20}
+        offset: {left: 40, top: 10}
       },
     },
     yMax: {
       value: axesMinMax[0].max.toFixed(1),
       anchor: {
         coords: {
-          x: elems[1].mark.items[7].x,
-          y: elems[1].mark.items[7].y,
+          x: elems[1].mark.items[6].x,
+          y: elems[1].mark.items[6].y,
         },
-        offset: {left: -10, top: -30}
+        offset: {left: 20, top: 10}
       },
     },
     yAxis: {

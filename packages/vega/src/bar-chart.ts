@@ -103,7 +103,7 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: (<any>v.axes![1]).title,
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
-        offset: {left: -30}
+        offset: {left: -30, top: 10}
       },
     },
     yAxisTitle: {

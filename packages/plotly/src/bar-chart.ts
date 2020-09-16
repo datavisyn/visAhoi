@@ -16,8 +16,8 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   return {
     chartTitle: {
       value: chart.layout.title.text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -56,8 +56,8 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
     },
     xAxisTitle: {
       value: chart.layout.xaxis.title.text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20}
       }
     },

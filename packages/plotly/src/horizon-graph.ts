@@ -19,8 +19,8 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   return {
     chartTitle: {
       value: chart.layout.title.text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -33,12 +33,12 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
         }
       },
     },
-    yMin: {
-      value: t._extremes.y.min[0].val, // 0 = first trace
-    },
-    yMax: {
-      value: t._extremes.y.max[0].val,
-    },
+    // yMin: {
+    //   value: t._extremes.y.min[0].val,
+    // },
+    // yMax: {
+    //   value: t._extremes.y.max[0].val,
+    // },
     xMin: {
       value: t._extremes.x.min[0].val, // 0 = first trace
     },

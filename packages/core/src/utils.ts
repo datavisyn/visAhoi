@@ -23,7 +23,7 @@ const getDomNodeByTextContent = (textContent: string, visElementId: string): HTM
 export const getAnchor = (prop: ISpecProp | undefined, visElementId: string): OnboardingAnchor | undefined => {
   if(!prop) { // if prop is undefined -> return
     return;
-  } else if(prop.findDomNodeByValue) { // the dom node should be found by it's content
+  } else if(prop.anchor?.findDomNodeByValue) { // the dom node should be found by it's content
     const targetDomNode = getDomNodeByTextContent(prop.domNodeValue ? prop.domNodeValue : prop.value, visElementId);
     // if no node was found by the given text return undefined, otherwise return the dom node
     return targetDomNode ? Object.assign({element: targetDomNode}, (prop.anchor || {})) : undefined;

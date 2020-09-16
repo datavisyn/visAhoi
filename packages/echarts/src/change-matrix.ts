@@ -13,8 +13,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -32,22 +32,22 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
     },
     xAxis: {
       value: options.xAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20}
       }
     },
     yAxis: {
       value: options.yAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
       }
     },
     type: {
       value: "area",
-      findDomNodeByValue: true,
       domNodeValue: options.yAxis[0].data[2],
       anchor: {
+        findDomNodeByValue: true,
         offset: {top: -10, left: 60}
       }
     },

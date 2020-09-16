@@ -35,8 +35,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -48,8 +48,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
     },
     yAxis: {
       value: options.yAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
       }
     },
     yMin: {

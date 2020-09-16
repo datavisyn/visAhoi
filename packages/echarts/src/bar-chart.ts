@@ -21,8 +21,8 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   return {
     chartTitle: {
       value: options.title[0].text,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -64,15 +64,15 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
     // },
     xAxisTitle: {
       value: options.xAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {left: -20, top: 5}
       }
     },
     yAxisTitle: {
       value: options.yAxis[0].name,
-      findDomNodeByValue: true,
       anchor: {
+        findDomNodeByValue: true,
         offset: {top: -20}
       }
     }
