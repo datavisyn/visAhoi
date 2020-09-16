@@ -1,11 +1,11 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingBarChartSpec,
-  generateOnboardingMessages,
+  generateMessages,
 } from "@visahoi/core";
 
-function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
+function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.points");
   const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -39,12 +39,12 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
       value: t.orientation === "v" ? "height" : "width",
     },
     yMin: {
-      value: t._extremes.y.min[0].val, // 0 = first trace
+      value: t._extremes.y.min[0].val.toFixed(1), // 0 = first trace
       anchor: {
         sel: '.bars > .points > .point:nth-child(2)',      }
     },
     yMax: {
-      value: t._extremes.y.max[0].val,
+      value: t._extremes.y.max[0].val.toFixed(1),
       anchor: {
         sel: '.bars > .points > .point:nth-child(7)',      }
     },
@@ -75,6 +75,6 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
 }
 
 export function barChartFactory(chart, visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(chart);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

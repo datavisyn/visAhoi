@@ -1,6 +1,6 @@
 import echarts from 'echarts';
 import * as d3 from 'd3';
-import { ahoi } from '@visahoi/echarts';
+import { ahoi, EVisualizationType } from '@visahoi/echarts';
 
 
 let chart = null;
@@ -9,7 +9,7 @@ function render() {
   d3.csv("../data/oslo-2018.csv").then(rows => {
     const {x, y} = processData(rows);
     const chart = createPlot(x, y);
-    ahoi('change-matrix', chart, 'onboarding');
+    ahoi(EVisualizationType.CHANGE_MATRIX, chart, 'onboarding');
   });
 }
 

@@ -15,7 +15,7 @@ function createColorRect(color = 'white') {
   return `<div class="colorRect" style="background: ${color}"></div>`;
 }
 
-function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec, visElementId: string): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingHorizonGraphSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElementId),
@@ -69,5 +69,5 @@ function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec, visElemen
 };
 
 export const horizonGraph = {
-  generateOnboardingMessages
+  generateMessages
 }

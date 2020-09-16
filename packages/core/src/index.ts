@@ -1,4 +1,4 @@
-import { EChartType, IOnboardingSpec, IOnboardingMessages } from './interfaces';
+import { EVisualizationType, IOnboardingSpec, IOnboardingMessages } from './interfaces';
 import { barChart, IOnboardingBarChartSpec } from './bar-chart';
 import { changeMatrix, IOnboardingChangeMatrixSpec } from './change-matrix';
 import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
@@ -10,16 +10,16 @@ export { IOnboardingBarChartSpec } from './bar-chart';
 export { IOnboardingChangeMatrixSpec } from './change-matrix';
 export { IOnboardingHorizonGraphSpec } from './horizon-graph';
 
-export function generateOnboardingMessages(chartType: EChartType, spec: IOnboardingSpec, visElementId: string): IOnboardingMessages[] {
-  switch(chartType) {
-    case EChartType.BAR_CHART:
-      return barChart.generateOnboardingMessages(<IOnboardingBarChartSpec>spec, visElementId);
+export function generateMessages(visType: EVisualizationType, spec: IOnboardingSpec, visElementId: string): IOnboardingMessages[] {
+  switch(visType) {
+    case EVisualizationType.BAR_CHART:
+      return barChart.generateMessages(<IOnboardingBarChartSpec>spec, visElementId);
 
-    case EChartType.CHANGE_MATRIX:
-      return changeMatrix.generateOnboardingMessages(<IOnboardingChangeMatrixSpec>spec, visElementId);
+    case EVisualizationType.CHANGE_MATRIX:
+      return changeMatrix.generateMessages(<IOnboardingChangeMatrixSpec>spec, visElementId);
 
-    case EChartType.HORIZON_GRAPH:
-      return horizonGraph.generateOnboardingMessages(<IOnboardingHorizonGraphSpec>spec, visElementId);
+    case EVisualizationType.HORIZON_GRAPH:
+      return horizonGraph.generateMessages(<IOnboardingHorizonGraphSpec>spec, visElementId);
   }
 
   return [];

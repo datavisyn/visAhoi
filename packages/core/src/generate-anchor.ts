@@ -42,7 +42,7 @@ export function createAnchor(d, i: number, nodes, stepNumber) {
     .text(`${stepNumber + 1}`);
 };
 
-export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean, visElementId: string) {
+export function displayMarkers(anchors, activeStep: number, showAllHints: boolean, visElementId: string) {
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually

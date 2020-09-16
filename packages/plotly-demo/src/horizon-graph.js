@@ -2,14 +2,14 @@
 // See https://github.com/ffg-seva/onboarding-prototype/issues/7
 // import * as Plotly from 'plotly.js';
 
-import { ahoi } from '@visahoi/plotly';
+import { ahoi, EVisualizationType } from '@visahoi/plotly';
 
 function render() {
   Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
     const {x, y} = processData(data);
 
     makePlotly(x, y).then((chart) => {
-      ahoi('horizon-graph', chart, 'onboarding');
+      ahoi(EVisualizationType.HORIZON_GRAPH, chart, 'onboarding');
     });
   });
 }

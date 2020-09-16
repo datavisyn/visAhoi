@@ -1,17 +1,17 @@
 import * as d3 from 'd3';
 import { Result } from 'vega-embed';
-import {EChartType, generateOnboarding} from '@visahoi/core';
+import {EVisualizationType, injectOnboarding} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
 
 /**
  *
- * @param chartType
+ * @param visType
  * @param vegaResult
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(chartType: EChartType, vegaResult: Result, onboardingElement: string) {
+export async function ahoi(visType: EVisualizationType, vegaResult: Result, onboardingElement: string) {
   const evaluated = await (<any>vegaResult.view).evaluate(); // TODO: `evaluate()` is not an officially supported Vega API
 
   // Vega-lite spec after all rendering happend and the aggregations
@@ -28,8 +28,8 @@ export async function ahoi(chartType: EChartType, vegaResult: Result, onboarding
 
   let onboardingMessages;
 
-  switch(chartType) {
-    case EChartType.BAR_CHART:
+  switch(visType) {
+    case EVisualizationType.BAR_CHART:
       // data_0 contains the input, output and values which are the aggregated data values
       const { data_0 } = evaluated._runtime.data;
       // Use the aggregated data values
@@ -38,11 +38,11 @@ export async function ahoi(chartType: EChartType, vegaResult: Result, onboarding
       onboardingMessages = barChartFactory(vegaSpec, values, d3Data, visElementId);
       break;
 
-    case EChartType.CHANGE_MATRIX:
+    case EVisualizationType.CHANGE_MATRIX:
       onboardingMessages = changeMatrixFactory(vegaSpec, d3Data, visElementId);
       break;
 
-    case EChartType.HORIZON_GRAPH:
+    case EVisualizationType.HORIZON_GRAPH:
       // data_0 contains the input, output and values which are the aggregated data values
       const { data_1 } = evaluated._runtime.data;
       // Use the aggregated data values
@@ -51,10 +51,11 @@ export async function ahoi(chartType: EChartType, vegaResult: Result, onboarding
       break;
 
     default:
-      throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
+      throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  generateOnboarding(onboardingMessages, onboardingElement, visElementId);
+  injectOnboarding(onboardingElement, onboardingMessages, visElementId);
 }
 
-export default onboarding;
+export { EVisualizationType };
+

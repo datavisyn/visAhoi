@@ -1,8 +1,8 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingHorizonGraphSpec,
-  generateOnboardingMessages,
+  generateMessages,
 } from "@visahoi/core";
 
 const getMinMax= (values) => {
@@ -26,7 +26,7 @@ const getMinMax= (values) => {
   return [min, max]
 }
 
-function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
+function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   const xAxis = chart._chartsViews[1]._data._itemLayouts[3];
   const positiveColor = chart._chartsViews[1]._data._itemLayouts[5];
   const negativeColor = chart._chartsViews[2]._data._itemLayouts[0];
@@ -93,6 +93,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
 }
 
 export function horizonGraphFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

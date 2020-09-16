@@ -1,11 +1,11 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingBarChartSpec,
-  generateOnboardingMessages,
+  generateMessages,
 } from "@visahoi/core";
 
-function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
+function extractOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const data = chart._chartsViews[0]._data;
   const options = chart._model.option;
@@ -80,6 +80,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
 }
 
 export function barChartFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

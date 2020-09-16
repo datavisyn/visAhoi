@@ -17,7 +17,7 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
 }
 
-function generateOnboardingMessages(spec: IOnboardingBarChartSpec, visElementId: string): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingBarChartSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElementId),
@@ -62,5 +62,5 @@ function generateOnboardingMessages(spec: IOnboardingBarChartSpec, visElementId:
 };
 
 export const barChart = {
-  generateOnboardingMessages
+  generateMessages
 }

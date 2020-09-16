@@ -1,8 +1,8 @@
 import { Spec } from "vega-typings";
-import { EChartType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessages, generateMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
 
 
-function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
+function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
   const v = vegaSpec;
   return {
     chartTitle: {
@@ -38,6 +38,6 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChange
 }
 
 export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(vegaSpec, elems);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(vegaSpec, elems);
+  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

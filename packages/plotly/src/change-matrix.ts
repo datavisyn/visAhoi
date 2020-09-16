@@ -1,12 +1,12 @@
 
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingChangeMatrixSpec,
-  generateOnboardingMessages,
+  generateMessages,
 } from "@visahoi/core";
 
-function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
+function extractOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   const heatmapData = (<any>Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]).__data__;
   const t = heatmapData[0].trace;
 
@@ -65,6 +65,6 @@ function generateOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
 }
 
 export function changeMatrixFactory(chart, visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(chart);
+  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }
