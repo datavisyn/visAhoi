@@ -1,4 +1,4 @@
-import {EChartType, generateOnboarding, IOnboardingMessages} from '@visahoi/core';
+import {EVisualizationType, generateOnboarding, IOnboardingMessages} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
@@ -9,7 +9,7 @@ import {horizonGraphFactory} from './horizon-graph';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(chartType: EChartType, chart: any, onboardingElement: string) {
+export async function ahoi(chartType: EVisualizationType, chart: any, onboardingElement: string) {
   const coords = {};
   const visElementId = chart._dom.id;
 
@@ -19,15 +19,15 @@ export async function ahoi(chartType: EChartType, chart: any, onboardingElement:
   let onboardingMessages: IOnboardingMessages[];
 
   switch(chartType) {
-    case EChartType.BAR_CHART:
+    case EVisualizationType.BAR_CHART:
       onboardingMessages = barChartFactory(chart, coords, visElementId);
       break;
 
-    case EChartType.CHANGE_MATRIX:
+    case EVisualizationType.CHANGE_MATRIX:
       onboardingMessages = changeMatrixFactory(chart, coords, visElementId);
       break;
 
-    case EChartType.HORIZON_GRAPH:
+    case EVisualizationType.HORIZON_GRAPH:
       onboardingMessages = horizonGraphFactory(chart, coords, visElementId);
       break;
 
@@ -37,3 +37,5 @@ export async function ahoi(chartType: EChartType, chart: any, onboardingElement:
 
   generateOnboarding(onboardingMessages, onboardingElement, visElementId);
 }
+
+export { EVisualizationType };

@@ -1,5 +1,5 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingBarChartSpec,
   generateOnboardingMessages,
@@ -39,12 +39,12 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
       value: t.orientation === "v" ? "height" : "width",
     },
     yMin: {
-      value: t._extremes.y.min[0].val, // 0 = first trace
+      value: t._extremes.y.min[0].val.toFixed(1), // 0 = first trace
       anchor: {
         sel: '.bars > .points > .point:nth-child(2)',      }
     },
     yMax: {
-      value: t._extremes.y.max[0].val,
+      value: t._extremes.y.max[0].val.toFixed(1),
       anchor: {
         sel: '.bars > .points > .point:nth-child(7)',      }
     },
@@ -76,5 +76,5 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
 
 export function barChartFactory(chart, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
+  return generateOnboardingMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

@@ -3,7 +3,7 @@ import {EOnboardingStages} from "./onboarding";
 /**
  * Supported chart types
  */
-export enum EChartType {
+export enum EVisualizationType {
   BAR_CHART = 'bar-chart',
   CHANGE_MATRIX = 'change-matrix',
   HORIZON_GRAPH = 'horizon-graph'

@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed';
-import { ahoi } from '@visahoi/vega';
+import { ahoi, EVisualizationType } from '@visahoi/vega';
 
 // Options for the vega embed
 const opt = {
@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  ahoi('horizon-graph', vegaLite, 'onboarding');
+  ahoi(EVisualizationType.HORIZON_GRAPH, vegaLite, 'onboarding');
 };
 
 render();

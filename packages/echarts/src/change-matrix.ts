@@ -1,5 +1,5 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingChangeMatrixSpec,
   generateOnboardingMessages,
@@ -56,5 +56,5 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
 
 export function changeMatrixFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  return generateOnboardingMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

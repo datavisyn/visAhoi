@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed';
-import { ahoi } from '@visahoi/vega';
+import { ahoi, EVisualizationType } from '@visahoi/vega';
 
 // Options for the vega embed
 const opt = {
@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  ahoi('bar-chart', vegaLite, 'onboarding');
+  ahoi(EVisualizationType.BAR_CHART, vegaLite, 'onboarding');
 };
 
 render();

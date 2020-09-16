@@ -1,5 +1,5 @@
 import { Spec } from "vega-typings";
-import { EChartType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessages, generateOnboardingMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
 
 
 function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
@@ -39,5 +39,5 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChange
 
 export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, elems);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  return generateOnboardingMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

@@ -1,5 +1,5 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingHorizonGraphSpec,
   generateOnboardingMessages,
@@ -94,5 +94,5 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
 
 export function horizonGraphFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec, visElementId);
+  return generateOnboardingMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

@@ -1,5 +1,5 @@
 import {
-  EChartType,
+  EVisualizationType,
   IOnboardingMessages,
   IOnboardingBarChartSpec,
   generateOnboardingMessages,
@@ -118,5 +118,5 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
 
 export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
+  return generateOnboardingMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }
