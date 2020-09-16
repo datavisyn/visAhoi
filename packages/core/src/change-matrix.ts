@@ -26,7 +26,7 @@ function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec, visElemen
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: spec.legendTitle?.anchor,
+      anchor: getAnchor(spec.legendTitle, visElementId),
       requires: ['legendTitle'],
       legend: `The legend shows the <span class="hT">${spec.legendTitle?.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
       onboardingStage: EOnboardingStages.READING
