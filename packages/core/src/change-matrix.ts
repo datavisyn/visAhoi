@@ -11,16 +11,16 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
 }
 
 
-function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec): IOnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
-      anchor: getAnchor(spec.chartTitle),
+      anchor: getAnchor(spec.chartTitle, visElementId),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.type),
+      anchor: getAnchor(spec.type, visElementId),
       requires: ['type'],
       legend: `The chart Is based on colored <span class="hT">${spec.type?.value}</span> elements.`,
       onboardingStage: EOnboardingStages.READING
@@ -32,7 +32,7 @@ function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec): IOnboard
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.xAxis),
+      anchor: getAnchor(spec.xAxis, visElementId),
       requires: ['xAxis', 'yAxis'],
       legend: `The columns show the <span class="hT">${spec.xAxis?.value}</span>, while the rows show the <span class="hT">${spec.yAxis?.value}</span>.`,
       onboardingStage: EOnboardingStages.READING

@@ -17,10 +17,11 @@ export async function ahoi(chartType: EChartType, vegaResult: Result, onboarding
   // Vega-lite spec after all rendering happend and the aggregations
   const vegaSpec = vegaResult.vgSpec;
   const origSpec = vegaResult.spec;
+  const visElementId: string = (vegaResult.view as any)._el.id;
 
   // ADDITIONAL (not used)
   // Get the individual nodes
-  const nodes = d3.select('#vis').selectAll('.role-mark').selectAll('path').nodes();
+  const nodes = d3.select(`#${visElementId}`).selectAll('.role-mark').selectAll('path').nodes();
 
   // Get the data of the individual bars
   const d3Data = nodes.map((el: any) => el.__data__);
@@ -34,26 +35,26 @@ export async function ahoi(chartType: EChartType, vegaResult: Result, onboarding
       // Use the aggregated data values
       const values = data_0.values.value;
 
-      onboardingMessages = barChartFactory(vegaSpec, values, d3Data);
+      onboardingMessages = barChartFactory(vegaSpec, values, d3Data, visElementId);
       break;
 
     case EChartType.CHANGE_MATRIX:
-      onboardingMessages = changeMatrixFactory(vegaSpec, d3Data);
+      onboardingMessages = changeMatrixFactory(vegaSpec, d3Data, visElementId);
       break;
 
     case EChartType.HORIZON_GRAPH:
       // data_0 contains the input, output and values which are the aggregated data values
       const { data_1 } = evaluated._runtime.data;
       // Use the aggregated data values
-      const v = data_1.values.value;
-      onboardingMessages = horizonGraphFactory(vegaSpec, origSpec, d3Data, v);
+      const aggregatedValues = data_1.values.value;
+      onboardingMessages = horizonGraphFactory(vegaSpec, origSpec, d3Data, aggregatedValues, visElementId);
       break;
 
     default:
       throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
   }
 
-  generateOnboarding(onboardingMessages, onboardingElement);
+  generateOnboarding(onboardingMessages, onboardingElement, visElementId);
 }
 
 export default onboarding;

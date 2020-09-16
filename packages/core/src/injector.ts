@@ -3,7 +3,7 @@ import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
 import { createAnchor, generateChartAnchors } from './generate-anchor';
 import {EOnboardingStages} from './onboarding';
 
-export function displayOnboardingMessages(messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
+export function displayOnboardingMessages(visElementId: string, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
   let reading: [number, IOnboardingMessages][] = [];
   let using: [number, IOnboardingMessages][] = [];
   messages.forEach((message, index) => {
@@ -23,7 +23,7 @@ export function displayOnboardingMessages(messages: IOnboardingMessages[], activ
   generateChartAnchors(messages.map((d, i) => ({
     anchor: d.anchor,
     index: i + 1,
-  })), activeStep, showAllHints);
+  })), activeStep, showAllHints, visElementId);
 }
 
 const createOnboardingStages = (activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, messages: [number, IOnboardingMessages][], step: EOnboardingStages, onboardingWrapper: any) => {

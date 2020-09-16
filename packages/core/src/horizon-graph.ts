@@ -15,10 +15,10 @@ function createColorRect(color = 'white') {
   return `<div class="colorRect" style="background: ${color}"></div>`;
 }
 
-function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec): IOnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingHorizonGraphSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
-      anchor: getAnchor(spec.chartTitle),
+      anchor: getAnchor(spec.chartTitle, visElementId),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING

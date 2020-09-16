@@ -58,7 +58,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
   }
 }
 
-export function changeMatrixFactory(chart, coords): IOnboardingMessages[] {
+export function changeMatrixFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
+  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

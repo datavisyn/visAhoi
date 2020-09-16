@@ -79,8 +79,7 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
   };
 }
 
-export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[]): IOnboardingMessages[] {
+export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[], visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, visualizationSpec, elems, aggregatedValues);
-  // console.log('Generated Spec: ', onbordingSpec);
-  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);
+  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

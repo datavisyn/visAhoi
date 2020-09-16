@@ -39,8 +39,7 @@ function generateOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChange
   };
 }
 
-export function changeMatrixFactory(vegaSpec: Spec, elems: any[]): IOnboardingMessages[] {
+export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, elems);
-  // console.log('Generated Spec: ', onbordingSpec);
-  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec);
+  return generateOnboardingMessages(EChartType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }

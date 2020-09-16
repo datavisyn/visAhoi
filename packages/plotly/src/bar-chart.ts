@@ -83,7 +83,7 @@ function generateOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart): IOnboardingMessages[] {
+export function barChartFactory(chart, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
+  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
 }

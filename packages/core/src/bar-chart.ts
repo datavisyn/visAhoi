@@ -17,10 +17,10 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
 }
 
-function generateOnboardingMessages(spec: IOnboardingBarChartSpec): IOnboardingMessages[] {
+function generateOnboardingMessages(spec: IOnboardingBarChartSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
-      anchor: getAnchor(spec.chartTitle),
+      anchor: getAnchor(spec.chartTitle, visElementId),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
@@ -32,13 +32,13 @@ function generateOnboardingMessages(spec: IOnboardingBarChartSpec): IOnboardingM
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.yAxisTitle),
+      anchor: getAnchor(spec.yAxisTitle, visElementId),
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
       legend: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the <span class="hT">${spec.yAxisTitle?.value} (y-axis)</span> for a certain ${spec.xAxisTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.xAxisTitle),
+      anchor: getAnchor(spec.xAxisTitle, visElementId),
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
       legend: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the <span class="hT">${spec.xAxisTitle?.value} (x-axis)</span>.`,
       onboardingStage: EOnboardingStages.READING

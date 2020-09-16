@@ -94,7 +94,7 @@ function generateOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart, coords): IOnboardingMessages[] {
+export function horizonGraphFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(chart, coords);
-  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec);
+  return generateOnboardingMessages(EChartType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

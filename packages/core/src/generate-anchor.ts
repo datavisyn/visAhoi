@@ -42,7 +42,7 @@ export function createAnchor(d, i: number, nodes, stepNumber) {
     .text(`${stepNumber + 1}`);
 };
 
-export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean) {
+export function generateChartAnchors(anchors, activeStep: number, showAllHints: boolean, visElementId: string) {
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
@@ -78,7 +78,7 @@ export function generateChartAnchors(anchors, activeStep: number, showAllHints: 
 
     // Find the positioning only if we provided no coords
     } else {
-      const svg = document.getElementById('vis') as HTMLElement;
+      const svg = document.getElementById(visElementId) as HTMLElement;
       const svgPosition = svg.getBoundingClientRect();
 
       let node;

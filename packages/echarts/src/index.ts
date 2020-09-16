@@ -11,6 +11,7 @@ import {horizonGraphFactory} from './horizon-graph';
  */
 export async function ahoi(chartType: EChartType, chart: any, onboardingElement: string) {
   const coords = {};
+  const visElementId = chart._dom.id;
 
   const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;
   coords['chartTitle'] = {x: chartTitlePosition[0], y: chartTitlePosition[1] + 20};
@@ -19,20 +20,20 @@ export async function ahoi(chartType: EChartType, chart: any, onboardingElement:
 
   switch(chartType) {
     case EChartType.BAR_CHART:
-      onboardingMessages = barChartFactory(chart, coords);
+      onboardingMessages = barChartFactory(chart, coords, visElementId);
       break;
 
     case EChartType.CHANGE_MATRIX:
-      onboardingMessages = changeMatrixFactory(chart, coords);
+      onboardingMessages = changeMatrixFactory(chart, coords, visElementId);
       break;
 
     case EChartType.HORIZON_GRAPH:
-      onboardingMessages = horizonGraphFactory(chart, coords);
+      onboardingMessages = horizonGraphFactory(chart, coords, visElementId);
       break;
 
     default:
       throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
   }
 
-  generateOnboarding(onboardingMessages, onboardingElement);
+  generateOnboarding(onboardingMessages, onboardingElement, visElementId);
 }

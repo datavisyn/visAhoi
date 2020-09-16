@@ -119,8 +119,7 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
   };
 }
 
-export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingMessages[] {
+export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElementId: string): IOnboardingMessages[] {
   const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
-  // console.log('Generated Spec: ', onbordingSpec);
-  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec);
+  return generateOnboardingMessages(EChartType.BAR_CHART, onbordingSpec, visElementId);
 }

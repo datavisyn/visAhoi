@@ -11,23 +11,23 @@ import {horizonGraphFactory} from './horizon-graph';
  */
 export async function ahoi(chartType: EChartType, chart: any, onboardingElement: string) {
     let onboardingMessages;
-
+    const visElementId = chart.getAttribute("id");
     switch(chartType) {
       case EChartType.BAR_CHART:
-        onboardingMessages = barChartFactory(chart);
+        onboardingMessages = barChartFactory(chart, visElementId);
         break;
 
       case EChartType.CHANGE_MATRIX:
-        onboardingMessages = changeMatrixFactory(chart);
+        onboardingMessages = changeMatrixFactory(chart, visElementId);
         break;
 
       case EChartType.HORIZON_GRAPH:
-        onboardingMessages = horizonGraphFactory(chart);
+        onboardingMessages = horizonGraphFactory(chart, visElementId);
         break;
 
       default:
         throw new Error(`Visualization onboarding for given chart type ${chartType} is not available.`);
     }
 
-    generateOnboarding(onboardingMessages, onboardingElement);
+    generateOnboarding(onboardingMessages, onboardingElement, visElementId);
 }
