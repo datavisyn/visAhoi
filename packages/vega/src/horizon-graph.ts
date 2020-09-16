@@ -1,9 +1,9 @@
-import { EVisualizationType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateOnboardingMessages} from '@visahoi/core';
+import { EVisualizationType, IOnboardingMessages, IOnboardingHorizonGraphSpec, generateMessages} from '@visahoi/core';
 import { Spec } from 'vega-typings';
 import { VisualizationSpec } from 'vega-embed';
 import {getMinMax} from './bar-chart';
 
-function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[]): IOnboardingHorizonGraphSpec {
+function extractOnboardingSpec(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[]): IOnboardingHorizonGraphSpec {
   const v = vegaSpec;
   const o = visualizationSpec;
   const axesMinMax = getMinMax(aggregatedValues);
@@ -77,6 +77,6 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
 }
 
 export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[], visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(vegaSpec, visualizationSpec, elems, aggregatedValues);
-  return generateOnboardingMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(vegaSpec, visualizationSpec, elems, aggregatedValues);
+  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

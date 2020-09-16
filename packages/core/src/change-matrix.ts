@@ -11,7 +11,7 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
 }
 
 
-function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec, visElementId: string): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingChangeMatrixSpec, visElementId: string): IOnboardingMessages[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElementId),
@@ -44,5 +44,5 @@ function generateOnboardingMessages(spec: IOnboardingChangeMatrixSpec, visElemen
 };
 
 export const changeMatrix = {
-  generateOnboardingMessages
+  generateMessages
 };

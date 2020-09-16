@@ -2,7 +2,7 @@ import {
   EVisualizationType,
   IOnboardingMessages,
   IOnboardingBarChartSpec,
-  generateOnboardingMessages,
+  generateMessages,
 } from "@visahoi/core";
 import { Spec } from "vega-typings";
 
@@ -45,7 +45,7 @@ function getPropertyValues(arr) {
   return res;
 }
 
-function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingBarChartSpec {
+function extractOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingBarChartSpec {
   const v = vegaSpec;
   const a = aggregatedValues;
 
@@ -117,6 +117,6 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
 }
 
 export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(vegaSpec, aggregatedValues, elems);
-  return generateOnboardingMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(vegaSpec, aggregatedValues, elems);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

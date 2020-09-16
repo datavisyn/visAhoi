@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import {IOnboardingMessages} from './interfaces';
-import {displayOnboardingMessages} from './injector';
+import {displayGuide} from './injector';
 
 export enum EOnboardingStages {
   READING = "reading-the-chart",
@@ -12,7 +12,7 @@ interface onboardingState {
   showAllHints: boolean;
 }
 
-export default class Onboarding {
+export default class OnboardingUI {
   private state: onboardingState;
   private onboardingMessages: IOnboardingMessages[];
   private onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
@@ -31,28 +31,28 @@ export default class Onboarding {
   private setOnboardingState = (attr: string, value: any) => {
     this.state[attr] = value;
     if(attr === "activeStep" || attr === "showAllHints") {
-      this.generateOnboardingStepper();
-      this.displayOnboardingMessages();
+      this.displayNavigation();
+      this.displayGuide();
     }
   }
 
-  generateOnboardingStepper() {
-    generateOnboardingStepper(this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState);
+  displayNavigation() {
+    displayNavigation(this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState);
   }
 
-  displayOnboardingMessages() {
-    displayOnboardingMessages(this.visElementId, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
+  displayGuide() {
+    displayGuide(this.visElementId, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
   }
 }
 
-export const generateOnboarding = (onboardingMessages: IOnboardingMessages[], onboardingElement: string, visElementId: string) => {
-  const onboarding = new Onboarding(onboardingMessages, onboardingElement, visElementId);
-  onboarding.generateOnboardingStepper();
-  onboarding.displayOnboardingMessages()
+export const injectOnboarding = (onboardingElement: string, onboardingMessages: IOnboardingMessages[], visElementId: string) => {
+  const onboarding = new OnboardingUI(onboardingMessages, onboardingElement, visElementId);
+  onboarding.displayNavigation();
+  onboarding.displayGuide()
 }
 
 
-const generateOnboardingStepper = (onboardingMessages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) => {
+const displayNavigation = (onboardingMessages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) => {
   const onNextBtnClick = () => {
     if(onboardingMessages.length -1 > activeStep && !showAllHints) {
       setOnboardingState("activeStep", activeStep+1);

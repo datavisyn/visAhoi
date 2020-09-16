@@ -1,15 +1,15 @@
 
 const demos = [
   {
-    title: 'Bar Chart SVG',
+    title: 'Bar Chart',
     link: './svg/bar-chart.html'
   },
   {
-    title: 'Change Matrix SVG',
+    title: 'Change Matrix',
     link: './svg/change-matrix.html'
   },
   {
-    title: 'Horizon Graph SVG',
+    title: 'Horizon Graph',
     link: './svg/horizon-graph.html'
   },
   // {

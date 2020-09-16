@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
-import { createAnchor, generateChartAnchors } from './generate-anchor';
+import { createAnchor, displayMarkers } from './generate-anchor';
 import {EOnboardingStages} from './onboarding';
 
-export function displayOnboardingMessages(visElementId: string, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
+export function displayGuide(visElementId: string, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
   let reading: [number, IOnboardingMessages][] = [];
   let using: [number, IOnboardingMessages][] = [];
   messages.forEach((message, index) => {
@@ -20,7 +20,7 @@ export function displayOnboardingMessages(visElementId: string, messages: IOnboa
   if(using.length > 0) {
     createOnboardingStages(activeStep, showAllHints, setOnboardingState, using, EOnboardingStages.USING, onboardingWrapper);
   }
-  generateChartAnchors(messages.map((d, i) => ({
+  displayMarkers(messages.map((d, i) => ({
     anchor: d.anchor,
     index: i + 1,
   })), activeStep, showAllHints, visElementId);

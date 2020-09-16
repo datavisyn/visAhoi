@@ -3,10 +3,10 @@ import {
   EVisualizationType,
   IOnboardingMessages,
   IOnboardingHorizonGraphSpec,
-  generateOnboardingMessages,
+  generateMessages,
 } from "@visahoi/core";
 
-function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
+function extractOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.fills");
   const areaNodes = traceNodes[0].querySelectorAll("path.js-fill");
@@ -67,6 +67,6 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
 }
 
 export function horizonGraphFactory(chart, visElementId: string): IOnboardingMessages[] {
-  const onbordingSpec = generateOnboardingSpec(chart);
-  return generateOnboardingMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
+  const onbordingSpec = extractOnboardingSpec(chart);
+  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }
