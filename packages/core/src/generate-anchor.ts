@@ -96,11 +96,11 @@ export function generateChartAnchors(anchors, activeStep: number, showAllHints: 
       const elBox = node.getBBox();
       // console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
       Object.assign(settings, {
-        cx: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
-        cy: a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top,
+        cx: elRect.x - svgPosition.left,
+        cy: elRect.y - svgPosition.top,
         r,
-        x: a.useDOMRect ? elRect.x - svgPosition.left : elBox.x - svgPosition.left,
-        y: (a.useDOMRect ? elRect.y - svgPosition.top : elBox.y - svgPosition.top) + textOffset,
+        x: elRect.x - svgPosition.left,
+        y: (elRect.y - svgPosition.top) + textOffset,
       });
     }
     // Create the respective anchor

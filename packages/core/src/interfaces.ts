@@ -32,12 +32,10 @@ interface IOnboardingCoordsAnchor extends IOnboardingAnchorBase {
 
 interface IOnboardingDOMAnchor extends IOnboardingAnchorBase {
   sel: string;
-  useDOMRect?: boolean;
 }
 
 interface IOnboardingElementAnchor extends IOnboardingAnchorBase {
   element?: HTMLElement;
-  useDOMRect?: boolean;
 }
 
 export type OnboardingAnchor = IOnboardingCoordsAnchor | IOnboardingDOMAnchor | IOnboardingElementAnchor;

@@ -13,7 +13,6 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
       value: (typeof(v.title) === 'string') ? v.title : v.title?.text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20, top: 5}
       }
     },
@@ -21,7 +20,6 @@ function generateOnboardingSpec(vegaSpec: Spec, visualizationSpec: Visualization
       value: (<any>v.axes![1]).title,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20, top: 5}
       }
     },

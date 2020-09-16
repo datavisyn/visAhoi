@@ -57,7 +57,6 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: typeof v.title === "string" ? v.title : v.title?.text,
       anchor: {
         sel: ".role-title-text",
-        useDOMRect: true,
         offset: {left: -20}
       },
     },
@@ -104,7 +103,6 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: (<any>v.axes![1]).title,
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
-        useDOMRect: true,
         offset: {left: -30}
       },
     },
@@ -112,7 +110,6 @@ function generateOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: (<any>v.axes![2]).title,
       anchor: {
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
-        useDOMRect: true,
         offset: {top: -30}
       },
     },

@@ -21,7 +21,6 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
       value: chart.layout.title.text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -59,7 +58,6 @@ function generateOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
       value: chart.layout.yaxis.title.text,
       anchor: {
         sel: '.infolayer .ytitle',
-        useDOMRect: true,
       }
     },
     // xAxisLabel (e.g. 01, 02, …)

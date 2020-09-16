@@ -23,7 +23,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -67,7 +66,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       value: options.xAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20, top: 5}
       }
     },
@@ -75,7 +73,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       value: options.yAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {top: -20}
       }
     }

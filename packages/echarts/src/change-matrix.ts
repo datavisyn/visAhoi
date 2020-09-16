@@ -15,7 +15,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
       value: options.title[0].text,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20, top: 10}
       }
     },
@@ -35,7 +34,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
       value: options.xAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true,
         offset: {left: -20}
       }
     },
@@ -43,7 +41,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
       value: options.yAxis[0].name,
       findDomNodeByValue: true,
       anchor: {
-        useDOMRect: true
       }
     },
     type: {
@@ -51,7 +48,6 @@ function generateOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
       findDomNodeByValue: true,
       domNodeValue: options.yAxis[0].data[2],
       anchor: {
-        useDOMRect: true,
         offset: {top: -10, left: 60}
       }
     },
