@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { Result } from 'vega-embed';
-import {EVisualizationType, injectOnboarding} from '@visahoi/core';
+import {EVisualizationType, injectOnboarding, getElement} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
@@ -11,7 +11,7 @@ import { horizonGraphFactory } from './horizon-graph';
  * @param vegaResult
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, vegaResult: Result, onboardingElement: string) {
+export async function ahoi(visType: EVisualizationType, vegaResult: Result, onboardingElement: string | Element) {
   const evaluated = await (<any>vegaResult.view).evaluate(); // TODO: `evaluate()` is not an officially supported Vega API
 
   // Vega-lite spec after all rendering happend and the aggregations
@@ -54,7 +54,7 @@ export async function ahoi(visType: EVisualizationType, vegaResult: Result, onbo
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  injectOnboarding(onboardingElement, onboardingMessages, visElementId);
+  injectOnboarding(getElement(onboardingElement), onboardingMessages, visElementId);
 }
 
 export { EVisualizationType };

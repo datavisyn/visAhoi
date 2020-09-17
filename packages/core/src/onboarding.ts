@@ -15,15 +15,15 @@ interface onboardingState {
 export default class OnboardingUI {
   private state: onboardingState;
   private onboardingMessages: IOnboardingMessages[];
-  private onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
+  private onboardingWrapper: d3.Selection<Element, unknown, null, undefined>;
   private visElementId: string;
-  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: string, visElementId: string) {
+  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: Element, visElementId: string) {
     this.state = {
       activeStep: 0,
       showAllHints: false
     }
     this.onboardingMessages = onboardingMessages;
-    this.onboardingWrapper = d3.select(`#${onboardingElement}`)
+    this.onboardingWrapper = d3.select(onboardingElement)
     this.onboardingWrapper.append('div').attr('id', 'onboardingStepper')
     this.visElementId = visElementId;
   }
@@ -45,7 +45,7 @@ export default class OnboardingUI {
   }
 }
 
-export const injectOnboarding = (onboardingElement: string, onboardingMessages: IOnboardingMessages[], visElementId: string) => {
+export const injectOnboarding = (onboardingElement: Element, onboardingMessages: IOnboardingMessages[], visElementId: string) => {
   const onboarding = new OnboardingUI(onboardingMessages, onboardingElement, visElementId);
   onboarding.displayNavigation();
   onboarding.displayGuide()
@@ -89,4 +89,20 @@ const displayNavigation = (onboardingMessages: IOnboardingMessages[], activeStep
     .on("click", onNextBtnClick)
     .property("disabled", showAllHints)
 
+}
+
+
+export const getElement = (param: string | Element): Element => {
+  let element: Element;
+  if(typeof param === 'string') {
+    const e = document.querySelector(param);
+    if(e) {
+      element = e;
+    } else {
+      throw new Error(`No Element for selector ${param} found.`);
+    }
+  } else {
+    element = param;
+  }
+  return element;
 }

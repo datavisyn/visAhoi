@@ -1,4 +1,4 @@
-import {EVisualizationType, injectOnboarding, IOnboardingMessages} from '@visahoi/core';
+import {EVisualizationType, injectOnboarding, IOnboardingMessages, getElement} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
@@ -9,7 +9,7 @@ import {horizonGraphFactory} from './horizon-graph';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, chart: any, onboardingElement: string) {
+export async function ahoi(visType: EVisualizationType, chart: any, onboardingElement: string | Element) {
   const coords = {};
   const visElementId = chart._dom.id;
 
@@ -35,7 +35,7 @@ export async function ahoi(visType: EVisualizationType, chart: any, onboardingEl
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  injectOnboarding(onboardingElement, onboardingMessages, visElementId);
+  injectOnboarding(getElement(onboardingElement), onboardingMessages, visElementId);
 }
 
 export { EVisualizationType };

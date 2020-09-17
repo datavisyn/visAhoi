@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  ahoi(EVisualizationType.BAR_CHART, vegaLite, 'onboarding');
+  ahoi(EVisualizationType.BAR_CHART, vegaLite, '#onboarding');
 };
 
 render();

@@ -14,7 +14,7 @@ async function render() {
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
 
-  ahoi(EVisualizationType.CHANGE_MATRIX, vegaLite, 'onboarding');
+  ahoi(EVisualizationType.CHANGE_MATRIX, vegaLite, '#onboarding');
 };
 
 render();
