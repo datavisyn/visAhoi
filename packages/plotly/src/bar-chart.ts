@@ -74,7 +74,7 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart, visElementId: string): IOnboardingMessages[] {
+export function barChartFactory(chart: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(chart);
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, chart);
 }

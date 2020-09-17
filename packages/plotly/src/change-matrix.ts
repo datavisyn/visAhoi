@@ -64,7 +64,7 @@ function extractOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   };
 }
 
-export function changeMatrixFactory(chart, visElementId: string): IOnboardingMessages[] {
+export function changeMatrixFactory(chart): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(chart);
-  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, chart);
 }

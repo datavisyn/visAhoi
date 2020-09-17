@@ -76,7 +76,7 @@ function extractOnboardingSpec(vegaSpec: Spec, visualizationSpec: VisualizationS
   };
 }
 
-export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[], visElementId: string): IOnboardingMessages[] {
+export function horizonGraphFactory(vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[], visElement: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, visualizationSpec, elems, aggregatedValues);
-  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
+  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElement);
 }

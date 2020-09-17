@@ -66,7 +66,7 @@ function extractOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart, visElementId: string): IOnboardingMessages[] {
+export function horizonGraphFactory(chart): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(chart);
-  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
+  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, chart);
 }

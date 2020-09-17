@@ -37,7 +37,7 @@ function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeM
   };
 }
 
-export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElementId: string): IOnboardingMessages[] {
+export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems);
-  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElement);
 }

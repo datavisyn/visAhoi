@@ -15,17 +15,17 @@ interface onboardingState {
 export default class OnboardingUI {
   private state: onboardingState;
   private onboardingMessages: IOnboardingMessages[];
-  private onboardingWrapper: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
-  private visElementId: string;
-  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: string, visElementId: string) {
+  private onboardingWrapper: d3.Selection<Element, unknown, null, undefined>;
+  private visElement: Element;
+  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: Element, visElement: Element) {
     this.state = {
       activeStep: 0,
       showAllHints: false
     }
     this.onboardingMessages = onboardingMessages;
-    this.onboardingWrapper = d3.select(`#${onboardingElement}`)
+    this.onboardingWrapper = d3.select(onboardingElement)
     this.onboardingWrapper.append('div').attr('id', 'onboardingStepper')
-    this.visElementId = visElementId;
+    this.visElement = visElement;
   }
 
   private setOnboardingState = (attr: string, value: any) => {
@@ -41,12 +41,12 @@ export default class OnboardingUI {
   }
 
   displayGuide() {
-    displayGuide(this.visElementId, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
+    displayGuide(this.visElement, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
   }
 }
 
-export const injectOnboarding = (onboardingElement: string, onboardingMessages: IOnboardingMessages[], visElementId: string) => {
-  const onboarding = new OnboardingUI(onboardingMessages, onboardingElement, visElementId);
+export const injectOnboarding = (onboardingElement: Element, onboardingMessages: IOnboardingMessages[], visElement: Element) => {
+  const onboarding = new OnboardingUI(onboardingMessages, onboardingElement, visElement);
   onboarding.displayNavigation();
   onboarding.displayGuide()
 }
@@ -89,4 +89,20 @@ const displayNavigation = (onboardingMessages: IOnboardingMessages[], activeStep
     .on("click", onNextBtnClick)
     .property("disabled", showAllHints)
 
+}
+
+
+export const getElement = (param: string | Element): Element => {
+  let element: Element;
+  if(typeof param === 'string') {
+    const e = document.querySelector(param);
+    if(e) {
+      element = e;
+    } else {
+      throw new Error(`No Element for selector ${param} found.`);
+    }
+  } else {
+    element = param;
+  }
+  return element;
 }

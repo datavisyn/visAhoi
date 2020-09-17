@@ -9,7 +9,7 @@ function render() {
   d3.csv("../data/oslo-2018.csv").then(rows => {
     const {x, y} = processData(rows);
     const chart = createPlot(x, y);
-    ahoi(EVisualizationType.CHANGE_MATRIX, chart, 'onboarding');
+    ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
   });
 }
 

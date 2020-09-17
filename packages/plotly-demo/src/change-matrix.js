@@ -9,7 +9,7 @@ function render() {
     const {x, y, z} = processData(data);
 
     makePlotly(x, y, z).then((chart) => {
-      ahoi(EVisualizationType.CHANGE_MATRIX, chart, 'onboarding');
+      ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
     });
   });
 }

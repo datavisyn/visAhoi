@@ -92,7 +92,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
+export function horizonGraphFactory(chart, coords, visElementId: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords);
   return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

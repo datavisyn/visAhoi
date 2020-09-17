@@ -54,7 +54,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingChangeMatrixSpec {
   }
 }
 
-export function changeMatrixFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
+export function changeMatrixFactory(chart, coords, visElementId: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords);
   return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }
