@@ -116,7 +116,7 @@ function extractOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: a
   };
 }
 
-export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElementId: string): IOnboardingMessages[] {
+export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElement: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, aggregatedValues, elems);
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElement);
 }

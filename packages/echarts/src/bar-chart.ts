@@ -79,7 +79,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart, coords, visElementId: string): IOnboardingMessages[] {
+export function barChartFactory(chart, coords, visElementId: Element): IOnboardingMessages[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords);
   return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

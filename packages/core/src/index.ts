@@ -10,16 +10,16 @@ export { IOnboardingBarChartSpec } from './bar-chart';
 export { IOnboardingChangeMatrixSpec } from './change-matrix';
 export { IOnboardingHorizonGraphSpec } from './horizon-graph';
 
-export function generateMessages(visType: EVisualizationType, spec: IOnboardingSpec, visElementId: string): IOnboardingMessages[] {
+export function generateMessages(visType: EVisualizationType, spec: IOnboardingSpec, visElement: Element): IOnboardingMessages[] {
   switch(visType) {
     case EVisualizationType.BAR_CHART:
-      return barChart.generateMessages(<IOnboardingBarChartSpec>spec, visElementId);
+      return barChart.generateMessages(<IOnboardingBarChartSpec>spec, visElement);
 
     case EVisualizationType.CHANGE_MATRIX:
-      return changeMatrix.generateMessages(<IOnboardingChangeMatrixSpec>spec, visElementId);
+      return changeMatrix.generateMessages(<IOnboardingChangeMatrixSpec>spec, visElement);
 
     case EVisualizationType.HORIZON_GRAPH:
-      return horizonGraph.generateMessages(<IOnboardingHorizonGraphSpec>spec, visElementId);
+      return horizonGraph.generateMessages(<IOnboardingHorizonGraphSpec>spec, visElement);
   }
 
   return [];

@@ -15,35 +15,35 @@ function createColorRect(color = 'white') {
   return `<div class="colorRect" style="background: ${color}"></div>`;
 }
 
-function generateMessages(spec: IOnboardingHorizonGraphSpec, visElementId: string): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingHorizonGraphSpec, visElement: Element): IOnboardingMessages[] {
   const messages = [
     {
-      anchor: getAnchor(spec.chartTitle, visElementId),
+      anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.type, visElementId),
+      anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
       legend: `The chart is made out of <span class="hT">${spec.type?.value}</span> elements.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.xAxis, visElementId),
+      anchor: getAnchor(spec.xAxis, visElement),
       requires: ['xAxis', 'yAxis'],
       legend: `The areas illustrate the <span class="hT">${spec.yAxis?.value} (y-axis)</span> over <span class="hT">${spec.xAxis?.value} (x-axis)</span>.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.positiveColor, visElementId),
+      anchor: getAnchor(spec.positiveColor, visElement),
       requires: ['yAxis', 'positiveColor'],
       legend: `Light ${createColorRect(spec.positiveColor?.value)} areas indicate a moderate positive <span class="hT">${spec.yAxis?.value}</span> and dark
         ${createColorRect(spec.positiveColor?.value)} areas a high positive <span class="hT">${spec.yAxis?.value}</span>.`,
         onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.negativeColor, visElementId),
+      anchor: getAnchor(spec.negativeColor, visElement),
       requires: ['yAxis', 'negativeColor'],
       legend: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative <span class="hT">${spec.yAxis?.value}</span>.`,
       onboardingStage: EOnboardingStages.READING

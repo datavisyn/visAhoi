@@ -9,27 +9,27 @@ import {horizonGraphFactory} from './horizon-graph';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, chart: any, onboardingElement: string | Element) {
+export async function ahoi(visType: EVisualizationType, chart: Element, onboardingElement: string | Element) {
   let onboardingMessages;
-  const visElementId = chart.getAttribute("id");
+
   switch(visType) {
     case EVisualizationType.BAR_CHART:
-      onboardingMessages = barChartFactory(chart, visElementId);
+      onboardingMessages = barChartFactory(chart);
       break;
 
     case EVisualizationType.CHANGE_MATRIX:
-      onboardingMessages = changeMatrixFactory(chart, visElementId);
+      onboardingMessages = changeMatrixFactory(chart);
       break;
 
     case EVisualizationType.HORIZON_GRAPH:
-      onboardingMessages = horizonGraphFactory(chart, visElementId);
+      onboardingMessages = horizonGraphFactory(chart);
       break;
 
     default:
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-    injectOnboarding(getElement(onboardingElement), onboardingMessages, visElementId);
+    injectOnboarding(getElement(onboardingElement), onboardingMessages, chart);
 }
 
 export { EVisualizationType };
