@@ -1,4 +1,4 @@
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import * as d3 from 'd3';
 import { ahoi, EVisualizationType } from '@visahoi/echarts';
 
