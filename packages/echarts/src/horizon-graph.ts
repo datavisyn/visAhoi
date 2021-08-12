@@ -27,10 +27,16 @@ const getMinMax= (values) => {
 }
 
 function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
-  const xAxis = chart._chartsViews[1]._data._itemLayouts[3];
+  console.log(chart)
+  // console.log('0')
+  const xAxis = chart._chartsViews[0]._data._rawExtent.x; //already changed
+  console.log(xAxis)
   const positiveColor = chart._chartsViews[1]._data._itemLayouts[5];
+  console.log(positiveColor)
   const negativeColor = chart._chartsViews[2]._data._itemLayouts[0];
+  console.log(negativeColor)
   const options = chart._model.option;
+  console.log(options)
   const [min, max] = getMinMax(chart._model.option.series);
   return {
     chartTitle: {
