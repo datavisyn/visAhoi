@@ -27,9 +27,9 @@ const getMinMax= (values) => {
 }
 
 function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
-  const xAxis = chart._chartsViews[1]._data._itemLayouts[3];
-  const positiveColor = chart._chartsViews[1]._data._itemLayouts[5];
-  const negativeColor = chart._chartsViews[2]._data._itemLayouts[0];
+  const xAxis = [chart._chartsViews[0]._points[6], chart._chartsViews[0]._points[7]];
+  const positiveColor = [chart._chartsViews[1]._points[10], chart._chartsViews[1]._points[11]];
+  const negativeColor = [chart._chartsViews[2]._points[0], chart._chartsViews[2]._points[1]];
   const options = chart._model.option;
   const [min, max] = getMinMax(chart._model.option.series);
   return {
@@ -56,8 +56,8 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
       value: min,
       anchor: {
         coords: {
-          x: chart._chartsViews[2]._data._itemLayouts[1][0],
-          y: chart._chartsViews[2]._data._itemLayouts[1][1],
+          x: chart._chartsViews[2]._points[2],
+          y: chart._chartsViews[2]._points[3]
         }
       },
     },
@@ -65,8 +65,8 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
       value: max,
       anchor: {
         coords: {
-          x: chart._chartsViews[1]._data._itemLayouts[6][0],
-          y: chart._chartsViews[1]._data._itemLayouts[6][1],
+          x: chart._chartsViews[1]._points[12],
+          y: chart._chartsViews[1]._points[13]
         }
       },
     },
@@ -86,7 +86,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
     type: {
       value: "area",
       anchor: {
-        coords: {x: chart._chartsViews[0]._data._itemLayouts[8][0], y: chart._chartsViews[0]._data._itemLayouts[3][1]}
+        coords: {x: chart._chartsViews[0]._points[16], y: chart._chartsViews[0]._points[6]}
       }
     }
   };
