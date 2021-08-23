@@ -51,10 +51,10 @@ const createOnboardingStages = (activeStep: number, showAllHints: boolean, setOn
     .enter()
     .append('div')
     .classed('vizHint', true)
-    .on('click', (d, i, nodes) => {
+    .on('click', (event, d) => {
       if(!showAllHints) {
         setOnboardingState("activeStep", d[0]);
-        d3.select(nodes[i]).classed("active", true);
+        d3.select((event as any)?.currentTarget).classed("active", true); //as any because of ts-error
       }
     })
     .classed('active', (d) => (showAllHints || activeStep === d[0]) ? true : false)

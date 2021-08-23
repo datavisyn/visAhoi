@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@visahoi/plotly-demo",
-  "version": "1.0.0",
+  "version": "2.0.0-SNAPSHOT",
   "description": "Visualization onboarding for Plotly.js",
   "keywords": [
     "visualization",
@@ -25,8 +25,8 @@
     "lint": "prettier --check \"src/**/*.js\""
   },
   "dependencies": {
-    "@visahoi/plotly": "^1.0.0",
-    "plotly.js": "^1.54.5"
+    "@visahoi/plotly": "^2.0.0-SNAPSHOT",
+    "plotly.js": "^2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

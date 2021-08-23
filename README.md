@@ -35,7 +35,7 @@ yarn add @visahoi/echarts
 Let's enhance a bar chart with VisAhoi:
 
 ```js
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import { ahoi } from '@visahoi/echarts';
 
 function render() {

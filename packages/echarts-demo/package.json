@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@visahoi/echarts-demo",
-  "version": "1.0.0",
+  "version": "2.0.0-SNAPSHOT",
   "description": "Visualization onboarding for ECharts",
   "keywords": [
     "visualization",
@@ -25,9 +25,9 @@
     "lint": "prettier --check \"src/**/*.js\""
   },
   "dependencies": {
-    "d3": "^5.16.0",
-    "echarts": "^4.8.0",
-    "@visahoi/echarts": "^1.0.0"
+    "d3": "^7.0.0",
+    "echarts": "^5.1.2",
+    "@visahoi/echarts": "^2.0.0-SNAPSHOT"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
