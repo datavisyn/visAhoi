@@ -22,12 +22,13 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "tsc -b tsconfig.json"
+    "compile": "tsc -b tsconfig.json",
+    "watch": "npm run compile -- --watch"
   },
   "devDependencies": {
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "^2.0.0-SNAPSHOT"
+    "@visahoi/core": "../core"
   }
 }
