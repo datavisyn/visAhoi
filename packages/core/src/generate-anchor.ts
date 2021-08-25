@@ -15,6 +15,7 @@ const textOffset = 5;
  * @param {*} nodes all nodes
  */
 export function createAnchor(d, i: number, nodes, stepNumber) {
+  /*
   const currentEl = nodes[i];
   const parentEl = d3.select(currentEl).node().parentNode;
 
@@ -40,9 +41,11 @@ export function createAnchor(d, i: number, nodes, stepNumber) {
     .attr('text-anchor', 'middle')
     .style('fill', 'white')
     .text(`${stepNumber + 1}`);
+    */
 };
 
 export function displayMarkers(anchors, activeStep: number, showAllHints: boolean, visElement: Element) {
+  
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
@@ -105,6 +108,7 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
     // Create the respective anchor
     createHint(settings, i, activeStep, showAllHints);
   });
+  
 }
 
 /**
@@ -114,29 +118,70 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
  */
 function createHint(settings, text, activeStep: number, showAllHints: boolean) {
   let { cx, cy, r, x, y, left, right, top, bottom } = settings;
-  const hG = d3
-    .select('.onboardingAnnotations')
-    // .html(null)
-    .append('g')
-    .classed('chartAnnotation', true)
-    .classed('active', showAllHints || activeStep === text-1 ? true : false)
-    .attr('id', `anchor-${text}`);
+
+  console.log(text)
+  console.log(settings);
+
+  const overlay = document.getElementById("ahoiOverlaySVG");
+
+  const test = overlay?.getBoundingClientRect();
 
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
   if(top) { cy += top; y += top; }
   if(bottom) { cy -= bottom; y -= bottom; }
 
-  hG.append('circle')
-    .attr('r', r)
-    .attr('cx', cx)
-    .attr('cy', cy)
-    .style('stroke', '#C51B7D')
-    .style('fill', '#C51B7D')
-  hG.append('text')
-    .attr('x', x)
-    .attr('y', y)
-    .attr('text-anchor', 'middle')
-    .style('fill', 'white')
-    .text(text);
+  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  g.setAttribute("x", x + test?.x);
+  g.setAttribute("y", y + test?.y);
+  g.setAttribute("height", h.toString());
+  g.setAttribute("width", w.toString());
+  //g.setAttribute("aria-describedby", "tooltip");
+  g.setAttribute("id", `anchor-${text}`)
+  g.style.cursor = "pointer";
+  g.style.pointerEvents = "all";
+  g.addEventListener("click", () => alert("Hi"));
+  overlay?.appendChild(g);
+
+  const circle = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
+  circle.setAttribute("cx", cx + test?.x);
+  circle.setAttribute("cy", cy + test?.y);
+  circle.setAttribute("r", r);
+  circle.setAttribute("fill", '#C51B7D');
+  g.appendChild(circle);
+
+  const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  txt.setAttribute("x", (x - textOffset + test.x).toString());
+  txt.setAttribute("y", (y + textOffset + test?.y).toString());
+  txt.style.color = "white";
+  txt.innerHTML = text;
+  g.appendChild(txt);
+}
+
+export function createOverlay(plotX: number, plotY: number, plotWidth: number, plotHeight: number) {
+  let overlay = document.getElementById("ahoiOverlay");
+  if (!overlay) { overlay = document.createElement("div"); }
+  overlay.setAttribute("height", plotHeight.toString());
+  overlay.setAttribute("width", plotWidth.toString());
+  overlay.setAttribute("id", "ahoiOverlay");
+  overlay.style.position = "absolute";
+  overlay.style.top = plotY + "px";
+  overlay.style.left = plotX + "px";
+  overlay.style.pointerEvents = "none";
+  document.body.appendChild(overlay);
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute(
+    "viewBox",
+    plotX + " " + plotY + " " + plotWidth + " " + plotHeight
+  );
+  svg.setAttribute("height", plotHeight.toString());
+  svg.setAttribute("width", plotWidth.toString());
+  svg.setAttribute("id", "ahoiOverlaySVG");
+  overlay.appendChild(svg);
+  
+  return overlay;
 }
