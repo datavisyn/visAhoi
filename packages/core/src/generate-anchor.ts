@@ -119,69 +119,84 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
 function createHint(settings, text, activeStep: number, showAllHints: boolean) {
   let { cx, cy, r, x, y, left, right, top, bottom } = settings;
 
-  console.log(text)
-  console.log(settings);
-
   const overlay = document.getElementById("ahoiOverlaySVG");
 
   const test = overlay?.getBoundingClientRect();
-
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
   if(top) { cy += top; y += top; }
   if(bottom) { cy -= bottom; y -= bottom; }
 
-  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  g.setAttribute("x", x + test?.x);
-  g.setAttribute("y", y + test?.y);
-  g.setAttribute("height", h.toString());
-  g.setAttribute("width", w.toString());
-  //g.setAttribute("aria-describedby", "tooltip");
-  g.setAttribute("id", `anchor-${text}`)
-  g.style.cursor = "pointer";
-  g.style.pointerEvents = "all";
-  g.addEventListener("click", () => alert("Hi"));
-  overlay?.appendChild(g);
+  let g = document.getElementById(`anchor-${text}`) as any;
+  if (!g) { 
+    g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    if (g) { //because ts won't let me recompile
+      g.setAttribute("id", `anchor-${text}`)
+      g.style.cursor = "pointer";
+      g.style.pointerEvents = "all";
+      g.addEventListener("click", () => alert("Hi"));
+    //g.setAttribute("aria-describedby", "tooltip");
+      overlay?.appendChild(g);
+    }
+  }
+  g?.setAttribute("x", x + test?.x);
+  g?.setAttribute("y", y + test?.y);
+  g?.setAttribute("height", h.toString());
+  g?.setAttribute("width", w.toString());
 
-  const circle = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
-  );
-  circle.setAttribute("cx", cx + test?.x);
-  circle.setAttribute("cy", cy + test?.y);
-  circle.setAttribute("r", r);
-  circle.setAttribute("fill", '#C51B7D');
-  g.appendChild(circle);
+  let circle = document.getElementById(`circle-anchor-${text}`) as any;
+  if (!circle) {
+    circle = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "circle"
+    );
+    circle?.setAttribute("id", `circle-anchor-${text}`);
+    circle?.setAttribute("fill", '#C51B7D');
+    g?.appendChild(circle);
+  }
 
-  const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  txt.setAttribute("x", (x - textOffset + test.x).toString());
-  txt.setAttribute("y", (y + textOffset + test?.y).toString());
-  txt.style.color = "white";
-  txt.innerHTML = text;
-  g.appendChild(txt);
+  circle?.setAttribute("cx", cx + test?.x);
+  circle?.setAttribute("cy", cy + test?.y);
+  circle?.setAttribute("r", r);
+
+  let txt = document.getElementById(`text-anchor-${text}`) as any;
+  if (!txt) {
+    txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    txt?.setAttribute("id", `text-anchor-${text}`)
+    g?.appendChild(txt);
+    txt.innerHTML = text;
+
+  }
+  txt?.setAttribute("x", (x + test?.x - textOffset).toString());
+  txt?.setAttribute("y", (y + test?.y).toString());
+  txt?.setAttribute("fill", "white")
 }
 
 export function createOverlay(plotX: number, plotY: number, plotWidth: number, plotHeight: number) {
-  let overlay = document.getElementById("ahoiOverlay");
-  if (!overlay) { overlay = document.createElement("div"); }
+  let overlay = document.getElementById("ahoiOverlay") as any;
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.setAttribute("id", "ahoiOverlay");
+    overlay.style.position = "absolute";
+    overlay.style.pointerEvents = "none";
+    document.body.appendChild(overlay);
+  }
   overlay.setAttribute("height", plotHeight.toString());
   overlay.setAttribute("width", plotWidth.toString());
-  overlay.setAttribute("id", "ahoiOverlay");
-  overlay.style.position = "absolute";
   overlay.style.top = plotY + "px";
   overlay.style.left = plotX + "px";
-  overlay.style.pointerEvents = "none";
-  document.body.appendChild(overlay);
 
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute(
+  let svg = document.getElementById("ahoiOverlaySvg") as any;
+  if (!svg) {
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg?.setAttribute("id", "ahoiOverlaySVG");
+    overlay?.appendChild(svg);
+    console.log('test1')
+  }
+  svg?.setAttribute(
     "viewBox",
     plotX + " " + plotY + " " + plotWidth + " " + plotHeight
   );
-  svg.setAttribute("height", plotHeight.toString());
-  svg.setAttribute("width", plotWidth.toString());
-  svg.setAttribute("id", "ahoiOverlaySVG");
-  overlay.appendChild(svg);
-  
-  return overlay;
+  svg?.setAttribute("height", plotHeight.toString());
+  svg?.setAttribute("width", plotWidth.toString());
 }
