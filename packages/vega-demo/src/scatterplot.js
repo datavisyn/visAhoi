@@ -9,10 +9,12 @@ const opt = {
 };
 
 async function render() {
-  const response = await fetch('./data/horizonGraphOslo2018.json');
+  const response = await fetch('./data/cars.json');
   const json = await response.json();
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
+
+  console.log(vegaLite)
 
   ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding');
 };

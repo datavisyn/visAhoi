@@ -2,6 +2,7 @@ import { EVisualizationType, IOnboardingSpec, IOnboardingMessages } from './inte
 import { barChart, IOnboardingBarChartSpec } from './bar-chart';
 import { changeMatrix, IOnboardingChangeMatrixSpec } from './change-matrix';
 import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
+import { IOnboardingScatterplotSpec, scatterplot } from './scatterplot';
 
 export * from './injector';
 export * from './onboarding';
@@ -20,6 +21,9 @@ export function generateMessages(visType: EVisualizationType, spec: IOnboardingS
 
     case EVisualizationType.HORIZON_GRAPH:
       return horizonGraph.generateMessages(<IOnboardingHorizonGraphSpec>spec, visElement);
+
+    case EVisualizationType.SCATTERPLOT:
+      return scatterplot.generateMessages(<IOnboardingScatterplotSpec>spec, visElement);
   }
 
   return [];

@@ -138,7 +138,6 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
       g.addEventListener("click", () => alert("Hi"));
     //g.setAttribute("aria-describedby", "tooltip");
       overlay?.appendChild(g);
-      console.log("test2")
     }
   }
   g?.setAttribute("x", x);
@@ -192,7 +191,6 @@ export function createOverlay(plotX: number, plotY: number, plotWidth: number, p
     svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg?.setAttribute("id", "ahoiOverlaySVG");
     overlay?.appendChild(svg);
-    console.log('test1')
   }
   svg?.setAttribute(
     "viewBox",

@@ -4,6 +4,7 @@ import {EVisualizationType, injectOnboarding, getElement} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
+import { scatterplotFactory } from './scatterplot';
 
 /**
  *
@@ -48,6 +49,10 @@ export async function ahoi(visType: EVisualizationType, vegaResult: Result, onbo
       // Use the aggregated data values
       const aggregatedValues = data_1.values.value;
       onboardingMessages = horizonGraphFactory(vegaSpec, origSpec, d3Data, aggregatedValues, visElement);
+      break;
+
+    case EVisualizationType.SCATTERPLOT:
+      onboardingMessages = scatterplotFactory(vegaSpec, d3Data, visElement);
       break;
 
     default:

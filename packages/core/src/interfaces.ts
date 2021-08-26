@@ -6,7 +6,8 @@ import {EOnboardingStages} from "./onboarding";
 export enum EVisualizationType {
   BAR_CHART = 'bar-chart',
   CHANGE_MATRIX = 'change-matrix',
-  HORIZON_GRAPH = 'horizon-graph'
+  HORIZON_GRAPH = 'horizon-graph',
+  SCATTERPLOT = 'scatterplot'
 }
 
 export interface IOnboardingMessages {
