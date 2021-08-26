@@ -120,8 +120,9 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
   let { cx, cy, r, x, y, left, right, top, bottom } = settings;
 
   const overlay = document.getElementById("ahoiOverlaySVG");
+  const olRect = overlay?.getBoundingClientRect();
+  cx += olRect?.x; cy += olRect?.y; x += olRect?.x; y += olRect?.y;
 
-  const test = overlay?.getBoundingClientRect();
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
   if(top) { cy += top; y += top; }
@@ -137,10 +138,11 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
       g.addEventListener("click", () => alert("Hi"));
     //g.setAttribute("aria-describedby", "tooltip");
       overlay?.appendChild(g);
+      console.log("test2")
     }
   }
-  g?.setAttribute("x", x + test?.x);
-  g?.setAttribute("y", y + test?.y);
+  g?.setAttribute("x", x);
+  g?.setAttribute("y", y);
   g?.setAttribute("height", h.toString());
   g?.setAttribute("width", w.toString());
 
@@ -155,8 +157,8 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
     g?.appendChild(circle);
   }
 
-  circle?.setAttribute("cx", cx + test?.x);
-  circle?.setAttribute("cy", cy + test?.y);
+  circle?.setAttribute("cx", cx);
+  circle?.setAttribute("cy", cy);
   circle?.setAttribute("r", r);
 
   let txt = document.getElementById(`text-anchor-${text}`) as any;
@@ -165,10 +167,9 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
     txt?.setAttribute("id", `text-anchor-${text}`)
     g?.appendChild(txt);
     txt.innerHTML = text;
-
   }
-  txt?.setAttribute("x", (x + test?.x - textOffset).toString());
-  txt?.setAttribute("y", (y + test?.y).toString());
+  txt?.setAttribute("x", (x - textOffset).toString());
+  txt?.setAttribute("y", (y).toString());
   txt?.setAttribute("fill", "white")
 }
 
@@ -186,7 +187,7 @@ export function createOverlay(plotX: number, plotY: number, plotWidth: number, p
   overlay.style.top = plotY + "px";
   overlay.style.left = plotX + "px";
 
-  let svg = document.getElementById("ahoiOverlaySvg") as any;
+  let svg = document.getElementById("ahoiOverlaySVG") as any;
   if (!svg) {
     svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg?.setAttribute("id", "ahoiOverlaySVG");

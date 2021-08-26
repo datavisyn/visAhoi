@@ -4,7 +4,7 @@ import { createAnchor, createOverlay, displayMarkers } from './generate-anchor';
 import {EOnboardingStages} from './onboarding';
 
 export function displayGuide(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
-  let reading: [number, IOnboardingMessages][] = [];
+  /*let reading: [number, IOnboardingMessages][] = [];
   let using: [number, IOnboardingMessages][] = [];
   messages.forEach((message, index) => {
     if(message.onboardingStage === EOnboardingStages.READING) {
@@ -13,6 +13,7 @@ export function displayGuide(visElement: Element, messages: IOnboardingMessages[
       using.push([index, message])
     }
   })
+  */
   createOverlay(visElement.getBoundingClientRect().x, visElement.getBoundingClientRect().y, visElement.clientWidth, visElement.clientHeight);
 
   displayMarkers(messages.map((d, i) => ({
