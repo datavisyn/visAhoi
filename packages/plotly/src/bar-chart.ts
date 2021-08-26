@@ -10,6 +10,7 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   const traceNodes = chart.querySelectorAll("g.points");
   const barNodes = traceNodes[0].querySelectorAll("g.point");
   const barNodesData = Array.from(barNodes).map((point: any) => point.__data__);
+  console.log(barNodesData)
 
   const t = barNodesData[0].trace;
 
