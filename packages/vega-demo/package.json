@@ -23,11 +23,11 @@
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\"",
-    "watch": "npm run start"
+    "watch-vega": "nodemon --watch"
   },
   "dependencies": {
     "d3": "^7.0.0",
-    "@visahoi/vega": "^2.0.0-SNAPSHOT",
+    "@visahoi/vega": "../vega",
     "vega": "^5.20.2",
     "vega-embed": "^6.18.2",
     "vega-lite": "^5.1.0"
@@ -36,6 +36,7 @@
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "prettier": "^2.1.1",
-    "snowpack": "^2.9.3"
+    "snowpack": "^2.9.3",
+    "nodemon": "2.0.12"
   }
 }
