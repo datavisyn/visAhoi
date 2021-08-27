@@ -5,9 +5,8 @@
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
 
 function render() {
-  Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
+  fetch("./data/oslo-2018.csv").then(response => response.text()).then(data => {
     const {x, y} = processData(data);
-
     makePlotly(x, y).then((chart) => {
       ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
     });
@@ -42,8 +41,6 @@ function processData(allRows) {
     }, 0);
     return sum / tempArray.length;
   });
-
-  // console.log("date", x, "temp", y);
   return {x, y: averagedYValues};
 }
 

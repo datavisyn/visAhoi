@@ -1,12 +1,7 @@
-import {
-    EVisualizationType,
-    IOnboardingMessages,
-    generateMessages,
-  } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessages, generateMessages } from "@visahoi/core";
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
   
   function extractOnboardingSpec(chart, coords): IOnboardingScatterplotSpec {
-      console.log(chart)
     const dataCoords = chart._chartsViews[0]._symbolDraw._data._itemLayouts;
     const data = chart._chartsViews[0]._symbolDraw._data;
     const options = chart._model.option;
@@ -19,11 +14,6 @@ import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
     const maxX = Math.max(...xVals);
     const maxXIndex = xVals.indexOf(maxX);
     const maxY = yVals[maxXIndex];
-
-    console.log(dataCoords[8])
-    console.log("maxX ", maxX, "maxY ", maxY)
-    console.log(options.xAxis)
-    console.log(options.yAxis)
   
     return {
       chartTitle: {

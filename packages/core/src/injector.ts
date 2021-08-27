@@ -1,9 +1,8 @@
-import * as d3 from 'd3';
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
-import { createAnchor, createOverlay, displayMarkers } from './generate-anchor';
-import {EOnboardingStages} from './onboarding';
+import { createOverlay, displayMarkers } from './generate-anchor';
 
-export function displayGuide(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void, onboardingWrapper: any) {
+
+export function displayGuide(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean) {
   /*let reading: [number, IOnboardingMessages][] = [];
   let using: [number, IOnboardingMessages][] = [];
   messages.forEach((message, index) => {

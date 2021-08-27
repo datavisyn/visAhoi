@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import {isOnboardingElementAnchor} from './interfaces';
 
 // Reused constants that should be change here to make it uniform
@@ -7,42 +6,34 @@ const w = 30;
 const h = 30;
 const textOffset = 5;
 
-/**
- * This method annotates all the text elements for the onboarding. They are aligned using
- * a grid layout and the index of the step
- * @param {*} d current datum of the selection
- * @param {*} i index of the current selection
- * @param {*} nodes all nodes
- */
-export function createAnchor(d, i: number, nodes, stepNumber) {
-  /*
-  const currentEl = nodes[i];
-  const parentEl = d3.select(currentEl).node().parentNode;
+export function createOverlay(plotX: number, plotY: number, plotWidth: number, plotHeight: number) {
+  let overlay = document.getElementById("ahoiOverlay") as any;
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.setAttribute("id", "ahoiOverlay");
+    overlay.style.position = "absolute";
+    overlay.style.pointerEvents = "none";
+    document.body.appendChild(overlay);
+  }
+  overlay.setAttribute("height", plotHeight.toString());
+  overlay.setAttribute("width", plotWidth.toString());
+  overlay.style.top = plotY + "px";
+  overlay.style.left = plotX + "px";
 
-  const hintGroup = d3
-    .select(parentEl)
-    .insert('svg', ':first-child')
-    .attr('width', w)
-    .attr('height', h)
-    .append('g')
-    .classed('textAnnotation', true);
+  let svg = document.getElementById("ahoiOverlaySVG") as any;
+  if (!svg) {
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg?.setAttribute("id", "ahoiOverlaySVG");
+    overlay?.appendChild(svg);
+  }
+  svg?.setAttribute(
+    "viewBox",
+    plotX + " " + plotY + " " + plotWidth + " " + plotHeight
+  );
+  svg?.setAttribute("height", plotHeight.toString());
+  svg?.setAttribute("width", plotWidth.toString());
+}
 
-  hintGroup
-    .append('circle')
-    .attr('r', r)
-    .attr('cx', w / 2)
-    .attr('cy', h / 2)
-    .style('stroke', '#C51B7D')
-    .style('fill', '#C51B7D');
-  hintGroup
-    .append('text')
-    .attr('x', w / 2)
-    .attr('y', h / 2 + textOffset)
-    .attr('text-anchor', 'middle')
-    .style('fill', 'white')
-    .text(`${stepNumber + 1}`);
-    */
-};
 
 export function displayMarkers(anchors, activeStep: number, showAllHints: boolean, visElement: Element) {
   
@@ -87,12 +78,12 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
       if(isOnboardingElementAnchor(a)) {
         node = a.element;
       } else {
-        const elToAppendTo = d3.select(a.sel);
-        if(!elToAppendTo.node()) {
+        const elToAppendTo = document.querySelector(a.sel);
+        if(!elToAppendTo) {
           console.error('No element found for selector', a.sel);
           return;
         }
-        node = elToAppendTo.node()
+        node = elToAppendTo;
       }
       const elRect = node.getBoundingClientRect();
       const elBox = node.getBBox();
@@ -172,30 +163,3 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
   txt?.setAttribute("fill", "white")
 }
 
-export function createOverlay(plotX: number, plotY: number, plotWidth: number, plotHeight: number) {
-  let overlay = document.getElementById("ahoiOverlay") as any;
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.setAttribute("id", "ahoiOverlay");
-    overlay.style.position = "absolute";
-    overlay.style.pointerEvents = "none";
-    document.body.appendChild(overlay);
-  }
-  overlay.setAttribute("height", plotHeight.toString());
-  overlay.setAttribute("width", plotWidth.toString());
-  overlay.style.top = plotY + "px";
-  overlay.style.left = plotX + "px";
-
-  let svg = document.getElementById("ahoiOverlaySVG") as any;
-  if (!svg) {
-    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg?.setAttribute("id", "ahoiOverlaySVG");
-    overlay?.appendChild(svg);
-  }
-  svg?.setAttribute(
-    "viewBox",
-    plotX + " " + plotY + " " + plotWidth + " " + plotHeight
-  );
-  svg?.setAttribute("height", plotHeight.toString());
-  svg?.setAttribute("width", plotWidth.toString());
-}

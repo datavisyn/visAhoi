@@ -1,12 +1,11 @@
 import * as echarts from 'echarts';
-import * as d3 from 'd3';
 import { ahoi, EVisualizationType } from '@visahoi/echarts';
 
 let chart = null;
 
 function render() {
-  d3.json("../data/cars.json").then(rows => {
-    const chart = createPlot(processData(rows));
+  fetch("../data/cars.json").then(response => response.json()).then(data => {
+    const chart = createPlot(processData(data));
     ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
   });
 }

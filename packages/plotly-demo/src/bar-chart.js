@@ -3,19 +3,29 @@
 // import * as Plotly from 'plotly.js';
 
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
+import { importCsv } from './util';
 
-function render() {
-  Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
-    const {x, y} = processData(data);
+async function render() {
+  const data = await importCsv("./data/oslo-2018.csv");
+  console.log(data) //here we've got data
+  const {x, y} = await processData(data);
+  console.log(x,y) //but not here
+  makePlotly(x, y).then((chart) => {
+    ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
+  })
 
-    makePlotly(x, y).then((chart) => {
-      ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
-    });
-  });
+  //TODO: csv-import for each library + window resize event + popper js
+
+  // fetch("./data/oslo-2018.csv").then(response => response.text()).then(text => {
+  //   const data = [];
+  //   const lines = text.split("\n");
+  //   lines.forEach((line) => data.push(line.split(",")));
+  //   console.log(data)
+    
+  // });
 }
 
 function processData(allRows) {
-  //console.log(allRows);
   const x = [];
   const y = [];
 
@@ -24,7 +34,6 @@ function processData(allRows) {
     x.push(`${row.year}-${row.month}`);
     y.push(row.temp);
   }
-  // console.log("date", x, "temp", y);
   return {x, y};
 }
 

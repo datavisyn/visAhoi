@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { Result } from 'vega-embed';
-import {EVisualizationType, injectOnboarding, getElement} from '@visahoi/core';
+import {EVisualizationType, injectOnboarding} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
@@ -59,7 +59,7 @@ export async function ahoi(visType: EVisualizationType, vegaResult: Result, onbo
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  injectOnboarding(getElement(onboardingElement), onboardingMessages, visElement);
+  injectOnboarding(onboardingMessages, visElement);
 }
 
 export { EVisualizationType };

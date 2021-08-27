@@ -13,9 +13,6 @@ async function render() {
   const json = await response.json();
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
-
-  console.log(vegaLite)
-
   ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding');
 };
 

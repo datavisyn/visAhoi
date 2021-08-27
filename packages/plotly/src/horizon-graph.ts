@@ -14,8 +14,6 @@ function extractOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
 
   const t = areaNodesData[0][0].trace;
 
-  // console.log(t);
-
   return {
     chartTitle: {
       value: chart.layout.title.text,

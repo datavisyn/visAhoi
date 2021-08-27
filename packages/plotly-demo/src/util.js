@@ -60,3 +60,22 @@ const getPropertyValues = (arr) => {
 
   return res;
 }
+
+export const importCsv = (url) => {
+  const data = [];
+  fetch(url).then(response => response.text()).then(text => {
+    const lines = text.split("\n");
+    const headers = lines[0].split(",");
+    lines.forEach((line, i) => {
+      if (i != 0) {
+        let obj = {};
+        line.split(",").forEach((l, j) => {
+          obj[`${headers[j]}`] = l;
+        })
+        data.push(obj)
+      }
+    });
+    return data;
+  }).catch(e => console.log(e));
+  return data;
+}

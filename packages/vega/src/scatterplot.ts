@@ -1,21 +1,33 @@
-import { EVisualizationType, IOnboardingMessages, IOnboardingSpec, generateMessages, ISpecProp} from '@visahoi/core';
+import { EVisualizationType, IOnboardingMessages, generateMessages } from '@visahoi/core';
 import { Spec } from 'vega-typings';
-import { VisualizationSpec } from 'vega-embed';
-import {getMinMax} from './bar-chart';
-
-export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
-    chartTitle?: ISpecProp;
-    type?: ISpecProp;
-    legendTitle?: ISpecProp;
-    xAxis?: ISpecProp;
-    yAxis?: ISpecProp;
-    yAxisTitle?: ISpecProp;
-    xAxisTitle?: ISpecProp;
-  }
+import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
 
 function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingScatterplotSpec {
 
   const v = vegaSpec;
+
+  const grid = document
+  .getElementsByClassName("background")[0]
+  .getBoundingClientRect();
+
+  const points = Array.from(
+    document
+      .getElementsByClassName("mark-symbol role-mark marks")[0]
+      .getElementsByTagName("path")
+  ).filter(
+    (point) =>
+      point.getBoundingClientRect().x &&
+      point.getBoundingClientRect().x <= grid.width + grid.x - 10 &&
+      point.getBoundingClientRect().y &&
+      point.getBoundingClientRect().y <= grid.height + grid.y - 10
+  );
+
+  const xVals = points.map((point) => point.getBoundingClientRect().x);
+  const yVals = points.map((point) => point.getBoundingClientRect().y);
+
+  const maxX = Math.max(...xVals);
+  const maxXIndex = xVals.indexOf(maxX);
+  const maxY = yVals[maxXIndex];
 
   return {
     chartTitle: {
@@ -39,15 +51,6 @@ function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingScatter
           offset: {top: -20}
       },
     },
-    xAxis: {
-      value: (<any>v.axes![2]).title.toLowerCase(),
-      anchor: {
-        coords: elems[0],
-      },
-    },
-    yAxis: {
-      value: (<any>v.axes![3]).title.toLowerCase()
-    },
     xAxisTitle: {
       value: (<any>v.axes![1]).title,
       anchor: {
@@ -61,6 +64,12 @@ function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingScatter
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
         offset: {top: -30}
       },
+    },
+    maxValue: {
+      value: maxX,
+      anchor: {
+        coords: {x: maxX, y: maxY} //rendered too low (bc onset in anchor creation)
+      }
     }
   };
 }

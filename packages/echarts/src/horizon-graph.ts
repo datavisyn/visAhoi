@@ -6,13 +6,9 @@ import {
 } from "@visahoi/core";
 
 const getMinMax= (values) => {
-  // console.log("values: ", values);
-  // _chartsViews[0]._data._rawData._data
   const unified: number[] = new Array(values[0].data.length).fill(0);
-  // console.log("unified: ", unified);
   values.forEach((v, i) => {
     v.data.forEach((val, index) => {
-      // console.log(val, index)
       if(i === 2) {
         unified[index] -= val
       }

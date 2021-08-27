@@ -13,7 +13,6 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   maxValue?: ISpecProp;
 }
 
-
 function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element): IOnboardingMessages[] {
   const messages = [
     {

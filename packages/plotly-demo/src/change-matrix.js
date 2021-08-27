@@ -5,9 +5,8 @@
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
 
 function render() {
-  Plotly.d3.json("./data/matrix.json", function(data) {
+  fetch('./data/matrix.json').then(response => response.json()).then(data => {
     const {x, y, z} = processData(data);
-
     makePlotly(x, y, z).then((chart) => {
       ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
     });
@@ -15,7 +14,6 @@ function render() {
 }
 
 function processData(allRows) {
-  // console.log(allRows);
 
   const nestedDataByDate = Plotly.d3
     .nest()
@@ -36,8 +34,6 @@ function processData(allRows) {
   const z = nestedDataByCity.map(city => {
     return city.values.map(d => d.c);
   });
-
-  // console.log("date", x, "city", y, "value", z);
   return {x, y, z};
 }
 
