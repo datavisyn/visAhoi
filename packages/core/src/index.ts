@@ -29,6 +29,8 @@ export function generateMessages(visType: EVisualizationType, spec: IOnboardingS
   return [];
 }
 
+window.addEventListener('resize', () => console.log('this is it'));
+
 export default function logger(message: string) {
   console.log(message);
 }

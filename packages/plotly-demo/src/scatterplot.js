@@ -5,11 +5,11 @@
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
 
 function render() {
-  Plotly.d3.json("./data/cars.json", function(data) {
-      const {x, y} = processData(data);
-      makePlotly(x, y).then((chart) => {
-        ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
-      });
+  Plotly.d3.json("../data/cars.json", data => {
+    const {x, y} = processData(data);
+    makePlotly(x, y).then((chart) => {
+      ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
+    });
   });
 }
 

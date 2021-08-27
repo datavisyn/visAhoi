@@ -10,6 +10,7 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   yAxis?: ISpecProp;
   yAxisTitle?: ISpecProp;
   xAxisTitle?: ISpecProp;
+  maxValue?: ISpecProp;
 }
 
 
@@ -34,8 +35,8 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       onboardingStage: EOnboardingStages.READING
     },
     {
-      anchor: getAnchor(spec.xAxis, visElement),
-      requires: ['xAxis', 'yAxis'],
+      anchor: getAnchor(spec.xAxisTitle, visElement),
+      requires: ['xAxisTitle', 'yAxisTitle'],
       legend: `The columns show the <span class="hT">${spec.xAxis?.value}</span>, while the rows show the <span class="hT">${spec.yAxis?.value}</span>.`,
       onboardingStage: EOnboardingStages.READING
     },
@@ -43,6 +44,12 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
       legend: `the <span class="hT">${spec.yAxisTitle?.value} (y-axis)</span> for a certain ${spec.xAxisTitle?.value}.`,
+      onboardingStage: EOnboardingStages.READING
+    },
+    {
+      anchor: getAnchor(spec.maxValue, visElement),
+      requires: ['maxValue'],
+      legend: `The chart Is based on colored <span class="hT">${spec.maxValue}</span> elements.`,
       onboardingStage: EOnboardingStages.READING
     }
   ];

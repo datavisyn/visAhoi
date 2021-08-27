@@ -34,7 +34,7 @@ export async function ahoi(visType: EVisualizationType, chart: Element, onboardi
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-    injectOnboarding(getElement(onboardingElement), onboardingMessages, chart);
+  injectOnboarding(getElement(onboardingElement), onboardingMessages, chart);
 }
 
 export { EVisualizationType };
