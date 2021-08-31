@@ -3,13 +3,13 @@
 // import * as Plotly from 'plotly.js';
 
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
+import { importCsv } from './util';
 
-function render() {
-  fetch("./data/oslo-2018.csv").then(response => response.text()).then(data => {
-    const {x, y} = processData(data);
-    makePlotly(x, y).then((chart) => {
-      ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
-    });
+async function render() {
+  const data = await importCsv("./data/oslo-2018.csv");
+  const {x, y} = processData(data);
+  makePlotly(x, y).then((chart) => {
+    ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
   });
 }
 

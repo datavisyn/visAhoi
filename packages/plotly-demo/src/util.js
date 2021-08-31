@@ -61,9 +61,9 @@ const getPropertyValues = (arr) => {
   return res;
 }
 
-export const importCsv = (url) => {
+export const importCsv = async (url) => {
   const data = [];
-  fetch(url).then(response => response.text()).then(text => {
+  await fetch(url).then(response => response.text()).then(text => {
     const lines = text.split("\n");
     const headers = lines[0].split(",");
     lines.forEach((line, i) => {

@@ -7,28 +7,15 @@ import { importCsv } from './util';
 
 async function render() {
   const data = await importCsv("./data/oslo-2018.csv");
-  console.log(data) //here we've got data
-  const {x, y} = await processData(data);
-  console.log(x,y) //but not here
+  const {x, y} = processData(data);
   makePlotly(x, y).then((chart) => {
     ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
   })
-
-  //TODO: csv-import for each library + window resize event + popper js
-
-  // fetch("./data/oslo-2018.csv").then(response => response.text()).then(text => {
-  //   const data = [];
-  //   const lines = text.split("\n");
-  //   lines.forEach((line) => data.push(line.split(",")));
-  //   console.log(data)
-    
-  // });
 }
 
 function processData(allRows) {
   const x = [];
   const y = [];
-
   for (var i = 0; i < allRows.length; i++) {
     const row = allRows[i];
     x.push(`${row.year}-${row.month}`);
