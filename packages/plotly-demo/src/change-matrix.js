@@ -8,6 +8,7 @@ function render() {
   fetch('./data/matrix.json').then(response => response.json()).then(data => {
     const {x, y, z} = processData(data);
     makePlotly(x, y, z).then((chart) => {
+      window.addEventListener("resize", () => ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding'));
       ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
     });
   });
@@ -20,6 +21,12 @@ function processData(allRows) {
     .key(d => d.b)
     .sortKeys(Plotly.d3.ascending)
     .entries(allRows);
+
+  //create map here
+
+  console.log(allRows)
+
+  console.log(nestedDataByDate)
 
   const x = nestedDataByDate.map(d => d.key);
 

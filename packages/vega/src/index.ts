@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import { Result } from 'vega-embed';
 import {EVisualizationType, injectOnboarding} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
@@ -22,10 +21,10 @@ export async function ahoi(visType: EVisualizationType, vegaResult: Result, onbo
 
   // ADDITIONAL (not used)
   // Get the individual nodes
-  const nodes = d3.select(visElement).selectAll('.role-mark').selectAll('path').nodes();
+  const nodes = document.querySelectorAll(".role-mark > path");
 
   // Get the data of the individual bars
-  const d3Data = nodes.map((el: any) => el.__data__);
+  const d3Data = Array.from(nodes).map((el: any) => el.__data__);
 
   let onboardingMessages;
 

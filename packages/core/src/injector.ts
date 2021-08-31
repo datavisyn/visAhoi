@@ -15,9 +15,6 @@ export function displayGuide(visElement: Element, messages: IOnboardingMessages[
   */
   createOverlay(visElement.getBoundingClientRect().x, visElement.getBoundingClientRect().y, visElement.clientWidth, visElement.clientHeight);
 
-  console.log(messages)
-
-
   displayMarkers(messages.map((d, i) => ({
     anchor: d.anchor,
     index: i + 1,

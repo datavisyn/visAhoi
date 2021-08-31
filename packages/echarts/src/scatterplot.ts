@@ -6,14 +6,15 @@ import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
     const data = chart._chartsViews[0]._symbolDraw._data;
     const options = chart._model.option;
 
-    const points = chart._chartsViews[0].renderTask.context.data._itemLayouts.filter(
+    const points = dataCoords.filter(
         (point) => point[0] && point[1]
       );
     const xVals = [...points.map((point) => point[0])];
     const yVals = [...points.map((point) => point[1])];
-    const maxX = Math.max(...xVals);
+    let maxX = Math.max(...xVals);
     const maxXIndex = xVals.indexOf(maxX);
-    const maxY = yVals[maxXIndex];
+    const maxY = yVals[maxXIndex] + chart._dom.offsetTop;
+    maxX += + chart._dom.offsetLeft;
   
     return {
       chartTitle: {
@@ -46,7 +47,8 @@ import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
       maxValue: {
           value: maxX,
           anchor: {
-            coords: {x: maxX, y: maxY}
+            coords: {x: maxX, y: maxY},
+            offset: {left: 25}
           }
       }
     };

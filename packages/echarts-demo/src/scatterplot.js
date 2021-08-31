@@ -6,7 +6,8 @@ let chart = null;
 function render() {
   fetch("../data/cars.json").then(response => response.json()).then(data => {
     const chart = createPlot(processData(data));
-    ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
+  window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding'));
+  ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
   });
 }
 
@@ -49,7 +50,8 @@ function createPlot(values) {
 
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
-  chart = echarts.init(vis, null, {renderer})
+  chart = echarts.init(vis, null, {renderer});
+  window.addEventListener("resize", () => chart.resize());
   render();
 }
 

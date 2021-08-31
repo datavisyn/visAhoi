@@ -25,8 +25,6 @@ function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
   const maxXIndex = xVals.indexOf(maxX);
   const maxY = yVals[maxXIndex];
 
-  console.log(maxY)
-
   return {
     chartTitle: {
       value: chart.layout.title.text,
@@ -57,7 +55,8 @@ function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
     maxValue: {
       value: maxX,
       anchor: {
-        coords: {x: maxX, y: maxY} //rendered too low (bc onset in anchor creation)
+        coords: {x: maxX, y: maxY},
+        offset: {left: 25}
       }
   }
   };

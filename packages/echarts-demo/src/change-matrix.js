@@ -9,6 +9,7 @@ async function render() {
   const data = await importCsv("../data/oslo-2018.csv");
   const {x, y} = processData(data);
   const chart = createPlot(x, y);
+  window.addEventListener("resize", () => ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding'));
   ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
 }
 
@@ -137,6 +138,7 @@ function processData(allRows) {
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
   chart = echarts.init(vis, null, {renderer})
+  window.addEventListener("resize", () => chart.resize());
   render();
 }
 

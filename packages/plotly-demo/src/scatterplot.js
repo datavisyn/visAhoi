@@ -8,6 +8,7 @@ function render() {
   fetch('../data/cars.json').then(response => response.json()).then(data => {
     const {x, y} = processData(data);
     makePlotly(x, y).then((chart) => {
+      window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding'));
       ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
     });
   });
@@ -50,4 +51,4 @@ function makePlotly(x, y) {
   return Plotly.newPlot("vis", traces, layout, config);
 }
 
-render();
+await render();

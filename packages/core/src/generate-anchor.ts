@@ -58,7 +58,7 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
     const i = el.index;
     const message = el.message;
     let settings = Object.assign({}, a.offset || {});
-
+    
     // If we have coords we can use them
     if (a.coords) {
       if (a.coords.hasOwnProperty('bounds')) { // This means we use th coords of a bar chart or anything with x1 and x2
@@ -126,8 +126,6 @@ function createHint(settings, text, message) { //unused params: activeStep: numb
   if(right) { cx -= right; x -= right; }
   if(top) { cy += top; y += top; }
   if(bottom) { cy -= bottom; y -= bottom; }
-
-  console.log(text, ": ", cx, ", ", x)
 
   let g = document.getElementById(`anchor-${text}`) as any;
   if (!g) { 

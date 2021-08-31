@@ -68,13 +68,14 @@ function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingScatter
     maxValue: {
       value: maxX,
       anchor: {
-        coords: {x: maxX, y: maxY} //rendered too low (bc onset in anchor creation)
+        coords: {x: maxX, y: maxY},
+        offset: {left: 25}
       }
     }
   };
 }
 
 export function scatterplotFactory(vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessages[] {
-    const onbordingSpec = extractOnboardingSpec(vegaSpec, elems);
+  const onbordingSpec = extractOnboardingSpec(vegaSpec, elems);
   return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElement);
 }

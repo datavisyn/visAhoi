@@ -13,7 +13,7 @@ async function render() {
   const json = await response.json();
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
-
+  window.addEventListener("resize", () => ahoi(EVisualizationType.HORIZON_GRAPH, vegaLite, '#onboarding'));
   ahoi(EVisualizationType.HORIZON_GRAPH, vegaLite, '#onboarding');
 };
 

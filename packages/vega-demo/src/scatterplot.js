@@ -13,6 +13,7 @@ async function render() {
   const json = await response.json();
 
   let vegaLite = await vegaEmbed('#vis', json, opt);
+  window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding'));
   ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding');
 };
 
