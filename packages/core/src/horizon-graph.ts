@@ -26,26 +26,26 @@ function generateMessages(spec: IOnboardingHorizonGraphSpec, visElement: Element
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
-      legend: `The chart is made out of <span class="hT">${spec.type?.value}</span> elements.`,
+      legend: `The chart is made out of ${spec.type?.value} elements.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.xAxis, visElement),
       requires: ['xAxis', 'yAxis'],
-      legend: `The areas illustrate the <span class="hT">${spec.yAxis?.value} (y-axis)</span> over <span class="hT">${spec.xAxis?.value} (x-axis)</span>.`,
+      legend: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
       onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.positiveColor, visElement),
       requires: ['yAxis', 'positiveColor'],
-      legend: `Light ${createColorRect(spec.positiveColor?.value)} areas indicate a moderate positive <span class="hT">${spec.yAxis?.value}</span> and dark
-        ${createColorRect(spec.positiveColor?.value)} areas a high positive <span class="hT">${spec.yAxis?.value}</span>.`,
+      legend: `Light ${createColorRect(spec.positiveColor?.value)} areas indicate a moderate positive ${spec.yAxis?.value} and dark
+        ${createColorRect(spec.positiveColor?.value)} areas a high positive ${spec.yAxis?.value}.`,
         onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.negativeColor, visElement),
       requires: ['yAxis', 'negativeColor'],
-      legend: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative <span class="hT">${spec.yAxis?.value}</span>.`,
+      legend: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative ${spec.yAxis?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {

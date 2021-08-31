@@ -1,3 +1,4 @@
+import { createPopper } from '@popperjs/core';
 import {isOnboardingElementAnchor} from './interfaces';
 
 // Reused constants that should be change here to make it uniform
@@ -32,6 +33,13 @@ export function createOverlay(plotX: number, plotY: number, plotWidth: number, p
   );
   svg?.setAttribute("height", plotHeight.toString());
   svg?.setAttribute("width", plotWidth.toString());
+
+  let tooltipContainer = document.getElementById("tooltipContainer") as any;
+  if (!tooltipContainer) {
+    tooltipContainer = document.createElement("div");
+    tooltipContainer?.setAttribute("id", "tooltipContainer");
+    overlay?.appendChild(tooltipContainer);
+  }
 }
 
 
@@ -48,6 +56,7 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
 
     const a = el.anchor;
     const i = el.index;
+    const message = el.message;
     let settings = Object.assign({}, a.offset || {});
 
     // If we have coords we can use them
@@ -89,15 +98,15 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
       const elBox = node.getBBox();
       // console.log('FOR ', a.sel || a.element ,' the DOMRect = ', elRect, ' and the SVGrect = ', elBox);
       Object.assign(settings, {
-        cx: elRect.x - svgPosition.left,
-        cy: elRect.y - svgPosition.top,
+        cx: elRect.x,
+        cy: elRect.y,
         r,
-        x: elRect.x - svgPosition.left,
-        y: (elRect.y - svgPosition.top) + textOffset,
+        x: elRect.x,
+        y: (elRect.y) + textOffset,
       });
     }
     // Create the respective anchor
-    createHint(settings, i, activeStep, showAllHints);
+    createHint(settings, i, message);
   });
   
 }
@@ -106,18 +115,19 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
  * Somewhat generic function to create an annotation based on some properties that can vary.
  * @param {*} settings where all the positions for the annotation are passed
  * @param {*} text of the annotation to show
+ * @param {*} message tooltip message for anchor
  */
-function createHint(settings, text, activeStep: number, showAllHints: boolean) {
+function createHint(settings, text, message) { //unused params: activeStep: number, showAllHints: boolean
   let { cx, cy, r, x, y, left, right, top, bottom } = settings;
 
   const overlay = document.getElementById("ahoiOverlaySVG");
-  const olRect = overlay?.getBoundingClientRect();
-  cx += olRect?.x; cy += olRect?.y; x += olRect?.x; y += olRect?.y;
 
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
   if(top) { cy += top; y += top; }
   if(bottom) { cy -= bottom; y -= bottom; }
+
+  console.log(text, ": ", cx, ", ", x)
 
   let g = document.getElementById(`anchor-${text}`) as any;
   if (!g) { 
@@ -126,8 +136,8 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
       g.setAttribute("id", `anchor-${text}`)
       g.style.cursor = "pointer";
       g.style.pointerEvents = "all";
-      g.addEventListener("click", () => alert("Hi"));
-    //g.setAttribute("aria-describedby", "tooltip");
+      g.addEventListener("click", () => toggleTooltip(`tooltip-anchor-${text}`));
+      g.setAttribute("aria-describedby", "tooltip");
       overlay?.appendChild(g);
     }
   }
@@ -160,6 +170,70 @@ function createHint(settings, text, activeStep: number, showAllHints: boolean) {
   }
   txt?.setAttribute("x", (x - textOffset).toString());
   txt?.setAttribute("y", (y).toString());
-  txt?.setAttribute("fill", "white")
+  txt?.setAttribute("fill", "white");
+
+  createTooltip(text, message, g);
 }
 
+function createTooltip(text: string, toolText: string, g: SVGGElement) {
+  const tooltipContainer = document.getElementById("tooltipContainer");
+  if (!tooltipContainer) {
+    return;
+  }
+
+  let tooltip = document.getElementById(`tooltip-anchor-${text}`);
+  if (!tooltip) {
+    tooltip = document.createElement("div");
+    tooltip?.setAttribute("id", `tooltip-anchor-${text}`);
+    tooltip?.setAttribute("role", "tooltip");
+    tooltip.style.display = "inline-block";
+    tooltip.style.background = "#C51B7D";
+    tooltip.style.color = "white";
+    tooltip.style.fontWeight = "bold";
+    tooltip.style.padding = "5px 10px";
+    tooltip.style.fontSize = "13px";
+    tooltip.style.borderRadius = "4px";
+    tooltip.style.pointerEvents = "all";
+    tooltip.style.wordBreak = "break-word";
+    tooltip.innerText = toolText;
+    tooltipContainer?.appendChild(tooltip);
+  }
+
+  let arrow = document.getElementById(`arrow-anchor-${text}`);
+  if (!arrow) {
+    arrow = document.createElement("div");
+    arrow?.setAttribute("id", `arrow-anchor-${text}`);
+    arrow?.setAttribute("data-popper-arrow", "");
+    arrow.style.transform = "rotate(45deg) !important"; //TODO: y not working?
+    arrow.style.position = "absolute";
+    arrow.style.width = "8px";
+    arrow.style.height = "8px";
+    arrow.style.background = "#C51B7D";
+    arrow.style.bottom = "-4px"
+    tooltip?.appendChild(arrow);
+  }
+
+  createPopper(g, tooltip, {
+    placement: "top",
+    modifiers: [
+      {
+        name: "offset",
+        options: {
+          offset: [0, 8]
+        }
+      }
+    ]
+  });
+}
+
+const toggleTooltip = (id: string) => {
+  const tooltip = document.getElementById(id);
+  if (!tooltip) {
+    return;
+  }
+  if (tooltip.style.display !== "none") {
+    tooltip.style.display = "none";
+  } else {
+    tooltip.style.display = "inline-block";
+  }
+};

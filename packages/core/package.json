@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "@types/d3": "^7.0.0",
-    "d3": "^7.0.0"
+    "d3": "^7.0.0",
+    "@popperjs/core": "2.9.3",
+    "popper.js": "1.16.1"
   }
 }

@@ -24,31 +24,31 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
-      legend: `The chart Is based on colored <span class="hT">${spec.type?.value}</span> elements.`,
+      legend: `The chart Is based on colored ${spec.type?.value} elements.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
-      legend: `The legend shows the <span class="hT">${spec.legendTitle?.value}</span> for the chart. The colors range from <span class="hT">blue to white and brown</span>.`,
+      legend: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['xAxisTitle', 'yAxisTitle'],
-      legend: `The columns show the <span class="hT">${spec.xAxis?.value}</span>, while the rows show the <span class="hT">${spec.yAxis?.value}</span>.`,
+      legend: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
-      legend: `the <span class="hT">${spec.yAxisTitle?.value} (y-axis)</span> for a certain ${spec.xAxisTitle?.value}.`,
+      legend: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
       onboardingStage: EOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      legend: `The chart Is based on colored <span class="hT">${spec.maxValue}</span> elements.`,
+      legend: `The chart Is based on colored ${spec.maxValue} elements.`,
       onboardingStage: EOnboardingStages.READING
     }
   ];

@@ -68,7 +68,11 @@ function makePlotly(x, y, z) {
     }
   };
 
-  return Plotly.newPlot("vis", traces, layout);
+  const config = {
+    responsive: true
+  };
+
+  return Plotly.newPlot("vis", traces, layout, config);
 }
 
 render();

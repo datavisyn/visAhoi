@@ -74,10 +74,10 @@ function createPlot(x, y) {
   return chart;
 }
 
-
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
   chart = echarts.init(vis, null, {renderer})
+  window.addEventListener("resize", () => chart.resize()) //add aditional event
   render();
 }
 

@@ -58,7 +58,6 @@ export async function ahoi(visType: EVisualizationType, vegaResult: Result, onbo
     default:
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
-
   injectOnboarding(onboardingMessages, visElement);
 }
 

@@ -29,11 +29,8 @@ export default class OnboardingUI {
   }
 }
 
-// window.addEventListener('resize', () => {
-//   onboarding.displayGuide();
-// })
-
 export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element) => {
   const onboarding = new OnboardingUI(onboardingMessages, visElement);
+  window.addEventListener("resize", () => onboarding.displayGuide())
   onboarding.displayGuide()
 }

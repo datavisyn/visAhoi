@@ -13,9 +13,9 @@ function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
 
   const points = (Array.from(areaNodes)as any[]).filter((point) =>
       point.getBoundingClientRect().x &&
-      point.getBoundingClientRect().x <= grid.width + grid.x - 10 &&
+      point.getBoundingClientRect().x <= grid.width + grid.x &&
       point.getBoundingClientRect().y &&
-      point.getBoundingClientRect().y <= grid.height + grid.y - 10
+      point.getBoundingClientRect().y <= grid.height + grid.y
   );
 
   const xVals = points.map((point) => point.getBoundingClientRect().x);
