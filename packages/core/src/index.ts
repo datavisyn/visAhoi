@@ -3,6 +3,8 @@ import { barChart, IOnboardingBarChartSpec } from './bar-chart';
 import { changeMatrix, IOnboardingChangeMatrixSpec } from './change-matrix';
 import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
 import { IOnboardingScatterplotSpec, scatterplot } from './scatterplot';
+import '@fortawesome/fontawesome-free/js/fontawesome.js';
+import '@fortawesome/fontawesome-free/js/solid.js';
 
 export * from './injector';
 export * from './onboarding';

@@ -7,42 +7,6 @@ const w = 30;
 const h = 30;
 const textOffset = 5;
 
-export function createOverlay(plotX: number, plotY: number, plotWidth: number, plotHeight: number) {
-  let overlay = document.getElementById("ahoiOverlay") as any;
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.setAttribute("id", "ahoiOverlay");
-    overlay.style.position = "absolute";
-    overlay.style.pointerEvents = "none";
-    document.body.appendChild(overlay);
-  }
-  overlay.setAttribute("height", plotHeight.toString());
-  overlay.setAttribute("width", plotWidth.toString());
-  overlay.style.top = plotY + "px";
-  overlay.style.left = plotX + "px";
-
-  let svg = document.getElementById("ahoiOverlaySVG") as any;
-  if (!svg) {
-    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg?.setAttribute("id", "ahoiOverlaySVG");
-    overlay?.appendChild(svg);
-  }
-  svg?.setAttribute(
-    "viewBox",
-    plotX + " " + plotY + " " + plotWidth + " " + plotHeight
-  );
-  svg?.setAttribute("height", plotHeight.toString());
-  svg?.setAttribute("width", plotWidth.toString());
-
-  let tooltipContainer = document.getElementById("tooltipContainer") as any;
-  if (!tooltipContainer) {
-    tooltipContainer = document.createElement("div");
-    tooltipContainer?.setAttribute("id", "tooltipContainer");
-    overlay?.appendChild(tooltipContainer);
-  }
-}
-
-
 export function displayMarkers(anchors, activeStep: number, showAllHints: boolean, visElement: Element) {
   
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);

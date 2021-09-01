@@ -1,5 +1,5 @@
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
-import { createOverlay, displayMarkers } from './generate-anchor';
+import { displayMarkers } from './generate-anchor';
 
 
 export function displayGuide(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean) {
@@ -13,7 +13,7 @@ export function displayGuide(visElement: Element, messages: IOnboardingMessages[
     }
   })
   */
-  createOverlay(visElement.getBoundingClientRect().x, visElement.getBoundingClientRect().y, visElement.clientWidth, visElement.clientHeight);
+  // createOverlay(visElement.getBoundingClientRect().x, visElement.getBoundingClientRect().y, visElement.clientWidth, visElement.clientHeight);
 
   displayMarkers(messages.map((d, i) => ({
     anchor: d.anchor,
