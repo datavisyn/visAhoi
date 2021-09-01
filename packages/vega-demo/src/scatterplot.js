@@ -11,8 +11,7 @@ const opt = {
 async function render() {
   const response = await fetch('./data/cars.json');
   const json = await response.json();
-
-  let vegaLite = await vegaEmbed('#vis', json, opt);
+  const vegaLite = await vegaEmbed('#vis', json, opt);
   window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding'));
   ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding');
 };

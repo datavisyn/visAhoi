@@ -184,15 +184,8 @@ function createTooltip(text: string, toolText: string, g: SVGGElement) {
     tooltip = document.createElement("div");
     tooltip?.setAttribute("id", `tooltip-anchor-${text}`);
     tooltip?.setAttribute("role", "tooltip");
-    // tooltip.style.display = "inline-block";
-    // tooltip.style.background = "#C51B7D";
-    // tooltip.style.color = "white";
-    // tooltip.style.fontWeight = "bold";
-    // tooltip.style.padding = "5px 10px";
-    // tooltip.style.fontSize = "13px";
-    // tooltip.style.borderRadius = "4px";
-    // tooltip.style.pointerEvents = "all";
-    // tooltip.style.wordBreak = "break-word";
+    tooltip?.setAttribute("class", "tooltip");
+    tooltip.style.pointerEvents = "all";
     tooltip.innerText = toolText;
     tooltipContainer?.appendChild(tooltip);
   }
@@ -202,12 +195,7 @@ function createTooltip(text: string, toolText: string, g: SVGGElement) {
     arrow = document.createElement("div");
     arrow?.setAttribute("id", `arrow-anchor-${text}`);
     arrow?.setAttribute("data-popper-arrow", "");
-    // arrow.style.transform = "rotate(45deg) !important"; //TODO: y not working?
-    // arrow.style.position = "absolute";
-    // arrow.style.width = "8px";
-    // arrow.style.height = "8px";
-    // arrow.style.background = "#C51B7D";
-    // arrow.style.bottom = "-4px"
+    arrow?.setAttribute("class", "arrow");
     tooltip?.appendChild(arrow);
   }
 

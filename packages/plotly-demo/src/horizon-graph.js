@@ -8,10 +8,9 @@ import { importCsv } from './util';
 async function render() {
   const data = await importCsv("./data/oslo-2018.csv");
   const {x, y} = processData(data);
-  makePlotly(x, y).then((chart) => {
-    window.addEventListener("resize", () => ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding'));
-    ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
-  });
+  const chart = await makePlotly(x, y);
+  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding'), 100));
+  ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
 }
 
 function processData(allRows) {

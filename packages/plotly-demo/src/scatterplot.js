@@ -4,14 +4,13 @@
 
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
 
-function render() {
-  fetch('../data/cars.json').then(response => response.json()).then(data => {
-    const {x, y} = processData(data);
-    makePlotly(x, y).then((chart) => {
-      window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding'));
-      ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
-    });
-  });
+async function render() {
+  const response = await fetch('../data/cars.json');
+  const data = await response.json();
+  const {x, y} = processData(data);
+  const chart = await makePlotly(x, y);
+  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding'), 100));
+  ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
 }
 
 function processData(allRows) {

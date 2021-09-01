@@ -8,10 +8,9 @@ import { importCsv } from './util';
 async function render() {
   const data = await importCsv("./data/oslo-2018.csv");
   const {x, y} = processData(data);
-  makePlotly(x, y).then((chart) => {
-    window.addEventListener("resize", () => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'));
-    ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
-  })
+  const chart = await makePlotly(x, y);
+  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'), 100));
+  ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
 }
 
 function processData(allRows) {
@@ -61,7 +60,7 @@ function makePlotly(x, y) {
     responsive: true
   };
 
-  return Plotly.newPlot("vis", traces, layout, responsive);
+  return Plotly.newPlot("vis", traces, layout, config);
 }
 
 render();

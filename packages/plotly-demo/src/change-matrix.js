@@ -4,14 +4,13 @@
 
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
 
-function render() {
-  fetch('./data/matrix.json').then(response => response.json()).then(data => {
-    const {x, y, z} = processData(data);
-    makePlotly(x, y, z).then((chart) => {
-      window.addEventListener("resize", () => ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding'));
-      ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
-    });
-  });
+async function render() {
+  const response = await fetch('./data/matrix.json');
+  const data = await response.json();
+  const {x, y, z} = processData(data);
+  const chart = await makePlotly(x, y, z)
+  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding'), 100));
+  ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding');
 }
 
 function processData(allRows) {
