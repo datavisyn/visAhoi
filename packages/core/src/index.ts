@@ -3,6 +3,7 @@ import { barChart, IOnboardingBarChartSpec } from './bar-chart';
 import { changeMatrix, IOnboardingChangeMatrixSpec } from './change-matrix';
 import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
 import { IOnboardingScatterplotSpec, scatterplot } from './scatterplot';
+import './styles.css';
 
 export * from './injector';
 export * from './onboarding';

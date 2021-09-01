@@ -16,31 +16,20 @@ function render() {
 
 function processData(allRows) {
 
-  const nestedDataByDate = Plotly.d3
-    .nest()
-    .key(d => d.b)
-    .sortKeys(Plotly.d3.ascending)
-    .entries(allRows);
+  const nestedDataByCity = new Map();
 
-  //create map here
-
-  console.log(allRows)
-
-  console.log(nestedDataByDate)
-
-  const x = nestedDataByDate.map(d => d.key);
-
-  const nestedDataByCity = Plotly.d3
-    .nest()
-    .key(d => d.a)
-    .sortKeys(Plotly.d3.descending)
-    .sortValues((a, b) => parseFloat(a.b) - parseFloat(b.b))
-    .entries(allRows);
-
-  const y = nestedDataByCity.map(d => d.key);
-  const z = nestedDataByCity.map(city => {
-    return city.values.map(d => d.c);
+  allRows.forEach((row) => {
+    if (nestedDataByCity.has(row.a)) {
+      nestedDataByCity.set(row.a, [...nestedDataByCity.get(row.a), row]);
+    } else {
+      nestedDataByCity.set(row.a, [row]);
+    }
   });
+
+  const x = new Set(allRows.map((row) => row.b));
+  const y = [...nestedDataByCity.keys()];
+  const z = [...nestedDataByCity.values()].map(value => [...value.map(v => v.c)]);
+
   return {x, y, z};
 }
 
