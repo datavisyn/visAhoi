@@ -5,6 +5,7 @@ import { horizonGraph, IOnboardingHorizonGraphSpec } from './horizon-graph';
 import { IOnboardingScatterplotSpec, scatterplot } from './scatterplot';
 import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
+// import './style.css'
 
 export * from './injector';
 export * from './onboarding';

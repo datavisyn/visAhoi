@@ -1,4 +1,5 @@
 import { createPopper } from '@popperjs/core';
+import { EOnboardingStages } from '.';
 import {isOnboardingElementAnchor} from './interfaces';
 
 // Reused constants that should be change here to make it uniform
@@ -84,7 +85,7 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
 function createHint(settings, text, message) { //unused params: activeStep: number, showAllHints: boolean
   let { cx, cy, r, x, y, left, right, top, bottom } = settings;
 
-  const overlay = document.getElementById("ahoiOverlaySVG");
+  const overlay = document.getElementById("visahoi-overlay-svg");
 
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
@@ -138,7 +139,7 @@ function createHint(settings, text, message) { //unused params: activeStep: numb
 }
 
 function createTooltip(text: string, toolText: string, g: SVGGElement) {
-  const tooltipContainer = document.getElementById("tooltipContainer");
+  const tooltipContainer = document.getElementById("visahoi-tooltips");
   if (!tooltipContainer) {
     return;
   }

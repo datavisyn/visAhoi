@@ -1,5 +1,6 @@
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
 import { displayMarkers } from './generate-anchor';
+import { EOnboardingStages } from "./onboarding";
 
 
 export function displayGuide(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean) {
@@ -13,12 +14,13 @@ export function displayGuide(visElement: Element, messages: IOnboardingMessages[
     }
   })
   */
-  // createOverlay(visElement.getBoundingClientRect().x, visElement.getBoundingClientRect().y, visElement.clientWidth, visElement.clientHeight);
-
-  displayMarkers(messages.map((d, i) => ({
+  // if (!activeStage) return;
+  displayMarkers(messages
+    // .filter(message => message.onboardingStage === activeStage)
+    .map((d, i) => ({
     anchor: d.anchor,
     index: i + 1,
-    message: d.legend
+    message: d.legend,
   })), activeStep, showAllHints, visElement);
 
 }
