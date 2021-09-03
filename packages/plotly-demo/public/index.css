@@ -90,7 +90,6 @@ svg {
 
 .tooltip {
   display: inline-block;
-  background: #C51B7D;
   color: white;
   font-weight: bold;
   padding: 5px 10px;
@@ -104,7 +103,6 @@ svg {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: #C51B7D;
 }
 
 .arrow {

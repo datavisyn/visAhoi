@@ -1,6 +1,7 @@
 import { createPopper } from '@popperjs/core';
-import { EOnboardingStages } from '.';
 import {isOnboardingElementAnchor} from './interfaces';
+import { OVERLAYSVG, OVERLAYTOOLTIPS } from './onboarding';
+import { getColor } from './utils';
 
 // Reused constants that should be change here to make it uniform
 const r = 10;
@@ -8,7 +9,7 @@ const w = 30;
 const h = 30;
 const textOffset = 5;
 
-export function displayMarkers(anchors, activeStep: number, showAllHints: boolean, visElement: Element) {
+export function createMarkers(anchors, visElement: Element) {
   
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
@@ -18,10 +19,10 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
     if (!el.anchor) {
       return;
     }
-
     const a = el.anchor;
     const i = el.index;
     const message = el.message;
+    const stage = el.stage;
     let settings = Object.assign({}, a.offset || {});
 
     // If we have coords we can use them
@@ -71,6 +72,9 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
       });
     }
     // Create the respective anchor
+    Object.assign(settings, {
+      color: getColor(stage)
+    })
     createHint(settings, i, message);
   });
   
@@ -83,9 +87,9 @@ export function displayMarkers(anchors, activeStep: number, showAllHints: boolea
  * @param {*} message tooltip message for anchor
  */
 function createHint(settings, text, message) { //unused params: activeStep: number, showAllHints: boolean
-  let { cx, cy, r, x, y, left, right, top, bottom } = settings;
+  let { cx, cy, r, x, y, left, right, top, bottom, color } = settings;
 
-  const overlay = document.getElementById("visahoi-overlay-svg");
+  const overlay = document.getElementById(OVERLAYSVG);
 
   if(left) { cx += left; x += left; }
   if(right) { cx -= right; x -= right; }
@@ -99,6 +103,7 @@ function createHint(settings, text, message) { //unused params: activeStep: numb
       g.setAttribute("id", `anchor-${text}`)
       g.style.cursor = "pointer";
       g.style.pointerEvents = "all";
+      g.style.display = "none";
       g.addEventListener("click", () => toggleTooltip(`tooltip-anchor-${text}`));
       g.setAttribute("aria-describedby", "tooltip");
       overlay?.appendChild(g);
@@ -116,7 +121,7 @@ function createHint(settings, text, message) { //unused params: activeStep: numb
       "circle"
     );
     circle?.setAttribute("id", `circle-anchor-${text}`);
-    circle?.setAttribute("fill", '#C51B7D');
+    circle?.setAttribute("fill", color);
     g?.appendChild(circle);
   }
 
@@ -129,17 +134,17 @@ function createHint(settings, text, message) { //unused params: activeStep: numb
     txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
     txt?.setAttribute("id", `text-anchor-${text}`)
     g?.appendChild(txt);
-    txt.innerHTML = text;
+    txt.innerHTML = text + 1;
   }
   txt?.setAttribute("x", (x - textOffset).toString());
   txt?.setAttribute("y", (y).toString());
   txt?.setAttribute("fill", "white");
 
-  createTooltip(text, message, g);
+  createTooltip(text, message, g, color);
 }
 
-function createTooltip(text: string, toolText: string, g: SVGGElement) {
-  const tooltipContainer = document.getElementById("visahoi-tooltips");
+function createTooltip(text: string, toolText: string, g: SVGGElement, color: string) {
+  const tooltipContainer = document.getElementById(OVERLAYTOOLTIPS);
   if (!tooltipContainer) {
     return;
   }
@@ -150,8 +155,10 @@ function createTooltip(text: string, toolText: string, g: SVGGElement) {
     tooltip?.setAttribute("id", `tooltip-anchor-${text}`);
     tooltip?.setAttribute("role", "tooltip");
     tooltip?.setAttribute("class", "tooltip");
+    tooltip.style.display = "none";
     tooltip.style.pointerEvents = "all";
     tooltip.innerText = toolText;
+    tooltip.style.background = color;
     tooltipContainer?.appendChild(tooltip);
   }
 
@@ -161,19 +168,16 @@ function createTooltip(text: string, toolText: string, g: SVGGElement) {
     arrow?.setAttribute("id", `arrow-anchor-${text}`);
     arrow?.setAttribute("data-popper-arrow", "");
     arrow?.setAttribute("class", "arrow");
+    arrow.style.background = color; //arrow not visible
     tooltip?.appendChild(arrow);
   }
 
   createPopper(g, tooltip, {
     placement: "top",
-    modifiers: [
-      {
+    modifiers: [{
         name: "offset",
-        options: {
-          offset: [0, 8]
-        }
-      }
-    ]
+        options: {offset: [0, 8]}
+      }]
   });
 }
 

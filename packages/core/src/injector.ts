@@ -1,27 +1,42 @@
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
-import { displayMarkers } from './generate-anchor';
+import { createMarkers } from './generate-anchor';
 import { EOnboardingStages } from "./onboarding";
+import { createPopper } from "@popperjs/core";
 
 
-export function displayGuide(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean) {
-  /*let reading: [number, IOnboardingMessages][] = [];
-  let using: [number, IOnboardingMessages][] = [];
-  messages.forEach((message, index) => {
-    if(message.onboardingStage === EOnboardingStages.READING) {
-      reading.push([index, message])
-    } else if(message.onboardingStage === EOnboardingStages.USING) {
-      using.push([index, message])
-    }
-  })
-  */
-  // if (!activeStage) return;
-  displayMarkers(messages
-    // .filter(message => message.onboardingStage === activeStage)
+export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, activeStage: EOnboardingStages | null) {
+  createMarkers(messages
     .map((d, i) => ({
     anchor: d.anchor,
-    index: i + 1,
+    index: i,
     message: d.legend,
-  })), activeStep, showAllHints, visElement);
-
+    stage: d.onboardingStage
+  })), visElement);
 }
 
+export function displayMarkers(messages: IOnboardingMessages[], activeStage: EOnboardingStages | null) {
+  const popper = (anchor, tooltip) => {
+    createPopper(anchor, tooltip, {
+      placement: "top",
+      modifiers: [{
+          name: "offset",
+          options: {offset: [0, 8]}
+        }]
+    });
+  }
+
+  messages.forEach((message, i) => {
+    const anchor = document.getElementById(`anchor-${i}`);
+    const tooltip = document.getElementById(`tooltip-anchor-${i}`)
+    if (anchor && tooltip) {
+      if (message.onboardingStage === activeStage) {
+        anchor.style.display = "block";
+        tooltip.style.display = "inline-block";
+        popper(anchor, tooltip);
+      } else {
+        anchor.style.display = "none";
+        tooltip.style.display = "none";
+      }
+    }
+  })
+}

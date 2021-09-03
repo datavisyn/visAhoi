@@ -1,22 +1,38 @@
-class CircleItem {
-  color: string;
-  iconClass: string;
-  instance: HTMLElement;
+import { EOnboardingStages } from "./onboarding";
+import { getColor } from "./utils";
 
-  constructor(parent: HTMLElement, color: string, iconClass: string, itemClass: string) {
-    this.color = color;
-    this.iconClass = iconClass;
-    this.instance = this.createCircle(parent, itemClass);
+const NAVIGATIONCLASS = "visahoi-navigation-item";
+const QUESTIONMARKCLASS = "visahoi-question-mark-item";
+const ANCHORCLASS = "visahoi-anchor-item";
+
+
+abstract class ACircleItem {
+  color: string;
+  iconClass?: string;
+  instance: HTMLElement;
+  itemClass: string;
+  stage?: EOnboardingStages;
+  circleClass: string;
+
+  constructor(parent: HTMLElement, circleClass: string, optional?: {iconClass?: string, stage?: EOnboardingStages}, onClick?: () => void) {
+    this.stage = optional?.stage;
+    this.circleClass = circleClass;
+    this.itemClass = this.getItemClass();
+    this.color = this.getColor();
+    this.iconClass = optional?.iconClass;
+    this.instance = this.createCircle(parent, this.itemClass);
+    if (onClick) {
+      this.instance.addEventListener("click", () => {
+         onClick();
+      });
+    }
   }
 
   private createCircle = (parent: HTMLElement, itemClass: string) => {
-    const icon = this.getIcon();
     const circle = document.createElement("div");
     circle.setAttribute("role", "button");
     // TODO: add this to css file
-    circle.classList.add("visahoi-circle-item", itemClass);
-    circle.style.width = "40px";
-    circle.style.height = "40px";
+    circle.classList.add(this.circleClass, itemClass);
     circle.style.backgroundColor = this.color;
     circle.style.borderRadius = "50%";
     circle.style.justifyContent = "center";
@@ -29,12 +45,16 @@ class CircleItem {
     circle.style.pointerEvents = "all";
     circle.style.transition = "bottom 250ms ease-in";
     circle.style.display = "none";
-    circle.appendChild(icon);
     parent.append(circle);
+    if (this.iconClass) {
+      const icon = this.getIcon();
+      if (icon) circle.appendChild(icon);
+    }
     return circle;
   };
 
   protected getIcon = () => {
+    if (!this.iconClass) return;
     const icon = document.createElement("i");
     icon.classList.add("fas", this.iconClass);
     return icon;
@@ -43,43 +63,66 @@ class CircleItem {
   getInstance() {
     return this.instance;
   }
+
+  protected getColor(): string {
+    return this.stage ? getColor(this.stage) : "whites";
+  }
+
+  protected getItemClass(): string {
+    switch(this.stage) {
+      case EOnboardingStages.ANALYZING: 
+        return "visahoi-analyzing";
+      case EOnboardingStages.READING:
+        return "visahoi-reading";
+      case EOnboardingStages.USING:
+        return "visahoi-interacting";
+      default:
+        return "";
+    }
+  }
 }
 
-export class NavigationItem extends CircleItem {
-    // static counter: number = 1;
-    // index: number;
-    onClick: () => void;
-  
-    constructor(parent: HTMLElement, color: string, iconClass: string, itemClass: string, onClick: () => void) {
-      super(parent, color, iconClass, itemClass)
-      // this.index = NavigationItem.counter;
-      // NavigationItem.counter += 1;
-      this.onClick = onClick;
-      this.instance.addEventListener("click", () => {
-        console.log("here");
-        this.onClick();
-      });
-      this.instance.classList.add("visahoi-navigation-item");
+export class AnchorItem extends ACircleItem {
+    static counter: number = 1;
+    index: number;
+
+    constructor(parent: HTMLElement, stage: EOnboardingStages, onClick: () => void) {
+      super(parent, ANCHORCLASS, {stage}, onClick);
+      this.index = AnchorItem.counter;
+      AnchorItem.counter++;
+      const circle = this.instance;
+      circle.style.width = "20px";
+      circle.style.height = "20px";
+    }
+}
+
+export class NavigationItem extends ACircleItem {
+    constructor(parent: HTMLElement, iconClass: string, stage: EOnboardingStages, onClick?: () => void) {
+      super(parent, NAVIGATIONCLASS, {iconClass, stage}, onClick)
+      const circle = this.instance;
+      circle.style.width = "40px";
+      circle.style.height = "40px";
     }
   }
   
-export class QuestionMarkItem extends CircleItem {
+export class QuestionMarkItem extends ACircleItem {
   isOpen: boolean;
   
   constructor(parent: HTMLElement) {
-    super(parent, "#EF5576", "fa-question", "visahoi-blubb");
+    super(parent, QUESTIONMARKCLASS, {iconClass: "fa-question"});
     this.isOpen = false;
-    this.instance.addEventListener("click", () => {
-      this.expandItems(this.isOpen);
-      this.switchSymbol(this.isOpen);
-      this.isOpen = !this.isOpen;
+
+    const circle = this.instance;
+    circle.addEventListener("click", () => {
+      this.onClick();
     });
-    this.instance.classList.add("visahoi-question-mark-item");
-    this.instance.style.display = "flex";
-    this.instance.style.flexDirection = "column";
-    this.instance.style.position = "absolute";
-    this.instance.style.bottom = "5px";
-    this.instance.style.right = "5px";
+    circle.style.display = "flex";
+    circle.style.flexDirection = "column";
+    circle.style.position = "absolute";
+    circle.style.bottom = "5px";
+    circle.style.right = "5px";
+    circle.style.width = "40px";
+    circle.style.height = "40px";
   }
 
   private switchSymbol(isOpen: boolean) {
@@ -88,17 +131,40 @@ export class QuestionMarkItem extends CircleItem {
       delChild = [...delChild, (child as Element)];
       if (child instanceof SVGElement) {
         this.iconClass = !isOpen ? "fa-times" : "fa-question";
-        this.instance.appendChild(this.getIcon());
+        this.instance.appendChild(this.getIcon() as HTMLElement);
       }
     });
     delChild.forEach(child => child.remove());
   }
 
   private expandItems(isOpen: boolean) {
-    const navItems = document.querySelectorAll(".visahoi-navigation-item");
+    const navItems = document.querySelectorAll(`.${NAVIGATIONCLASS}`);
+    let counter = 1
+    //(i + 1)
     navItems.forEach((item, i) => {
-      (item as HTMLElement).style.bottom = !isOpen ? `${(i + 1) * 50}px` : '0px';
+      (item as HTMLElement).style.bottom = !isOpen ? `${counter * 50}px` : '0px';
       (item as HTMLElement).style.display = !isOpen ? `flex` : 'none';
+      counter++;
     });
+    const anchorItems = document.querySelectorAll(`.${ANCHORCLASS}`);
+    anchorItems.forEach((item, i) => {
+      (item as HTMLElement).style.bottom = !isOpen ? `${counter * 50}px` : '0px';
+      (item as HTMLElement).style.display = !isOpen ? `flex` : 'none';
+      counter++;
+    })
+  }
+
+  private onClick() {
+    this.expandItems(this.isOpen);
+    this.switchSymbol(this.isOpen);
+    this.isOpen = !this.isOpen;
+  }
+
+  protected getColor() {
+    return "#EF5576";
+  }
+
+  protected getItemClass() {
+    return "visahoi-blubb";
   }
 }

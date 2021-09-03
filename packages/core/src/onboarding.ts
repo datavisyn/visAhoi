@@ -1,6 +1,11 @@
 import {IOnboardingMessages} from './interfaces';
-import {displayGuide} from './injector';
-import { NavigationItem,  QuestionMarkItem } from './navigationItem';
+import {generateMarkers, displayMarkers} from './injector';
+import { AnchorItem, NavigationItem,  QuestionMarkItem } from './navigationItem';
+
+export const OVERLAYSVG = "visahoi-overlay-svg";
+export const OVERLAYDIV = "visahoi-overlay";
+export const OVERLAYTOOLTIPS = "visahoi-tooltips";
+export const OVERLAYNAVIGATION = "visahoi-navigation";
 
 export enum EOnboardingStages {
   READING = "reading-the-chart",
@@ -11,7 +16,7 @@ export enum EOnboardingStages {
 interface onboardingState {
   activeStep: number;
   showAllHints: boolean;
-  // activeStage: null | EOnboardingStages;
+  activeStage: null | EOnboardingStages;
 }
 
 export default class OnboardingUI {
@@ -22,7 +27,7 @@ export default class OnboardingUI {
     this.state = {
       activeStep: 0,
       showAllHints: false,
-      // activeStage: null
+      activeStage: null
     }
     this.onboardingMessages = onboardingMessages;
     this.visElement = visElement;
@@ -30,13 +35,17 @@ export default class OnboardingUI {
     this.addNavigationItems();
   }
 
-  displayGuide() {
-    displayGuide(this.visElement, this.onboardingMessages, this.state.activeStep, this.state.showAllHints);
+  generateMarkers() {
+    generateMarkers(this.visElement, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.state.activeStage);
   }
 
-  // setStage(stage: EOnboardingStages | null) {
-  //   this.state.activeStage = stage;
-  // }
+  displayMarkers() {
+    displayMarkers(this.onboardingMessages, this.state.activeStage);
+  }
+
+  setStage(stage: EOnboardingStages | null) {
+    this.state.activeStage = stage;
+  }
 
   createOverlay(visElement) {
     const plotX = visElement.getBoundingClientRect().x;
@@ -44,10 +53,10 @@ export default class OnboardingUI {
     const plotWidth = visElement.clientWidth;
     const plotHeight = visElement.clientHeight;
 
-    let overlay = document.getElementById("visahoi-overlay") as any;
+    let overlay = document.getElementById(OVERLAYDIV) as any;
     if (!overlay) {
       overlay = document.createElement("div");
-      overlay.setAttribute("id", "visahoi-overlay");
+      overlay.setAttribute("id", OVERLAYDIV);
       overlay.style.position = "absolute";
       overlay.style.pointerEvents = "none";
       document.body.appendChild(overlay);
@@ -57,10 +66,10 @@ export default class OnboardingUI {
     overlay.style.top = plotY + "px";
     overlay.style.left = plotX + "px";
   
-    let svg = document.getElementById("visahoi-overlay-svg") as any;
+    let svg = document.getElementById(OVERLAYSVG) as any;
     if (!svg) {
       svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg?.setAttribute("id", "visahoi-overlay-svg");
+      svg?.setAttribute("id", OVERLAYSVG);
       overlay?.appendChild(svg);
     }
     svg?.setAttribute(
@@ -70,24 +79,24 @@ export default class OnboardingUI {
     svg?.setAttribute("height", plotHeight.toString());
     svg?.setAttribute("width", plotWidth.toString());
   
-    let tooltipContainer = document.getElementById("visahoi-tooltips") as any;
+    let tooltipContainer = document.getElementById(OVERLAYTOOLTIPS) as any;
     if (!tooltipContainer) {
       tooltipContainer = document.createElement("div");
-      tooltipContainer?.setAttribute("id", "visahoi-tooltips");
+      tooltipContainer?.setAttribute("id", OVERLAYTOOLTIPS);
       overlay?.appendChild(tooltipContainer);
     }
 
-    let navigationContainer = document.getElementById("visahoi-navigation");
+    let navigationContainer = document.getElementById(OVERLAYNAVIGATION);
     if (!navigationContainer) {
       navigationContainer = document.createElement("div");
-      navigationContainer?.setAttribute("id", "visahoi-navigation");
-      navigationContainer?.setAttribute("class", "visahoi-navigation");
+      navigationContainer?.setAttribute("id", OVERLAYNAVIGATION);
+      navigationContainer?.setAttribute("class", OVERLAYNAVIGATION);
       overlay?.appendChild(navigationContainer);
     }
   }
 
   addNavigationItems() {
-    const navigationContainer = document.getElementById("visahoi-navigation");
+    const navigationContainer = document.getElementById(OVERLAYNAVIGATION);
     if (!navigationContainer || navigationContainer.childElementCount > 0) {
       return;
     }
@@ -95,33 +104,42 @@ export default class OnboardingUI {
       const questionMark = new QuestionMarkItem(navigationContainer);
       const analyzing = new NavigationItem(
         navigationContainer,
-        "#FE8029",
         "fa-lightbulb",
-        "visahoi-analyzing",
-        () => null
-        // this.setStage(EOnboardingStages.ANALYZING)
+        EOnboardingStages.ANALYZING,
+        () => {
+          this.setStage(EOnboardingStages.ANALYZING);
+          this.displayMarkers();
+        }
       );
       const interacting = new NavigationItem(
         navigationContainer,
-        "#003D5C",
         "fa-hand-point-up",
-        "visahoi-interacting",
-        () => null 
-        // this.setStage(EOnboardingStages.USING)
+        EOnboardingStages.USING,
+        () => {
+          this.setStage(EOnboardingStages.USING);
+          this.displayMarkers();
+        }
       );
       const reading = new NavigationItem(
         navigationContainer,
-        "#7B5096",
         "fa-glasses",
-        "visahoi-reading",
-        () => null 
-        // this.setStage(EOnboardingStages.READING)
+        EOnboardingStages.READING,
+        () => {
+          this.setStage(EOnboardingStages.READING);
+          this.displayMarkers();
+        }
       );
+
+      console.log(this.onboardingMessages);
+
+      this.onboardingMessages.forEach((m, i) => {
+        new AnchorItem(navigationContainer, m.onboardingStage, () => console.log(m));
+      })
     }
   }
 }
 
 export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element) => {
   const onboarding = new OnboardingUI(onboardingMessages, visElement);
-  onboarding.displayGuide()
+  onboarding.generateMarkers()
 }

@@ -86,7 +86,6 @@ h1 {
 
 .tooltip {
   display: inline-block;
-  background: #C51B7D;
   color: white;
   font-weight: bold;
   padding: 5px 10px;
@@ -100,7 +99,6 @@ h1 {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: #C51B7D;
 }
 
 .arrow {
