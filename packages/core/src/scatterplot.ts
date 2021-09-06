@@ -19,13 +19,13 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EOnboardingStages.ANALYZING
     },
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
       legend: `The chart Is based on colored ${spec.type?.value} elements.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EOnboardingStages.USING
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
@@ -37,13 +37,13 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['xAxisTitle', 'yAxisTitle'],
       legend: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EOnboardingStages.ANALYZING
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
       legend: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EOnboardingStages.USING
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),

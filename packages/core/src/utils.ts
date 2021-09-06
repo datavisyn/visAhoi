@@ -1,3 +1,4 @@
+import { createPopper } from '@popperjs/core';
 import {ISpecProp, OnboardingAnchor} from './interfaces';
 import { EOnboardingStages } from './onboarding';
 
@@ -44,4 +45,14 @@ export const getColor = (stage: EOnboardingStages) => {
     default:
       return "white";
   }
+}
+
+export const popper = (anchor, tooltip) => {
+  createPopper(anchor, tooltip, {
+    placement: "top",
+    modifiers: [{
+        name: "offset",
+        options: {offset: [0, 8]}
+      }]
+  });
 }

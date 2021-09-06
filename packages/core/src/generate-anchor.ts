@@ -1,7 +1,7 @@
 import { createPopper } from '@popperjs/core';
 import {isOnboardingElementAnchor} from './interfaces';
 import { OVERLAYSVG, OVERLAYTOOLTIPS } from './onboarding';
-import { getColor } from './utils';
+import { getColor, popper } from './utils';
 
 // Reused constants that should be change here to make it uniform
 const r = 10;
@@ -14,6 +14,8 @@ export function createMarkers(anchors, visElement: Element) {
   // console.log(`%c Anchors we want to create`, `background-color: lemonchiffon; color: #003366;`, anchors);
 
   // We use for each as we want to control each element individually
+  let count = 1;
+
   anchors.forEach(el => {
     // Return if the el is empty
     if (!el.anchor) {
@@ -23,6 +25,7 @@ export function createMarkers(anchors, visElement: Element) {
     const i = el.index;
     const message = el.message;
     const stage = el.stage;
+    const clickEvent = el.clickEvent;
     let settings = Object.assign({}, a.offset || {});
 
     // If we have coords we can use them
@@ -73,9 +76,12 @@ export function createMarkers(anchors, visElement: Element) {
     }
     // Create the respective anchor
     Object.assign(settings, {
-      color: getColor(stage)
+      color: getColor(stage),
+      clickEvent: clickEvent
     })
-    createHint(settings, i, message);
+    createHint(settings, count, message);
+    count++;
+    if (stage !== anchors[i + 1]?.stage) count = 1;
   });
   
 }
@@ -87,7 +93,7 @@ export function createMarkers(anchors, visElement: Element) {
  * @param {*} message tooltip message for anchor
  */
 function createHint(settings, text, message) { //unused params: activeStep: number, showAllHints: boolean
-  let { cx, cy, r, x, y, left, right, top, bottom, color } = settings;
+  let { cx, cy, r, x, y, left, right, top, bottom, color, clickEvent} = settings;
 
   const overlay = document.getElementById(OVERLAYSVG);
 
@@ -104,7 +110,7 @@ function createHint(settings, text, message) { //unused params: activeStep: numb
       g.style.cursor = "pointer";
       g.style.pointerEvents = "all";
       g.style.display = "none";
-      g.addEventListener("click", () => toggleTooltip(`tooltip-anchor-${text}`));
+      g.addEventListener("click", () => clickEvent());
       g.setAttribute("aria-describedby", "tooltip");
       overlay?.appendChild(g);
     }
@@ -172,13 +178,7 @@ function createTooltip(text: string, toolText: string, g: SVGGElement, color: st
     tooltip?.appendChild(arrow);
   }
 
-  createPopper(g, tooltip, {
-    placement: "top",
-    modifiers: [{
-        name: "offset",
-        options: {offset: [0, 8]}
-      }]
-  });
+  popper(g, tooltip);
 }
 
 const toggleTooltip = (id: string) => {

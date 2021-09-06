@@ -1,6 +1,6 @@
 import {IOnboardingMessages} from './interfaces';
-import {generateMarkers, displayMarkers} from './injector';
-import { AnchorItem, NavigationItem,  QuestionMarkItem } from './navigationItem';
+import {displayAnchors, displayTooltip, generateMarkers} from './injector';
+import { AnchorItem, ArrowItem, NavigationItem,  QuestionMarkItem } from './navigationItem';
 
 export const OVERLAYSVG = "visahoi-overlay-svg";
 export const OVERLAYDIV = "visahoi-overlay";
@@ -23,28 +23,59 @@ export default class OnboardingUI {
   private state: onboardingState;
   private onboardingMessages: IOnboardingMessages[];
   private visElement: Element;
+  private anchorItems: AnchorItem[];
+  private questionMark?: QuestionMarkItem;
   constructor(onboardingMessages: IOnboardingMessages[], visElement: Element) {
     this.state = {
       activeStep: 0,
       showAllHints: false,
       activeStage: null
     }
-    this.onboardingMessages = onboardingMessages;
+    this.onboardingMessages = onboardingMessages.sort((a, b) => a.onboardingStage > b.onboardingStage ? 1 : a.onboardingStage < b.onboardingStage ? -1 : 0);
+    console.log(this.onboardingMessages)
+    this.anchorItems = [];
     this.visElement = visElement;
     this.createOverlay(visElement);
-    this.addNavigationItems();
+    const parent = document.getElementById(OVERLAYNAVIGATION);
+    if (parent) {
+      this.questionMark = this.createQuestionMarkItem(parent);
+      this.addItems(parent);
+    }
   }
 
   generateMarkers() {
-    generateMarkers(this.visElement, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.state.activeStage);
+    generateMarkers(
+      this.visElement,
+      this.onboardingMessages,
+      (i: number, stage: EOnboardingStages) => {
+        this.setStage(stage);
+        this.setActiveStep(i);
+      }
+    );
   }
 
-  displayMarkers() {
-    displayMarkers(this.onboardingMessages, this.state.activeStage);
+  displayAnchors() {
+    displayAnchors(this.onboardingMessages, this.state.activeStage);
+  }
+
+  displayTooltip() {
+    displayTooltip(this.onboardingMessages, this.state.activeStep, this.state.activeStage);
   }
 
   setStage(stage: EOnboardingStages | null) {
+    if (stage && stage === this.state.activeStage) return;
     this.state.activeStage = stage;
+    this.questionMark?.setActiveStage(stage);
+    this.displayAnchors();
+  }
+
+  setActiveStep(step: number) {
+    if (step < 0 || step > this.anchorItems.length - 1) return;
+    const prev = this.state.activeStep;
+    this.state.activeStep = step;
+    this.anchorItems[prev].unsetSelected();
+    this.anchorItems[step].setSelected();
+    this.displayTooltip();
   }
 
   createOverlay(visElement) {
@@ -95,47 +126,112 @@ export default class OnboardingUI {
     }
   }
 
-  addNavigationItems() {
-    const navigationContainer = document.getElementById(OVERLAYNAVIGATION);
-    if (!navigationContainer || navigationContainer.childElementCount > 0) {
+  deSelectAllAnchor() {
+    this.anchorItems.forEach((anchor) => anchor.unsetSelected());
+  }
+
+  setSelectedAnchor() {
+    this.anchorItems.forEach((anchor, i) => {
+      if (anchor.getStage() === this.state.activeStage && this.anchorItems[i - 1]?.getStage() !== anchor.getStage()) {
+        this.setActiveStep(anchor.getIndex());
+      }
+    })
+  }
+
+  nextStep() {
+    const curr = this.state.activeStep;
+    this.setStage(this.anchorItems[curr + 1].getStage());
+    this.setActiveStep(curr + 1);
+  }
+
+  prevStep() {
+    const curr = this.state.activeStep;
+    this.setStage(this.anchorItems[curr - 1].getStage());
+    this.setActiveStep(curr - 1);
+  }
+
+  createQuestionMarkItem(parent: HTMLElement): QuestionMarkItem {
+    return new QuestionMarkItem(
+      parent,
+      () => {
+        if (this.state.activeStage) {
+          this.setStage(null);
+          this.displayAnchors();
+        }
+      }
+    );
+  }
+
+  addItems(parent: HTMLElement) {
+    if (!parent || parent.childElementCount > 1) {
       return;
     }
-    if (navigationContainer) {
-      const questionMark = new QuestionMarkItem(navigationContainer);
-      const analyzing = new NavigationItem(
-        navigationContainer,
+    this.addNavigationItems(parent);
+    this.addAnchorItems(parent);
+  }
+
+  addNavigationItems(parent: HTMLElement) {
+    const stages = new Set(this.onboardingMessages.map(message => message.onboardingStage));
+    if (stages.has(EOnboardingStages.ANALYZING)) {
+      new NavigationItem(
+        parent,
         "fa-lightbulb",
         EOnboardingStages.ANALYZING,
         () => {
           this.setStage(EOnboardingStages.ANALYZING);
-          this.displayMarkers();
+          this.displayAnchors();
+          this.setSelectedAnchor()
         }
       );
-      const interacting = new NavigationItem(
-        navigationContainer,
+    }
+    if (stages.has(EOnboardingStages.USING)) {
+      new NavigationItem(
+        parent,
         "fa-hand-point-up",
         EOnboardingStages.USING,
         () => {
           this.setStage(EOnboardingStages.USING);
-          this.displayMarkers();
+          this.displayAnchors();
+          this.setSelectedAnchor()
         }
       );
-      const reading = new NavigationItem(
-        navigationContainer,
+    }
+    if (stages.has(EOnboardingStages.READING)) {
+      new NavigationItem(
+        parent,
         "fa-glasses",
         EOnboardingStages.READING,
         () => {
           this.setStage(EOnboardingStages.READING);
-          this.displayMarkers();
+          this.displayAnchors();
+          this.setSelectedAnchor()
         }
       );
-
-      console.log(this.onboardingMessages);
-
-      this.onboardingMessages.forEach((m, i) => {
-        new AnchorItem(navigationContainer, m.onboardingStage, () => console.log(m));
-      })
     }
+  }
+
+  addAnchorItems(parent: HTMLElement) {
+    new ArrowItem(
+      parent,
+      () => this.prevStep(),
+      "up"
+    );
+    new ArrowItem(
+      parent,
+      () => this.nextStep(),
+      "down"
+    );
+    this.onboardingMessages.forEach((m, i) => {
+      this.anchorItems.push(new AnchorItem(
+        i,
+        parent,
+        m.onboardingStage,
+        () => {
+          this.setStage(m.onboardingStage);
+          this.setActiveStep(i);
+        }
+      ));
+    });
   }
 }
 

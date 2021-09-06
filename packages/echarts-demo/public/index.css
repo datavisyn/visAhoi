@@ -101,9 +101,9 @@ h1 {
   height: 8px;
 }
 
-.arrow {
+/* .arrow {
   visibility: hidden;
-}
+} */
 
 .arrow::before {
   visibility: visible;

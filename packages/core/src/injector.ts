@@ -1,37 +1,28 @@
 import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
 import { createMarkers } from './generate-anchor';
 import { EOnboardingStages } from "./onboarding";
-import { createPopper } from "@popperjs/core";
+import { popper } from "./utils";
 
 
-export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, activeStage: EOnboardingStages | null) {
+export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], clickEvent: (i: number, stage: EOnboardingStages) => void) {
   createMarkers(messages
-    .map((d, i) => ({
-    anchor: d.anchor,
+    .map((message, i) => ({
+    anchor: message.anchor,
     index: i,
-    message: d.legend,
-    stage: d.onboardingStage
+    message: message.legend,
+    stage: message.onboardingStage,
+    clickEvent: () => clickEvent(i, message.onboardingStage)
   })), visElement);
 }
 
-export function displayMarkers(messages: IOnboardingMessages[], activeStage: EOnboardingStages | null) {
-  const popper = (anchor, tooltip) => {
-    createPopper(anchor, tooltip, {
-      placement: "top",
-      modifiers: [{
-          name: "offset",
-          options: {offset: [0, 8]}
-        }]
-    });
-  }
-
+export function displayAnchors(messages: IOnboardingMessages[], activeStage: EOnboardingStages | null) {
+  if (messages?.length === 0 || !activeStage) return;
   messages.forEach((message, i) => {
     const anchor = document.getElementById(`anchor-${i}`);
     const tooltip = document.getElementById(`tooltip-anchor-${i}`)
     if (anchor && tooltip) {
       if (message.onboardingStage === activeStage) {
         anchor.style.display = "block";
-        tooltip.style.display = "inline-block";
         popper(anchor, tooltip);
       } else {
         anchor.style.display = "none";
@@ -39,4 +30,20 @@ export function displayMarkers(messages: IOnboardingMessages[], activeStage: EOn
       }
     }
   })
+}
+
+export function displayTooltip(messages: IOnboardingMessages[], activeAnchor: number, activeStage: EOnboardingStages | null) {
+  if (messages?.length === 0 || !activeStage) return;
+  messages.forEach((message, i) => {
+    const anchor = document.getElementById(`anchor-${i}`);
+    const tooltip = document.getElementById(`tooltip-anchor-${i}`)
+    if (anchor && tooltip) {
+      if (message.onboardingStage === activeStage && i === activeAnchor) {
+        tooltip.style.display = "inline-block";
+        popper(anchor, tooltip);
+      } else {
+        tooltip.style.display = "none";
+      }
+    }
+  });
 }

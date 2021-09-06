@@ -106,7 +106,8 @@ svg {
 }
 
 .arrow {
-  visibility: hidden;
+  /* visibility: hidden; */
+  transform: rotate(45deg);
 }
 
 .arrow::before {
