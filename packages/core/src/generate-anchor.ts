@@ -163,10 +163,12 @@ function createTooltip(index: number, message: string, g: SVGGElement, color: st
   if (!arrow) {
     arrow = document.createElement("div");
     arrow?.setAttribute("id", `arrow-anchor-${index}`);
-    arrow?.setAttribute("data-popper-arrow", "");
+    arrow?.setAttribute("data-popper-arrow", "true");
     arrow?.setAttribute("class", "arrow");
     arrow.style.background = color;
     tooltip?.appendChild(arrow);
   }
   popper(g, tooltip);
+  console.log(arrow.childNodes)
+
 }

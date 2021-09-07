@@ -1,7 +1,10 @@
 import {EOnboardingStages, IOnboardingMessages} from './interfaces';
 import {displayAnchors, displayTooltip, generateMarkers} from './injector';
-import { AnchorItem, ArrowItem, NavigationItem, QuestionMarkItem } from './navigationItem';
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, OVERLAYDIV, OVERLAYNAVIGATION, OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
+import AnchorItem from './ahoi_items/AnchorItem';
+import QuestionMarkItem from './ahoi_items/QuestionMarkItem';
+import NavigationItem from './ahoi_items/NavigationItem';
+import ArrowItem from './ahoi_items/ArrowItem';
 
 interface onboardingState {
   activeStep: number;
@@ -32,6 +35,8 @@ export default class OnboardingUI {
       this.addOnboardingItems(parent);
     }
   }
+
+  //https://github.com/datavisyn/tdp_core/blob/03b78384c9b1c1e9301123a4f9d85bd3bf09f138/src/tour/TourManager.ts#L178
 
   createOverlay(visElement) {
     const plotX = visElement.getBoundingClientRect().x;

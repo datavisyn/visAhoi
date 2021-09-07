@@ -1,6 +1,6 @@
 import { IOnboardingMessages, EOnboardingStages } from "./interfaces";
 import { createMarkers } from './generate-anchor';
-import { popper } from "./utils";
+import { getColor, popper } from "./utils";
 
 
 export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], clickEvent: (i: number, stage: EOnboardingStages) => void) {
@@ -34,11 +34,14 @@ export function displayTooltip(messages: IOnboardingMessages[], activeAnchor: nu
   if (messages?.length === 0 || !activeStage) return;
   messages.forEach((message, i) => {
     const anchor = document.getElementById(`anchor-${i}`);
-    const tooltip = document.getElementById(`tooltip-anchor-${i}`)
+    const tooltip = document.getElementById(`tooltip-anchor-${i}`);
     if (anchor && tooltip) {
       if (message.onboardingStage === activeStage && i === activeAnchor) {
         tooltip.classList.remove("hidden");
         popper(anchor, tooltip);
+        // console.log(document.querySelector(`#arrow-anchor-${i}.arrow::before`));
+        // console.log(document.getElementById(`arrow-anchor-${i}.arrow::before`));
+        // (document.getElementById(`arrow-anchor-${i}.arrow::before`) as HTMLElement).style.background = getColor(message.onboardingStage);
       } else {
         tooltip.classList.add("hidden");
       }
