@@ -1,6 +1,5 @@
 import { createPopper } from '@popperjs/core';
-import {ISpecProp, OnboardingAnchor} from './interfaces';
-import { EOnboardingStages } from './onboarding';
+import {EOnboardingStages, ISpecProp, OnboardingAnchor} from './interfaces';
 
 /**
  * Returns the dom node which contains the passed text
@@ -34,6 +33,10 @@ export const getAnchor = (prop: ISpecProp | undefined, visElement: Element): Onb
   }
 }
 
+/**
+ * Returns the color for the specific onboarding stage
+ * @param stage: the onboarding stage 
+ */
 export const getColor = (stage: EOnboardingStages) => {
   switch(stage) {
     case EOnboardingStages.ANALYZING: 
@@ -47,6 +50,11 @@ export const getColor = (stage: EOnboardingStages) => {
   }
 }
 
+/**
+ * Does the popper function for the given tooltip + anchor 
+ * @param anchor: anchor on which the tooltip should be aligned
+ * @param tooltip: tooltip for the given anchor
+ */
 export const popper = (anchor, tooltip) => {
   createPopper(anchor, tooltip, {
     placement: "top",

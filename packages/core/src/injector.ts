@@ -1,6 +1,5 @@
-import { IOnboardingMessages, OnboardingAnchor } from "./interfaces";
+import { IOnboardingMessages, EOnboardingStages } from "./interfaces";
 import { createMarkers } from './generate-anchor';
-import { EOnboardingStages } from "./onboarding";
 import { popper } from "./utils";
 
 
@@ -16,17 +15,16 @@ export function generateMarkers(visElement: Element, messages: IOnboardingMessag
 }
 
 export function displayAnchors(messages: IOnboardingMessages[], activeStage: EOnboardingStages | null) {
-  if (messages?.length === 0 || !activeStage) return;
+  if (messages?.length === 0) return;
   messages.forEach((message, i) => {
     const anchor = document.getElementById(`anchor-${i}`);
     const tooltip = document.getElementById(`tooltip-anchor-${i}`)
     if (anchor && tooltip) {
       if (message.onboardingStage === activeStage) {
-        anchor.style.display = "block";
-        popper(anchor, tooltip);
+        anchor.classList.remove("hidden");
       } else {
-        anchor.style.display = "none";
-        tooltip.style.display = "none";
+        anchor.classList.add("hidden");
+        tooltip.classList.add("hidden");
       }
     }
   })
@@ -39,10 +37,10 @@ export function displayTooltip(messages: IOnboardingMessages[], activeAnchor: nu
     const tooltip = document.getElementById(`tooltip-anchor-${i}`)
     if (anchor && tooltip) {
       if (message.onboardingStage === activeStage && i === activeAnchor) {
-        tooltip.style.display = "inline-block";
+        tooltip.classList.remove("hidden");
         popper(anchor, tooltip);
       } else {
-        tooltip.style.display = "none";
+        tooltip.classList.add("hidden");
       }
     }
   });

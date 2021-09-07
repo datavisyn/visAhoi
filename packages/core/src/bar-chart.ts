@@ -1,6 +1,5 @@
-import {ISpecProp, IOnboardingSpec, IOnboardingMessages} from './interfaces';
+import {ISpecProp, IOnboardingSpec, IOnboardingMessages, EOnboardingStages} from './interfaces';
 import {getAnchor} from './utils';
-import {EOnboardingStages } from './onboarding';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;

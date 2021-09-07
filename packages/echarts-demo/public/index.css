@@ -1,4 +1,5 @@
-@import "./onboarding-annotation.css";
+@import "./onboarding.css";
+@import "./popper.css";
 
 body {
   font-family: sans-serif;
