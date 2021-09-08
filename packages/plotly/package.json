@@ -29,6 +29,6 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "../core"
+    "@visahoi/core": "^2.0.0-SNAPSHOT"
   }
 }
