@@ -26,7 +26,7 @@
     "watch": "npm run start"
   },
   "dependencies": {
-    "@visahoi/plotly": "../plotly",
+    "@visahoi/plotly": "^2.0.0-SNAPSHOT",
     "plotly.js": "^2.2.1"
   },
   "devDependencies": {
