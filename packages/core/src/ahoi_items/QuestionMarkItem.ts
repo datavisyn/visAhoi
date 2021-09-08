@@ -5,12 +5,11 @@ import { AAhoiItem } from "./AAhoiItem";
 
 export default class QuestionMarkItem extends AAhoiItem {
     private isOpen: boolean;
-    private activeStage: EOnboardingStages | null;
     
     constructor(parent: HTMLElement, onClick: () => void) {
       super(parent, QUESTIONMARKCLASS, onClick, {iconClass: "fa-question", htmlTitle: "Open Onboarding"});
       this.isOpen = false;
-      this.activeStage = null;
+      this.stage = null;
     }
   
     protected clickHandler() {
@@ -28,7 +27,7 @@ export default class QuestionMarkItem extends AAhoiItem {
           }
         });
       } else {
-        if (this.activeStage === null) {
+        if (this.stage === null) {
           navItems.forEach((item) => item.classList.add("hidden"));
           this.isOpen = false;
           this.instance.setAttribute("title", "Open Onboarding");
@@ -50,9 +49,9 @@ export default class QuestionMarkItem extends AAhoiItem {
     }
   
     setActiveStage(activeStage: EOnboardingStages | null) {
-      this.activeStage = activeStage;
+      this.stage = activeStage;
       this.instance.style.background = activeStage ? getColor(activeStage) : this.getColor();
-      this.instance.setAttribute("title", this.activeStage ? "Close Anchors" : "Close Onboarding");
+      this.instance.setAttribute("title", this.stage ? "Close Anchors" : "Close Onboarding");
     }
   
     protected getColor() {

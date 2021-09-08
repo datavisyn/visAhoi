@@ -20,6 +20,8 @@ export function createMarkers(anchors, visElement: Element) {
     const stage = anchor.stage;
     const clickEvent = anchor.clickEvent;
     let settings = Object.assign({}, a.offset || {});
+    let title = "";
+    anchor.title.forEach((t, i) => title += (i === 0 ? "" : " ") + t);
 
     // If we have coords we can use them
     if (a.coords) {
@@ -69,7 +71,7 @@ export function createMarkers(anchors, visElement: Element) {
       clickEvent: clickEvent
     })
     // Create the respective anchor
-    createHint(settings, text, message, index); 
+    createHint(settings, text, message, title, index); 
     text++;
     if (stage !== anchors[index + 1]?.stage) text = 1;
   });
@@ -80,9 +82,10 @@ export function createMarkers(anchors, visElement: Element) {
  * @param {*} settings where all the positions, colors and clickevents for the anchor are passed
  * @param {*} text of the anchor to show
  * @param {*} message tooltip message for anchor
+ * @param {*} title title of tooltip
  * @param {*} index index of anchor
  */
-function createHint(settings, text, message, index) { //unused params: activeStep: number, showAllHints: boolean
+function createHint(settings, text, message, title, index) { //unused params: activeStep: number, showAllHints: boolean
   let { cx, cy, r, x, y, left, right, top, bottom, color, clickEvent} = settings;
 
   const overlay = document.getElementById(OVERLAYSVG);
@@ -133,18 +136,18 @@ function createHint(settings, text, message, index) { //unused params: activeSte
   txt?.setAttribute("y", (y).toString());
   txt?.setAttribute("fill", "white");
 
-  createTooltip(index, message, g, color);
+  createTooltip(index, message, title, g, color);
 }
-
 
 /**
  * Somewhat generic function to create tooltips based on some properties that can vary.
  * @param {*} index index of tooltips/anchor
  * @param {*} message text shown on tooltip
+ * @param {*} title title of tooltip
  * @param {*} g SVG-G-element to which the tooltip belongs
  * @param {*} color color of the tooltip
  */
-function createTooltip(index: number, message: string, g: SVGGElement, color: string) {
+function createTooltip(index: number, message: string, title: string, g: SVGGElement, color: string) {
   const tooltipContainer = document.getElementById(OVERLAYTOOLTIPS);
   if (!tooltipContainer) {
     return;
@@ -155,9 +158,13 @@ function createTooltip(index: number, message: string, g: SVGGElement, color: st
     tooltip?.setAttribute("id", `tooltip-anchor-${index}`);
     tooltip?.setAttribute("role", "tooltip");
     tooltip.classList.add("tooltip", "hidden");
-    tooltip.innerText = message;
+    tooltip.innerHTML = title;
     tooltip.style.background = color;
     tooltipContainer?.appendChild(tooltip);
+    const tooltipText = document.createElement("div");
+    tooltipText.classList.add("tooltip-text");
+    tooltipText.innerHTML = message;
+    tooltip.appendChild(tooltipText);
   }
   let arrow = document.getElementById(`arrow-anchor-${index}`);
   if (!arrow) {
@@ -169,6 +176,4 @@ function createTooltip(index: number, message: string, g: SVGGElement, color: st
     tooltip?.appendChild(arrow);
   }
   popper(g, tooltip);
-  console.log(arrow.childNodes)
-
 }

@@ -4,12 +4,14 @@ import { AAhoiItem } from "./AAhoiItem";
 
 export default class AnchorItem extends AAhoiItem {
     static count = 0;
-    index: number;
+    private readonly index: number;
+    private readonly itemAlign: "horizontal" | "vertical";
 
-    constructor(parent: HTMLElement, index: number, stage: EOnboardingStages, onClick: () => void) {
-      super(parent, ANCHORCLASS, onClick, {stage});
+    constructor(parent: HTMLElement, index: number, htmlTitle: string, stage: EOnboardingStages, itemAlign: "horizontal" | "vertical", onClick: () => void) {
+      super(parent, ANCHORCLASS, onClick, {stage, htmlTitle});
       this.index = index;
       AnchorItem.count++;
+      this.itemAlign = itemAlign;
       this.instance.classList.add("hidden");
     }
 
@@ -23,15 +25,17 @@ export default class AnchorItem extends AAhoiItem {
 
     setSelected() {
       this.instance.classList.add("selected");
-      this.instance.style.bottom = `${(AnchorItem.count - this.index) * 30 + 17.5}px`;
+      this.instance.style[this.itemAlign === "vertical" ? "bottom" : "right"] = `${(AnchorItem.count - this.index) * 30 + 27.5}px`;
+      this.instance.style[this.itemAlign === "vertical" ? "right" : "bottom"] = "12.5px";
     }
 
     unsetSelected() {
       this.instance.classList.remove("selected");
-      this.instance.style.bottom = `${(AnchorItem.count - this.index) * 30 + 20}px`;
+      this.instance.style[this.itemAlign === "vertical" ? "bottom" : "right"] = `${(AnchorItem.count - this.index) * 30 + 30}px`;
+      this.instance.style[this.itemAlign === "vertical" ? "right" : "bottom"] = "15px";
     }
 
-    clickHandler() {
+    protected clickHandler() {
       super.clickHandler();
     }
 }

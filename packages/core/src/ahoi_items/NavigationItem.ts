@@ -14,7 +14,7 @@ export default class NavigationItem extends AAhoiItem {
       document.querySelectorAll(`.${ANCHORCLASS}, .${ARROWCLASS}`).forEach((item) => item.classList.remove("hidden"));
     }
 
-    protected getItemClass(): string {
+    private getItemClass(): string {
       switch(this.stage) {
         case EOnboardingStages.ANALYZING: 
           return "visahoi-analyzing";

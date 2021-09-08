@@ -6,11 +6,12 @@ import { getColor, popper } from "./utils";
 export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], clickEvent: (i: number, stage: EOnboardingStages) => void) {
   createMarkers(messages
     .map((message, i) => ({
-    anchor: message.anchor,
-    index: i,
-    message: message.legend,
-    stage: message.onboardingStage,
-    clickEvent: () => clickEvent(i, message.onboardingStage)
+      anchor: message.anchor,
+      index: i,
+      title: message.requires,
+      message: message.legend,
+      stage: message.onboardingStage,
+      clickEvent: () => clickEvent(i, message.onboardingStage)
   })), visElement);
 }
 
@@ -37,11 +38,9 @@ export function displayTooltip(messages: IOnboardingMessages[], activeAnchor: nu
     const tooltip = document.getElementById(`tooltip-anchor-${i}`);
     if (anchor && tooltip) {
       if (message.onboardingStage === activeStage && i === activeAnchor) {
+        document.documentElement.style.setProperty("--selection-background", getColor(activeStage)); //sets the bg-color for the ::before element of the popper-arrow
         tooltip.classList.remove("hidden");
         popper(anchor, tooltip);
-        // console.log(document.querySelector(`#arrow-anchor-${i}.arrow::before`));
-        // console.log(document.getElementById(`arrow-anchor-${i}.arrow::before`));
-        // (document.getElementById(`arrow-anchor-${i}.arrow::before`) as HTMLElement).style.background = getColor(message.onboardingStage);
       } else {
         tooltip.classList.add("hidden");
       }

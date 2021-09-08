@@ -66,18 +66,3 @@
 .visahoi-anchor.hidden {
     display: none;
 }
-
-.visahoi-backdrop {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-    z-index: 1999;
-    background: rgba(0, 0, 0, 0.2);
-    display: block;
-}
-
-.visahoi-backdrop.hidden {
-    display: none;
-}

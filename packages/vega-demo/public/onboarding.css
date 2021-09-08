@@ -24,7 +24,6 @@
 .visahoi-arrow-item {
     width: 20px;
     height: 20px;
-    right: 15px;
     color: black;
     display: flex;
 }
@@ -32,7 +31,6 @@
 .visahoi-anchor-item {
     width: 20px;
     height: 20px;
-    right: 15px;
     opacity: 0.4;
     display: flex;
 }
@@ -40,7 +38,6 @@
 .visahoi-anchor-item.selected {
     width: 25px;
     height: 25px;
-    right: 12.5px;
     opacity: 1;
 }
 
@@ -70,11 +67,17 @@
     display: none;
 }
 
-.tooltip {
-    display: inline-block;
-    pointer-events: all;
+.visahoi-backdrop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1999;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
 }
 
-.tooltip.hidden {
+.visahoi-backdrop.hidden {
     display: none;
 }

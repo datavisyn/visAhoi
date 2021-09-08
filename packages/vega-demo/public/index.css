@@ -40,7 +40,7 @@ h1 {
 /* hT --> highlight Text */
 .hT {
   border-radius: 3px;
-  background: #c51b7d;
+  background: var(--selection-background);
   color: white;
   padding: 2px;
   font-size: 0.9em;

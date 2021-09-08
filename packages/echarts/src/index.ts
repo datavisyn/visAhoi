@@ -1,5 +1,4 @@
 import {EVisualizationType, injectOnboarding, IOnboardingMessages} from '@visahoi/core';
-import { scatterplot } from '@visahoi/core/src/scatterplot';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
@@ -41,7 +40,7 @@ export async function ahoi(visType: EVisualizationType, chart: any, onboardingEl
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  injectOnboarding(onboardingMessages, visElement);
+  injectOnboarding(onboardingMessages, visElement, "horizontal");
 }
 
 export { EVisualizationType };
