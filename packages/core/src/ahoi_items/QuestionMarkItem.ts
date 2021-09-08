@@ -7,9 +7,8 @@ export default class QuestionMarkItem extends AAhoiItem {
     private isOpen: boolean;
     
     constructor(parent: HTMLElement, onClick: () => void) {
-      super(parent, QUESTIONMARKCLASS, onClick, {iconClass: "fa-question", htmlTitle: "Open Onboarding"});
+      super(parent, QUESTIONMARKCLASS, onClick, {iconClass: "fa-question", htmlTitle: "Open Onboarding", stage: null});
       this.isOpen = false;
-      this.stage = null;
     }
   
     protected clickHandler() {
