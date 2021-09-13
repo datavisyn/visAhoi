@@ -14,4 +14,5 @@ font-size: 4vh;
 `,css2=`
 background-color: lemonchiffon;
 color: #003366;
-`,getAllNodes=e=>e.select(".role-mark").selectAll("path").nodes(),getOrientation=e=>{const[t,p]=e,{name:s,type:o}=t,{name:x,type:n}=p;return{x:o==="band"?"horizontal":"vertical",y:n==="band"?"horizontal":"vertical",b:o==="band"?"height":"width"}},getMinMax=e=>{const t=c(e),p=Object.keys(t),s=[];return p.forEach(o=>{s.push({key:o,min:Math.min(...t[o]),max:Math.max(...t[o])})}),s};const c=e=>{const t={},p=Object.keys(e[0]);return p.forEach(s=>{t[s]=e.map(o=>o[s])}),t};
+`,getAllNodes=o=>o.select(".role-mark").selectAll("path").nodes(),getOrientation=o=>{const[e,t]=o,{name:n,type:s}=e,{name:p,type:c}=t;return{x:s==="band"?"horizontal":"vertical",y:c==="band"?"horizontal":"vertical",b:s==="band"?"height":"width"}},getMinMax=o=>{const e=l(o),t=Object.keys(e),n=[];return t.forEach(s=>{n.push({key:s,min:Math.min(...e[s]),max:Math.max(...e[s])})}),n};const l=o=>{const e={},t=Object.keys(o[0]);return t.forEach(n=>{e[n]=o.map(s=>s[n])}),e};export const importCsv=async o=>{const e=[];return await fetch(o).then(t=>t.text()).then(t=>{const n=t.split(`
+`),s=n[0].split(",");return n.forEach((p,c)=>{if(c!=0){let r={};p.split(",").forEach((a,x)=>{r[`${s[x]}`]=a}),e.push(r)}}),e}).catch(t=>console.log(t)),e};

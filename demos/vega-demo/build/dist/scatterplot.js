@@ -1,0 +1,1 @@
+import t from"../web_modules/vega-embed.js";import{ahoi as o,EVisualizationType as a}from"../web_modules/@visahoi/vega.js";const i={theme:"default",actions:!1,renderer:"svg"};async function r(){const s=await fetch("./data/cars.json"),n=await s.json(),e=await t("#vis",n,i);window.addEventListener("resize",()=>o(a.SCATTERPLOT,e,"#onboarding")),o(a.SCATTERPLOT,e,"#onboarding")}r();
