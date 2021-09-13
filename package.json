@@ -8,7 +8,9 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "start": "lerna run start",
-    "watch": "lerna run watch --parallel"
+    "watch-plotly": "lerna run --parallel watch-plotly",
+    "watch-echarts": "lerna run --parallel watch-echarts",
+    "watch-vega": "lerna run --parallel watch-vega"
   },
   "repository": {
     "type": "git",
