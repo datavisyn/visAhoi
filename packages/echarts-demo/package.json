@@ -22,10 +22,10 @@
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
-    "lint": "prettier --check \"src/**/*.js\""
+    "lint": "prettier --check \"src/**/*.js\"",
+    "watch-echarts": "nodemon --watch"
   },
   "dependencies": {
-    "d3": "^7.0.0",
     "echarts": "^5.1.2",
     "@visahoi/echarts": "^2.0.0-SNAPSHOT"
   },
@@ -33,6 +33,7 @@
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "prettier": "^2.1.1",
-    "snowpack": "^2.9.3"
+    "snowpack": "^2.9.3",
+    "nodemon": "2.0.12"
   }
 }

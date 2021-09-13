@@ -22,14 +22,13 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "tsc -b tsconfig.json"
+    "compile": "tsc -b tsconfig.json",
+    "watch-vega": "npm run compile -- --watch"
   },
   "devDependencies": {
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@types/d3": "^7.0.0",
-    "d3": "^7.0.0",
     "@visahoi/core": "^2.0.0-SNAPSHOT",
     "vega": "^5.20.2",
     "vega-embed": "^6.18.2",

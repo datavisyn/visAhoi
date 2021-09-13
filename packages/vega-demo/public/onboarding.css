@@ -1,0 +1,83 @@
+.visahoi-overlay {
+    position: absolute;
+    pointer-events: none;
+}
+
+.visahoi-item {
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    bottom: 0px;
+    pointer-events: all;
+    transition: bottom 250ms ease-in;
+    display: none;
+}
+
+.visahoi-item.hidden {
+    display: none;
+}
+
+.visahoi-arrow-item {
+    width: 20px;
+    height: 20px;
+    color: black;
+    display: flex;
+}
+
+.visahoi-anchor-item {
+    width: 20px;
+    height: 20px;
+    opacity: 0.4;
+    display: flex;
+}
+
+.visahoi-anchor-item.selected {
+    width: 25px;
+    height: 25px;
+    opacity: 1;
+}
+
+.visahoi-navigation-item {
+    width: 40px;
+    height: 40px;
+    display: flex;
+}
+
+.visahoi-question-mark-item {
+    display: flex;
+    flex-direction: column-reverse;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+}
+
+.visahoi-anchor {
+    cursor: pointer;
+    pointer-events: all;
+    display: block;
+}
+
+.visahoi-anchor.hidden {
+    display: none;
+}
+
+.visahoi-backdrop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1999;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+.visahoi-backdrop.hidden {
+    display: none;
+}

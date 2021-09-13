@@ -1,15 +1,15 @@
 import * as echarts from 'echarts';
-import * as d3 from 'd3';
 import { ahoi, EVisualizationType } from '@visahoi/echarts';
+import { importCsv } from './utils';
 
 let chart = null;
 
-function render() {
-  d3.csv("../data/oslo-2018.csv").then(rows => {
-    const {x, y} = processData(rows);
-    const chart = createPlot(x, y);
-    ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
-  });
+async function render() {
+  const data = await importCsv("../data/oslo-2018.csv");
+  const {x, y} = processData(data);
+  const chart = createPlot(x, y);
+  window.addEventListener("resize", () => ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding'));
+  ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
 }
 
 function processData(allRows) {
@@ -128,7 +128,8 @@ function createPlot(x, y) {
 
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
-  chart = echarts.init(vis, null, {renderer})
+  chart = echarts.init(vis, null, {renderer});
+  window.addEventListener("resize", () => chart.resize());
   render();
 }
 

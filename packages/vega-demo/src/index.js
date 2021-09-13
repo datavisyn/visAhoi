@@ -11,6 +11,10 @@ const demos = [
   {
     title: 'Horizon Graph',
     link: './horizon-graph.html'
+  },
+  {
+    title: 'Scatterplot',
+    link: './scatterplot.html'
   }
 ];
 

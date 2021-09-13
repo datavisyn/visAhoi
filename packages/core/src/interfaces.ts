@@ -1,12 +1,17 @@
-import {EOnboardingStages} from "./onboarding";
-
 /**
  * Supported chart types
  */
 export enum EVisualizationType {
   BAR_CHART = 'bar-chart',
   CHANGE_MATRIX = 'change-matrix',
-  HORIZON_GRAPH = 'horizon-graph'
+  HORIZON_GRAPH = 'horizon-graph',
+  SCATTERPLOT = 'scatterplot'
+}
+
+export enum EOnboardingStages {
+  READING = "reading-the-chart",
+  USING = "using-the-chart",
+  ANALYZING = "analyze-the-chart"
 }
 
 export interface IOnboardingMessages {
@@ -54,3 +59,4 @@ export interface ISpecProp {
 export interface IOnboardingSpec {
   [key: string]: ISpecProp | undefined
 }
+

@@ -1,108 +1,293 @@
-import * as d3 from 'd3';
-import {IOnboardingMessages} from './interfaces';
-import {displayGuide} from './injector';
-
-export enum EOnboardingStages {
-  READING = "reading-the-chart",
-  USING = "using-the-chart"
-}
+import {EOnboardingStages, IOnboardingMessages} from './interfaces';
+import {displayAnchors, displayTooltip, generateMarkers} from './injector';
+import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, OVERLAYDIV, OVERLAYNAVIGATION, OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
+import AnchorItem from './ahoi_items/AnchorItem';
+import QuestionMarkItem from './ahoi_items/QuestionMarkItem';
+import NavigationItem from './ahoi_items/NavigationItem';
+import ArrowItem from './ahoi_items/ArrowItem';
 
 interface onboardingState {
   activeStep: number;
   showAllHints: boolean;
+  activeStage: null | EOnboardingStages;
 }
 
 export default class OnboardingUI {
   private state: onboardingState;
-  private onboardingMessages: IOnboardingMessages[];
-  private onboardingWrapper: d3.Selection<Element, unknown, null, undefined>;
-  private visElement: Element;
-  constructor(onboardingMessages: IOnboardingMessages[], onboardingElement: Element, visElement: Element) {
+  private readonly onboardingMessages: IOnboardingMessages[];
+  private readonly visElement: Element;
+  private readonly anchorItems: AnchorItem[];
+  private readonly questionMark: QuestionMarkItem;
+  private readonly itemAlign: "horizontal" | "vertical";
+  private readonly backdrop: HTMLElement;
+  constructor(onboardingMessages: IOnboardingMessages[], visElement: Element, itemAlign: "horizontal" | "vertical") {
     this.state = {
       activeStep: 0,
-      showAllHints: false
+      showAllHints: false,
+      activeStage: null
     }
-    this.onboardingMessages = onboardingMessages;
-    this.onboardingWrapper = d3.select(onboardingElement)
-    this.onboardingWrapper.append('div').attr('id', 'onboardingStepper')
+    this.itemAlign = itemAlign;
+    this.onboardingMessages = onboardingMessages.sort((a, b) => Object.values(EOnboardingStages).indexOf(a.onboardingStage) - Object.values(EOnboardingStages).indexOf(b.onboardingStage));
+    this.anchorItems = [];
     this.visElement = visElement;
+    const {overlay, svg, navigationContainer} = this.createOverlay(visElement);
+    
+    this.questionMark = this.createQuestionMarkItem(navigationContainer);
+    this.addOnboardingItems(navigationContainer);
+    this.backdrop = this.createBackdrop(visElement);
   }
 
-  private setOnboardingState = (attr: string, value: any) => {
-    this.state[attr] = value;
-    if(attr === "activeStep" || attr === "showAllHints") {
-      this.displayNavigation();
-      this.displayGuide();
+  createOverlay(visElement) {
+    const plotX = visElement.getBoundingClientRect().x;
+    const plotY = visElement.getBoundingClientRect().y;
+    const plotWidth = visElement.clientWidth;
+    const plotHeight = visElement.clientHeight;
+
+    let overlay = document.getElementById(OVERLAYDIV) as any;
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.setAttribute("id", OVERLAYDIV);
+      overlay.classList.add(OVERLAYDIV);
+      document.body.appendChild(overlay);
+    }
+    overlay.setAttribute("height", plotHeight.toString());
+    overlay.setAttribute("width", plotWidth.toString());
+    overlay.style.top = plotY + "px";
+    overlay.style.left = plotX + "px";
+  
+    let svg = document.getElementById(OVERLAYSVG) as any;
+    if (!svg) {
+      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg?.setAttribute("id", OVERLAYSVG);
+      overlay?.appendChild(svg);
+    }
+    svg?.setAttribute(
+      "viewBox",
+      plotX + " " + plotY + " " + plotWidth + " " + plotHeight
+    );
+    svg?.setAttribute("height", plotHeight.toString());
+    svg?.setAttribute("width", plotWidth.toString());
+  
+    let tooltipContainer = document.getElementById(OVERLAYTOOLTIPS) as any;
+    if (!tooltipContainer) {
+      tooltipContainer = document.createElement("div");
+      tooltipContainer?.setAttribute("id", OVERLAYTOOLTIPS);
+      overlay?.appendChild(tooltipContainer);
+    }
+
+    let navigationContainer = document.getElementById(OVERLAYNAVIGATION);
+    if (!navigationContainer) {
+      navigationContainer = document.createElement("div");
+      navigationContainer?.setAttribute("id", OVERLAYNAVIGATION);
+      navigationContainer?.setAttribute("class", OVERLAYNAVIGATION);
+      overlay?.appendChild(navigationContainer);
+    }
+    return {overlay, svg, navigationContainer};
+  }
+
+  private createBackdrop(visElement: Element) {
+    let backdrop = document.getElementById("visahoi-backdrop");
+    if (!backdrop) {
+      backdrop = document.createElement("div");
+      backdrop.setAttribute("id", "visahoi-backdrop");
+      backdrop.classList.add("visahoi-backdrop", "hidden");
+    }
+    const mask = visElement.getBoundingClientRect();
+    const fullAppWidth = '100vw';
+    const fullAppHeight = '100vh';
+
+    // set the new height of the backdrop
+    backdrop.style.height = fullAppHeight;
+    backdrop.style.width = fullAppWidth;
+
+    // also consider the current scroll offset inside the window
+    const scrollOffsetX = self.scrollX;
+    const scrollOffsetY = self.scrollY;
+
+    // @see http://bennettfeely.com/clippy/ -> select `Frame` example
+    backdrop.style.clipPath = `polygon(
+      0% 0%,
+      0% ${fullAppHeight},
+      ${mask.left + scrollOffsetX}px ${fullAppHeight},
+      ${mask.left + scrollOffsetX}px ${mask.top + scrollOffsetY}px,
+      ${mask.left + mask.width + scrollOffsetX}px ${mask.top + scrollOffsetY}px,
+      ${mask.left + mask.width + scrollOffsetX}px ${mask.top + mask.height + scrollOffsetY + 5}px,
+      ${mask.left + scrollOffsetX}px ${mask.top + mask.height + scrollOffsetY + 5}px,
+      ${mask.left + scrollOffsetX}px ${fullAppHeight},
+      ${fullAppWidth} ${fullAppHeight},
+      ${fullAppWidth} 0%
+    )`;
+    document.body.appendChild(backdrop);
+    return backdrop;
+  }
+
+  private createQuestionMarkItem(parent: HTMLElement): QuestionMarkItem {
+    return new QuestionMarkItem(
+      parent,
+      () => {
+        if (this.state.activeStage) {
+          this.setStage(null);
+          this.backdrop.classList.add("hidden");
+        }
+      }
+    );
+  }
+
+  generateMarkers() {
+    generateMarkers(
+      this.visElement,
+      this.onboardingMessages,
+      (i: number) => this.setActiveStep(i)
+    );
+  }
+
+  private addNavigationItems(parent: HTMLElement) {
+    const stages = new Set(this.onboardingMessages.map(message => message.onboardingStage));
+    if (stages.has(EOnboardingStages.ANALYZING)) {
+      new NavigationItem(
+        parent,
+        "fa-lightbulb",
+        EOnboardingStages.ANALYZING,
+        "Analyzing",
+        () => {
+          this.setStage(EOnboardingStages.ANALYZING);
+          this.displayAnchors();
+          this.setSelectedAnchor()
+          this.backdrop.classList.remove("hidden");
+        }
+      );
+    }
+    if (stages.has(EOnboardingStages.USING)) {
+      new NavigationItem(
+        parent,
+        "fa-hand-point-up",
+        EOnboardingStages.USING,
+        "Using",
+        () => {
+          this.setStage(EOnboardingStages.USING);
+          this.displayAnchors();
+          this.setSelectedAnchor()
+          this.backdrop.classList.remove("hidden");
+        }
+      );
+    }
+    if (stages.has(EOnboardingStages.READING)) {
+      new NavigationItem(
+        parent,
+        "fa-glasses",
+        EOnboardingStages.READING,
+        "Reading",
+        () => {
+          this.setStage(EOnboardingStages.READING);
+          this.displayAnchors();
+          this.setSelectedAnchor()
+          this.backdrop.classList.remove("hidden");
+        }
+      );
     }
   }
 
-  displayNavigation() {
-    displayNavigation(this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState);
+  private addAnchorItems(parent: HTMLElement) {
+    new ArrowItem(
+      parent,
+      () => this.prevStep(),
+      this.itemAlign === "vertical" ? "up" : "left"
+    );
+    new ArrowItem(
+      parent,
+      () => this.nextStep(),
+      this.itemAlign === "vertical" ? "down" : "right"
+    );
+    this.onboardingMessages.forEach((m, i) => {
+      let title = "";
+      m.requires.forEach((t, i) => title += (i === 0 ? "" : " ") + t);
+      this.anchorItems.push(new AnchorItem(
+        parent,
+        i,
+        title,
+        m.onboardingStage,
+        this.itemAlign,
+        () => {
+          this.setStage(m.onboardingStage);
+          this.setActiveStep(i);
+        }
+      ));
+    });
   }
 
-  displayGuide() {
-    displayGuide(this.visElement, this.onboardingMessages, this.state.activeStep, this.state.showAllHints, this.setOnboardingState, this.onboardingWrapper);
+  private alignItems() {
+    const navItems = document.querySelectorAll(`.${NAVIGATIONCLASS}`);
+    const anchorItems = document.querySelectorAll(`.${ANCHORCLASS}, .${ARROWCLASS}`);
+    navItems.forEach((item, i) => {
+      (item as HTMLElement).style[this.itemAlign === "vertical" ? "bottom" : "right"] = `${(i + 1) * 50 + 10}px`;
+      (item as HTMLElement).style[this.itemAlign === "vertical" ? "right" : "bottom"] = "5px";
+   });
+    anchorItems.forEach((item, i) => {
+      (item as HTMLElement).style[this.itemAlign === "vertical" ? "bottom" : "right"] = `${(anchorItems.length - i) * 30 + 30}px`;
+      (item as HTMLElement).style[this.itemAlign === "vertical" ? "right" : "bottom"] = "15px";
+    });
   }
-}
 
-export const injectOnboarding = (onboardingElement: Element, onboardingMessages: IOnboardingMessages[], visElement: Element) => {
-  const onboarding = new OnboardingUI(onboardingMessages, onboardingElement, visElement);
-  onboarding.displayNavigation();
-  onboarding.displayGuide()
-}
-
-
-const displayNavigation = (onboardingMessages: IOnboardingMessages[], activeStep: number, showAllHints: boolean, setOnboardingState: (attr: string, value: any) => void) => {
-  const onNextBtnClick = () => {
-    if(onboardingMessages.length -1 > activeStep && !showAllHints) {
-      setOnboardingState("activeStep", activeStep+1);
+  private addOnboardingItems(parent: HTMLElement) {
+    if (!parent || parent.childElementCount > 1) {
+      return;
     }
-  }
-  const onPrevBtnClick = () => {
-    if(activeStep > 0 && !showAllHints) {
-      setOnboardingState("activeStep", activeStep - 1)
-    }
+    this.addNavigationItems(parent);
+    this.addAnchorItems(parent);
+    this.alignItems();
   }
 
-  const stepper = d3.select(`#onboardingStepper`)
-    .html(null);
+  private displayAnchors() {
+    displayAnchors(this.onboardingMessages, this.state.activeStage);
+  }
 
-  const toggle = stepper.append("label").attr("class", "onboarding-toggle");
-    toggle.append("input").attr("class", "toggle-checkbox").attr("type", "checkbox").on("click", function() {
-      setOnboardingState("showAllHints", !showAllHints);
+  private displayTooltip() {
+    displayTooltip(this.onboardingMessages, this.state.activeStep, this.state.activeStage);
+  }
+
+  private setStage(stage: EOnboardingStages | null) {
+    if (stage && stage === this.state.activeStage) return;
+    this.state.activeStage = stage;
+    this.questionMark?.setActiveStage(stage);
+    this.displayAnchors();
+  }
+
+  private setActiveStep(step: number) {
+    if (step < 0 || step > this.anchorItems.length - 1) return;
+    const prev = this.state.activeStep;
+    this.state.activeStep = step;
+    this.anchorItems[prev].unsetSelected();
+    this.anchorItems[step].setSelected();
+    this.displayTooltip();
+  }
+
+  private deSelectAllAnchor() {
+    this.anchorItems.forEach((anchor) => anchor.unsetSelected());
+  }
+
+  private setSelectedAnchor() {
+    this.anchorItems.forEach((anchor, i) => {
+      if (anchor.getStage() === this.state.activeStage && this.anchorItems[i - 1]?.getStage() !== anchor.getStage()) {
+        this.setActiveStep(anchor.getIndex());
+        return;
+      }
     })
-    .property("checked", showAllHints)
-    toggle.append("div").attr("class", "toggle-switch")
-    toggle.append("span").attr("class", "toggle-label").html("Show / Hide All Hints")
+  }
 
-  stepper.append("input")
-    .attr("type", "button")
-    .attr("name", "previous")
-    .attr("value", "PREVIOUS")
-    .on("click", onPrevBtnClick)
-    .property("disabled", showAllHints)
+  private nextStep() {
+    const curr = this.state.activeStep;
+    this.setStage(this.anchorItems[curr + 1].getStage());
+    this.setActiveStep(curr + 1);
+  }
 
-  stepper.append("input")
-    .attr("type", "button")
-    .attr("name", "next")
-    .attr("value", "NEXT")
-    .on("click", onNextBtnClick)
-    .property("disabled", showAllHints)
-
+  private prevStep() {
+    const curr = this.state.activeStep;
+    this.setStage(this.anchorItems[curr - 1].getStage());
+    this.setActiveStep(curr - 1);
+  }
 }
 
-
-export const getElement = (param: string | Element): Element => {
-  let element: Element;
-  if(typeof param === 'string') {
-    const e = document.querySelector(param);
-    if(e) {
-      element = e;
-    } else {
-      throw new Error(`No Element for selector ${param} found.`);
-    }
-  } else {
-    element = param;
-  }
-  return element;
+export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element, itemAlign: "horizontal" | "vertical") => {
+  const onboarding = new OnboardingUI(onboardingMessages, visElement, itemAlign);
+  onboarding.generateMarkers()
 }

@@ -12,6 +12,10 @@ const demos = [
     title: 'Horizon Graph',
     link: './svg/horizon-graph.html'
   },
+  {
+    title: 'Scatterplot',
+    link: './svg/scatterplot.html'
+  }
   // {
   //   title: 'Bar Chart Canvas',
   //   link: './canvas/bar-chart.html'

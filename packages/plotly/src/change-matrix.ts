@@ -10,8 +10,6 @@ function extractOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   const heatmapData = (<any>Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]).__data__;
   const t = heatmapData[0].trace;
 
-  //console.log(t);
-
   return {
     chartTitle: {
       value: chart.layout.title.text,

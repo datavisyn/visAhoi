@@ -3,15 +3,14 @@
 // import * as Plotly from 'plotly.js';
 
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
+import { importCsv } from './util';
 
-function render() {
-  Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
-    const {x, y} = processData(data);
-
-    makePlotly(x, y).then((chart) => {
-      ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
-    });
-  });
+async function render() {
+  const data = await importCsv("./data/oslo-2018.csv");
+  const {x, y} = processData(data);
+  const chart = await makePlotly(x, y);
+  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding'), 100));
+  ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding');
 }
 
 function processData(allRows) {
@@ -42,8 +41,6 @@ function processData(allRows) {
     }, 0);
     return sum / tempArray.length;
   });
-
-  // console.log("date", x, "temp", y);
   return {x, y: averagedYValues};
 }
 
@@ -109,7 +106,11 @@ function makePlotly(x, y) {
     showlegend: false
   };
 
-  return Plotly.newPlot("vis", traces, layout);
+  const config = {
+    responsive: true
+  };
+
+  return Plotly.newPlot("vis", traces, layout, config);
 }
 
 render();

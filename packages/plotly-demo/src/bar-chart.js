@@ -3,28 +3,24 @@
 // import * as Plotly from 'plotly.js';
 
 import { ahoi, EVisualizationType } from '@visahoi/plotly';
+import { importCsv } from './util';
 
-function render() {
-  Plotly.d3.csv("./data/oslo-2018.csv", function(data) {
-    const {x, y} = processData(data);
-
-    makePlotly(x, y).then((chart) => {
-      ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
-    });
-  });
+async function render() {
+  const data = await importCsv("./data/oslo-2018.csv");
+  const {x, y} = processData(data);
+  const chart = await makePlotly(x, y);
+  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'), 100));
+  ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
 }
 
 function processData(allRows) {
-  //console.log(allRows);
   const x = [];
   const y = [];
-
   for (var i = 0; i < allRows.length; i++) {
     const row = allRows[i];
     x.push(`${row.year}-${row.month}`);
     y.push(row.temp);
   }
-  // console.log("date", x, "temp", y);
   return {x, y};
 }
 
@@ -60,7 +56,11 @@ function makePlotly(x, y) {
     }
   };
 
-  return Plotly.newPlot("vis", traces, layout);
+  const config = {
+    responsive: true
+  };
+
+  return Plotly.newPlot("vis", traces, layout, config);
 }
 
 render();

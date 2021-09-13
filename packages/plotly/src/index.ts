@@ -1,7 +1,8 @@
-import {EVisualizationType, injectOnboarding, getElement} from '@visahoi/core';
+import {EVisualizationType, injectOnboarding} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
+import { scatterplotFactory } from './scatterplot';
 
 /**
  *
@@ -25,11 +26,16 @@ export async function ahoi(visType: EVisualizationType, chart: Element, onboardi
       onboardingMessages = horizonGraphFactory(chart);
       break;
 
+    case EVisualizationType.SCATTERPLOT:
+      onboardingMessages = scatterplotFactory(chart);
+      break;
+
     default:
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-    injectOnboarding(getElement(onboardingElement), onboardingMessages, chart);
+  injectOnboarding(onboardingMessages, chart, "vertical");
 }
 
 export { EVisualizationType };
+
