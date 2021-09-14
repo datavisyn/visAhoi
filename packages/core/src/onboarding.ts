@@ -1,14 +1,16 @@
 import {EOnboardingStages, IOnboardingMessages} from './interfaces';
 import {displayAnchors, displayTooltip, generateMarkers} from './injector';
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, OVERLAYDIV, OVERLAYNAVIGATION, OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
-import AnchorItem from './ahoi_items/AnchorItem';
+import OnboardingStageNavigationItem from './ahoi_items/OnboardingStageNavigationItem';
 import QuestionMarkItem from './ahoi_items/QuestionMarkItem';
 import NavigationItem from './ahoi_items/NavigationItem';
 import ArrowItem from './ahoi_items/ArrowItem';
+import { NavigationAlignment } from './ahoi_items/OnboardingNavigation';
+import OnboardingNavigation from './ahoi_items/OnboardingNavigation';
+import Backdrop from './ahoi_items/Backdrop';
 
 interface onboardingState {
   activeStep: number;
-  showAllHints: boolean;
   activeStage: null | EOnboardingStages;
 }
 
@@ -16,25 +18,25 @@ export default class OnboardingUI {
   private state: onboardingState;
   private readonly onboardingMessages: IOnboardingMessages[];
   private readonly visElement: Element;
-  private readonly anchorItems: AnchorItem[];
+  private readonly anchorItems: OnboardingStageNavigationItem[];
   private readonly questionMark: QuestionMarkItem;
-  private readonly itemAlign: "horizontal" | "vertical";
-  private readonly backdrop: HTMLElement;
-  constructor(onboardingMessages: IOnboardingMessages[], visElement: Element, itemAlign: "horizontal" | "vertical") {
+  private readonly navigationAlignment: NavigationAlignment;
+  private readonly backdrop: Backdrop;
+  constructor(onboardingMessages: IOnboardingMessages[], visElement: Element, navigationAlignment: NavigationAlignment) {
     this.state = {
       activeStep: 0,
-      showAllHints: false,
       activeStage: null
     }
-    this.itemAlign = itemAlign;
-    this.onboardingMessages = onboardingMessages.sort((a, b) => Object.values(EOnboardingStages).indexOf(a.onboardingStage) - Object.values(EOnboardingStages).indexOf(b.onboardingStage));
+    this.navigationAlignment = navigationAlignment;
+    // this.onboardingMessages = onboardingMessages.sort((a, b) => Object.values(EOnboardingStages).indexOf(a.onboardingStage) - Object.values(EOnboardingStages).indexOf(b.onboardingStage));
+    this.onboardingMessages = onboardingMessages;
     this.anchorItems = [];
     this.visElement = visElement;
     const {overlay, svg, navigationContainer} = this.createOverlay(visElement);
-    
+
     this.questionMark = this.createQuestionMarkItem(navigationContainer);
     this.addOnboardingItems(navigationContainer);
-    this.backdrop = this.createBackdrop(visElement);
+    this.backdrop = new Backdrop({visElement});
   }
 
   createOverlay(visElement) {
@@ -54,7 +56,7 @@ export default class OnboardingUI {
     overlay.setAttribute("width", plotWidth.toString());
     overlay.style.top = plotY + "px";
     overlay.style.left = plotX + "px";
-  
+
     let svg = document.getElementById(OVERLAYSVG) as any;
     if (!svg) {
       svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -67,7 +69,7 @@ export default class OnboardingUI {
     );
     svg?.setAttribute("height", plotHeight.toString());
     svg?.setAttribute("width", plotWidth.toString());
-  
+
     let tooltipContainer = document.getElementById(OVERLAYTOOLTIPS) as any;
     if (!tooltipContainer) {
       tooltipContainer = document.createElement("div");
@@ -85,49 +87,13 @@ export default class OnboardingUI {
     return {overlay, svg, navigationContainer};
   }
 
-  private createBackdrop(visElement: Element) {
-    let backdrop = document.getElementById("visahoi-backdrop");
-    if (!backdrop) {
-      backdrop = document.createElement("div");
-      backdrop.setAttribute("id", "visahoi-backdrop");
-      backdrop.classList.add("visahoi-backdrop", "hidden");
-    }
-    const mask = visElement.getBoundingClientRect();
-    const fullAppWidth = '100vw';
-    const fullAppHeight = '100vh';
-
-    // set the new height of the backdrop
-    backdrop.style.height = fullAppHeight;
-    backdrop.style.width = fullAppWidth;
-
-    // also consider the current scroll offset inside the window
-    const scrollOffsetX = self.scrollX;
-    const scrollOffsetY = self.scrollY;
-
-    // @see http://bennettfeely.com/clippy/ -> select `Frame` example
-    backdrop.style.clipPath = `polygon(
-      0% 0%,
-      0% ${fullAppHeight},
-      ${mask.left + scrollOffsetX}px ${fullAppHeight},
-      ${mask.left + scrollOffsetX}px ${mask.top + scrollOffsetY}px,
-      ${mask.left + mask.width + scrollOffsetX}px ${mask.top + scrollOffsetY}px,
-      ${mask.left + mask.width + scrollOffsetX}px ${mask.top + mask.height + scrollOffsetY + 5}px,
-      ${mask.left + scrollOffsetX}px ${mask.top + mask.height + scrollOffsetY + 5}px,
-      ${mask.left + scrollOffsetX}px ${fullAppHeight},
-      ${fullAppWidth} ${fullAppHeight},
-      ${fullAppWidth} 0%
-    )`;
-    document.body.appendChild(backdrop);
-    return backdrop;
-  }
-
   private createQuestionMarkItem(parent: HTMLElement): QuestionMarkItem {
     return new QuestionMarkItem(
       parent,
       () => {
         if (this.state.activeStage) {
           this.setStage(null);
-          this.backdrop.classList.add("hidden");
+          this.backdrop.hide();
         }
       }
     );
@@ -153,7 +119,7 @@ export default class OnboardingUI {
           this.setStage(EOnboardingStages.ANALYZING);
           this.displayAnchors();
           this.setSelectedAnchor()
-          this.backdrop.classList.remove("hidden");
+          this.backdrop.show();
         }
       );
     }
@@ -166,8 +132,8 @@ export default class OnboardingUI {
         () => {
           this.setStage(EOnboardingStages.USING);
           this.displayAnchors();
-          this.setSelectedAnchor()
-          this.backdrop.classList.remove("hidden");
+          this.setSelectedAnchor();
+          this.backdrop.show();
         }
       );
     }
@@ -180,8 +146,8 @@ export default class OnboardingUI {
         () => {
           this.setStage(EOnboardingStages.READING);
           this.displayAnchors();
-          this.setSelectedAnchor()
-          this.backdrop.classList.remove("hidden");
+          this.setSelectedAnchor();
+          this.backdrop.show();
         }
       );
     }
@@ -191,22 +157,22 @@ export default class OnboardingUI {
     new ArrowItem(
       parent,
       () => this.prevStep(),
-      this.itemAlign === "vertical" ? "up" : "left"
+      this.navigationAlignment === "vertical" ? "up" : "left"
     );
     new ArrowItem(
       parent,
       () => this.nextStep(),
-      this.itemAlign === "vertical" ? "down" : "right"
+      this.navigationAlignment === "vertical" ? "down" : "right"
     );
     this.onboardingMessages.forEach((m, i) => {
       let title = "";
       m.requires.forEach((t, i) => title += (i === 0 ? "" : " ") + t);
-      this.anchorItems.push(new AnchorItem(
+      this.anchorItems.push(new OnboardingStageNavigationItem(
         parent,
         i,
         title,
         m.onboardingStage,
-        this.itemAlign,
+        this.navigationAlignment,
         () => {
           this.setStage(m.onboardingStage);
           this.setActiveStep(i);
@@ -219,12 +185,12 @@ export default class OnboardingUI {
     const navItems = document.querySelectorAll(`.${NAVIGATIONCLASS}`);
     const anchorItems = document.querySelectorAll(`.${ANCHORCLASS}, .${ARROWCLASS}`);
     navItems.forEach((item, i) => {
-      (item as HTMLElement).style[this.itemAlign === "vertical" ? "bottom" : "right"] = `${(i + 1) * 50 + 10}px`;
-      (item as HTMLElement).style[this.itemAlign === "vertical" ? "right" : "bottom"] = "5px";
+      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "bottom" : "right"] = `${(i + 1) * 50 + 10}px`;
+      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "right" : "bottom"] = "5px";
    });
     anchorItems.forEach((item, i) => {
-      (item as HTMLElement).style[this.itemAlign === "vertical" ? "bottom" : "right"] = `${(anchorItems.length - i) * 30 + 30}px`;
-      (item as HTMLElement).style[this.itemAlign === "vertical" ? "right" : "bottom"] = "15px";
+      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "bottom" : "right"] = `${(anchorItems.length - i) * 30 + 30}px`;
+      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "right" : "bottom"] = "15px";
     });
   }
 
@@ -261,10 +227,6 @@ export default class OnboardingUI {
     this.displayTooltip();
   }
 
-  private deSelectAllAnchor() {
-    this.anchorItems.forEach((anchor) => anchor.unsetSelected());
-  }
-
   private setSelectedAnchor() {
     this.anchorItems.forEach((anchor, i) => {
       if (anchor.getStage() === this.state.activeStage && this.anchorItems[i - 1]?.getStage() !== anchor.getStage()) {
@@ -287,7 +249,9 @@ export default class OnboardingUI {
   }
 }
 
-export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element, itemAlign: "horizontal" | "vertical") => {
-  const onboarding = new OnboardingUI(onboardingMessages, visElement, itemAlign);
-  onboarding.generateMarkers()
+export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element, navigationAlignment: NavigationAlignment) => {
+  // TODO: continue with onboarding navigation
+  // const navigation = new OnboardingNavigation(onboardingMessages, navigationAlignment);
+  const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
+  onboarding.generateMarkers();
 }

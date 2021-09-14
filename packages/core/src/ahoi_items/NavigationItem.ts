@@ -1,10 +1,10 @@
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS } from "../constants";
 import { EOnboardingStages } from "../interfaces";
-import { AAhoiItem } from "./AAhoiItem";
+import { AOnboardingStageNavigationItem } from "./AOnboardingStageNavigationItem";
 
-export default class NavigationItem extends AAhoiItem {
+export default class NavigationItem extends AOnboardingStageNavigationItem {
     constructor(parent: HTMLElement, iconClass: string, stage: EOnboardingStages, htmlTitle: string, onClick: () => void) {
-      super(parent, NAVIGATIONCLASS, onClick, {iconClass, stage, htmlTitle})
+      super(parent, NAVIGATIONCLASS, onClick, {iconClass, stage, title: htmlTitle})
       this.instance.classList.add(this.getItemClass(), "hidden");
     }
 
@@ -16,7 +16,7 @@ export default class NavigationItem extends AAhoiItem {
 
     private getItemClass(): string {
       switch(this.stage) {
-        case EOnboardingStages.ANALYZING: 
+        case EOnboardingStages.ANALYZING:
           return "visahoi-analyzing";
         case EOnboardingStages.READING:
           return "visahoi-reading";
@@ -27,4 +27,4 @@ export default class NavigationItem extends AAhoiItem {
       }
     }
   }
-  
+

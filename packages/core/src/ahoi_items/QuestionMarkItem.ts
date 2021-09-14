@@ -1,16 +1,16 @@
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, QUESTIONMARKCLASS } from "../constants";
 import { EOnboardingStages } from "../interfaces";
 import { getColor } from "../utils";
-import { AAhoiItem } from "./AAhoiItem";
+import { AOnboardingStageNavigationItem } from "./AOnboardingStageNavigationItem";
 
-export default class QuestionMarkItem extends AAhoiItem {
+export default class QuestionMarkItem extends AOnboardingStageNavigationItem {
     private isOpen: boolean;
-    
+
     constructor(parent: HTMLElement, onClick: () => void) {
-      super(parent, QUESTIONMARKCLASS, onClick, {iconClass: "fa-question", htmlTitle: "Open Onboarding", stage: null});
+      super(parent, QUESTIONMARKCLASS, onClick, {iconClass: "fa-question", title: "Open Onboarding", stage: null});
       this.isOpen = false;
     }
-  
+
     protected clickHandler() {
       let delChild: Element[] = [];
       const navItems = document.querySelectorAll(`.${NAVIGATIONCLASS}`);
@@ -22,7 +22,7 @@ export default class QuestionMarkItem extends AAhoiItem {
           delChild.push(child as Element);
           if (child instanceof SVGElement) {
             this.iconClass = "fa-times";
-            this.instance.appendChild(this.getIcon() as HTMLElement);
+            this.instance.appendChild(this.getIconElement() as HTMLElement);
           }
         });
       } else {
@@ -34,7 +34,7 @@ export default class QuestionMarkItem extends AAhoiItem {
             delChild.push(child as Element);
             if (child instanceof SVGElement) {
               this.iconClass = "fa-question";
-              this.instance.appendChild(this.getIcon() as HTMLElement);
+              this.instance.appendChild(this.getIconElement() as HTMLElement);
             }
           });
         } else {
@@ -46,13 +46,13 @@ export default class QuestionMarkItem extends AAhoiItem {
       delChild.forEach(child => child.remove());
       super.clickHandler();
     }
-  
+
     setActiveStage(activeStage: EOnboardingStages | null) {
       this.stage = activeStage;
       this.instance.style.background = activeStage ? getColor(activeStage) : this.getColor();
       this.instance.setAttribute("title", this.stage ? "Close Anchors" : "Close Onboarding");
     }
-  
+
     protected getColor() {
       return "#EF5576";
     }
