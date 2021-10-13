@@ -1,5 +1,5 @@
 import { ARROWCLASS } from "../constants";
-import { AAhoiItem } from "./AAhoiItem";
+import { AOnboardingStageNavigationItem } from "./AOnboardingStageNavigationItem";
 
 function getArrowIconClass(direction) {
   switch(direction) {
@@ -16,12 +16,13 @@ function getArrowIconClass(direction) {
   }
 }
 
-export default class ArrowItem extends AAhoiItem {
-    constructor(parent: HTMLElement, onClick: () => void, direction: "up" | "down" | "left" | "right") {
-      super(parent, ARROWCLASS, onClick, {iconClass: getArrowIconClass(direction), htmlTitle: direction === "up" || direction === "left" ? "Previous Step" : "Next Step"});
+type Direction = "up" | "down" | "left" | "right";
+export default class ArrowItem extends AOnboardingStageNavigationItem {
+    constructor(parent: HTMLElement, onClick: () => void, direction: Direction) {
+      super(parent, ARROWCLASS, onClick, {iconClass: getArrowIconClass(direction), title: direction === "up" || direction === "left" ? "Previous Step" : "Next Step"});
       this.instance.classList.add("hidden");
     }
-  
+
     protected getColor() {
       return "transparent";
     }

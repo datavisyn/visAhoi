@@ -1,6 +1,6 @@
 import {isOnboardingElementAnchor} from './interfaces';
 import { OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
-import { getColor, popper } from './utils';
+import { getColor, createPopperTooltip } from './utils';
 
 // Reused constants that should be change here to make it uniform
 const r = 10;
@@ -8,20 +8,20 @@ const w = 30;
 const h = 30;
 const textOffset = 5;
 
-export function createMarkers(anchors, visElement: Element) {
-  let text = 1;
-  anchors.forEach((anchor, index) => {
+export function createMarkers(anchors, visAhoiSVGElement: Element) {
+  let anchorText = 1;
+  anchors.forEach((anchor, anchorIndex) => {
     if (!anchor.anchor) { // Return if the anchor is empty
-      return; 
+      return;
     }
     const a = anchor.anchor;
     const i = anchor.index;
-    const message = anchor.message;
+    const tooltipMessage = anchor.message;
     const stage = anchor.stage;
     const clickEvent = anchor.clickEvent;
     let settings = Object.assign({}, a.offset || {});
-    let title = "";
-    anchor.title.forEach((t, i) => title += (i === 0 ? "" : " ") + t);
+    let tooltipTitle = "";
+    anchor.title.forEach((t, i) => tooltipTitle += (i === 0 ? "" : " ") + t);
 
     // If we have coords we can use them
     if (a.coords) {
@@ -43,7 +43,7 @@ export function createMarkers(anchors, visElement: Element) {
         });
       }
     } else { // Find the positioning only if we provided no coords
-      const svgPosition = visElement.getBoundingClientRect();
+      const svgPosition = visAhoiSVGElement.getBoundingClientRect();
 
       let node;
       if(isOnboardingElementAnchor(a)) {
@@ -66,26 +66,36 @@ export function createMarkers(anchors, visElement: Element) {
         y: (elRect.y) + textOffset,
       });
     }
-    Object.assign(settings, { 
+    Object.assign(settings, {
       color: getColor(stage),
       clickEvent: clickEvent
     })
     // Create the respective anchor
-    createHint(settings, text, message, title, index); 
-    text++;
-    if (stage !== anchors[index + 1]?.stage) text = 1;
+    createHint({settings, anchorIndex, anchorText, tooltipTitle, tooltipMessage});
+    anchorText++;
+    if (stage !== anchors[anchorIndex + 1]?.stage){
+      anchorText = 1;
+    }
   });
+}
+
+interface ICreateHint {
+  settings: any;
+  anchorIndex: number;
+  anchorText: number;
+  tooltipTitle: string;
+  tooltipMessage: string;
 }
 
 /**
  * Somewhat generic function to create the hints based on some properties that can vary.
  * @param {*} settings where all the positions, colors and clickevents for the anchor are passed
- * @param {*} text of the anchor to show
- * @param {*} message tooltip message for anchor
- * @param {*} title title of tooltip
- * @param {*} index index of anchor
+ * @param {*} anchorText of the anchor to show
+ * @param {*} tooltipMessage tooltip message for anchor
+ * @param {*} tooltipTitle title of tooltip
+ * @param {*} anchorIndex index of anchor
  */
-function createHint(settings, text, message, title, index) { //unused params: activeStep: number, showAllHints: boolean
+function createHint({settings, anchorIndex, anchorText, tooltipTitle, tooltipMessage}: ICreateHint) {
   let { cx, cy, r, x, y, left, right, top, bottom, color, clickEvent} = settings;
 
   const overlay = document.getElementById(OVERLAYSVG);
@@ -95,11 +105,11 @@ function createHint(settings, text, message, title, index) { //unused params: ac
   if(top) { cy += top; y += top; }
   if(bottom) { cy -= bottom; y -= bottom; }
 
-  let g = document.getElementById(`anchor-${index}`) as any;
-  if (!g) { 
+  let g = document.getElementById(`anchor-${anchorIndex}`) as any;
+  if (!g) {
     g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     if (g) { //because ts won't let me recompile
-      g.setAttribute("id", `anchor-${index}`);
+      g.setAttribute("id", `anchor-${anchorIndex}`);
       g.classList.add("visahoi-anchor", "hidden");
       g.addEventListener("click", () => clickEvent());
       g.setAttribute("aria-describedby", "tooltip");
@@ -111,13 +121,13 @@ function createHint(settings, text, message, title, index) { //unused params: ac
   g?.setAttribute("height", h.toString());
   g?.setAttribute("width", w.toString());
 
-  let circle = document.getElementById(`circle-anchor-${index}`) as any;
+  let circle = document.getElementById(`circle-anchor-${anchorIndex}`) as any;
   if (!circle) {
     circle = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "circle"
     );
-    circle?.setAttribute("id", `circle-anchor-${index}`);
+    circle?.setAttribute("id", `circle-anchor-${anchorIndex}`);
     circle?.setAttribute("fill", color);
     g?.appendChild(circle);
   }
@@ -125,18 +135,26 @@ function createHint(settings, text, message, title, index) { //unused params: ac
   circle?.setAttribute("cy", cy);
   circle?.setAttribute("r", r);
 
-  let txt = document.getElementById(`text-anchor-${index}`) as any;
+  let txt = document.getElementById(`text-anchor-${anchorIndex}`) as any;
   if (!txt) {
     txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    txt?.setAttribute("id", `text-anchor-${index}`)
+    txt?.setAttribute("id", `text-anchor-${anchorIndex}`)
     g?.appendChild(txt);
-    txt.innerHTML = text;
+    txt.innerHTML = anchorText;
   }
   txt?.setAttribute("x", (x - textOffset).toString());
   txt?.setAttribute("y", (y).toString());
   txt?.setAttribute("fill", "white");
 
-  createTooltip(index, message, title, g, color);
+  createTooltip({anchorIndex, tooltipMessage, tooltipTitle, g, color});
+}
+
+interface ICreateTooltip {
+  anchorIndex: number;
+  tooltipMessage: string;
+  tooltipTitle: string;
+  g: SVGGElement;
+  color: string;
 }
 
 /**
@@ -147,33 +165,33 @@ function createHint(settings, text, message, title, index) { //unused params: ac
  * @param {*} g SVG-G-element to which the tooltip belongs
  * @param {*} color color of the tooltip
  */
-function createTooltip(index: number, message: string, title: string, g: SVGGElement, color: string) {
+function createTooltip({anchorIndex, tooltipMessage, tooltipTitle, g, color}: ICreateTooltip) {
   const tooltipContainer = document.getElementById(OVERLAYTOOLTIPS);
   if (!tooltipContainer) {
     return;
   }
-  let tooltip = document.getElementById(`tooltip-anchor-${index}`);
+  let tooltip = document.getElementById(`tooltip-anchor-${anchorIndex}`);
   if (!tooltip) {
     tooltip = document.createElement("div");
-    tooltip?.setAttribute("id", `tooltip-anchor-${index}`);
+    tooltip?.setAttribute("id", `tooltip-anchor-${anchorIndex}`);
     tooltip?.setAttribute("role", "tooltip");
     tooltip.classList.add("tooltip", "hidden");
-    tooltip.innerHTML = title;
+    tooltip.innerHTML = tooltipTitle;
     tooltip.style.background = color;
     tooltipContainer?.appendChild(tooltip);
     const tooltipText = document.createElement("div");
     tooltipText.classList.add("tooltip-text");
-    tooltipText.innerHTML = message;
+    tooltipText.innerHTML = tooltipMessage;
     tooltip.appendChild(tooltipText);
   }
-  let arrow = document.getElementById(`arrow-anchor-${index}`);
+  let arrow = document.getElementById(`arrow-anchor-${anchorIndex}`);
   if (!arrow) {
     arrow = document.createElement("div");
-    arrow?.setAttribute("id", `arrow-anchor-${index}`);
+    arrow?.setAttribute("id", `arrow-anchor-${anchorIndex}`);
     arrow?.setAttribute("data-popper-arrow", "true");
     arrow?.setAttribute("class", "arrow");
     arrow.style.background = color;
     tooltip?.appendChild(arrow);
   }
-  popper(g, tooltip);
+  createPopperTooltip(g, tooltip);
 }

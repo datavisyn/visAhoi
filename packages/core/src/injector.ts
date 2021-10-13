@@ -1,6 +1,6 @@
 import { IOnboardingMessages, EOnboardingStages } from "./interfaces";
 import { createMarkers } from './generate-anchor';
-import { getColor, popper } from "./utils";
+import { getColor, createPopperTooltip } from "./utils";
 
 
 export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], clickEvent: (i: number, stage: EOnboardingStages) => void) {
@@ -40,7 +40,7 @@ export function displayTooltip(messages: IOnboardingMessages[], activeAnchor: nu
       if (message.onboardingStage === activeStage && i === activeAnchor) {
         document.documentElement.style.setProperty("--selection-background", getColor(activeStage)); //sets the bg-color for the ::before element of the popper-arrow
         tooltip.classList.remove("hidden");
-        popper(anchor, tooltip);
+        createPopperTooltip(anchor, tooltip);
       } else {
         tooltip.classList.add("hidden");
       }
