@@ -1,9 +1,9 @@
-import { IOnboardingMessages, EOnboardingStages } from "./interfaces";
+import { IOnboardingMessage, OnboardingStage } from "./interfaces";
 import { createMarkers } from './generate-anchor';
 import { getColor, createPopperTooltip } from "./utils";
 
 
-export function generateMarkers(visElement: Element, messages: IOnboardingMessages[], clickEvent: (i: number, stage: EOnboardingStages) => void) {
+export function generateMarkers(visElement: Element, messages: IOnboardingMessage[], clickEvent: (i: number, stage: OnboardingStage) => void) {
   createMarkers(messages
     .map((message, i) => ({
       anchor: message.anchor,
@@ -15,7 +15,7 @@ export function generateMarkers(visElement: Element, messages: IOnboardingMessag
   })), visElement);
 }
 
-export function displayAnchors(messages: IOnboardingMessages[], activeStage: EOnboardingStages | null) {
+export function displayAnchors(messages: IOnboardingMessage[], activeStage: OnboardingStage | null) {
   if (messages?.length === 0) return;
   messages.forEach((message, i) => {
     const anchor = document.getElementById(`anchor-${i}`);
@@ -23,6 +23,7 @@ export function displayAnchors(messages: IOnboardingMessages[], activeStage: EOn
     if (anchor && tooltip) {
       if (message.onboardingStage === activeStage) {
         anchor.classList.remove("hidden");
+        // tooltip.classList.remove("hidden");
       } else {
         anchor.classList.add("hidden");
         tooltip.classList.add("hidden");
@@ -31,7 +32,17 @@ export function displayAnchors(messages: IOnboardingMessages[], activeStage: EOn
   })
 }
 
-export function displayTooltip(messages: IOnboardingMessages[], activeAnchor: number, activeStage: EOnboardingStages | null) {
+export function hideAllAnchors(messages: IOnboardingMessage[]) {
+  if (messages?.length === 0) return;
+  messages.forEach((message, i) => {
+    const anchor = document.getElementById(`anchor-${i}`);
+    const tooltip = document.getElementById(`tooltip-anchor-${i}`)
+    anchor?.classList.add("hidden");
+    tooltip?.classList.add("hidden");
+  })
+}
+
+export function displayTooltip(messages: IOnboardingMessage[], activeAnchor: number, activeStage: OnboardingStage | null) {
   if (messages?.length === 0 || !activeStage) return;
   messages.forEach((message, i) => {
     const anchor = document.getElementById(`anchor-${i}`);

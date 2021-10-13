@@ -1,7 +1,7 @@
 
 import {
   EVisualizationType,
-  IOnboardingMessages,
+  IOnboardingMessage,
   IOnboardingChangeMatrixSpec,
   generateMessages,
 } from "@visahoi/core";
@@ -62,7 +62,7 @@ function extractOnboardingSpec(chart: any): IOnboardingChangeMatrixSpec {
   };
 }
 
-export function changeMatrixFactory(chart): IOnboardingMessages[] {
+export function changeMatrixFactory(chart): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart);
   return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, chart);
 }

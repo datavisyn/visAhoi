@@ -4,17 +4,20 @@
 }
 
 .visahoi-item {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
     color: white;
     cursor: pointer;
-    position: absolute;
     right: 5px;
     bottom: 0px;
     pointer-events: all;
     transition: bottom 250ms ease-in;
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .visahoi-item.hidden {

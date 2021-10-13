@@ -1,4 +1,4 @@
-import { EVisualizationType, IOnboardingMessages, generateMessages } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessage, generateMessages } from "@visahoi/core";
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
 
 function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
@@ -62,7 +62,7 @@ function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
   };
 }
 
-export function scatterplotFactory(chart: Element): IOnboardingMessages[] {
+export function scatterplotFactory(chart: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart);
   return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, chart);
 }

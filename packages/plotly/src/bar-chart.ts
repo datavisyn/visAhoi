@@ -1,6 +1,6 @@
 import {
   EVisualizationType,
-  IOnboardingMessages,
+  IOnboardingMessage,
   IOnboardingBarChartSpec,
   generateMessages,
 } from "@visahoi/core";
@@ -74,7 +74,7 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart: Element): IOnboardingMessages[] {
+export function barChartFactory(chart: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart);
   return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, chart);
 }

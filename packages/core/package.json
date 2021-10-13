@@ -21,7 +21,8 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "tsc -b tsconfig.json",
+    "compile": "tsc -b tsconfig.json && npm run",
+    "copy-css": "cp -r ./src/css/ ./dist/",
     "watch-plotly": "npm run compile -- --watch",
     "watch-echarts": "npm run compile -- --watch",
     "watch-vega": "npm run compile -- --watch"

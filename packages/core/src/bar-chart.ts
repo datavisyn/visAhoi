@@ -1,4 +1,4 @@
-import {ISpecProp, IOnboardingSpec, IOnboardingMessages, EOnboardingStages} from './interfaces';
+import {ISpecProp, IOnboardingSpec, IOnboardingMessage, OnboardingStage, EDefaultOnboardingStages} from './interfaces';
 import {getAnchor} from './utils';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
@@ -16,43 +16,43 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
 }
 
-function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element): IOnboardingMessage[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
       legend: `Each ${spec.type?.value} represents a data item.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
       legend: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
       legend: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the ${spec.xAxisTitle?.value} (x-axis).`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.yMin, visElement),
       requires: ['yAxisTitle', 'yMin'],
       legend: `The minimum ${spec.yAxisTitle?.value} is ${spec.yMin?.value}.`,
-      onboardingStage: EOnboardingStages.USING
+      onboardingStage: EDefaultOnboardingStages.USING
     },
     {
       anchor: getAnchor(spec.yMax, visElement),
       requires: ['yAxisTitle', 'yMax'],
       legend: `The <span class="hT">maximum</span> ${spec.yAxisTitle?.value} is ${spec.yMax?.value}.`,
-      onboardingStage: EOnboardingStages.USING
+      onboardingStage: EDefaultOnboardingStages.USING
     },
   ];
 

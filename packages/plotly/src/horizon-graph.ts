@@ -1,7 +1,7 @@
 
 import {
   EVisualizationType,
-  IOnboardingMessages,
+  IOnboardingMessage,
   IOnboardingHorizonGraphSpec,
   generateMessages,
 } from "@visahoi/core";
@@ -64,7 +64,7 @@ function extractOnboardingSpec(chart: any): IOnboardingHorizonGraphSpec {
   };
 }
 
-export function horizonGraphFactory(chart): IOnboardingMessages[] {
+export function horizonGraphFactory(chart): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart);
   return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, chart);
 }

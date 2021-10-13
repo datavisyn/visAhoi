@@ -1,4 +1,4 @@
-import { ISpecProp, IOnboardingSpec, IOnboardingMessages, EOnboardingStages } from "./interfaces";
+import { ISpecProp, IOnboardingSpec, IOnboardingMessage, OnboardingStage, EDefaultOnboardingStages } from "./interfaces";
 import {getAnchor} from './utils';
 
 export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
@@ -10,31 +10,31 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
 }
 
 
-function generateMessages(spec: IOnboardingChangeMatrixSpec, visElement: Element): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingChangeMatrixSpec, visElement: Element): IOnboardingMessage[] {
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
       legend: `The chart shows the ${spec.chartTitle?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
       legend: `The chart Is based on colored ${spec.type?.value} elements.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
       legend: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
     {
       anchor: getAnchor(spec.xAxis, visElement),
       requires: ['xAxis', 'yAxis'],
       legend: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      onboardingStage: EDefaultOnboardingStages.READING
     },
   ];
 

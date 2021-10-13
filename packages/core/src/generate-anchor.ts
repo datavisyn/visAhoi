@@ -105,17 +105,18 @@ function createHint({settings, anchorIndex, anchorText, tooltipTitle, tooltipMes
   if(top) { cy += top; y += top; }
   if(bottom) { cy -= bottom; y -= bottom; }
 
-  let g = document.getElementById(`anchor-${anchorIndex}`) as any;
-  if (!g) {
-    g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    if (g) { //because ts won't let me recompile
+  // let g = document.getElementById(`anchor-${anchorIndex}`) as any;
+  // if (!g) {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    console.log("g: ", g);
+    // if (g) { //because ts won't let me recompile
       g.setAttribute("id", `anchor-${anchorIndex}`);
       g.classList.add("visahoi-anchor", "hidden");
-      g.addEventListener("click", () => clickEvent());
+      g.addEventListener("click", () => {console.log("clicked g"); clickEvent()});
       g.setAttribute("aria-describedby", "tooltip");
       overlay?.appendChild(g);
-    }
-  }
+    // }
+  // }
   g?.setAttribute("x", x);
   g?.setAttribute("y", y);
   g?.setAttribute("height", h.toString());
@@ -193,5 +194,6 @@ function createTooltip({anchorIndex, tooltipMessage, tooltipTitle, g, color}: IC
     arrow.style.background = color;
     tooltip?.appendChild(arrow);
   }
+  console.log("creating tooltip");
   createPopperTooltip(g, tooltip);
 }

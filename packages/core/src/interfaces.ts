@@ -1,3 +1,7 @@
+export interface IAhoiConfig {
+  onboardingStages: IOnboardingStage[];
+}
+
 /**
  * Supported chart types
  */
@@ -8,18 +12,49 @@ export enum EVisualizationType {
   SCATTERPLOT = 'scatterplot'
 }
 
-export enum EOnboardingStages {
+export type OnboardingStage = string;
+
+export interface IOnboardingMessage {
+  anchor: any;
+  requires: string[];
+  legend: string;
+  onboardingStage: EDefaultOnboardingStages;
+}
+
+export interface IOnboardingStage {
+  id: string;
+  title: string;
+  iconClass: string;
+  color: string;
+}
+
+export enum EDefaultOnboardingStages {
   READING = "reading-the-chart",
   USING = "using-the-chart",
   ANALYZING = "analyze-the-chart"
 }
 
-export interface IOnboardingMessages {
-  anchor: any;
-  requires: string[];
-  legend: string;
-  onboardingStage: EOnboardingStages;
-}
+// TODO: move to right place
+export const defaultOnboardingStages: IOnboardingStage[] = [
+  {
+    id: EDefaultOnboardingStages.READING,
+    title: 'Reading',
+    iconClass: 'fas fa-glasses',
+    color: 'rgb(123, 80, 150)'
+  },
+  {
+    id: EDefaultOnboardingStages.USING,
+    title: 'Interacting',
+    iconClass: 'fas fa-hand-point-up',
+    color: 'rgb(0, 61, 92)'
+  },
+  {
+    id: EDefaultOnboardingStages.ANALYZING,
+    title: 'Analyzing',
+    iconClass: 'fas fa-lightbulb',
+    color: 'rgb(254, 128, 41)'
+  }
+]
 
 interface IPoint {
   x: number;
@@ -59,4 +94,3 @@ export interface ISpecProp {
 export interface IOnboardingSpec {
   [key: string]: ISpecProp | undefined
 }
-

@@ -1,6 +1,6 @@
-import { EVisualizationType, IOnboardingMessages, generateMessages } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessage, generateMessages } from "@visahoi/core";
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
-  
+
   function extractOnboardingSpec(chart, coords): IOnboardingScatterplotSpec {
     const dataCoords = chart._chartsViews[0]._symbolDraw._data._itemLayouts;
     const data = chart._chartsViews[0]._symbolDraw._data;
@@ -15,7 +15,7 @@ import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
     const maxXIndex = xVals.indexOf(maxX);
     const maxY = yVals[maxXIndex] + chart._dom.offsetTop;
     maxX += + chart._dom.offsetLeft;
-  
+
     return {
       chartTitle: {
         value: options.title[0].text,
@@ -53,9 +53,8 @@ import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
       }
     };
   }
-  
-  export function scatterplotFactory(chart, coords, visElementId: Element): IOnboardingMessages[] {
+
+  export function scatterplotFactory(chart, coords, visElementId: Element): IOnboardingMessage[] {
     const onbordingSpec = extractOnboardingSpec(chart, coords);
     return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElementId);
   }
-  

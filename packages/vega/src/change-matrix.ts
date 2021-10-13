@@ -1,5 +1,5 @@
 import { Spec } from "vega-typings";
-import { EVisualizationType, IOnboardingMessages, generateMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessage, generateMessages, IOnboardingChangeMatrixSpec } from "@visahoi/core";
 
 
 function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeMatrixSpec {
@@ -37,7 +37,7 @@ function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingChangeM
   };
 }
 
-export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessages[] {
+export function changeMatrixFactory(vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems);
   return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElement);
 }
