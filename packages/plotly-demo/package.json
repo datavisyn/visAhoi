@@ -26,7 +26,7 @@
     "watch-plotly": "nodemon --watch"
   },
   "dependencies": {
-    "@visahoi/plotly": "^2.0.0-SNAPSHOT",
+    "@visahoi/plotly": "2.0.0",
     "plotly.js": "^2.2.1"
   },
   "devDependencies": {

@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "echarts": "^5.1.2",
-    "@visahoi/echarts": "^2.0.0-SNAPSHOT"
+    "@visahoi/echarts": "2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
