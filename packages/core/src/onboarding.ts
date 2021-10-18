@@ -1,3 +1,4 @@
+import App from './Test.svelte';
 import {EOnboardingStages, IOnboardingMessages} from './interfaces';
 import {displayAnchors, displayTooltip, generateMarkers} from './injector';
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, OVERLAYDIV, OVERLAYNAVIGATION, OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
@@ -252,6 +253,13 @@ export default class OnboardingUI {
 export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element, navigationAlignment: NavigationAlignment) => {
   // TODO: continue with onboarding navigation
   // const navigation = new OnboardingNavigation(onboardingMessages, navigationAlignment);
-  const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
-  onboarding.generateMarkers();
+
+  // const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
+  // onboarding.generateMarkers();
+  new App({
+    target: document.body,
+    props: {
+      name: 'world'
+    }
+  });
 }
