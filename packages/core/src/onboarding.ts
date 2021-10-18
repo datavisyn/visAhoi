@@ -254,12 +254,12 @@ export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visE
   // TODO: continue with onboarding navigation
   // const navigation = new OnboardingNavigation(onboardingMessages, navigationAlignment);
 
-  // const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
-  // onboarding.generateMarkers();
-  new App({
-    target: document.body,
-    props: {
-      name: 'world'
-    }
-  });
+  const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
+  onboarding.generateMarkers();
+  // new App({
+  //   target: document.body,
+  //   props: {
+  //     name: 'world'
+  //   }
+  // });
 }

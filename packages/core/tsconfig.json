@@ -14,7 +14,8 @@
       "ES2020",
       "dom"
     ],
-    "isolatedModules": false
+    "isolatedModules": false,
+    "importsNotUsedAsValues": "remove"
   },
   "include": ["src/**/*"],
   "exclude": [
