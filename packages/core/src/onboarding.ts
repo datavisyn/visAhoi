@@ -1,4 +1,5 @@
-import App from './Test.svelte';
+// import App from './Test.svelte';
+import OnboardingUI from './OnboardingUI.svelte';
 import {EOnboardingStages, IOnboardingMessages} from './interfaces';
 import {displayAnchors, displayTooltip, generateMarkers} from './injector';
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, OVERLAYDIV, OVERLAYNAVIGATION, OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
@@ -15,7 +16,7 @@ interface onboardingState {
   activeStage: null | EOnboardingStages;
 }
 
-export default class OnboardingUI {
+export default class OnboardingUIOld {
   private state: onboardingState;
   private readonly onboardingMessages: IOnboardingMessages[];
   private readonly visElement: Element;
@@ -254,12 +255,15 @@ export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visE
   // TODO: continue with onboarding navigation
   // const navigation = new OnboardingNavigation(onboardingMessages, navigationAlignment);
 
-  const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
-  onboarding.generateMarkers();
-  // new App({
-  //   target: document.body,
-  //   props: {
-  //     name: 'world'
-  //   }
-  // });
+  // const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
+  // onboarding.generateMarkers();
+  new OnboardingUI({
+    target: document.getElementById(visElement.id) as Element,
+    props: {
+      x: 0,
+      y: 0,
+      width: 100,
+      height: 100
+    }
+  });
 }

@@ -37,7 +37,10 @@
     "svelte-preprocess": "4.7.4",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "postcss-import": "^14.0.2",
+    "postcss": "^8.3.9",
+    "rollup-plugin-postcss": "^4.0.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",

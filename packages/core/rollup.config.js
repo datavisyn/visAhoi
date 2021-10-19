@@ -1,14 +1,16 @@
 import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import livereload from 'rollup-plugin-livereload';
+import postcss from 'rollup-plugin-postcss';
+import postcssImport from "postcss-import";
 
 const production = !process.env.ROLLUP_WATCH;
 
-export default {
+export default [{
   input: './src/index.ts',
   output: [{
     sourcemap: true,
@@ -25,9 +27,10 @@ export default {
       preprocess: sveltePreprocess(),
     }),
     css({ output: null }),
-    resolve({
+    nodeResolve({
       browser: true,
-      dedupe: ['svelte']
+      dedupe: ['svelte'],
+      extensions: ['.css']
     }),
     commonjs(),
     typescript({
@@ -36,4 +39,22 @@ export default {
     }),
 		!production && livereload('dist'),
   ],
-};
+},
+{
+  input: './src/css/main.css',
+  output: [{
+    format: 'es',
+    dir: './dist/css'
+  }, {
+    format: 'es',
+    file: './build/css/main.css'
+  }],
+  plugins: [
+    postcss({
+      plugins: [postcssImport({extensions: ['.css']})],
+      extract: true,
+      to: "./build/css/main.css",
+      minimize: Boolean(!production)
+    })
+  ]
+}];
