@@ -257,13 +257,14 @@ export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visE
 
   // const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
   // onboarding.generateMarkers();
+
   new OnboardingUI({
     target: document.getElementById(visElement.id) as Element,
     props: {
       x: 0,
       y: 0,
-      width: 100,
-      height: 100
+      width: '100px',
+      height: '100px'
     }
   });
 }

@@ -23,9 +23,7 @@ export default [{
     file: './build/bundle.js'
   }],
   plugins: [
-    svelte({
-      preprocess: sveltePreprocess(),
-    }),
+    svelte(),
     css({ output: null }),
     nodeResolve({
       browser: true,
