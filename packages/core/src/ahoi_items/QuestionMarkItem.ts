@@ -1,5 +1,5 @@
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, QUESTIONMARKCLASS } from "../constants";
-import { EOnboardingStages } from "../interfaces";
+import { IOnboardingStage } from "../interfaces";
 import { getColor } from "../utils";
 import { AOnboardingStageNavigationItem } from "./AOnboardingStageNavigationItem";
 
@@ -47,9 +47,9 @@ export default class QuestionMarkItem extends AOnboardingStageNavigationItem {
       super.clickHandler();
     }
 
-    setActiveStage(activeStage: EOnboardingStages | null) {
+    setActiveStage(activeStage: IOnboardingStage | null) {
       this.stage = activeStage;
-      this.instance.style.background = activeStage ? getColor(activeStage) : this.getColor();
+      this.instance.style.background = activeStage ? activeStage.color : this.getColor();
       this.instance.setAttribute("title", this.stage ? "Close Anchors" : "Close Onboarding");
     }
 

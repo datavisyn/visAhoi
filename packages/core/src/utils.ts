@@ -1,5 +1,5 @@
 import { createPopper } from '@popperjs/core';
-import {EOnboardingStages, ISpecProp, OnboardingAnchor} from './interfaces';
+import {EDefaultOnboardingStages, ISpecProp, OnboardingAnchor} from './interfaces';
 
 /**
  * Returns the dom node which contains the passed text
@@ -37,13 +37,13 @@ export const getAnchor = (prop: ISpecProp | undefined, visElement: Element): Onb
  * Returns the color for the specific onboarding stage
  * @param stage: the onboarding stage
  */
-export const getColor = (stage: EOnboardingStages) => {
+export const getColor = (stage: string) => {
   switch(stage) {
-    case EOnboardingStages.ANALYZING:
+    case EDefaultOnboardingStages.ANALYZING:
       return "#FE8029";
-    case EOnboardingStages.READING:
+    case EDefaultOnboardingStages.READING:
       return "#7B5096";
-    case EOnboardingStages.USING:
+    case EDefaultOnboardingStages.USING:
       return "#003D5C";
     default:
       return "white";

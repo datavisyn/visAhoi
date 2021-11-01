@@ -1,9 +1,9 @@
-import { IOnboardingMessages } from "../interfaces";
+import { IOnboardingMessage } from "../interfaces";
 
-export type NavigationAlignment = "horizontal" | "vertical";
+export type NavigationAlignment = "row" | "column";
 
 export default class OnboardingNavigation {
-  constructor(onboardingMessages: IOnboardingMessages[], alignment: NavigationAlignment) {
+  constructor(onboardingMessages: IOnboardingMessage[], alignment: NavigationAlignment) {
 
   }
 }

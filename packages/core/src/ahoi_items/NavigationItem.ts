@@ -1,9 +1,9 @@
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS } from "../constants";
-import { EOnboardingStages } from "../interfaces";
+import { IOnboardingStage, EDefaultOnboardingStages } from "../interfaces";
 import { AOnboardingStageNavigationItem } from "./AOnboardingStageNavigationItem";
 
 export default class NavigationItem extends AOnboardingStageNavigationItem {
-    constructor(parent: HTMLElement, iconClass: string, stage: EOnboardingStages, htmlTitle: string, onClick: () => void) {
+    constructor(parent: HTMLElement, iconClass: string, stage: IOnboardingStage, htmlTitle: string, onClick: () => void) {
       super(parent, NAVIGATIONCLASS, onClick, {iconClass, stage, title: htmlTitle})
       this.instance.classList.add(this.getItemClass(), "hidden");
     }
@@ -15,12 +15,12 @@ export default class NavigationItem extends AOnboardingStageNavigationItem {
     }
 
     private getItemClass(): string {
-      switch(this.stage) {
-        case EOnboardingStages.ANALYZING:
+      switch(this.stage?.id) {
+        case EDefaultOnboardingStages.ANALYZING:
           return "visahoi-analyzing";
-        case EOnboardingStages.READING:
+        case EDefaultOnboardingStages.READING:
           return "visahoi-reading";
-        case EOnboardingStages.USING:
+        case EDefaultOnboardingStages.USING:
           return "visahoi-interacting";
         default:
           return "";

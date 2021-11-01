@@ -1,9 +1,9 @@
-import { EOnboardingStages } from "../interfaces";
+import { IOnboardingStage } from "../interfaces";
 import { getColor } from "../utils";
 
 interface IAOnboardingStage {
   iconClass?: string;
-  stage?: EOnboardingStages | null;
+  stage?: IOnboardingStage | null;
   title?: string;
 }
 
@@ -15,7 +15,7 @@ export abstract class AOnboardingStageNavigationItem {
 
     protected iconClass?: string;
     protected readonly instance: HTMLElement;
-    protected stage: EOnboardingStages | null;
+    protected stage: IOnboardingStage | null;
 
     constructor(parent: HTMLElement, itemClass: string, onClick: () => void, options?: IAOnboardingStage) {
       this.stage = options?.stage ? options.stage : null;
@@ -63,6 +63,6 @@ export abstract class AOnboardingStageNavigationItem {
     };
 
     protected getColor(): string {
-      return this.stage ? getColor(this.stage) : "white";
+      return this.stage?.color || "white";
     };
   }

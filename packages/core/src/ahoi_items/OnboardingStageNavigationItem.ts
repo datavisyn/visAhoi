@@ -1,5 +1,5 @@
 import { ANCHORCLASS } from "../constants";
-import { EOnboardingStages } from "../interfaces";
+import { IOnboardingStage } from "../interfaces";
 import { AOnboardingStageNavigationItem } from "./AOnboardingStageNavigationItem";
 import { NavigationAlignment } from './OnboardingNavigation';
 
@@ -8,7 +8,7 @@ export default class OnboardingStageNavigationItem extends AOnboardingStageNavig
     private readonly index: number;
     private readonly navigationAlignment: NavigationAlignment;
 
-    constructor(parent: HTMLElement, index: number, htmlTitle: string, stage: EOnboardingStages, navigationAlignment: NavigationAlignment, onClick: () => void) {
+    constructor(parent: HTMLElement, index: number, htmlTitle: string, stage: IOnboardingStage, navigationAlignment: NavigationAlignment, onClick: () => void) {
       super(parent, ANCHORCLASS, onClick, {stage, title: htmlTitle});
       this.index = index;
       OnboardingStageNavigationItem.count++;
@@ -26,13 +26,13 @@ export default class OnboardingStageNavigationItem extends AOnboardingStageNavig
 
     setSelected() {
       this.instance.classList.add("selected");
-      this.instance.style[this.navigationAlignment === "vertical" ? "bottom" : "right"] = `${(OnboardingStageNavigationItem.count - this.index) * 30 + 27.5}px`;
-      this.instance.style[this.navigationAlignment === "vertical" ? "right" : "bottom"] = "12.5px";
+      this.instance.style[this.navigationAlignment === "row" ? "bottom" : "right"] = `${(OnboardingStageNavigationItem.count - this.index) * 30 + 27.5}px`;
+      this.instance.style[this.navigationAlignment === "row" ? "right" : "bottom"] = "12.5px";
     }
 
     unsetSelected() {
       this.instance.classList.remove("selected");
-      this.instance.style[this.navigationAlignment === "vertical" ? "bottom" : "right"] = `${(OnboardingStageNavigationItem.count - this.index) * 30 + 30}px`;
-      this.instance.style[this.navigationAlignment === "vertical" ? "right" : "bottom"] = "15px";
+      this.instance.style[this.navigationAlignment === "row" ? "bottom" : "right"] = `${(OnboardingStageNavigationItem.count - this.index) * 30 + 30}px`;
+      this.instance.style[this.navigationAlignment === "row" ? "right" : "bottom"] = "15px";
     }
 }

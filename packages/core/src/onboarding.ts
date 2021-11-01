@@ -1,6 +1,8 @@
 // import App from './Test.svelte';
-import OnboardingUI from './OnboardingUI.svelte';
-import {EOnboardingStages, IOnboardingMessages} from './interfaces';
+import OnboardingUI from './components/OnboardingUI.svelte';
+import { onboardingMessages, navigationAlignment, onboardingStages } from './components/stores.js';
+
+import { IOnboardingStage, IOnboardingMessage, EDefaultOnboardingStages, defaultOnboardingStages } from './interfaces';
 import {displayAnchors, displayTooltip, generateMarkers} from './injector';
 import { ANCHORCLASS, ARROWCLASS, NAVIGATIONCLASS, OVERLAYDIV, OVERLAYNAVIGATION, OVERLAYSVG, OVERLAYTOOLTIPS } from './constants';
 import OnboardingStageNavigationItem from './ahoi_items/OnboardingStageNavigationItem';
@@ -13,18 +15,18 @@ import Backdrop from './ahoi_items/Backdrop';
 
 interface onboardingState {
   activeStep: number;
-  activeStage: null | EOnboardingStages;
+  activeStage: null | IOnboardingStage;
 }
 
 export default class OnboardingUIOld {
   private state: onboardingState;
-  private readonly onboardingMessages: IOnboardingMessages[];
+  private readonly onboardingMessages: IOnboardingMessage[];
   private readonly visElement: Element;
   private readonly anchorItems: OnboardingStageNavigationItem[];
   private readonly questionMark: QuestionMarkItem;
   private readonly navigationAlignment: NavigationAlignment;
   private readonly backdrop: Backdrop;
-  constructor(onboardingMessages: IOnboardingMessages[], visElement: Element, navigationAlignment: NavigationAlignment) {
+  constructor(onboardingMessages: IOnboardingMessage[], visElement: Element, navigationAlignment: NavigationAlignment) {
     this.state = {
       activeStep: 0,
       activeStage: null
@@ -110,43 +112,43 @@ export default class OnboardingUIOld {
   }
 
   private addNavigationItems(parent: HTMLElement) {
-    const stages = new Set(this.onboardingMessages.map(message => message.onboardingStage));
-    if (stages.has(EOnboardingStages.ANALYZING)) {
+    const stages = new Set(this.onboardingMessages.map(message => message.onboardingStage.id));
+    if (stages.has(EDefaultOnboardingStages.ANALYZING)) {
       new NavigationItem(
         parent,
         "fa-lightbulb",
-        EOnboardingStages.ANALYZING,
+        defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING) as IOnboardingStage,
         "Analyzing",
         () => {
-          this.setStage(EOnboardingStages.ANALYZING);
+          this.setStage(defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING) as IOnboardingStage);
           this.displayAnchors();
           this.setSelectedAnchor()
           this.backdrop.show();
         }
       );
     }
-    if (stages.has(EOnboardingStages.USING)) {
+    if (stages.has(EDefaultOnboardingStages.USING)) {
       new NavigationItem(
         parent,
         "fa-hand-point-up",
-        EOnboardingStages.USING,
+        defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage,
         "Using",
         () => {
-          this.setStage(EOnboardingStages.USING);
+          this.setStage(defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage);
           this.displayAnchors();
           this.setSelectedAnchor();
           this.backdrop.show();
         }
       );
     }
-    if (stages.has(EOnboardingStages.READING)) {
+    if (stages.has(EDefaultOnboardingStages.READING)) {
       new NavigationItem(
         parent,
         "fa-glasses",
-        EOnboardingStages.READING,
+        defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage,
         "Reading",
         () => {
-          this.setStage(EOnboardingStages.READING);
+          this.setStage(defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage);
           this.displayAnchors();
           this.setSelectedAnchor();
           this.backdrop.show();
@@ -159,12 +161,12 @@ export default class OnboardingUIOld {
     new ArrowItem(
       parent,
       () => this.prevStep(),
-      this.navigationAlignment === "vertical" ? "up" : "left"
+      this.navigationAlignment === "row" ? "up" : "left"
     );
     new ArrowItem(
       parent,
       () => this.nextStep(),
-      this.navigationAlignment === "vertical" ? "down" : "right"
+      this.navigationAlignment === "row" ? "down" : "right"
     );
     this.onboardingMessages.forEach((m, i) => {
       let title = "";
@@ -187,12 +189,12 @@ export default class OnboardingUIOld {
     const navItems = document.querySelectorAll(`.${NAVIGATIONCLASS}`);
     const anchorItems = document.querySelectorAll(`.${ANCHORCLASS}, .${ARROWCLASS}`);
     navItems.forEach((item, i) => {
-      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "bottom" : "right"] = `${(i + 1) * 50 + 10}px`;
-      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "right" : "bottom"] = "5px";
+      (item as HTMLElement).style[this.navigationAlignment === "row" ? "bottom" : "right"] = `${(i + 1) * 50 + 10}px`;
+      (item as HTMLElement).style[this.navigationAlignment === "row" ? "right" : "bottom"] = "5px";
    });
     anchorItems.forEach((item, i) => {
-      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "bottom" : "right"] = `${(anchorItems.length - i) * 30 + 30}px`;
-      (item as HTMLElement).style[this.navigationAlignment === "vertical" ? "right" : "bottom"] = "15px";
+      (item as HTMLElement).style[this.navigationAlignment === "row" ? "bottom" : "right"] = `${(anchorItems.length - i) * 30 + 30}px`;
+      (item as HTMLElement).style[this.navigationAlignment === "row" ? "right" : "bottom"] = "15px";
     });
   }
 
@@ -213,7 +215,7 @@ export default class OnboardingUIOld {
     displayTooltip(this.onboardingMessages, this.state.activeStep, this.state.activeStage);
   }
 
-  private setStage(stage: EOnboardingStages | null) {
+  private setStage(stage: IOnboardingStage | null) {
     if (stage && stage === this.state.activeStage) return;
     this.state.activeStage = stage;
     this.questionMark?.setActiveStage(stage);
@@ -251,20 +253,27 @@ export default class OnboardingUIOld {
   }
 }
 
-export const injectOnboarding = (onboardingMessages: IOnboardingMessages[], visElement: Element, navigationAlignment: NavigationAlignment) => {
+export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Element, alignment: NavigationAlignment) => {
   // TODO: continue with onboarding navigation
   // const navigation = new OnboardingNavigation(onboardingMessages, navigationAlignment);
 
   // const onboarding = new OnboardingUI(onboardingMessages, visElement, navigationAlignment);
   // onboarding.generateMarkers();
-
+  const x = visElement.getBoundingClientRect().x;
+  const y = visElement.getBoundingClientRect().y;
+  const width = visElement.clientWidth;
+  const height = visElement.clientHeight;
+  console.log("vis position: ", x,y, width, height);
+  onboardingMessages.set(messages);
+  onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))])
+  navigationAlignment.set(alignment);
   new OnboardingUI({
-    target: document.getElementById(visElement.id) as Element,
+    target: document.body as Element,
     props: {
-      x: 0,
-      y: 0,
-      width: '100px',
-      height: '100px'
+      x,
+      y,
+      width,
+      height
     }
   });
 }

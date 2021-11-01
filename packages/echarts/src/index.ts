@@ -1,4 +1,4 @@
-import {EVisualizationType, injectOnboarding, IOnboardingMessages} from '@visahoi/core';
+import {EVisualizationType, injectOnboarding, IOnboardingMessage} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import {changeMatrixFactory} from './change-matrix';
 import {horizonGraphFactory} from './horizon-graph';
@@ -17,7 +17,7 @@ export async function ahoi(visType: EVisualizationType, chart: any, onboardingEl
   const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;
   coords['chartTitle'] = {x: chartTitlePosition[0], y: chartTitlePosition[1] + 20};
 
-  let onboardingMessages: IOnboardingMessages[];
+  let onboardingMessages: IOnboardingMessage[];
 
   switch(visType) {
     case EVisualizationType.BAR_CHART:
@@ -40,7 +40,7 @@ export async function ahoi(visType: EVisualizationType, chart: any, onboardingEl
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  injectOnboarding(onboardingMessages, visElement, "horizontal");
+  injectOnboarding(onboardingMessages, visElement, "column");
 }
 
 export { EVisualizationType };

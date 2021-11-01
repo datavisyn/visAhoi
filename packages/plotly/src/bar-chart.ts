@@ -1,6 +1,6 @@
 import {
   EVisualizationType,
-  IOnboardingMessages,
+  IOnboardingMessage,
   IOnboardingBarChartSpec,
   generateMessages,
 } from "@visahoi/core";
@@ -58,14 +58,14 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
       value: chart.layout.xaxis.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: {left: -20}
+        offset: {left: -20, bottom: 10}
       }
     },
     yAxisTitle: {
       value: chart.layout.yaxis.title.text,
       anchor: {
         sel: '.infolayer .ytitle',
-        offset: {top: -25}
+        offset: {top: -25, right: 10}
       }
     },
     // xAxisLabel (e.g. 01, 02, …)
@@ -74,7 +74,7 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart: Element): IOnboardingMessages[] {
+export function barChartFactory(chart: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart);
   return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, chart);
 }

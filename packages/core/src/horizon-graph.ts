@@ -1,4 +1,4 @@
-import { ISpecProp, IOnboardingSpec, IOnboardingMessages, EOnboardingStages } from "./interfaces";
+import { ISpecProp, IOnboardingSpec, IOnboardingMessage, IOnboardingStage, EDefaultOnboardingStages, defaultOnboardingStages } from "./interfaces";
 import {getAnchor} from './utils';
 
 export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
@@ -14,50 +14,52 @@ function createColorRect(color = 'white') {
   return `<div class="colorRect" style="background: ${color}"></div>`;
 }
 
-function generateMessages(spec: IOnboardingHorizonGraphSpec, visElement: Element): IOnboardingMessages[] {
+function generateMessages(spec: IOnboardingHorizonGraphSpec, visElement: Element): IOnboardingMessage[] {
+  const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage;
+  const using = defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage;
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      legend: `The chart shows the ${spec.chartTitle?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      onboardingStage: reading
     },
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
-      legend: `The chart is made out of ${spec.type?.value} elements.`,
-      onboardingStage: EOnboardingStages.READING
+      text: `The chart is made out of ${spec.type?.value} elements.`,
+      onboardingStage: reading
     },
     {
       anchor: getAnchor(spec.xAxis, visElement),
       requires: ['xAxis', 'yAxis'],
-      legend: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
-      onboardingStage: EOnboardingStages.READING
+      text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
+      onboardingStage: reading
     },
     {
       anchor: getAnchor(spec.positiveColor, visElement),
       requires: ['yAxis', 'positiveColor'],
-      legend: `Light ${createColorRect(spec.positiveColor?.value)} areas indicate a moderate positive ${spec.yAxis?.value} and dark
+      text: `Light ${createColorRect(spec.positiveColor?.value)} areas indicate a moderate positive ${spec.yAxis?.value} and dark
         ${createColorRect(spec.positiveColor?.value)} areas a high positive ${spec.yAxis?.value}.`,
-        onboardingStage: EOnboardingStages.READING
+        onboardingStage: reading
     },
     {
       anchor: getAnchor(spec.negativeColor, visElement),
       requires: ['yAxis', 'negativeColor'],
-      legend: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative ${spec.yAxis?.value}.`,
-      onboardingStage: EOnboardingStages.READING
+      text: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative ${spec.yAxis?.value}.`,
+      onboardingStage: reading
     },
     {
       anchor: spec.yMin?.anchor,
       requires: ['yAxis', 'yMin'],
-      legend: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-      onboardingStage: EOnboardingStages.USING
+      text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
+      onboardingStage: using
     },
     {
       anchor: spec.yMax?.anchor,
       requires: ['yAxis', 'yMax'],
-      legend: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-      onboardingStage: EOnboardingStages.USING
+      text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
+      onboardingStage: using
     },
   ];
 
