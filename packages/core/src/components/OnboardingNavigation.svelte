@@ -1,10 +1,7 @@
 <script lang="ts">
-  import { onboardingMessages, navigationAlignment, onboardingStages, activeOnboardingStage } from "./stores.js";
+  import { navigationAlignment, onboardingStages } from "./stores.js";
   import OnboardingNavigationItem from './OnboardingNavigationItem.svelte';
 
-  // activeOnboardingStage.subscribe((value) => {
-  //   console.log("active onboarding stage: ", value);
-  // })
   export let height: number;
   const navigationHeight = $onboardingStages.length * 100 > height ? height : $onboardingStages.length * 100;
 </script>
@@ -24,7 +21,6 @@
   style="--flexDirection:{$navigationAlignment}; height: {navigationHeight + 'px'}"
 >
 {#each $onboardingStages as stage}
-<!-- todo: continue here! -->
   <OnboardingNavigationItem stage={stage} />
 {/each}
 

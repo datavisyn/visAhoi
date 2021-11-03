@@ -67,7 +67,7 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
         sel: '.infolayer .ytitle',
         offset: {top: -25, right: 10}
       }
-    },
+    }
     // xAxisLabel (e.g. 01, 02, …)
     // yAxisLabel (e.g. -5, 0, 5, ...)
     // Title (Average Temperature in Oslo)

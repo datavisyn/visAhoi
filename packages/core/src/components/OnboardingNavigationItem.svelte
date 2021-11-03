@@ -1,11 +1,7 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
 
-  import {
-    onboardingMessages,
-    navigationAlignment,
-    activeOnboardingStage,
-  } from "./stores.js";
+  import { navigationAlignment, activeOnboardingStage } from "./stores.js";
   export let stage: IOnboardingStage;
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
@@ -25,23 +21,17 @@
          {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-  {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
     <div
       class="visahoi-navigation-item-circle"
       style="background-color: {stage.color}"
     >
-      <i class="fas fa-lightbulb" />
+        <i class="{
+          !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
+          ? stage.iconClass
+          : 'fas fa-times'
+        }"/>
     </div>
-    {stage.title}
-  {:else}
-    <div
-      class="visahoi-navigation-item-circle"
-      style="background-color: {stage.color}"
-    >
-      <i class="fas fa-times" />
-    </div>
-    Close
-  {/if}
+    <span class="visahoi-stage-title">{stage.title}</span>
 </div>
 
 <style>
@@ -53,8 +43,6 @@
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
-    /* The border seems to cause drawing artifacts on transition. Probably a browser bug. */
-    /* border: 1px solid black; */
     margin: 5px;
     width: 40px;
     bottom: var(--bottom);
@@ -62,7 +50,6 @@
   }
 
   .visahoi-navigation-item:hover {
-    /* background-color: darken(var(--background-color)); */
     filter: brightness(0.8);
   }
 
@@ -95,5 +82,9 @@
 
   .vertical {
     /* bottom: calc(var(--order) * 100px); */
+  }
+
+  .visahoi-stage-title {
+    font-weight: bold;
   }
 </style>
