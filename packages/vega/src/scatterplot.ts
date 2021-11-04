@@ -1,4 +1,4 @@
-import { EVisualizationType, IOnboardingMessages, generateMessages } from '@visahoi/core';
+import { EVisualizationType, IOnboardingMessage, generateMessages } from '@visahoi/core';
 import { Spec } from 'vega-typings';
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
 
@@ -75,7 +75,7 @@ function extractOnboardingSpec(vegaSpec: Spec, elems: any[]): IOnboardingScatter
   };
 }
 
-export function scatterplotFactory(vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessages[] {
+export function scatterplotFactory(vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems);
   return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElement);
 }

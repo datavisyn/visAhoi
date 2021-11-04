@@ -12,6 +12,7 @@ async function render() {
   const response = await fetch('./data/cars.json');
   const json = await response.json();
   const vegaLite = await vegaEmbed('#vis', json, opt);
+  console.log("vegalite: ", vegalite);
   window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding'));
   ahoi(EVisualizationType.SCATTERPLOT, vegaLite, '#onboarding');
 };
