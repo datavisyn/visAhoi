@@ -1,4 +1,3 @@
-import { left } from "@popperjs/core";
 import { IAnchorPosition, IMarkerInformation, IOnboardingMessage, isOnboardingElementAnchor, ITooltip } from "../interfaces";
 import { getColor } from "../utils";
 

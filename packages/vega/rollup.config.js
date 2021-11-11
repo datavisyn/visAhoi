@@ -14,11 +14,9 @@ export default [{
   output: [{
     sourcemap: true,
     format: 'esm',
-    exports: "named",
-    dir: './dist'
   }, {
     sourcemap: true,
-    format: 'iife',
+    format: 'esm',
     file: './build/bundle.js'
   }],
   plugins: [

@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "snowpack dev --reload",
-    "build": "snowpack build",
+    "build": "snowpack build --reload",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\"",
@@ -28,14 +28,16 @@
   "dependencies": {
     "@visahoi/vega": "2.0.0",
     "vega": "5.21.0",
-    "vega-embed": "6.18.0",
+    "vega-embed": "6.19.1",
+    "babel-plugin-add-module-exports": "^1.0.4",
     "vega-lite": "5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "prettier": "^2.1.1",
-    "snowpack": "^2.9.3",
+    "snowpack": "2.18.5",
     "nodemon": "2.0.12"
   }
 }

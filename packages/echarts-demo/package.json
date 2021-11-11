@@ -33,7 +33,7 @@
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "prettier": "^2.1.1",
-    "snowpack": "^2.9.3",
+    "snowpack": "^3.0.1",
     "nodemon": "2.0.12"
   }
 }

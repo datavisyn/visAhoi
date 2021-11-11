@@ -1,4 +1,4 @@
-import { createPopper } from '@popperjs/core';
+import { createPopper } from '@popperjs/core/dist/esm/';
 import {EDefaultOnboardingStages, ISpecProp, OnboardingAnchor} from './interfaces';
 
 /**

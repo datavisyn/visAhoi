@@ -4,7 +4,7 @@
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation } from "../interfaces";
-  import { createPopper } from "@popperjs/core";
+  import { createPopper } from '@popperjs/core/dist/esm/';
 
   let activeMarkerInformation: {
     markerId: string;

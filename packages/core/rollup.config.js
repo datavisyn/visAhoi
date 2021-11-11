@@ -14,16 +14,16 @@ export default [{
   output: [{
     sourcemap: true,
     format: 'esm',
-    exports: "named",
-    dir: './dist'
+    dir: './dist',
+    name: "core"
   }, {
     sourcemap: true,
-    format: 'iife',
-    file: './build/bundle.js'
+    format: 'esm',
+    file: './build/bundle.js',
+    name: "core"
   }],
   plugins: [
     svelte({
-      dev: !production,
       emitCss: true,
       preprocess: autoPreprocess(),
     }),
