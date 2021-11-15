@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 import { IMarkerInformation, IOnboardingMessage, IOnboardingStage } from '../interfaces';
 import { NavigationAlignment } from '../ahoi_items/OnboardingNavigation';
 
+export const showOnboarding = writable<boolean>(false);
 export const activeStep = writable(null);
 export const onboardingMessages = writable<IOnboardingMessage[]>([]);
 export const navigationAlignment = writable<NavigationAlignment>('column');

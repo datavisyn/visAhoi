@@ -1,6 +1,6 @@
 // import App from './Test.svelte';
 import OnboardingUI from './components/OnboardingUI.svelte';
-import { onboardingMessages, navigationAlignment, onboardingStages } from './components/stores.js';
+import { onboardingMessages, navigationAlignment, onboardingStages, showOnboarding } from './components/stores.js';
 
 import { IOnboardingStage, IOnboardingMessage, EDefaultOnboardingStages, defaultOnboardingStages } from './interfaces';
 import {displayAnchors, displayTooltip, generateMarkers} from './injector';
@@ -276,4 +276,8 @@ export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Ele
       height
     }
   });
+}
+
+export const showVisahoiOnboarding = (show: boolean) => {
+  showOnboarding.set(show);
 }

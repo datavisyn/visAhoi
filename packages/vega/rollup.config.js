@@ -14,6 +14,7 @@ export default [{
   output: [{
     sourcemap: true,
     format: 'esm',
+    dir: './dist'
   }, {
     sourcemap: true,
     format: 'esm',

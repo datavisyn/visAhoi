@@ -1,15 +1,15 @@
 import * as echarts from 'echarts';
-import { ahoi, EVisualizationType } from '@visahoi/echarts';
+import { ahoi, EVisualizationType, removeOnboarding } from '@visahoi/echarts';
 import { importCsv } from './utils';
 
 let chart = null;
+let showOnboarding = false;
 
 async function render() {
   const data = await importCsv("../data/oslo-2018.csv");
   const {x, y} = processData(data);
   const chart = createPlot(x, y);
   window.addEventListener("resize", () => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'));
-  ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
 }
 
 function processData(allRows) {
@@ -75,10 +75,26 @@ function createPlot(x, y) {
   return chart;
 }
 
+const registerEventListener = () => {
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', () => {
+    if(!showOnboarding) {
+      ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
+    } else {
+      // todo: hide onboarding
+      removeOnboarding();
+    }
+    showOnboarding = !showOnboarding;
+    console.log("clicked! :D");
+  })
+}
+
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
   chart = echarts.init(vis, null, {renderer});
   window.addEventListener("resize", () => chart.resize());
+  registerEventListener();
   render();
 }
 
