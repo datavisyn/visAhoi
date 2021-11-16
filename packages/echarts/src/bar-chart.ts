@@ -8,7 +8,6 @@ import {
 function extractOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const data = chart._chartsViews[0]._data;
-  console.log("data: ", data);
   const options = chart._model.option;
 
   function getMainAxis(xType, yType) {

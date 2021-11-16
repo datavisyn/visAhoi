@@ -18,12 +18,12 @@
     "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
   },
   "scripts": {
-    "start": "snowpack dev --reload",
+    "start": "vite",
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\"",
-    "watch-plotly": "nodemon --watch"
+    "watch-plotly": "npm run start"
   },
   "dependencies": {
     "@visahoi/plotly": "2.0.0",
@@ -33,7 +33,6 @@
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "prettier": "^2.1.1",
-    "snowpack": "^3.0.1",
-    "nodemon": "2.0.12"
+    "vite": "^2.6.14"
   }
 }

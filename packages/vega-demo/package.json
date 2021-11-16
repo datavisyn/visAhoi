@@ -18,12 +18,11 @@
     "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
   },
   "scripts": {
-    "start": "snowpack dev --reload",
-    "build": "snowpack build --reload",
+    "start": "vite",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\"",
-    "watch-vega": "nodemon --watch"
+    "watch-vega": "npm run start"
   },
   "dependencies": {
     "@visahoi/vega": "2.0.0",
@@ -37,7 +36,6 @@
     "@babel/preset-env": "^7.11.0",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "prettier": "^2.1.1",
-    "snowpack": "2.18.5",
-    "nodemon": "2.0.12"
+    "vite": "^2.6.14"
   }
 }

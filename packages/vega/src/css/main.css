@@ -1,6 +1,2 @@
 @import '@visahoi/core/build/css/main.css';
-
-
-h1 {
-  color: yellowgreen;
-}
+@import '@visahoi/core/build/css/svelte-bundle.css';
