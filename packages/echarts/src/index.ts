@@ -1,4 +1,4 @@
-import { defaultOnboardingStages, EVisualizationType, IAhoiConfig, injectOnboarding, IOnboardingMessage, showVisahoiOnboarding } from '@visahoi/core';
+import { defaultOnboardingStages, EVisualizationType, IAhoiConfig, injectOnboarding, IOnboardingMessage, removeOnboarding } from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
@@ -43,13 +43,5 @@ export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: 
   injectOnboarding(onboardingMessages, visElement, "column");
 }
 
-const removeOnboarding = () => {
-  showVisahoiOnboarding(false);
-  // const onboardingUIs = document.getElementsByClassName('visahoi-onboarding-ui');
-  // console.log("# ", onboardingUIs);
-  // while (onboardingUIs.length > 0) {
-  //   onboardingUIs[0].parentNode?.removeChild(onboardingUIs[0]);
-  // }
-}
 
 export { EVisualizationType, removeOnboarding };

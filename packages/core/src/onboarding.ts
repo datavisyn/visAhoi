@@ -253,6 +253,7 @@ export default class OnboardingUIOld {
   }
 }
 
+let onboardingUI;
 export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Element, alignment: NavigationAlignment) => {
   // TODO: continue with onboarding navigation
   // const navigation = new OnboardingNavigation(onboardingMessages, navigationAlignment);
@@ -267,7 +268,7 @@ export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Ele
   onboardingMessages.set(messages);
   onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))])
   navigationAlignment.set(alignment);
-  new OnboardingUI({
+  onboardingUI = new OnboardingUI({
     target: document.body as Element,
     props: {
       x,
@@ -278,6 +279,6 @@ export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Ele
   });
 }
 
-export const showVisahoiOnboarding = (show: boolean) => {
-  showOnboarding.set(show);
+export const removeOnboarding = () => {
+  onboardingUI.$destroy();
 }

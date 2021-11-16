@@ -8,8 +8,9 @@ let showOnboarding = false;
 async function render() {
   const data = await importCsv("../data/oslo-2018.csv");
   const {x, y} = processData(data);
-  const chart = createPlot(x, y);
-  window.addEventListener("resize", () => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'));
+  chart = createPlot(x, y);
+  // window.addEventListener("resize", () => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'));
+  // ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
 }
 
 function processData(allRows) {
@@ -80,8 +81,10 @@ const registerEventListener = () => {
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', () => {
     if(!showOnboarding) {
+      // addOnboarding();
       ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
     } else {
+      console.log("please hide!")
       // todo: hide onboarding
       removeOnboarding();
     }
