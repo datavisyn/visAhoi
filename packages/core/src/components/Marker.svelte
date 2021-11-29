@@ -28,7 +28,7 @@
 
 <g id={markerId} text-anchor="middle" on:click={handleClick}>
   <circle fill={markerInformation.message.onboardingStage.color} class="visahoi-marker" cx={markerInformation.anchorPosition.cx} cy={markerInformation.anchorPosition.cy} r="10" />
-  <text fill="white" x={markerInformation.anchorPosition.x} y={markerInformation.anchorPosition.y}>{order}</text>
+  <text style="user-select:none" fill="white" x={markerInformation.anchorPosition.x} y={markerInformation.anchorPosition.y}>{order}</text>
 </g>
 
 <style>

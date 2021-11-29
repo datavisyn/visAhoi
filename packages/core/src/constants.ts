@@ -9,3 +9,6 @@ export const NAVIGATIONCLASS = "visahoi-navigation-item";
 export const QUESTIONMARKCLASS = "visahoi-question-mark-item";
 export const ANCHORCLASS = "visahoi-anchor-item";
 export const ARROWCLASS = "visahoi-arrow-item";
+
+
+export const navigationMainItemDefaultColor = "#eb3461";

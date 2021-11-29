@@ -1,7 +1,7 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
 
-  import { navigationAlignment, activeOnboardingStage } from "./stores.js";
+  import { navigationAlignment, activeOnboardingStage, showOnboardingSteps } from "./stores.js";
   export let stage: IOnboardingStage;
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
@@ -11,14 +11,8 @@
 
 <div
   style="--background-color:{stage.color}; --bottom:{bottom}"
-  class="visahoi-navigation-item {$activeOnboardingStage &&
-  $activeOnboardingStage.id !== stage.id
-    ? 'removed'
-    : ''}
-    {$activeOnboardingStage && $activeOnboardingStage.id === stage.id
-    ? 'active'
-    : ''}
-         {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
+  class="visahoi-navigation-item {!$showOnboardingSteps || $activeOnboardingStage ? 'removed' : ''}
+    {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
     <div
@@ -47,10 +41,11 @@
     width: 40px;
     bottom: var(--bottom);
     opacity: 1;
+    z-index: 15;
   }
 
   .visahoi-navigation-item:hover {
-    filter: brightness(0.8);
+    filter: brightness(0.85);
   }
 
   .visahoi-navigation-item-circle {
@@ -76,13 +71,13 @@
     z-index: 10;
   }
 
-  .horizontal {
-    /* right: calc(var(--order) * 100px); */
+  /* .horizontal {
+    right: calc(var(--order) * 100px);
   }
 
   .vertical {
-    /* bottom: calc(var(--order) * 100px); */
-  }
+    bottom: calc(var(--order) * 100px);
+  } */
 
   .visahoi-stage-title {
     font-weight: bold;

@@ -21,7 +21,7 @@
 		setVisElementPosition();
 	};
 
-  let show = false;
+  let show = true;
   showOnboarding.subscribe((value) => {
     show = value;
   });

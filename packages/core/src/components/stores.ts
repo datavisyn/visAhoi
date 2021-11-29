@@ -13,6 +13,7 @@ export const initializeStoreValue = (<T>(defaultValue: any) => {
 });
 
 export const showOnboarding = initializeStoreValue<boolean>(false);
+export const showOnboardingSteps = initializeStoreValue<boolean>(false);
 export const activeStep = initializeStoreValue(null);
 export const onboardingMessages = initializeStoreValue<IOnboardingMessage[]>([]);
 export const navigationAlignment = initializeStoreValue<NavigationAlignment>('column');
