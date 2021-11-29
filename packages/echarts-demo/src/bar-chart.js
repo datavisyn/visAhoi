@@ -1,16 +1,16 @@
 import * as echarts from 'echarts';
-import { ahoi, EVisualizationType, removeOnboarding } from '@visahoi/echarts';
+import { ahoi, EVisualizationType } from '@visahoi/echarts';
 import { importCsv } from './utils';
 
 let chart = null;
 let showOnboarding = false;
+let onboardingUI = null;
 
 async function render() {
   const data = await importCsv("../data/oslo-2018.csv");
   const {x, y} = processData(data);
   chart = createPlot(x, y);
-  // window.addEventListener("resize", () => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'));
-  // ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
 }
 
 function processData(allRows) {
@@ -79,17 +79,13 @@ function createPlot(x, y) {
 const registerEventListener = () => {
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
-  helpIcon.addEventListener('click', () => {
-    if(!showOnboarding) {
-      // addOnboarding();
-      ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
+  helpIcon.addEventListener('click', async () => {
+    if(showOnboarding) {
+      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
     } else {
-      console.log("please hide!")
-      // todo: hide onboarding
-      removeOnboarding();
+      onboardingUI?.removeOnboarding();
     }
     showOnboarding = !showOnboarding;
-    console.log("clicked! :D");
   })
 }
 

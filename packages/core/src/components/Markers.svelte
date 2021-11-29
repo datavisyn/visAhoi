@@ -2,31 +2,29 @@
   import {
     activeOnboardingStage,
     onboardingMessages,
-    onboardingStages,
+    visHeight,
+    visWidth,
+    visXPosition,
+    visYPosition,
   } from "./stores";
   import { getMarkerInformation } from "./getMarkerInformation";
   import Marker from "./Marker.svelte";
-  import OnboardingNavigation from "./OnboardingNavigation.svelte";
 
-  export let left: number;
-  export let top: number;
-  export let width: number;
-  export let height: number;
-
-  const viewBox = `${left +  window.scrollX} ${top +  window.scrollY} ${width} ${height}`;
+  $: viewBox = `${$visXPosition + window.scrollX} ${
+    $visYPosition + window.scrollY
+  } ${$visWidth} ${$visHeight}`;
 
   const markerInformation = getMarkerInformation($onboardingMessages);
-  console.log("---> ", markerInformation);
 
   let currentOnboardingStage;
   activeOnboardingStage.subscribe((value) => {
     currentOnboardingStage = value?.id;
   });
 </script>
+
 <svg viewBox={viewBox} class="visahoi-markers">
   {#each markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
-      {console.log(marker, index)}
-      <Marker markerInformation={marker} order={index+1} />
+    <Marker markerInformation={marker} order={index + 1} />
   {/each}
 </svg>
 

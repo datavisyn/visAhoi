@@ -1,4 +1,4 @@
-import { defaultOnboardingStages, EVisualizationType, IAhoiConfig, injectOnboarding, IOnboardingMessage, removeOnboarding } from '@visahoi/core';
+import { defaultOnboardingStages, EVisualizationType, IAhoiConfig, injectOnboarding, IOnboardingMessage } from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
@@ -40,8 +40,8 @@ export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: 
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
 
-  injectOnboarding(onboardingMessages, visElement, "column");
+  return injectOnboarding(onboardingMessages, visElement, "column");
 }
 
 
-export { EVisualizationType, removeOnboarding };
+export { EVisualizationType};
