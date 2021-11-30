@@ -5,6 +5,7 @@
   import Markers from "./Markers.svelte";
   import Tooltips from "./Tooltips.svelte";
   import { onDestroy, onMount } from "svelte";
+  import Backdrop from "./Backdrop.svelte";
 
   export let ref;
   export let visElement: Element;
@@ -44,6 +45,7 @@
     <Markers />
     <Tooltips />
     <OnboardingNavigation height={$visHeight} />
+    <Backdrop />
   </div>
 
 <style>

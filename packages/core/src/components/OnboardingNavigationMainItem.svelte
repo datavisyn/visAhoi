@@ -10,10 +10,8 @@
     }
   };
 
-  activeOnboardingStage.subscribe((v) => console.log("v: ", v))
   $: iconClass = $activeOnboardingStage ? 'fas fa-times' : 'fas fa-question';
 
-  activeOnboardingStage.subscribe((a) => console.log("iconclass: ", iconClass))
 </script>
 
 <div

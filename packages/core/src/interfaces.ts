@@ -8,6 +8,14 @@ export enum EVisualizationType {
   SCATTERPLOT = 'scatterplot'
 }
 
+export interface IBackdrop {
+  visElement: Element;
+  color?: string;
+}
+
+
+export type NavigationAlignment = "row" | "column";
+
 interface IPoint {
   x: number;
   y: number;

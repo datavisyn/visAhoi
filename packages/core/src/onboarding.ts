@@ -2,8 +2,7 @@
 import OnboardingUI from './components/OnboardingUI.svelte';
 import { onboardingMessages, navigationAlignment, onboardingStages } from './components/stores.js';
 
-import { IOnboardingMessage} from './interfaces';
-import { NavigationAlignment } from './ahoi_items/OnboardingNavigation';
+import { IOnboardingMessage, NavigationAlignment} from './interfaces';
 
 
 let onboardingUI: OnboardingUI;

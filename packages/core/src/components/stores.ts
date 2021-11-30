@@ -1,6 +1,5 @@
 import { writable } from 'svelte/store';
-import { IMarkerInformation, IOnboardingMessage, IOnboardingStage } from '../interfaces';
-import { NavigationAlignment } from '../ahoi_items/OnboardingNavigation';
+import { IMarkerInformation, IOnboardingMessage, IOnboardingStage, NavigationAlignment } from '../interfaces';
 
 export const initializeStoreValue = (<T>(defaultValue: any) => {
   const { subscribe, set, update } = writable<T>(defaultValue);
