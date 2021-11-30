@@ -48,7 +48,8 @@ export interface IOnboardingSpec {
 }
 
 export interface IAhoiConfig {
-  onboardingStages: Map<string,IOnboardingStage>;
+  // onboardingStages: Map<string,IOnboardingStage>;
+  onboardingMessages: IOnboardingMessage[];
 }
 export interface IOnboardingMessage {
   anchor: any;
@@ -97,7 +98,7 @@ export const defaultOnboardingStages: Map<EDefaultOnboardingStages, IOnboardingS
     color: 'rgb(254, 128, 41)',
     order: 3
   }]
-])
+]);
 
 export interface IAnchorPosition {
   x: number;

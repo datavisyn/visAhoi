@@ -2,13 +2,9 @@
 import OnboardingUI from './components/OnboardingUI.svelte';
 import { onboardingMessages, navigationAlignment, onboardingStages } from './components/stores.js';
 
-import { IOnboardingStage, IOnboardingMessage} from './interfaces';
+import { IOnboardingMessage} from './interfaces';
 import { NavigationAlignment } from './ahoi_items/OnboardingNavigation';
 
-interface onboardingState {
-  activeStep: number;
-  activeStage: null | IOnboardingStage;
-}
 
 let onboardingUI: OnboardingUI;
 export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Element, alignment: NavigationAlignment) => {

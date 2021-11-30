@@ -1,5 +1,5 @@
 import * as echarts from 'echarts';
-import { ahoi, EVisualizationType } from '@visahoi/echarts';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
 import { importCsv } from './utils';
 
 let chart = null;
@@ -81,7 +81,15 @@ const registerEventListener = () => {
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
     if(showOnboarding) {
-      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
+      const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.BAR_CHART, chart);
+      const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+        ...d,
+        text: "test123"
+      }));
+      const ahoiConfig = {
+        onboardingMessages: defaultOnboardingMessages,
+      }
+      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, ahoiConfig);
     } else {
       onboardingUI?.removeOnboarding();
     }

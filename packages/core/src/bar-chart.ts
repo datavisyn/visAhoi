@@ -1,4 +1,4 @@
-import {ISpecProp, IOnboardingSpec, IOnboardingMessage, EDefaultOnboardingStages, defaultOnboardingStages, IOnboardingStage} from './interfaces';
+import {ISpecProp, IOnboardingSpec, IOnboardingMessage, EDefaultOnboardingStages, defaultOnboardingStages, IOnboardingStage, IAhoiConfig} from './interfaces';
 import {getAnchor} from './utils';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
@@ -16,7 +16,7 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
 }
 
-function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element): IOnboardingMessage[] {
+function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ahoiConfig: IAhoiConfig): IOnboardingMessage[] {
   const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage;
   const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage;
   const messages: IOnboardingMessage[] = [

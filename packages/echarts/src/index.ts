@@ -6,14 +6,15 @@ import { scatterplotFactory } from './scatterplot';
 
 /**
  *
- * @param visType
- * @param chart
+ * @param visType see EVisualizationType
+ * @param chart runtime object of the visualization
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig = { onboardingStages: defaultOnboardingStages }) {
+export const generateBasicAnnotations = (visType: EVisualizationType, chart: any): IOnboardingMessage[] => {
   const coords = {};
   const visElement = chart._dom;
 
+  // TODO: coords
   const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;
   coords['chartTitle'] = { x: chartTitlePosition[0], y: chartTitlePosition[1] + 20 };
 
@@ -39,9 +40,20 @@ export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: 
     default:
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
-
-  return injectOnboarding(onboardingMessages, visElement, "column");
+  return onboardingMessages;
 }
 
 
-export { EVisualizationType};
+/**
+ *
+ * @param visType
+ * @param chart
+ * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ */
+export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig = { onboardingMessages: generateBasicAnnotations(visType, chart) }) {
+  const visElement = chart._dom;
+  return injectOnboarding(ahoiConfig.onboardingMessages, visElement, "column");
+}
+
+
+export { EVisualizationType };
