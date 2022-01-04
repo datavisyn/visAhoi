@@ -1,4 +1,3 @@
-// import App from './Test.svelte';
 import OnboardingUI from './components/OnboardingUI.svelte';
 import { onboardingMessages, navigationAlignment, onboardingStages } from './components/stores.js';
 

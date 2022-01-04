@@ -5,7 +5,7 @@ import {
   generateMessages,
 } from "@visahoi/core";
 
-function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
+function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.points");
   const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -74,7 +74,7 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart: Element): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart);
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, chart);
+export function barChartFactory(chart: Element, coords, visElementId: Element): IOnboardingMessage[] {
+  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

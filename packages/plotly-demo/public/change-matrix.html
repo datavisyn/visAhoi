@@ -14,13 +14,18 @@
     <title>VisAhoi - Plotly - Change Matrix</title>
   </head>
   <body>
+    <div className="header">
+      <span id="show-onboarding" title="Show onboarding">
+        <i class="fas fa-question-circle"></i> Show onboarding
+      </span>
+    </div>
     <h1>VisAhoi Demo: Plotly - Change Matrix</h1>
     <div id="vis"></div>
     <!--
       Use Plotly.js via CDN, because we cannot bundle it using Snowpack.
       See https://github.com/ffg-seva/onboarding-prototype/issues/7
     -->
-    <script src="https://cdn.plot.ly/plotly-1.54.5.min.js"></script>
+    <!-- <script src="https://cdn.plot.ly/plotly-1.54.5.min.js"></script> -->
     <script type="module" src="../src/change-matrix.js"></script>
   </body>
 </html>
