@@ -10,7 +10,7 @@
     markerId: string;
     markerInformation: IMarkerInformation;
   } | null = null;
-  const tooltipId = uuidv4().split("-").join("");
+  const tooltipId = uuidv4();
 
   activeOnboardingStage.subscribe((onboardingStage) => {
     if(!onboardingStage) {

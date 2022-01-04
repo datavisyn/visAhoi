@@ -6,7 +6,7 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  const markerId = uuidv4().split("-").join("");
+  const markerId = uuidv4();
 
   const handleClick = () => {
     if($activeMarker?.markerId === markerId) {

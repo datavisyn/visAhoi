@@ -29,7 +29,7 @@ import { visHeight, visWidth, visXPosition, visYPosition } from "./stores.js";
 
 </script>
 
-<div class="backdrop" style="--clipPath: {backdropPath}">test</div>
+<div class="backdrop" style="--clipPath: {backdropPath}"></div>
 
 <style>
   .backdrop {

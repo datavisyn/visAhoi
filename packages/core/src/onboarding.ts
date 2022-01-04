@@ -19,10 +19,6 @@ export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Ele
   onboardingUI = new OnboardingUI({
     target: document.body as Element,
     props: {
-      x,
-      y,
-      width,
-      height,
       ref,
       visElement
     }

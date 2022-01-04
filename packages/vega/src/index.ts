@@ -12,7 +12,6 @@ import { scatterplotFactory } from './scatterplot';
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
 export async function ahoi(visType: EVisualizationType, vegaResult: Result, onboardingElement: string | Element) {
-  console.log("result: ", vegaResult);
   const evaluated = await (<any>vegaResult.view).evaluate(); // TODO: `evaluate()` is not an officially supported Vega API
 
   // Vega-lite spec after all rendering happend and the aggregations
