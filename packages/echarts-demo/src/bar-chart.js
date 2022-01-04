@@ -87,7 +87,7 @@ const registerEventListener = () => {
         text: "test123"
       }));
       const ahoiConfig = {
-        onboardingMessages: extendedOnboardingMessages,
+        onboardingMessages: defaultOnboardingMessages,
       }
       onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, ahoiConfig);
     } else {

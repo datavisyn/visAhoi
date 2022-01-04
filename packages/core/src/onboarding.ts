@@ -7,11 +7,6 @@ import { IOnboardingMessage, NavigationAlignment} from './interfaces';
 
 let onboardingUI: OnboardingUI;
 export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Element, alignment: NavigationAlignment) => {
-  const x = visElement.getBoundingClientRect().x;
-  const y = visElement.getBoundingClientRect().y;
-  const width = visElement.clientWidth;
-  const height = visElement.clientHeight;
-
   onboardingMessages.set(messages);
   onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))])
   navigationAlignment.set(alignment);

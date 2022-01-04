@@ -6,7 +6,6 @@ import { IOnboardingScatterplotSpec, scatterplot } from './scatterplot';
 import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
 
-export * from './injector';
 export * from './onboarding';
 export * from './interfaces';
 export { IOnboardingBarChartSpec } from './bar-chart';

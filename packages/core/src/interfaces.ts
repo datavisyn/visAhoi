@@ -56,8 +56,7 @@ export interface IOnboardingSpec {
 }
 
 export interface IAhoiConfig {
-  // onboardingStages: Map<string,IOnboardingStage>;
-  onboardingMessages: IOnboardingMessage[];
+  onboardingStages: Map<EDefaultOnboardingStages, IOnboardingStage>
 }
 export interface IOnboardingMessage {
   anchor: any;
