@@ -1,13 +1,15 @@
 import * as echarts from 'echarts';
-import { ahoi, EVisualizationType } from '@visahoi/echarts';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
 
 let chart = null;
+let showOnboarding = false;
+let onboardingUI = null;
 
 function render() {
   fetch("../data/cars.json").then(response => response.json()).then(data => {
-    const chart = createPlot(processData(data));
-  window.addEventListener("resize", () => ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding'));
-  ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
+  chart = createPlot(processData(data));
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
+
   });
 }
 
@@ -48,10 +50,32 @@ function createPlot(values) {
   return chart;
 }
 
+const registerEventListener = () => {
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', async () => {
+    if(showOnboarding) {
+      const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.SCATTERPLOT, chart);
+      const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+        ...d,
+        text: "test123"
+      }));
+      const ahoiConfig = {
+        onboardingMessages: defaultOnboardingMessages,
+      }
+      onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, ahoiConfig);
+    } else {
+      onboardingUI?.removeOnboarding();
+    }
+    showOnboarding = !showOnboarding;
+  })
+}
+
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
   chart = echarts.init(vis, null, {renderer});
   window.addEventListener("resize", () => chart.resize());
+  registerEventListener();
   render();
 }
 

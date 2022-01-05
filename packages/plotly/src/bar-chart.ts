@@ -1,11 +1,11 @@
 import {
   EVisualizationType,
-  IOnboardingMessages,
+  IOnboardingMessage,
   IOnboardingBarChartSpec,
   generateMessages,
 } from "@visahoi/core";
 
-function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
+function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.points");
   const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -58,23 +58,23 @@ function extractOnboardingSpec(chart: any): IOnboardingBarChartSpec {
       value: chart.layout.xaxis.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: {left: -20}
+        offset: {left: -20, bottom: 10}
       }
     },
     yAxisTitle: {
       value: chart.layout.yaxis.title.text,
       anchor: {
         sel: '.infolayer .ytitle',
-        offset: {top: -25}
+        offset: {top: -25, right: 10}
       }
-    },
+    }
     // xAxisLabel (e.g. 01, 02, …)
     // yAxisLabel (e.g. -5, 0, 5, ...)
     // Title (Average Temperature in Oslo)
   };
 }
 
-export function barChartFactory(chart: Element): IOnboardingMessages[] {
-  const onbordingSpec = extractOnboardingSpec(chart);
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, chart);
+export function barChartFactory(chart: Element, coords, visElementId: Element): IOnboardingMessage[] {
+  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

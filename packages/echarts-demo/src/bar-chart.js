@@ -1,15 +1,16 @@
 import * as echarts from 'echarts';
-import { ahoi, EVisualizationType } from '@visahoi/echarts';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
 import { importCsv } from './utils';
 
 let chart = null;
+let showOnboarding = false;
+let onboardingUI = null;
 
 async function render() {
   const data = await importCsv("../data/oslo-2018.csv");
   const {x, y} = processData(data);
-  const chart = createPlot(x, y);
-  window.addEventListener("resize", () => ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding'));
-  ahoi(EVisualizationType.BAR_CHART, chart, '#onboarding');
+  chart = createPlot(x, y);
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
 }
 
 function processData(allRows) {
@@ -75,10 +76,32 @@ function createPlot(x, y) {
   return chart;
 }
 
+const registerEventListener = () => {
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', async () => {
+    if(showOnboarding) {
+      const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.BAR_CHART, chart);
+      const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+        ...d,
+        text: "test123"
+      }));
+      const ahoiConfig = {
+        onboardingMessages: defaultOnboardingMessages,
+      }
+      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, ahoiConfig);
+    } else {
+      onboardingUI?.removeOnboarding();
+    }
+    showOnboarding = !showOnboarding;
+  })
+}
+
 const createChart = (renderer = 'svg') => {
   const vis = document.getElementById("vis");
   chart = echarts.init(vis, null, {renderer});
   window.addEventListener("resize", () => chart.resize());
+  registerEventListener();
   render();
 }
 

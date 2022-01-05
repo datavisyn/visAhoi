@@ -10,11 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A semi-automated Visualization onboarding for a bar chart created with ECharts." />
     <link rel="stylesheet" type="text/css" href="../index.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/main.css" />
     <title>VisAhoi - ECharts - Bar Chart</title>
   </head>
   <body>
+    <div className="header">
+      <span id="show-onboarding" title="Show onboarding">
+        <i class="fas fa-question-circle"></i> Show onboarding
+      </span>
+    </div>
     <h1>VisAhoi Demo: ECharts - Bar Chart</h1>
     <div id="vis"></div>
-    <script type="module" src="../dist/svg/bar-chart.js"></script>
+    <script type="module" src="../../src/svg/bar-chart.js"></script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 import {
   EVisualizationType,
-  IOnboardingMessages,
+  IOnboardingMessage,
   IOnboardingBarChartSpec,
   generateMessages,
 } from "@visahoi/core";
@@ -27,7 +27,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       }
     },
     yMin: {
-      value: data._rawExtent.y[0],
+      value: data._store._rawExtent[1][0],
       anchor: {
         coords: {x: dataCoords[1].x + dataCoords[1].width/2, y: dataCoords[1].y + dataCoords[1].height}
       }
@@ -39,7 +39,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
       }
     },
     yMax: {
-      value: data._rawExtent.y[1],
+      value: data._store._rawExtent[1][1],
       anchor: {
         coords: {x: dataCoords[6].x + dataCoords[6].width/2, y: dataCoords[6].y + dataCoords[6].height}
       }
@@ -79,7 +79,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingBarChartSpec {
   };
 }
 
-export function barChartFactory(chart, coords, visElementId: Element): IOnboardingMessages[] {
+export function barChartFactory(chart, coords, visElementId: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords);
   return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }

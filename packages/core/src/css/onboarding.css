@@ -41,12 +41,6 @@
     opacity: 1;
 }
 
-.visahoi-navigation-item {
-    width: 40px;
-    height: 40px;
-    display: flex;
-}
-
 .visahoi-question-mark-item {
     display: flex;
     flex-direction: column-reverse;
@@ -74,7 +68,6 @@
     bottom: 0px;
     right: 0px;
     z-index: 1999;
-    background: rgba(0, 0, 0, 0.2);
     display: block;
 }
 

@@ -1,11 +1,18 @@
 {
   "devOptions": {
-    "bundle": false,
+    "bundle": true,
     "port": 8082
   },
   "mount": {
     "public": "/",
     "src": "/dist"
   },
-  "plugins": []
+  "optimize": {
+    "treeshake": false,
+    "target": "es2017"
+  },
+  "workspaceRoot": "..",
+  "packageOptions": {
+    "namedExports": ["semver@7.3.5", "vega-embed", "vega-embed@6.19.1", "semver", "semver.v7.3.5.js", "vega-embed.v6.19.1.js"]
+  }
 }

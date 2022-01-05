@@ -7,5 +7,7 @@
     "public": "/",
     "src": "/dist"
   },
-  "plugins": []
+  "plugins": [],
+  "workspaceRoot": "..",
+  "target": "es2017"
 }

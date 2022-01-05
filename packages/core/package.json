@@ -1,6 +1,6 @@
 {
   "name": "@visahoi/core",
-  "version": "2.0.0-SNAPSHOT",
+  "version": "2.0.0",
   "description": "Core library for the visualization onboarding",
   "keywords": [
     "visualization",
@@ -21,17 +21,30 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "tsc -b tsconfig.json",
+    "compile": "rollup -c",
     "watch-plotly": "npm run compile -- --watch",
     "watch-echarts": "npm run compile -- --watch",
     "watch-vega": "npm run compile -- --watch"
   },
   "devDependencies": {
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "tslib": "^2.3.1",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "8.2.5",
+    "@tsconfig/svelte": "2.0.1",
+    "rollup": "^2.3.4",
+    "svelte-preprocess": "4.7.4",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "svelte": "^3.0.0",
+    "postcss-import": "^14.0.2",
+    "postcss": "^8.3.9",
+    "rollup-plugin-postcss": "^4.0.1",
+    "uuid": "^8.3.2"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.15.4",
-    "@popperjs/core": "2.9.3",
-    "popper.js": "1.16.1"
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@popperjs/core": "^2.10.2"
   }
 }

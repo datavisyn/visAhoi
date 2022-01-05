@@ -1,16 +1,16 @@
-// Use Plotly.js via CDN in HTML template, because we cannot bundle it using Snowpack.
-// See https://github.com/ffg-seva/onboarding-prototype/issues/7
-// import * as Plotly from 'plotly.js';
+import Plotly from 'plotly.js-dist'
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/plotly';
 
-import { ahoi, EVisualizationType } from '@visahoi/plotly';
+let chart = null;
+let showOnboarding = false;
+let onboardingUI = null;
 
 async function render() {
   const response = await fetch('../data/cars.json');
   const data = await response.json();
   const {x, y} = processData(data);
-  const chart = await makePlotly(x, y);
-  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding'), 100));
-  ahoi(EVisualizationType.SCATTERPLOT, chart, '#onboarding');
+  chart = await makePlotly(x, y);
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
 }
 
 function processData(allRows) {
@@ -50,4 +50,26 @@ function makePlotly(x, y) {
   return Plotly.newPlot("vis", traces, layout, config);
 }
 
-await render();
+const registerEventListener = () => {
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', async () => {
+    if(showOnboarding) {
+      const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.SCATTERPLOT, chart);
+      const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+        ...d,
+        text: "test123"
+      }));
+      const ahoiConfig = {
+        onboardingMessages: defaultOnboardingMessages,
+      }
+      onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, ahoiConfig);
+    } else {
+      onboardingUI?.removeOnboarding();
+    }
+    showOnboarding = !showOnboarding;
+  })
+}
+
+registerEventListener();
+render();

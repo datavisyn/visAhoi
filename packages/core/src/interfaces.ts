@@ -8,18 +8,13 @@ export enum EVisualizationType {
   SCATTERPLOT = 'scatterplot'
 }
 
-export enum EOnboardingStages {
-  READING = "reading-the-chart",
-  USING = "using-the-chart",
-  ANALYZING = "analyze-the-chart"
+export interface IBackdrop {
+  visElement: Element;
+  color?: string;
 }
 
-export interface IOnboardingMessages {
-  anchor: any;
-  requires: string[];
-  legend: string;
-  onboardingStage: EOnboardingStages;
-}
+
+export type NavigationAlignment = "row" | "column";
 
 interface IPoint {
   x: number;
@@ -60,3 +55,73 @@ export interface IOnboardingSpec {
   [key: string]: ISpecProp | undefined
 }
 
+export interface IAhoiConfig {
+  onboardingMessages: IOnboardingMessage[];
+}
+export interface IOnboardingMessage {
+  anchor: any;
+  requires: string[];
+  text: string;
+  onboardingStage: IOnboardingStage;
+}
+
+export enum EDefaultOnboardingStages {
+  READING = "reading-the-chart",
+  USING = "using-the-chart",
+  ANALYZING = "analyze-the-chart"
+}
+
+
+export type OnboardingStage = string;
+
+export interface IOnboardingStage {
+  id: string;
+  title: string;
+  iconClass: string;
+  color: string;
+  order: number;
+}
+
+// TODO: move to right place
+export const defaultOnboardingStages: Map<EDefaultOnboardingStages, IOnboardingStage> = new Map([
+  [EDefaultOnboardingStages.READING, {
+    id: EDefaultOnboardingStages.READING,
+    title: 'Reading',
+    iconClass: 'fas fa-glasses',
+    color: 'rgb(123, 80, 150)',
+    order: 1
+  }],
+  [EDefaultOnboardingStages.USING, {
+    id: EDefaultOnboardingStages.USING,
+    title: 'Interacting',
+    iconClass: 'fas fa-hand-point-up',
+    color: 'rgb(0, 61, 92)',
+    order: 2
+  }],
+  [EDefaultOnboardingStages.ANALYZING, {
+    id: EDefaultOnboardingStages.ANALYZING,
+    title: 'Analyzing',
+    iconClass: 'fas fa-lightbulb',
+    color: 'rgb(254, 128, 41)',
+    order: 3
+  }]
+]);
+
+export interface IAnchorPosition {
+  x: number;
+  y: number;
+  cx: number;
+  cy: number;
+  offset?: {left?: number, top?: number, right?: number, bottom?: number}
+}
+
+export interface ITooltip {
+  title: string;
+  text: string;
+}
+
+export interface IMarkerInformation {
+  tooltip: ITooltip,
+  anchorPosition: IAnchorPosition,
+  message: IOnboardingMessage,
+}

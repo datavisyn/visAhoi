@@ -1,25 +1,26 @@
-import {EVisualizationType, injectOnboarding, IOnboardingMessages} from '@visahoi/core';
+import { defaultOnboardingStages, EVisualizationType, IAhoiConfig, injectOnboarding, IOnboardingMessage } from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
-import {changeMatrixFactory} from './change-matrix';
-import {horizonGraphFactory} from './horizon-graph';
+import { changeMatrixFactory } from './change-matrix';
+import { horizonGraphFactory } from './horizon-graph';
 import { scatterplotFactory } from './scatterplot';
 
 /**
  *
- * @param visType
- * @param chart
+ * @param visType see EVisualizationType
+ * @param chart runtime object of the visualization
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, chart: any, onboardingElement: string | Element) {
+export const generateBasicAnnotations = (visType: EVisualizationType, chart: any): IOnboardingMessage[] => {
   const coords = {};
   const visElement = chart._dom;
 
+  // TODO: coords
   const chartTitlePosition = chart._componentsMap["_ec_\u0000series\u00000\u00000_title"].group.position;
-  coords['chartTitle'] = {x: chartTitlePosition[0], y: chartTitlePosition[1] + 20};
+  coords['chartTitle'] = { x: chartTitlePosition[0], y: chartTitlePosition[1] + 20 };
 
-  let onboardingMessages: IOnboardingMessages[];
+  let onboardingMessages: IOnboardingMessage[];
 
-  switch(visType) {
+  switch (visType) {
     case EVisualizationType.BAR_CHART:
       onboardingMessages = barChartFactory(chart, coords, visElement);
       break;
@@ -39,8 +40,20 @@ export async function ahoi(visType: EVisualizationType, chart: any, onboardingEl
     default:
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
-
-  injectOnboarding(onboardingMessages, visElement, "horizontal");
+  return onboardingMessages;
 }
+
+
+/**
+ *
+ * @param visType
+ * @param chart
+ * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ */
+export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig = { onboardingMessages: generateBasicAnnotations(visType, chart) }) {
+  const visElement = chart._dom;
+  return injectOnboarding(ahoiConfig.onboardingMessages, visElement, "column");
+}
+
 
 export { EVisualizationType };

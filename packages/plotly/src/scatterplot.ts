@@ -1,7 +1,7 @@
-import { EVisualizationType, IOnboardingMessages, generateMessages } from "@visahoi/core";
+import { EVisualizationType, IOnboardingMessage, generateMessages } from "@visahoi/core";
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
 
-function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
+function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
   const traceNodes = chart.querySelectorAll("g.points");
   const areaNodes = traceNodes[0].querySelectorAll("path.point");
   const areaNodesData = Array.from(areaNodes).map((point: any) => point.__data__);
@@ -62,7 +62,7 @@ function extractOnboardingSpec(chart: any): IOnboardingScatterplotSpec {
   };
 }
 
-export function scatterplotFactory(chart: Element): IOnboardingMessages[] {
-  const onbordingSpec = extractOnboardingSpec(chart);
-  return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, chart);
+export function scatterplotFactory(chart: Element, coords, visElementId: Element): IOnboardingMessage[] {
+  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElementId);
 }

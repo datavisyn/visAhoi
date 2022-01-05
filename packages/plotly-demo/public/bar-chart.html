@@ -10,16 +10,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A semi-automated Visualization onboarding for a bar chart created with Plotly.js." />
     <link rel="stylesheet" type="text/css" href="./index.css" />
+    <link rel="stylesheet" type="text/css" href="../src/css/main.css" />
     <title>VisAhoi - Plotly - Bar Chart</title>
   </head>
   <body>
+    <div className="header">
+      <span id="show-onboarding" title="Show onboarding">
+        <i class="fas fa-question-circle"></i> Show onboarding
+      </span>
+    </div>
     <h1>VisAhoi Demo: Plotly - Bar Chart</h1>
-    <div id="vis"></div>
+    <div id="vis" style="margin-top: 560px;"></div>
     <!--
       Use Plotly.js via CDN, because we cannot bundle it using Snowpack.
       See https://github.com/ffg-seva/onboarding-prototype/issues/7
     -->
-    <script src="https://cdn.plot.ly/plotly-1.54.5.min.js"></script>
-    <script type="module" src="./dist/bar-chart.js"></script>
+    <!-- <script src="https://cdn.plot.ly/plotly-1.54.5.min.js"></script> -->
+    <script type="module" src="../src/bar-chart.js"></script>
   </body>
 </html>
