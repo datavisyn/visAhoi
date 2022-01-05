@@ -1,6 +1,6 @@
 # Visualization Onboarding - ECharts Demos
 
-This package contains the ECharts demos with Visualization Onboarding and is built with [Snowpack](https://www.snowpack.dev/).
+This package contains the ECharts demos with Visualization Onboarding and is built with [Vite](https://www.vitejs.dev/).
 
 ## Available Scripts
 
@@ -16,9 +16,3 @@ You will also see any lint errors in the console.
 
 Builds a static copy of your site to the `build/` folder.
 Your app is ready to be deployed!
-
-**For the best production performance:** Activate the webpack bundler plugin in the `snowpack.config.json` config file `devOptions.bundle: true`.
-
-### Q: What about Eject?
-
-No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.

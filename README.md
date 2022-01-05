@@ -163,5 +163,3 @@ npm start
 
 TBD
 -->
-
-<!-- why we use nodemon: https://stackoverflow.com/questions/64923057/snowpack-dev-server-is-not-recompiling-files-in-node-modules-when-changed >
