@@ -1,6 +1,6 @@
 <script lang="ts">
   import OnboardingNavigation from "./OnboardingNavigation.svelte";
-  import { showOnboarding, resetStore, visHeight, visWidth, visXPosition, visYPosition } from "./stores.js";
+  import { showOnboarding, showBackdrop, activeOnboardingStage, resetStore, visHeight, visWidth, visXPosition, visYPosition } from "./stores.js";
   import { fade } from "svelte/transition";
   import Markers from "./Markers.svelte";
   import Tooltips from "./Tooltips.svelte";
@@ -45,7 +45,9 @@
     <Markers />
     <Tooltips />
     <OnboardingNavigation height={$visHeight} />
-    <Backdrop />
+    {#if $activeOnboardingStage && $showBackdrop}
+      <Backdrop />
+    {/if}
   </div>
 
 <style>

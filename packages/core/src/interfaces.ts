@@ -57,6 +57,7 @@ export interface IOnboardingSpec {
 
 export interface IAhoiConfig {
   onboardingMessages: IOnboardingMessage[];
+  showBackdrop: boolean;
 }
 export interface IOnboardingMessage {
   anchor: any;

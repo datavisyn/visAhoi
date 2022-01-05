@@ -22,6 +22,7 @@ export const activeMarker = initializeStoreValue<{
   markerId: string;
   markerInformation: IMarkerInformation;
 } | null>(null);
+export const showBackdrop = initializeStoreValue<boolean>(true);
 
 export const visXPosition = writable<number>(0);
 export const visYPosition = writable<number>(0);
