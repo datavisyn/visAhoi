@@ -1,5 +1,5 @@
 <script lang="ts">
-import { visHeight, visWidth, visXPosition, visYPosition } from "./stores.js";
+import { visHeight, visWidth, visXPosition, visYPosition, backdropOpacity } from "./stores.js";
 
 
   const fullAppWidth = "100vw";
@@ -29,11 +29,11 @@ import { visHeight, visWidth, visXPosition, visYPosition } from "./stores.js";
 
 </script>
 
-<div class="backdrop" style="--clipPath: {backdropPath}"></div>
+<div class="backdrop" style="--clipPath: {backdropPath}; --opacity: {$backdropOpacity}"></div>
 
 <style>
   .backdrop {
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, var(--opacity));
     clip-path: var(--clipPath);
     position: fixed;
     width: 100%;

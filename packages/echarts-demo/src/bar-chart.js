@@ -88,6 +88,10 @@ const registerEventListener = () => {
       }));
       const ahoiConfig = {
         onboardingMessages: defaultOnboardingMessages,
+        backdrop: {
+          // show: true,
+          // opacity: 1
+        }
       }
       onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, ahoiConfig);
     } else {
