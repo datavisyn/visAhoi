@@ -22,7 +22,7 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "rollup -c -w",
+    "compile": "rollup -c",
     "watch-echarts": "npm run compile -- --watch"
   },
   "devDependencies": {
