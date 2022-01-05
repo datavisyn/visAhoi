@@ -10,7 +10,7 @@ async function render() {
   const data = await importCsv("./data/oslo-2018.csv");
   const {x, y} = processData(data);
   chart = await makePlotly(x, y);
-  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.HORIZON_GRAPH, chart, '#onboarding'), 100));
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
 }
 
 function processData(allRows) {

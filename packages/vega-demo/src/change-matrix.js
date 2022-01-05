@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed';
-import { ahoi, EVisualizationType } from '@visahoi/vega';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/vega';
 
 // Options for the vega embed
 const opt = {
@@ -8,13 +8,42 @@ const opt = {
   renderer: 'svg',
 };
 
+let chart = null;
+let showOnboarding = false;
+let onboardingUI = null;
+
 async function render() {
   const response = await fetch('./data/changeMatrix.json');
   const json = await response.json();
 
-  let vegaLite = await vegaEmbed('#vis', json, opt);
-  window.addEventListener("resize", () => ahoi(EVisualizationType.CHANGE_MATRIX, vegaLite, '#onboarding'));
-  ahoi(EVisualizationType.CHANGE_MATRIX, vegaLite, '#onboarding');
+  chart = await vegaEmbed('#vis', json, opt);
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
 };
 
+const registerEventListener = () => {
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', async () => {
+    if(showOnboarding) {
+      generateBasicAnnotations(EVisualizationType.CHANGE_MATRIX, chart).then((defaultOnboardingMessages) => {
+        const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+          ...d,
+          text: "test123"
+        }));
+
+        const ahoiConfig = {
+          onboardingMessages: defaultOnboardingMessages,
+        }
+        ahoi(EVisualizationType.CHANGE_MATRIX, chart, ahoiConfig).then((result) => {
+          onboardingUI = result;
+        });
+      });
+    } else {
+      onboardingUI?.removeOnboarding();
+    }
+    showOnboarding = !showOnboarding;
+  })
+}
+
+registerEventListener();
 render();

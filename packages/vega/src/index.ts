@@ -1,5 +1,5 @@
 import { Result } from 'vega-embed';
-import {EVisualizationType, injectOnboarding} from '@visahoi/core';
+import {EVisualizationType, IAhoiConfig, injectOnboarding, IOnboardingMessage} from '@visahoi/core';
 import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
@@ -7,17 +7,17 @@ import { scatterplotFactory } from './scatterplot';
 
 /**
  *
- * @param visType
- * @param vegaResult
+ * @param visType see EVisualizationType
+ * @param chart runtime object of the visualization
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, vegaResult: Result, onboardingElement: string | Element) {
-  const evaluated = await (<any>vegaResult.view).evaluate(); // TODO: `evaluate()` is not an officially supported Vega API
+ export const generateBasicAnnotations = async (visType: EVisualizationType, chart: any): Promise<IOnboardingMessage[]> => {
+  const evaluated = await (chart.view.runAsync()); // TODO: `evaluate()` is not an officially supported Vega API
 
   // Vega-lite spec after all rendering happend and the aggregations
-  const vegaSpec = vegaResult.vgSpec;
-  const origSpec = vegaResult.spec;
-  const visElement: Element = (vegaResult.view as any)._el;
+  const vegaSpec = chart.vgSpec;
+  const origSpec = chart.spec;
+  const visElement: Element = (chart.view as any)._el;
 
   // ADDITIONAL (not used)
   // Get the individual nodes
@@ -57,8 +57,20 @@ export async function ahoi(visType: EVisualizationType, vegaResult: Result, onbo
     default:
       throw new Error(`No onboarding for visualization type ${visType} available.`);
   }
-  injectOnboarding(onboardingMessages, visElement, "column");
+  return onboardingMessages;
+}
+
+
+/**
+ *
+ * @param visType
+ * @param chart
+ * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ */
+export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig = { onboardingMessages: [] }) {
+  ahoiConfig.onboardingMessages = await generateBasicAnnotations(visType, chart);
+  const visElement = chart.view._el;
+  return injectOnboarding(ahoiConfig.onboardingMessages, visElement, "column");
 }
 
 export { EVisualizationType };
-

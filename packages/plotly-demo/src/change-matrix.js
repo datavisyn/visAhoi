@@ -10,7 +10,7 @@ async function render() {
   const data = await response.json();
   const {x, y, z} = processData(data);
   chart = await makePlotly(x, y, z)
-  window.addEventListener("resize", () => setTimeout(() => ahoi(EVisualizationType.CHANGE_MATRIX, chart, '#onboarding'), 100));
+  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
 }
 
 function processData(allRows) {
