@@ -2,7 +2,6 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
 # currently we are testing the demos by building them
-# no build errors from snowpack means everything should be fine
 name: Test demos
 
 on:
