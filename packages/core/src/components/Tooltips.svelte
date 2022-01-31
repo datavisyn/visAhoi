@@ -1,10 +1,12 @@
 <script lang="ts">
   import Tooltip from "./Tooltip.svelte";
 
+  export let visElement;
+
 </script>
 
 <div class="tooltips">
-      <Tooltip />
+      <Tooltip visElement={visElement} />
 </div>
 
 <style>

@@ -43,7 +43,7 @@
       'px'}; left:{$visXPosition + window.scrollX + 'px'} position: absolute"
   >
     <Markers />
-    <Tooltips />
+    <Tooltips visElement={visElement} />
     <OnboardingNavigation height={$visHeight} />
     {#if $activeOnboardingStage && $showBackdrop}
       <Backdrop />

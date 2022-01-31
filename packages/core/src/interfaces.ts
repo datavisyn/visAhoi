@@ -64,11 +64,15 @@ export interface IAhoiConfig {
   onboardingMessages: IOnboardingMessage[];
   backdrop: IBackdropConfig;
 }
+
+export type TooltipPosition = "top" | "bottom" | "left" | "right";
 export interface IOnboardingMessage {
   anchor: any;
   requires: string[];
   text: string;
+  title: string;
   onboardingStage: IOnboardingStage;
+  tooltipPosition?: TooltipPosition;
 }
 
 export enum EDefaultOnboardingStages {
@@ -124,6 +128,7 @@ export interface IAnchorPosition {
 export interface ITooltip {
   title: string;
   text: string;
+  position: TooltipPosition;
 }
 
 export interface IMarkerInformation {
