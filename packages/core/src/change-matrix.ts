@@ -19,7 +19,12 @@ function generateMessages(spec: IOnboardingChangeMatrixSpec, visElement: Element
       text: `The <span class="visahoi-tooltip-hover-text">chart</span> shows the ${spec.chartTitle?.value}.`,
       title: 'Reading the chart',
       onboardingStage: reading,
-      tooltipPosition: "top" as TooltipPosition
+      tooltipPosition: "top" as TooltipPosition,
+      marker: {
+        radius: 8,
+        content: "",
+        fontSize: '20px'
+      }
     },
     {
       anchor: getAnchor(spec.type, visElement),

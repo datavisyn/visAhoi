@@ -95,7 +95,8 @@ export function getMarkerInformation(onboardingMessages: IOnboardingMessage[]): 
     markerInformation.push({
       message,
       anchorPosition,
-      tooltip
+      tooltip,
+      marker: message.marker
     });
   });
   return markerInformation;

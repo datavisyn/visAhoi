@@ -56,7 +56,7 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      text: `The chart Is based on colored ${spec.maxValue} elements.`,
+      text: `The chart Is based on colored ${spec.type?.value} elements.`,
       title: 'Reading the chart',
       onboardingStage: reading
     }

@@ -69,7 +69,7 @@
     ? ''
     : 'hidden'}"
   style="--stage-color: {activeMarkerInformation?.markerInformation.message
-    .onboardingStage.color}"
+    .onboardingStage.backgroundColor}"
 >
   <div class="visahoi-tooltip-title">
     <b>{$activeMarker?.markerInformation.tooltip.title}</b>

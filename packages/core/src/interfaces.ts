@@ -66,6 +66,12 @@ export interface IAhoiConfig {
 }
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";
+
+export interface IMarker {
+  radius?: number;
+  fontSize?: string;
+  content?: string;
+}
 export interface IOnboardingMessage {
   anchor: any;
   requires: string[];
@@ -73,6 +79,7 @@ export interface IOnboardingMessage {
   title: string;
   onboardingStage: IOnboardingStage;
   tooltipPosition?: TooltipPosition;
+  marker?: IMarker;
 }
 
 export enum EDefaultOnboardingStages {
@@ -88,7 +95,9 @@ export interface IOnboardingStage {
   id: string;
   title: string;
   iconClass: string;
-  color: string;
+  backgroundColor: string;
+  hoverBackgroundColor?: string;
+  activeBackgroundColor?: string;
   order: number;
 }
 
@@ -98,21 +107,23 @@ export const defaultOnboardingStages: Map<EDefaultOnboardingStages, IOnboardingS
     id: EDefaultOnboardingStages.READING,
     title: 'Reading',
     iconClass: 'fas fa-glasses',
-    color: 'rgb(123, 80, 150)',
+    hoverBackgroundColor: 'rgb(92, 59, 112)',
+    backgroundColor: 'rgb(123, 80, 150)',
+    activeBackgroundColor: 'rgb(76, 46, 94)',
     order: 1
   }],
   [EDefaultOnboardingStages.USING, {
     id: EDefaultOnboardingStages.USING,
     title: 'Interacting',
     iconClass: 'fas fa-hand-point-up',
-    color: 'rgb(0, 61, 92)',
+    backgroundColor: 'rgb(0, 61, 92)',
     order: 2
   }],
   [EDefaultOnboardingStages.ANALYZING, {
     id: EDefaultOnboardingStages.ANALYZING,
     title: 'Analyzing',
     iconClass: 'fas fa-lightbulb',
-    color: 'rgb(254, 128, 41)',
+    backgroundColor: 'rgb(254, 128, 41)',
     order: 3
   }]
 ]);
@@ -135,4 +146,5 @@ export interface IMarkerInformation {
   tooltip: ITooltip,
   anchorPosition: IAnchorPosition,
   message: IOnboardingMessage,
+  marker?: IMarker;
 }
