@@ -39,7 +39,6 @@
       const markerElement = document.getElementById(marker.markerId);
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
-          // TODO: make it configurable and test all four possibilities
           placement: marker.markerInformation.tooltip.position as TooltipPosition,
           modifiers: [
             {

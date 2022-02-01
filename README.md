@@ -46,7 +46,7 @@ function render() {
     /* EChart specification */
   });
 
-  ahoi('bar-chart', chart);
+  ahoi('bar-chart', chart, ahoiConfig);
 };
 
 render();
@@ -78,7 +78,7 @@ async function render() {
 
   const chart = await Plotly.newPlot('vis', traces, layout);
 
-  ahoi('bar-chart', chart);
+  ahoi('bar-chart', chart, ahoiConfig);
 }
 
 render();
@@ -108,7 +108,7 @@ async function render() {
 
   const chart = await vegaEmbed('#vis', spec, { renderer: 'svg' });
 
-  ahoi('bar-chart', chart);
+  ahoi('bar-chart', chart, ahoiConfig);
 };
 
 render();
@@ -127,8 +127,43 @@ Currently VisAhoi provides the onboarding messages for following visualization t
 * Change Matrix (`change-matrix`)
 * Horizon Graph (`horizon-graph`)
 
-The visualization type is passed as first parameter to the `ahoi(type, chart)` function. The second paramter is the the chart instance of the used visualization library.
+The visualization type is passed as first parameter to the `ahoi(type, chart, ahoiConfig)` function. The second paramter is the the chart instance of the used visualization library.
 
+
+# Customization
+The onboarding can be customized via the `ahoiConfig` parameter which is passed to the `ahoi(type, chart, ahoiConfig)` function.
+It allows you to customize the onboarding messages and the backdrop.
+
+The interface of the ahoiConfig looks like this:
+```
+interface IAhoiConfig {
+  onboardingMessages: IOnboardingMessage[];
+  backdrop: IBackdropConfig;
+}
+```
+
+To customize the onboarding messages, you can either pass your own onboarding messages, or adapt the automatically generated onboarding messages for your specific visualization type. To get the automatically generated messages use our function `generateBasicAnnotations()`. It returns an array of onbaording messages which you can modify or directly pass to the `ahoi()` function.
+
+An onboarding message has the following interface:
+```
+interface IOnboardingMessage {
+  anchor: any;
+  requires: string[];
+  text: string;
+  title: string;
+  onboardingStage: IOnboardingStage;
+  tooltipPosition?: TooltipPosition;
+}
+```
+
+The backdrop can also be configured via the `ahoiConfig`. You can define if you want to show a backdrop at all and customize it's opacity.
+The interface for the backdrop looks like this:
+```
+interface IBackdropConfig {
+  show: boolean;
+  opacity: number;
+}
+```
 
 # Developer Information
 
