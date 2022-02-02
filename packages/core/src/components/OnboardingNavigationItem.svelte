@@ -10,7 +10,7 @@
 </script>
 
 <div
-  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor}; --bottom:{bottom}"
+  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor || stage.backgroundColor}; --bottom:{bottom}"
   class="visahoi-navigation-item {!$showOnboardingSteps || $activeOnboardingStage ? 'removed' : ''}
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
