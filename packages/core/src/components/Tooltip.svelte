@@ -4,6 +4,7 @@
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
+import { getMarkerDomId } from "../utils";
 
   export let visElement;
 
@@ -14,10 +15,7 @@
     },
   };
 
-  let activeMarkerInformation: {
-    markerId: string;
-    markerInformation: IMarkerInformation;
-  } | null = null;
+  let activeMarkerInformation: IMarkerInformation | null = null;
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
 
@@ -36,10 +34,10 @@
     const arrowElement = document.getElementById(arrowId);
     if (marker) {
       activeMarkerInformation = marker;
-      const markerElement = document.getElementById(marker.markerId);
+      const markerElement = document.getElementById(getMarkerDomId(marker.marker.id));
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
-          placement: marker.markerInformation.tooltip.position as TooltipPosition,
+          placement: marker.tooltip.position as TooltipPosition,
           modifiers: [
             {
               name: "arrow",
@@ -53,9 +51,9 @@
                 boundary: visElement,
               },
             },
-            {
-              name: "flip",
-            },
+          //   {
+          //     name: "flip",
+          //   },
           ],
         });
       }
@@ -68,18 +66,18 @@
   class="visahoi-tooltip {$activeMarker && $activeOnboardingStage
     ? ''
     : 'hidden'}"
-  style="--stage-color: {activeMarkerInformation?.markerInformation.message
+  style="--stage-color: {activeMarkerInformation?.message
     .onboardingStage.backgroundColor}"
 >
   <div class="visahoi-tooltip-title">
-    <b>{$activeMarker?.markerInformation.tooltip.title}</b>
+    <b>{$activeMarker?.tooltip.title}</b>
     <div class="visahoi-close-tooltip" on:click={closeTooltip}>
       <i class="fas fa-times" />
     </div>
   </div>
   <div class="visahoi-tooltip-content">
     {@html sanitizeHtml(
-      activeMarkerInformation?.markerInformation.tooltip.text,
+      activeMarkerInformation?.tooltip.text,
       sanitizerOptions
     )}
   </div>

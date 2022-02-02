@@ -19,11 +19,12 @@ function generateMessages(spec: IOnboardingChangeMatrixSpec, visElement: Element
       text: `The <span class="visahoi-tooltip-hover-text">chart</span> shows the ${spec.chartTitle?.value}.`,
       title: 'Reading the chart',
       onboardingStage: reading,
-      tooltipPosition: "top" as TooltipPosition,
+      tooltipPosition: "top" as TooltipPosition, // this causes the "jumping" of the tooltip when resizing
       marker: {
         radius: 8,
         content: "",
-        fontSize: '20px'
+        fontSize: '20px',
+        id: "unique-marker-id-1"
       }
     },
     {
@@ -32,21 +33,30 @@ function generateMessages(spec: IOnboardingChangeMatrixSpec, visElement: Element
       text: `The chart Is based on colored ${spec.type?.value} elements.`,
       title: 'Reading the chart',
       onboardingStage: reading,
-      tooltipPosition: "left" as TooltipPosition
+      tooltipPosition: "left" as TooltipPosition,
+      marker: {
+        id: "unique-marker-id-2"
+      }
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
       text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
       title: 'Reading the chart',
-      onboardingStage: reading
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-3"
+      }
     },
     {
       anchor: getAnchor(spec.xAxis, visElement),
       requires: ['xAxis', 'yAxis'],
       text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
       title: 'Reading the chart',
-      onboardingStage: reading
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-4"
+      }
     },
   ];
 

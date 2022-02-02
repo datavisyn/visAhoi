@@ -19,10 +19,10 @@
   }
 
   const setMarkerInformation = () => {
-    // reset active marker
-    activeMarker.set(null);
     const updatedMarkerInformation = getMarkerInformation($onboardingMessages);
     markerInformation.set(updatedMarkerInformation);
+    // update data of active marker
+    activeMarker.set(updatedMarkerInformation.find((m) => m.marker.id === $activeMarker?.marker.id) || null);
   }
 
 

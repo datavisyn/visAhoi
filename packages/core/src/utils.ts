@@ -64,3 +64,13 @@ export const createPopperTooltip = (anchor, tooltip) => {
       }]
   });
 }
+
+/**
+ * returns the markerId with the visahoi prefix
+ * this id is used for the marker dom element
+ * @param id
+ * @returns
+ */
+export const getMarkerDomId = (id: string): string => {
+  return `visahoi-marker-${id}`;
+}

@@ -71,6 +71,7 @@ export interface IMarker {
   radius?: number;
   fontSize?: string;
   content?: string;
+  id: string;
 }
 export interface IOnboardingMessage {
   anchor: any;
@@ -79,7 +80,7 @@ export interface IOnboardingMessage {
   title: string;
   onboardingStage: IOnboardingStage;
   tooltipPosition?: TooltipPosition;
-  marker?: IMarker;
+  marker: IMarker;
 }
 
 export enum EDefaultOnboardingStages {
@@ -146,5 +147,5 @@ export interface IMarkerInformation {
   tooltip: ITooltip,
   anchorPosition: IAnchorPosition,
   message: IOnboardingMessage,
-  marker?: IMarker;
+  marker: IMarker;
 }

@@ -18,10 +18,7 @@ export const onboardingMessages = initializeStoreValue<IOnboardingMessage[]>([])
 export const navigationAlignment = initializeStoreValue<NavigationAlignment>('column');
 export const onboardingStages = initializeStoreValue<IOnboardingStage[]>([]);
 export const activeOnboardingStage = initializeStoreValue<IOnboardingStage | null>(null);
-export const activeMarker = initializeStoreValue<{
-  markerId: string;
-  markerInformation: IMarkerInformation;
-} | null>(null);
+export const activeMarker = initializeStoreValue<IMarkerInformation | null>(null);
 export const showBackdrop = initializeStoreValue<boolean>(true);
 export const backdropOpacity = initializeStoreValue<number>(0.15);
 
