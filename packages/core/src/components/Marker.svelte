@@ -5,7 +5,6 @@
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
-
   const markerId = uuidv4();
 
   const handleClick = () => {

@@ -1,8 +1,7 @@
 import OnboardingUI from './components/OnboardingUI.svelte';
 import { onboardingMessages, navigationAlignment, onboardingStages, showBackdrop, backdropOpacity } from './components/stores.js';
-
-import { IAhoiConfig, IOnboardingMessage, NavigationAlignment} from './interfaces';
-
+import debounce from "lodash.debounce";
+import { IAhoiConfig, NavigationAlignment } from './interfaces';
 
 let onboardingUI: OnboardingUI;
 export const injectOnboarding = (ahoiConfig: IAhoiConfig, visElement: Element, alignment: NavigationAlignment) => {
@@ -17,6 +16,13 @@ export const injectOnboarding = (ahoiConfig: IAhoiConfig, visElement: Element, a
   }
 
   const ref = {update: () => {}}
+
+
+  const updateOnboarding = (b) => {
+    onboardingMessages.set(b.onboardingMessages);
+    ref.update();
+  }
+
   onboardingUI = new OnboardingUI({
     target: document.body as Element,
     props: {
@@ -25,7 +31,7 @@ export const injectOnboarding = (ahoiConfig: IAhoiConfig, visElement: Element, a
     }
   });
   return {
-    updateOnboarding: () => ref.update(),
+    updateOnboarding: debounce(updateOnboarding),
     removeOnboarding: () => {
       onboardingUI.$destroy();
     }

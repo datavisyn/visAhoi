@@ -1,11 +1,12 @@
 <script lang="ts">
   import OnboardingNavigation from "./OnboardingNavigation.svelte";
-  import { showOnboarding, showBackdrop, activeOnboardingStage, resetStore, visHeight, visWidth, visXPosition, visYPosition } from "./stores.js";
+  import { showOnboarding, showBackdrop, activeOnboardingStage, resetStore, visHeight, visWidth, visXPosition, visYPosition, onboardingMessages, markerInformation, activeMarker} from "./stores.js";
   import { fade } from "svelte/transition";
   import Markers from "./Markers.svelte";
   import Tooltips from "./Tooltips.svelte";
   import { onDestroy, onMount } from "svelte";
   import Backdrop from "./Backdrop.svelte";
+  import { getMarkerInformation } from "./getMarkerInformation";
 
   export let ref;
   export let visElement: Element;
@@ -17,9 +18,17 @@
     visHeight.set(visElement.clientHeight);
   }
 
+  const setMarkerInformation = () => {
+    // reset active marker
+    activeMarker.set(null);
+    const updatedMarkerInformation = getMarkerInformation($onboardingMessages);
+    markerInformation.set(updatedMarkerInformation);
+  }
+
 
   ref.update = () => {
 		setVisElementPosition();
+    setMarkerInformation();
 	};
 
   let show = true;
@@ -29,6 +38,7 @@
 
   onMount(() => {
     setVisElementPosition();
+    setMarkerInformation();
   })
   onDestroy(() => {
     resetStore();

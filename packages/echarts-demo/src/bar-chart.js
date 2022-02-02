@@ -1,16 +1,21 @@
 import * as echarts from 'echarts';
 import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
+import debounce from "lodash.debounce";
 import { importCsv } from './utils';
 
 let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
 
+const debouncedResize = debounce((event) => {
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250);
+
 async function render() {
   const data = await importCsv("../data/oslo-2018.csv");
   const {x, y} = processData(data);
   chart = createPlot(x, y);
-  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
+  window.addEventListener("resize", debouncedResize);
 }
 
 function processData(allRows) {
@@ -76,24 +81,28 @@ function createPlot(x, y) {
   return chart;
 }
 
+const getAhoiConfig = () => {
+  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.BAR_CHART, chart);
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+    ...d,
+    text: "test123"
+  }));
+  const ahoiConfig = {
+    onboardingMessages: defaultOnboardingMessages,
+    backdrop: {
+      // show: true,
+      // opacity: 1
+    }
+  }
+  return ahoiConfig;
+}
+
 const registerEventListener = () => {
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
     if(showOnboarding) {
-      const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.BAR_CHART, chart);
-      const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-        ...d,
-        text: "test123"
-      }));
-      const ahoiConfig = {
-        onboardingMessages: defaultOnboardingMessages,
-        backdrop: {
-          // show: true,
-          // opacity: 1
-        }
-      }
-      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, ahoiConfig);
+      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, getAhoiConfig());
     } else {
       onboardingUI?.removeOnboarding();
     }

@@ -29,6 +29,7 @@ export const visXPosition = writable<number>(0);
 export const visYPosition = writable<number>(0);
 export const visHeight = writable<number>(0);
 export const visWidth = writable<number>(0);
+export const markerInformation = writable<IMarkerInformation[]>([]);
 
 
 export const resetStore = () => {
