@@ -1,49 +1,201 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <title>Visualization Onboarding by ffg-seva</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="stylesheets/styles.css" />
+    <link rel="stylesheet" href="stylesheets/github-light.css" />
+    <meta name="viewport" content="width=device-width" />
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body>
     <div class="wrapper">
       <header>
         <h1>Visualization Onboarding</h1>
-        <p>Towards Semi-Automated Generation of Visualization Onboarding for High-level Visualization Grammars</p>
+        <p>
+          Towards Semi-Automated Generation of Visualization Onboarding for
+          High-level Visualization Grammars
+        </p>
 
-        <p class="view"><a href="https://github.com/ffg-seva/onboarding-prototype">View the Project on GitHub <small>ffg-seva/onboarding-prototype</small></a></p>
-
+        <p class="view">
+          <a href="https://github.com/ffg-seva/onboarding-prototype"
+            >View the Project on GitHub
+            <small>ffg-seva/onboarding-prototype</small></a
+          >
+        </p>
 
         <ul>
-          <li><a href="https://github.com/ffg-seva/onboarding-prototype/zipball/develop">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ffg-seva/onboarding-prototype/tarball/develop">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ffg-seva/onboarding-prototype">View On <strong>GitHub</strong></a></li>
+          <li>
+            <a
+              href="https://github.com/ffg-seva/onboarding-prototype/zipball/develop"
+              >Download <strong>ZIP File</strong></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/ffg-seva/onboarding-prototype/tarball/develop"
+              >Download <strong>TAR Ball</strong></a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/ffg-seva/onboarding-prototype"
+              >View On <strong>GitHub</strong></a
+            >
+          </li>
         </ul>
       </header>
       <section>
-        <p>This repository proposes a technical approach for the semi-automated creation of on-boarding elements for different visualization types and data sets. We demonstrate the approach using three well-known high-level descriptive visualization grammars (<a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, <a href="https://plotly.com/javascript/">Plotly.js</a>, and <a href="https://echarts.apache.org/">ECharts</a>) to extract and describe visualization onboarding instructions and showthe feasibility by the example of a bar chart, a horizon graph, and a change matrix.</p>
+        <p>
+          This repository proposes a technical approach for the semi-automated
+          creation of onboarding elements for different visualization types and
+          data sets. We demonstrate the approach using three well-known
+          high-level descriptive visualization grammars (<a
+            href="https://vega.github.io/vega-lite/"
+            >Vega-Lite</a
+          >, <a href="https://plotly.com/javascript/">Plotly.js</a>, and
+          <a href="https://echarts.apache.org/">ECharts</a>) to extract and
+          describe visualization onboarding instructions and show the
+          feasibility by the example of a bar chart, a horizon graph, and a
+          change matrix. We provide a demo for each visualization type in all
+          three charting libraries.
+        </p>
 
         <h2>Demos</h2>
-        <ul style="font-size:x-large">
+        <ul style="font-size: x-large">
           <li><a href="./demos/echarts-demo/build/">ECharts</a></li>
           <li><a href="./demos/plotly-demo/build/">Plotly.js</a></li>
           <li><a href="./demos/vega-demo/build/">Vega-Lite</a></li>
         </ul>
 
+        <h2>Docs</h2>
+        <h3>Getting started</h3>
+        <!-- TODO: publish on npm -->
+
+        <h3>Derieve automatically generated onboarding messages</h3>
+        <p>
+          Our library provides two main functions which can be used to create
+          and add the onboarding to your visualization. The function
+          <code>generateBasicAnnotations</code> allows you to get the
+          automatically generated onboarding messages for your chart type
+        </p>
+        <code>
+          generateBasicAnnotations(CHART_TYPE, CHART);
+        </code>
+        <p>
+          <p>
+          <b>CHART_TYPE:</b> defines the type of chart for which you want
+          to get the onboarding messages for. We support all charttypes which
+          are contained in the enum
+          <code
+            ><a
+              href="https://github.com/ffg-seva/onboarding-prototype/blob/c3f14e087c6517205c567ae52bf0711e3c99f309/packages/core/src/interfaces.ts#L4"
+              >EVisualizationType</a
+            ></code
+          >.</p>
+          <p> <b>CHART:</b> Pass the runtime object of your visualization
+          as the second parameter to this funcition. </p>
+          <p><b>RETURN VALUE:</b> The
+          funciton returns an array of
+          <code
+            ><a
+              href="https://github.com/ffg-seva/onboarding-prototype/blob/c3f14e087c6517205c567ae52bf0711e3c99f309/packages/core/src/interfaces.ts#L61"
+              >OnboardingMessages</a
+            ></code
+          >
+        
+        </p>
+        <p><b>EXAMPLE: </b><code>
+          import { generateBasicAnnotations, EVisualizationType } from '@visahoi/plotly'; </br>
+          const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.BAR_CHART, chart)</code></p>
+        </p>
+        <h3>Customize the default onboarding messages</h3>
+        <p>
+          As you got the automatically generated onboarding messages for your
+          cart type now, you can freely
+          customize them. You could interate over the array and customize the
+          text, add new items or remove some which you don't need. For newly added items consider that they need to match the <a
+          href="https://github.com/ffg-seva/onboarding-prototype/blob/c3f14e087c6517205c567ae52bf0711e3c99f309/packages/core/src/interfaces.ts#L61"
+          >IOnboardingMessage</a
+        > interface.
+        </p>
+
+        <h3>Create the onboarding</h3>
+        <p>When you're done customizing your onboarding messages, it's time to create the onboarding interface for your visualization. To do that, call our <code>ahoi(CHART_TYPE, CHART, CONFIG)</code> method.</p>
+        <p><b>CHART_TYPE: </b><code
+          ><a
+            href="https://github.com/ffg-seva/onboarding-prototype/blob/c3f14e087c6517205c567ae52bf0711e3c99f309/packages/core/src/interfaces.ts#L4"
+            >EVisualizationType</a
+          ></code
+        ></p>
+        <p><b>CHART:</b> Pass the runtime object of your visualization</p>
+        <p><b>CONFIG: </b> The config object contains all configuration necessary to customize the onboarding, including the onboarding messages. See the interface <a href="https://github.com/ffg-seva/onboarding-prototype/blob/c3f14e087c6517205c567ae52bf0711e3c99f309/packages/core/src/interfaces.ts#L58">IAhoiConfig</a> </br>
+          <ul>
+            <li>onboardingMessages: IOnboardingMessage[];</li>
+            <li>backdrop: IBackdropConfig;</li>
+          </ul>
+        </p>
+
+        <p><b>EXAMPLE: </b> const onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, ahoiConfig);</p>
+
+        <h3>Customizations via the onboarding messages</h3>
+        <h4>Marker</h4> 
+        <!-- TODO: add link to marker interface -->
+          <ul>
+            <li>Radius (optional)</li>
+            <li>Font size (optional)</li>
+            <li>Content (optional, default: index)</li>
+            <!-- <li>id (some unique marker id)</li> -->
+          </ul>
+        <h4>Tooltip position</h4>
+        <!-- TODO: add link to tooltip position -->
+        <h4><a href="https://github.com/ffg-seva/onboarding-prototype/blob/c3f14e087c6517205c567ae52bf0711e3c99f309/packages/core/src/interfaces.ts#L77">Onboarding stages</a></h4>
+          <ul>
+            <li>title</li>
+            <li>iconClass</li>
+            <li>backgroundColor</li>
+            <li>hoverBackgroundColor (optional)</li>
+            <li>activeBackgroundColor (optional)</li>
+            <li>order</li>
+          </ul>
+        <h4>Message title</h4>
+        <h4>Message text</h4>
+
+        <h3>Remove the onboarding</h3>
+        <p>To remove the onboarding again, call <code>removeOnboarding</code> on the onboardnig instance.</p>
+        <p><b>EXAMPLE: </b> onboardingUI?.removeOnboarding(); </p>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/ffg-seva">ffg-seva</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p>
+          This project is maintained by
+          <a href="https://github.com/ffg-seva">ffg-seva</a>
+        </p>
+        <p>
+          <small
+            >Hosted on GitHub Pages &mdash; Theme by
+            <a href="https://github.com/orderedlist">orderedlist</a></small
+          >
+        </p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
   </body>
 </html>
