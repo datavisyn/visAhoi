@@ -1,14 +1,21 @@
 import OnboardingUI from './components/OnboardingUI.svelte';
-import { onboardingMessages, navigationAlignment, onboardingStages } from './components/stores.js';
+import { onboardingMessages, navigationAlignment, onboardingStages, showBackdrop, backdropOpacity } from './components/stores.js';
 
-import { IOnboardingMessage, NavigationAlignment} from './interfaces';
+import { IAhoiConfig, IOnboardingMessage, NavigationAlignment} from './interfaces';
 
 
 let onboardingUI: OnboardingUI;
-export const injectOnboarding = (messages: IOnboardingMessage[], visElement: Element, alignment: NavigationAlignment) => {
-  onboardingMessages.set(messages);
-  onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))])
+export const injectOnboarding = (ahoiConfig: IAhoiConfig, visElement: Element, alignment: NavigationAlignment) => {
+  onboardingMessages.set(ahoiConfig.onboardingMessages);
+  onboardingStages.set([...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage))])
   navigationAlignment.set(alignment);
+  if(ahoiConfig?.backdrop?.show !== null && ahoiConfig?.backdrop?.show !== undefined) {
+    showBackdrop.set(ahoiConfig?.backdrop?.show);
+  }
+  if(ahoiConfig?.backdrop?.opacity !== null && ahoiConfig?.backdrop?.opacity !== undefined) {
+    backdropOpacity.set(ahoiConfig?.backdrop?.opacity)
+  }
+
   const ref = {update: () => {}}
   onboardingUI = new OnboardingUI({
     target: document.body as Element,

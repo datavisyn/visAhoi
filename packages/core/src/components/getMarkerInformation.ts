@@ -98,6 +98,5 @@ export function getMarkerInformation(onboardingMessages: IOnboardingMessage[]): 
       tooltip
     });
   });
-  console.log("marker information: ", markerInformation);
   return markerInformation;
 }

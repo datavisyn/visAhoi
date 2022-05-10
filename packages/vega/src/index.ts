@@ -67,10 +67,10 @@ import { scatterplotFactory } from './scatterplot';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig = { onboardingMessages: [] }) {
+export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig) {
   ahoiConfig.onboardingMessages = await generateBasicAnnotations(visType, chart);
   const visElement = chart.view._el;
-  return injectOnboarding(ahoiConfig.onboardingMessages, visElement, "column");
+  return injectOnboarding(ahoiConfig, visElement, "column");
 }
 
 export { EVisualizationType };

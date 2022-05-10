@@ -55,8 +55,14 @@ export interface IOnboardingSpec {
   [key: string]: ISpecProp | undefined
 }
 
+export interface IBackdropConfig {
+  show: boolean;
+  opacity: number;
+}
+
 export interface IAhoiConfig {
   onboardingMessages: IOnboardingMessage[];
+  backdrop: IBackdropConfig;
 }
 export interface IOnboardingMessage {
   anchor: any;
