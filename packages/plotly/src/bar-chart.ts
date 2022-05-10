@@ -24,7 +24,8 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
     type: {
       value: t.type,
       anchor: {
-        sel: '.bars > .points > .point:nth-child(4)',      }
+        sel: '.bars > .points > .point:nth-child(4)',
+      }
     },
     orientation: {
       value: t.orientation === "v" ? "vertical" : "horizontal",

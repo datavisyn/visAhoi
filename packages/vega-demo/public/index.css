@@ -1,4 +1,3 @@
-@import "./popper.css";
 @import "./onboarding.css";
 
 body {
@@ -21,31 +20,7 @@ h1 {
   }
 }
 
-.vizHint {
-  font-size: 0.9em;
-  line-height: 1.9;
-  font-weight: normal;
-  opacity: 0.5;
-  margin: 10px 0;
-}
 
-.vizHint:hover {
-  cursor: pointer;
-}
-
-.vizHint.active {
-  opacity: 1;
-}
-
-/* hT --> highlight Text */
-.hT {
-  border-radius: 3px;
-  background: var(--selection-background);
-  color: white;
-  padding: 2px;
-  font-size: 0.9em;
-  font-weight: 700;
-}
 
 svg {
   overflow: visible;

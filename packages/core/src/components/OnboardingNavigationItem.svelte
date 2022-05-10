@@ -10,14 +10,13 @@
 </script>
 
 <div
-  style="--background-color:{stage.color}; --bottom:{bottom}"
+  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor || stage.backgroundColor}; --bottom:{bottom}"
   class="visahoi-navigation-item {!$showOnboardingSteps || $activeOnboardingStage ? 'removed' : ''}
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
     <div
       class="visahoi-navigation-item-circle"
-      style="background-color: {stage.color}"
     >
         <i class="{
           !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
@@ -44,8 +43,8 @@
     z-index: 15;
   }
 
-  .visahoi-navigation-item:hover {
-    filter: brightness(0.85);
+  .visahoi-navigation-item:hover .visahoi-navigation-item-circle {
+    background-color: var(--hover-background-color);
   }
 
   .visahoi-navigation-item-circle {
@@ -57,6 +56,8 @@
     border-radius: 50%;
     color: white;
     margin: 5px;
+    background-color: var(--background-color);
+    transition: background-color 0.2s ease;
   }
 
   .removed {

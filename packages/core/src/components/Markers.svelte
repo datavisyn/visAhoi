@@ -1,20 +1,17 @@
 <script lang="ts">
   import {
     activeOnboardingStage,
-    onboardingMessages,
     visHeight,
     visWidth,
     visXPosition,
     visYPosition,
+    markerInformation
   } from "./stores";
-  import { getMarkerInformation } from "./getMarkerInformation";
   import Marker from "./Marker.svelte";
 
   $: viewBox = `${$visXPosition + window.scrollX} ${
     $visYPosition + window.scrollY
   } ${$visWidth} ${$visHeight}`;
-
-  const markerInformation = getMarkerInformation($onboardingMessages);
 
   let currentOnboardingStage;
   activeOnboardingStage.subscribe((value) => {
@@ -23,7 +20,7 @@
 </script>
 
 <svg viewBox={viewBox} class="visahoi-markers">
-  {#each markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
+  {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
     <Marker markerInformation={marker} order={index + 1} />
   {/each}
 </svg>

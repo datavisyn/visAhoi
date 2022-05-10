@@ -17,11 +17,11 @@ export function getMarkerInformation(onboardingMessages: IOnboardingMessage[]): 
     const anchor = message.anchor;
 
     // tooltip information
-    const tooltip: ITooltip = {text: "", title: ""}
-    tooltip.text = message.text;
-    let tooltipTitle = "";
-    message.requires.forEach((t, i) => tooltipTitle += (i === 0 ? "" : " ") + t);
-    tooltip.title = tooltipTitle;
+    const tooltip: ITooltip = {
+      text: message.text,
+      title: message.title,
+      position: message.tooltipPosition || "bottom"
+    };
 
     // If we have coords we can use them
     if (anchor.coords) {
@@ -95,9 +95,9 @@ export function getMarkerInformation(onboardingMessages: IOnboardingMessage[]): 
     markerInformation.push({
       message,
       anchorPosition,
-      tooltip
+      tooltip,
+      marker: message.marker
     });
   });
-  console.log("marker information: ", markerInformation);
   return markerInformation;
 }

@@ -1,5 +1,4 @@
 @import "./onboarding.css";
-@import "./popper.css";
 
 body {
   font-family: sans-serif;
@@ -25,32 +24,6 @@ svg {
   overflow: visible;
 }
 
-.vizHint {
-  font-size: 0.9em;
-  line-height: 1.9;
-  font-weight: normal;
-  opacity: 0.5;
-  margin: 10px 0;
-}
-
-.vizHint:hover {
-  cursor: pointer;
-}
-
-.vizHint.active {
-  opacity: 1;
-}
-
-/* hT --> highlight Text */
-.hT {
-  border-radius: 3px;
-  background: var(--selection-background);
-  color: white;
-  padding: 2px;
-  font-size: 0.9em;
-  font-weight: 700;
-}
-
 /* Other */
 #reading,
 #using {
@@ -69,12 +42,6 @@ svg {
 .hiddenClass {
   display: none;
   outline: none;
-}
-
-/* ANNOTATIONS */
-.vizHint {
-  display: grid;
-  grid-template-columns: 50px 1fr;
 }
 
 /* Used to show a color */

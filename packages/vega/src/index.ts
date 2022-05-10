@@ -12,8 +12,7 @@ import { scatterplotFactory } from './scatterplot';
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
  export const generateBasicAnnotations = async (visType: EVisualizationType, chart: any): Promise<IOnboardingMessage[]> => {
-  const evaluated = await (chart.view.runAsync()); // TODO: `evaluate()` is not an officially supported Vega API
-
+  const evaluated = await (chart.view.runAsync());
   // Vega-lite spec after all rendering happend and the aggregations
   const vegaSpec = chart.vgSpec;
   const origSpec = chart.spec;
@@ -67,10 +66,10 @@ import { scatterplotFactory } from './scatterplot';
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig = { onboardingMessages: [] }) {
+export async function ahoi(visType: EVisualizationType, chart: any, ahoiConfig: IAhoiConfig) {
   ahoiConfig.onboardingMessages = await generateBasicAnnotations(visType, chart);
   const visElement = chart.view._el;
-  return injectOnboarding(ahoiConfig.onboardingMessages, visElement, "column");
+  return injectOnboarding(ahoiConfig, visElement, "column");
 }
 
 export { EVisualizationType };

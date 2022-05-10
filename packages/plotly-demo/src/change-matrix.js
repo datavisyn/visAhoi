@@ -1,16 +1,21 @@
 import Plotly from 'plotly.js-dist'
-import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/plotly';
+import { generateBasicAnnotations, ahoi, EVisualizationType} from '@visahoi/plotly';
+import debounce from "lodash.debounce";
 
 let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
+
+const debouncedResize = debounce((event) => {
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250);
 
 async function render() {
   const response = await fetch('./data/matrix.json');
   const data = await response.json();
   const {x, y, z} = processData(data);
   chart = await makePlotly(x, y, z)
-  window.addEventListener("resize", () => onboardingUI?.updateOnboarding());
+  window.addEventListener("resize", debouncedResize);
 }
 
 function processData(allRows) {
@@ -70,20 +75,25 @@ function makePlotly(x, y, z) {
   return Plotly.newPlot("vis", traces, layout, config);
 }
 
+const getAhoiConfig = () => {
+  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.CHANGE_MATRIX, chart);
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+    ...d,
+    text: "test123"
+  }));
+  const ahoiConfig = {
+    onboardingMessages: defaultOnboardingMessages,
+  }
+  return ahoiConfig;
+}
+
 const registerEventListener = () => {
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
     if(showOnboarding) {
-      const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.CHANGE_MATRIX, chart);
-      const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-        ...d,
-        text: "test123"
-      }));
-      const ahoiConfig = {
-        onboardingMessages: defaultOnboardingMessages,
-      }
-      onboardingUI = await ahoi(EVisualizationType.CHANGE_MATRIX, chart, ahoiConfig);
+
+      onboardingUI = await ahoi(EVisualizationType.CHANGE_MATRIX, chart, getAhoiConfig());
     } else {
       onboardingUI?.removeOnboarding();
     }

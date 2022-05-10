@@ -18,15 +18,15 @@ export const onboardingMessages = initializeStoreValue<IOnboardingMessage[]>([])
 export const navigationAlignment = initializeStoreValue<NavigationAlignment>('column');
 export const onboardingStages = initializeStoreValue<IOnboardingStage[]>([]);
 export const activeOnboardingStage = initializeStoreValue<IOnboardingStage | null>(null);
-export const activeMarker = initializeStoreValue<{
-  markerId: string;
-  markerInformation: IMarkerInformation;
-} | null>(null);
+export const activeMarker = initializeStoreValue<IMarkerInformation | null>(null);
+export const showBackdrop = initializeStoreValue<boolean>(true);
+export const backdropOpacity = initializeStoreValue<number>(0.15);
 
 export const visXPosition = writable<number>(0);
 export const visYPosition = writable<number>(0);
 export const visHeight = writable<number>(0);
 export const visWidth = writable<number>(0);
+export const markerInformation = writable<IMarkerInformation[]>([]);
 
 
 export const resetStore = () => {

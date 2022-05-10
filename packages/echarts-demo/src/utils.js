@@ -13,6 +13,6 @@ export const importCsv = async (url) => {
         }
       });
       return data;
-    }).catch(e => console.log(e));
+    }).catch(e => console.error(e));
     return data;
   }
