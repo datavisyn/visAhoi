@@ -113,7 +113,7 @@
   }
 
   .visahoi-tooltip-title > b {
-    margin-right: 8px;
+    margin-right: 13px;
   }
 
   .visahoi-tooltip-title > .visahoi-close-tooltip {
