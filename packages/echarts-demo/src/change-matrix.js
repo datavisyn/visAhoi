@@ -154,6 +154,7 @@ const getAhoiConfig = () => {
 }
 
 const registerEventListener = () => {
+  showOnboarding = !showOnboarding;
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
