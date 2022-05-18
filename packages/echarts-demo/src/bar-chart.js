@@ -97,17 +97,16 @@ const getAhoiConfig = () => {
   return ahoiConfig;
 }
 
-const registerEventListener = () => {
-  showOnboarding = !showOnboarding;
+const registerEventListener = () => {  
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
+    showOnboarding = !showOnboarding;
     if(showOnboarding) {
       onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, getAhoiConfig());
     } else {
       onboardingUI?.removeOnboarding();
     }
-    showOnboarding = !showOnboarding;
   })
 }
 
