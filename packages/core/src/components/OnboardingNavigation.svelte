@@ -11,6 +11,7 @@
 </script>
 
 <div
+  id="visahoi-navigation-container"
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: {navigationHeight +
     'px'}"
@@ -29,5 +30,6 @@
     display: flex;
     flex-direction: var(--flexDirection);
     align-items: center;
+    /* pointer-events: all; */
   }
 </style>

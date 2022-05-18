@@ -14,10 +14,11 @@
 
   // $: iconClass = $activeOnboardingStage ? "fas fa-times" : "fas fa-question";
   $: console.log("from outside the  elsse", $showOnboardingSteps);
+  $: iconClass = $showOnboardingSteps ? "fas fa-times" : "fas fa-question";
 
-  $: iconClass = $activeOnboardingStage
-    ? $activeOnboardingStage.iconClass
-    : "fas fa-question";
+  // $: iconClass = $activeOnboardingStage
+  //   ? $activeOnboardingStage.iconClass
+  //   : "fas fa-question";
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
@@ -26,8 +27,10 @@
     style="background-color: {$activeOnboardingStage?.color ||
       navigationMainItemDefaultColor}"
   >
-    <i class={iconClass} />
     <!-- <i class={$showOnboardingSteps ? "fas fa-times" : "fas fa-question"} /> -->
+    <i class="fp-prev" />
+    <!-- <i class="fas fa-times" /> -->
+    <!-- <p class:test={$showOnboardingSteps}>tws</p> -->
   </div>
   <!-- <span class="visahoi-stage-title"
     >{$activeOnboardingStage?.title || "Help"}</span
@@ -43,6 +46,22 @@
 </div>
 
 <style>
+  @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+
+  .fp-prev::before {
+    color: #000;
+    content: "\f35a"; /* You should use \ and not /*/
+    font-family: "Font Awesome 5 Free"; /* This is the correct font-family*/
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+  }
+
+  .twitter::before {
+    font-family: "Font Awesome 5 Brands";
+    content: "\f099";
+  }
+
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;
