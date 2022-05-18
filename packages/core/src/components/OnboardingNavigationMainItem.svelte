@@ -1,30 +1,45 @@
 <script lang="ts">
   import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
-  import { navigationMainItemDefaultColor } from '../constants';
+  import { navigationMainItemDefaultColor } from "../constants";
+  import { get } from "svelte/store";
 
   const handleClick = () => {
-    if($activeOnboardingStage) {
+    if ($activeOnboardingStage) {
       activeOnboardingStage.update((v) => null);
     } else {
       showOnboardingSteps.update((v) => !v);
+      console.log("from sthe elsse", get(showOnboardingSteps));
     }
   };
 
-  $: iconClass = $activeOnboardingStage ? 'fas fa-times' : 'fas fa-question';
+  // $: iconClass = $activeOnboardingStage ? "fas fa-times" : "fas fa-question";
+  $: console.log("from outside the  elsse", $showOnboardingSteps);
 
+  $: iconClass = $activeOnboardingStage
+    ? $activeOnboardingStage.iconClass
+    : "fas fa-question";
 </script>
 
-<div
-  class="visahoi-navigation-main-item"
-  on:click={handleClick}
->
-    <div
-      class="visahoi-navigation-item-circle"
-      style="background-color: {$activeOnboardingStage?.color || navigationMainItemDefaultColor}"
-    >
-      <i class="{iconClass}"></i>
-    </div>
-    <span class="visahoi-stage-title">{$activeOnboardingStage?.title || 'Help'}</span>
+<div class="visahoi-navigation-main-item" on:click={handleClick}>
+  <div
+    class="visahoi-navigation-item-circle"
+    style="background-color: {$activeOnboardingStage?.color ||
+      navigationMainItemDefaultColor}"
+  >
+    <i class={iconClass} />
+    <!-- <i class={$showOnboardingSteps ? "fas fa-times" : "fas fa-question"} /> -->
+  </div>
+  <!-- <span class="visahoi-stage-title"
+    >{$activeOnboardingStage?.title || "Help"}</span
+  > -->
+
+  <span class="visahoi-stage-title"
+    >{$activeOnboardingStage
+      ? $activeOnboardingStage?.title
+      : $showOnboardingSteps
+      ? "Close"
+      : "Help"}
+  </span>
 </div>
 
 <style>

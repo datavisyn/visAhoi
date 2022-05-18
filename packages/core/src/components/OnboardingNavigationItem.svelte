@@ -1,7 +1,11 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
 
-  import { navigationAlignment, activeOnboardingStage, showOnboardingSteps } from "./stores.js";
+  import {
+    navigationAlignment,
+    activeOnboardingStage,
+    showOnboardingSteps,
+  } from "./stores.js";
   export let stage: IOnboardingStage;
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
@@ -10,21 +14,23 @@
 </script>
 
 <div
-  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor || stage.backgroundColor}; --bottom:{bottom}"
-  class="visahoi-navigation-item {!$showOnboardingSteps || $activeOnboardingStage ? 'removed' : ''}
+  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+    stage.backgroundColor}; --bottom:{bottom}"
+  class="visahoi-navigation-item {!$showOnboardingSteps ||
+  $activeOnboardingStage
+    ? 'removed'
+    : ''}
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-    <div
-      class="visahoi-navigation-item-circle"
-    >
-        <i class="{
-          !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
-          ? stage.iconClass
-          : 'fas fa-times'
-        }"/>
-    </div>
-    <span class="visahoi-stage-title">{stage.title}</span>
+  <div class="visahoi-navigation-item-circle">
+    <i
+      class={!$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
+        ? stage.iconClass
+        : "fas fa-times"}
+    />
+  </div>
+  <span class="visahoi-stage-title">{stage.title}</span>
 </div>
 
 <style>
