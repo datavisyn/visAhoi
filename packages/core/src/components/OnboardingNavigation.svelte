@@ -1,11 +1,25 @@
 <script lang="ts">
   import { navigationAlignment, onboardingStages } from "./stores.js";
-  import OnboardingNavigationItem from './OnboardingNavigationItem.svelte';
-  import OnboardingNavigationMainItem from './OnboardingNavigationMainItem.svelte';
+  import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
+  import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
 
   export let height: number;
-  const navigationHeight = $onboardingStages.length * 100 > height ? height : $onboardingStages.length * 100;
+  const navigationHeight =
+    $onboardingStages.length * 100 > height
+      ? height
+      : $onboardingStages.length * 100;
 </script>
+
+<div
+  class="visahoi-navigation-container"
+  style="--flexDirection:{$navigationAlignment}; height: {navigationHeight +
+    'px'}"
+>
+  {#each $onboardingStages as stage}
+    <OnboardingNavigationItem {stage} />
+  {/each}
+  <OnboardingNavigationMainItem />
+</div>
 
 <style>
   .visahoi-navigation-container {
@@ -16,14 +30,8 @@
     flex-direction: var(--flexDirection);
     align-items: center;
   }
+
+  .visahoi-navigation-container {
+    pointer-events: all;
+  }
 </style>
-
-<div class="visahoi-navigation-container"
-  style="--flexDirection:{$navigationAlignment}; height: {navigationHeight + 'px'}"
->
-{#each $onboardingStages as stage}
-<OnboardingNavigationItem stage={stage} />
-{/each}
-<OnboardingNavigationMainItem />
-
-</div>
