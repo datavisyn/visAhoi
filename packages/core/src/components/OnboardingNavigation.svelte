@@ -29,9 +29,6 @@
     display: flex;
     flex-direction: var(--flexDirection);
     align-items: center;
-  }
-
-  .visahoi-navigation-container {
     pointer-events: all;
   }
 </style>
