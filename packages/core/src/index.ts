@@ -1,3 +1,4 @@
+import { IOnboardingTreemapSpec, treemap } from './treemap';
 import { EVisualizationType, IOnboardingSpec, IOnboardingMessage } from './interfaces';
 import { barChart, IOnboardingBarChartSpec } from './bar-chart';
 import { changeMatrix, IOnboardingChangeMatrixSpec } from './change-matrix';
@@ -12,6 +13,7 @@ export { IOnboardingBarChartSpec } from './bar-chart';
 export { IOnboardingChangeMatrixSpec } from './change-matrix';
 export { IOnboardingHorizonGraphSpec } from './horizon-graph';
 export { IOnboardingScatterplotSpec } from './scatterplot';
+export { IOnboardingTreemapSpec } from './treemap';
 
 export function generateMessages(visType: EVisualizationType, spec: IOnboardingSpec, visElement: Element): IOnboardingMessage[] {
   switch(visType) {
@@ -26,6 +28,9 @@ export function generateMessages(visType: EVisualizationType, spec: IOnboardingS
 
     case EVisualizationType.SCATTERPLOT:
       return scatterplot.generateMessages(<IOnboardingScatterplotSpec>spec, visElement);
+
+    case EVisualizationType.TREEMAP:
+      return treemap.generateMessages(<IOnboardingTreemapSpec>spec, visElement);
   }
 
   return [];
