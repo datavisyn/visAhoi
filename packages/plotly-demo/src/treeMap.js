@@ -41,7 +41,8 @@ const makePlotly = (label, parent, value, color) => {
             values: value,
             marker: {
                 colors: color,
-                colorscale: 'Greys',      
+                // colorscale: 'Greys',
+                      
             },          
         }
     ];
