@@ -1,5 +1,5 @@
 import Plotly from 'plotly.js-dist'
-import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/plotly';
+import { generateBasicAnnotations, ahoi, EVisualizationType, createBasicOnboardingStage, getOnboardingStages, createBasicOnboardingMessage } from '@visahoi/plotly';
 import debounce from "lodash.debounce";
 import { importCsv } from './util';
 
@@ -13,7 +13,7 @@ const debouncedResize = debounce((event) => {
 
 async function render() {
   const data = await importCsv("./data/oslo-2018.csv");
-  const {x, y} = processData(data);
+  const { x, y } = processData(data);
   chart = await makePlotly(x, y);
   window.addEventListener("resize", debouncedResize);
 }
@@ -46,7 +46,7 @@ function processData(allRows) {
     }, 0);
     return sum / tempArray.length;
   });
-  return {x, y: averagedYValues};
+  return { x, y: averagedYValues };
 }
 
 function makePlotly(x, y) {
@@ -120,26 +120,64 @@ function makePlotly(x, y) {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.HORIZON_GRAPH, chart);
+  const newOnboardingStage = createBasicOnboardingStage({
+    title: "New stage",
+    iconClass: "fas fa-flask",
+    backgroundColor: "tomato",
+  });
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
     text: "test123"
   }));
+  defaultOnboardingMessages[0].onboardingStage = newOnboardingStage;
+  defaultOnboardingMessages[0].title = "New stage";
+  defaultOnboardingMessages.push(createBasicOnboardingMessage({
+    text: "This is the newly added onboarding message for the horizon chart. It's absolutely positioned.",
+    title: "Absolutely positioned message",
+    onboardingStage: newOnboardingStage,
+    anchor: {
+      coords: {
+        x: 250,
+        y: 250,
+      }
+    }
+  }));
+  defaultOnboardingMessages.push(createBasicOnboardingMessage({
+    text: "This is the newly added onboarding message for the horizon chart. It's attached to a selector.",
+    title: "Selector attached message",
+    onboardingStage: newOnboardingStage,
+    anchor: {
+      sel: ".infolayer .ytitle"
+    }
+  }));
+  defaultOnboardingMessages.push(createBasicOnboardingMessage({
+    text: "This is the newly added onboarding message for the horizon chart. It's attached to a selector.",
+    title: "Element attached message",
+    onboardingStage: newOnboardingStage,
+    anchor: {
+      element: document.getElementsByClassName("section-title")[0]
+    }
+  }));
+  // const newOnboardingMessage = createBasicOnboardingMessage();
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
+    backdrop: {
+      show: false
+    }
   }
   return ahoiConfig;
 }
 
 const registerEventListener = () => {
   const helpIcon = document.getElementById("show-onboarding");
-  if(!helpIcon) { return; }
+  if (!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
-    if(showOnboarding) {
+    showOnboarding = !showOnboarding;
+    if (showOnboarding) {
       onboardingUI = await ahoi(EVisualizationType.HORIZON_GRAPH, chart, getAhoiConfig());
     } else {
       onboardingUI?.removeOnboarding();
     }
-    showOnboarding = !showOnboarding;
   })
 }
 

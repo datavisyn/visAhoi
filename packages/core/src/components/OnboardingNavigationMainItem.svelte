@@ -1,30 +1,29 @@
 <script lang="ts">
   import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
-  import { navigationMainItemDefaultColor } from '../constants';
+  import { navigationMainItemDefaultColor } from "../constants";
 
   const handleClick = () => {
-    if($activeOnboardingStage) {
+    if ($activeOnboardingStage) {
       activeOnboardingStage.update((v) => null);
     } else {
       showOnboardingSteps.update((v) => !v);
     }
   };
 
-  $: iconClass = $activeOnboardingStage ? 'fas fa-times' : 'fas fa-question';
-
+  $: iconClass = $activeOnboardingStage ? "fas fa-times" : "fas fa-question";
 </script>
 
-<div
-  class="visahoi-navigation-main-item"
-  on:click={handleClick}
->
-    <div
-      class="visahoi-navigation-item-circle"
-      style="background-color: {$activeOnboardingStage?.color || navigationMainItemDefaultColor}"
-    >
-      <i class="{iconClass}"></i>
-    </div>
-    <span class="visahoi-stage-title">{$activeOnboardingStage?.title || 'Help'}</span>
+<div class="visahoi-navigation-main-item" on:click={handleClick}>
+  <div
+    class="visahoi-navigation-item-circle"
+    style="background-color: {$activeOnboardingStage?.color ||
+      navigationMainItemDefaultColor}"
+  >
+    <i class={iconClass} />
+  </div>
+  <span class="visahoi-stage-title"
+    >{$activeOnboardingStage?.title || "Help"}</span
+  >
 </div>
 
 <style>
@@ -37,7 +36,7 @@
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
     margin: 5px;
-    width: 40px;
+    width: 80px;
     bottom: 0;
     opacity: 1;
     z-index: 15;

@@ -1,30 +1,37 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
 
-  import { navigationAlignment, activeOnboardingStage, showOnboardingSteps } from "./stores.js";
+  import {
+    navigationAlignment,
+    activeOnboardingStage,
+    showOnboardingSteps,
+  } from "./stores.js";
   export let stage: IOnboardingStage;
+  export let index: number;
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
-  const bottom: string = stage.order * 75 + "px";
+  const bottom: string = (index + 1) * 75 + "px";
 </script>
 
 <div
-  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor || stage.backgroundColor}; --bottom:{bottom}"
-  class="visahoi-navigation-item {!$showOnboardingSteps || $activeOnboardingStage ? 'removed' : ''}
+  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+    stage.backgroundColor}; --bottom:{bottom}"
+  class="visahoi-navigation-item {!$showOnboardingSteps ||
+  $activeOnboardingStage
+    ? 'removed'
+    : ''}
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-    <div
-      class="visahoi-navigation-item-circle"
-    >
-        <i class="{
-          !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
-          ? stage.iconClass
-          : 'fas fa-times'
-        }"/>
-    </div>
-    <span class="visahoi-stage-title">{stage.title}</span>
+  <div class="visahoi-navigation-item-circle">
+    <i
+      class={!$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
+        ? stage.iconClass
+        : "fas fa-times"}
+    />
+  </div>
+  <span class="visahoi-stage-title">{stage.title}</span>
 </div>
 
 <style>
@@ -37,7 +44,7 @@
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
     margin: 5px;
-    width: 40px;
+    width: 80px;
     bottom: var(--bottom);
     opacity: 1;
     z-index: 15;
