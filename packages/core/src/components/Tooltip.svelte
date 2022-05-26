@@ -4,7 +4,7 @@
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
-import { getMarkerDomId } from "../utils";
+  import { getMarkerDomId } from "../utils";
 
   export let visElement;
 
@@ -34,7 +34,9 @@ import { getMarkerDomId } from "../utils";
     const arrowElement = document.getElementById(arrowId);
     if (marker) {
       activeMarkerInformation = marker;
-      const markerElement = document.getElementById(getMarkerDomId(marker.marker.id));
+      const markerElement = document.getElementById(
+        getMarkerDomId(marker.marker.id)
+      );
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
           placement: marker.tooltip.position as TooltipPosition,
@@ -51,9 +53,9 @@ import { getMarkerDomId } from "../utils";
                 boundary: visElement,
               },
             },
-          //   {
-          //     name: "flip",
-          //   },
+            //   {
+            //     name: "flip",
+            //   },
           ],
         });
       }
@@ -66,8 +68,8 @@ import { getMarkerDomId } from "../utils";
   class="visahoi-tooltip {$activeMarker && $activeOnboardingStage
     ? ''
     : 'hidden'}"
-  style="--stage-color: {activeMarkerInformation?.message
-    .onboardingStage.backgroundColor}"
+  style="--stage-color: {activeMarkerInformation?.message.onboardingStage
+    .backgroundColor}"
 >
   <div class="visahoi-tooltip-title">
     <b>{$activeMarker?.tooltip.title}</b>
@@ -98,6 +100,7 @@ import { getMarkerDomId } from "../utils";
 
   .visahoi-tooltip.hidden {
     display: none;
+    visibility: hidden;
   }
 
   .visahoi-tooltip-title {
@@ -108,6 +111,10 @@ import { getMarkerDomId } from "../utils";
     justify-content: space-between;
     padding: 3px;
     font-size: 13px;
+  }
+
+  .visahoi-tooltip-title > b {
+    margin-right: 13px;
   }
 
   .visahoi-tooltip-title > .visahoi-close-tooltip {

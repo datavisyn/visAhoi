@@ -67,16 +67,17 @@ const getAhoiConfig = () => {
   return ahoiConfig;
 }
 
-const registerEventListener = () => {
+const registerEventListener = () => { 
+  console.log(showOnboarding)   
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
+    showOnboarding = !showOnboarding;
     if(showOnboarding) {
       onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, getAhoiConfig());
     } else {
       onboardingUI?.removeOnboarding();
-    }
-    showOnboarding = !showOnboarding;
+    }    
   })
 }
 
