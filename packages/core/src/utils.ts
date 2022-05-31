@@ -25,7 +25,7 @@ export const getAnchor = (prop: ISpecProp | undefined, visElement: Element): Onb
   if(!prop) { // if prop is undefined -> return
     return;
   } else if(prop.anchor?.findDomNodeByValue) { // the dom node should be found by it's content
-    const targetDomNode = getDomNodeByTextContent(prop.domNodeValue ? prop.domNodeValue : prop.value, visElement);
+    const targetDomNode = getDomNodeByTextContent(prop.domNodeValue ? prop.domNodeValue : prop.value, visElement);    
     // if no node was found by the given text return undefined, otherwise return the dom node
     return targetDomNode ? Object.assign({element: targetDomNode}, (prop.anchor || {})) : undefined;
   } else if(prop.anchor) {

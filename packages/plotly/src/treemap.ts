@@ -5,76 +5,119 @@ import {
     generateMessages,
   } from "@visahoi/core";
   
-  function extractOnboardingSpec(chart: any, coords): IOnboardingTreemapSpec {
-    // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
-    // const traceNodes = chart.querySelectorAll("g.points");
-    // const barNodes = traceNodes[0].querySelectorAll("g.point");
-    // const barNodesData = Array.from(barNodes).map((point: any) => point.__data__);
+  function extractOnboardingSpec(chart: any, coords): IOnboardingTreemapSpec {    
   
-    // const t = barNodesData[0].trace;
+  let indexArr: number[] = [];
+  let valArr: number[] = [];
+  let childArr: any =[];
+  let maxIndex: number;
+  let minIndex: number;
+  let maxLabel: string= '';
+  let minLabel: string= '';
+
+  console.log(chart.data)
+
+  chart.data.map((dat: any, i: number) => {
+    dat.parents.map((parent: any, j: number) => {      
+      if(parent === "Workforce Development") {
+        indexArr.push(j);  
+       }      
+    });
+   
+    dat.values.map((value: number, id: number) => {
+      if(indexArr) {
+        indexArr.map((d) => {
+          if(d === id) {          
+            childArr.push({value: value,
+            index: id});
+            valArr.push(value);           
+          }
+        })        
+      }      
+    });      
+  });  
+  
+  const maxVal = Math.max.apply(Math, valArr);
+  const minVal = Math.min.apply(Math, valArr);  
+  
+
+  childArr.map((dd:any, i: number) => {    
+    if(parseInt(dd.value) === maxVal) {      
+      maxIndex = dd.index;
+    }
+    if(parseInt(dd.value) === minVal) {      
+      minIndex = dd.index;      
+    }
+  })
+  
+  chart.data.map((d: any) => d.labels.map((label: string, i:number ) => {
+    if(i === maxIndex) {
+      maxLabel = label;
+    }
+    if(i === minIndex) {
+      minLabel = label;
+    }
+  }));   
   
     return {
-      chartTitle: {
-        // value: chart.layout.title.text,
+      chartTitle: {        
         value: chart.layout.title.text,
         anchor: {
           findDomNodeByValue: true,
           offset: {left: -20, top: 10}
         }
       },
-    //   type: {
-    //     value: t.type,
-    //     anchor: {
-    //       sel: '.bars > .points > .point:nth-child(4)',
-    //     }
-    //   },
-    //   orientation: {
-    //     value: t.orientation === "v" ? "vertical" : "horizontal",
-    //   },
-    //   yAxisOrientation: {
-    //     value: t.orientation === "v" ? "vertical" : "horizontal",
-    //   },
-    //   xAxisOrientation: {
-    //     value: t.orientation === "v" ? "horizontal" : "vertical",
-    //   },
-    //   barLength: {
-    //     value: t.orientation === "v" ? "height" : "width",
-    //   },
-    //   yMin: {
-    //     value: t._extremes.y.min[0].val.toFixed(1), // 0 = first trace
-    //     anchor: {
-    //       sel: '.bars > .points > .point:nth-child(2)',      }
-    //   },
-    //   yMax: {
-    //     value: t._extremes.y.max[0].val.toFixed(1),
-    //     anchor: {
-    //       sel: '.bars > .points > .point:nth-child(7)',      }
-    //   },
-    //   xMin: {
-    //     value: t._extremes.x.min[0].val, // 0 = first trace
-    //   },
-    //   xMax: {
-    //     value: t._extremes.x.max[0].val,
-    //   },
-    //   xAxisTitle: {
-    //     value: chart.layout.xaxis.title.text,
-    //     anchor: {
-    //       findDomNodeByValue: true,
-    //       offset: {left: -20, bottom: 10}
-    //     }
-    //   },
-    //   yAxisTitle: {
-    //     value: chart.layout.yaxis.title.text,
-    //     anchor: {
-    //       sel: '.infolayer .ytitle',
-    //       offset: {top: -25, right: 10}
-    //     }
-    //   }
 
+      desc: {        
+        value: chart.data[0].labels[0],
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -20, top: 20}
+        }
+      },
 
-      // xAxisLabel (e.g. 01, 02, …)
-      // yAxisLabel (e.g. -5, 0, 5, ...)
-      // Title (Average Temperature in Oslo)
+      subDesc: {
+        value: chart.data[0].labels[17],
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -40, top:-60}
+        }
+      },
+      otherDesc: {
+        value: chart.data[0].labels[6],
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -80, top: -30}
+        }
+      },
+      interactingDesc:{
+        value: chart.data[0].labels[8],
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -20, top: -30}
+        }
+      },
+      maxValueDesc: {        
+        value: maxLabel,
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -20, top: -30}
+        }
+      },
+      minValueDesc: {        
+        value: minLabel,
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -20, top: -20}
+        }
+      },
+      maxValue: {
+        value: maxVal,        
+      },
+      minValue: {
+        value: minVal
+      }  
+     
     };
   }
   

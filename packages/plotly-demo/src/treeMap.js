@@ -69,15 +69,11 @@ const getAhoiConfig = () => {
     return ahoiConfig;
   }
 
-  const registerEventListener = () => {
-    debugger;
+  const registerEventListener = () => {    
     const helpIcon = document.getElementById("show-onboarding");
     if(!helpIcon) { return; }
-    helpIcon.addEventListener('click', async () => {
-      console.log('Clicked help icon');
-      if(showOnboarding) {
-        console.log(showOnboarding)
-        debugger;
+    helpIcon.addEventListener('click', async () => {      
+      if(showOnboarding) {      
         onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, getAhoiConfig());
       } else {
         onboardingUI?.removeOnboarding();
