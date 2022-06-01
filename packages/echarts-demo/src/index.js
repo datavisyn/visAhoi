@@ -15,6 +15,10 @@ const demos = [
   {
     title: 'Scatterplot',
     link: './svg/scatterplot.html'
+  },
+  {
+    title: 'Treemap',
+    link: './svg/treemap.html'
   }
   // {
   //   title: 'Bar Chart Canvas',
