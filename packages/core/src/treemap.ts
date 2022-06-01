@@ -74,7 +74,7 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
     {
       anchor: getAnchor(spec.maxValueDesc, visElement),
       requires: ['maxValueDesc', 'maxValue'],
-      text: `Seek out the largest rectangular values. It's value is ${spec.maxValue?.value}`,
+      text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -85,7 +85,7 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
     {
       anchor: getAnchor(spec.minValueDesc, visElement),
       requires: ['minValueDesc', 'minValue'],
-      text: `Seek out the smallest rectangular. It's value is ${spec.minValue?.value}`,
+      text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
