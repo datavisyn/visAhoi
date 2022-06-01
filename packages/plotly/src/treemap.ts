@@ -13,13 +13,21 @@ import {
   let maxIndex: number;
   let minIndex: number;
   let maxLabel: string= '';
-  let minLabel: string= '';
+  let minLabel: string= '';  
+  let parentLabel: string = '';
+ 
+// set the parent for getting the max and min values of the sub-category
+  chart.data.map((d) => { if(d.parents.length > 1) {
+    if ( d.parents[0] === '' && d.parents.length >2) {
+     parentLabel = d.parents[1]; } else {  parentLabel = d.parents[0] } }  });
 
-  console.log(chart.data)
+  
+// To get the min and max values and corresponding labels in each sub-category
+    
 
   chart.data.map((dat: any, i: number) => {
     dat.parents.map((parent: any, j: number) => {      
-      if(parent === "Workforce Development") {
+      if(parent === parentLabel) {
         indexArr.push(j);  
        }      
     });
@@ -77,21 +85,22 @@ import {
       },
 
       subDesc: {
-        value: chart.data[0].labels[17],
+        // value: chart.data[0].labels[17],
+        value: (chart.data[0].labels[1]) ? chart.data[0].labels[1] : chart.data[0].labels[0],
         anchor: {
           findDomNodeByValue: true,
-          offset: {left: -40, top:-60}
+          offset: {left: -40, top:-30}
         }
       },
       otherDesc: {
-        value: chart.data[0].labels[6],
+        value: (chart.data[0].labels[2]) ? chart.data[0].labels[2] : chart.data[0].labels[1] ? chart.data[0].labels[1]: chart.data[0].labels[0],
         anchor: {
           findDomNodeByValue: true,
           offset: {left: -80, top: -30}
         }
       },
       interactingDesc:{
-        value: chart.data[0].labels[8],
+        value: chart.data[0].labels[0],
         anchor: {
           findDomNodeByValue: true,
           offset: {left: -20, top: -30}
