@@ -14,6 +14,10 @@ const demos = [
   {
     title: 'Scatterplot',
     link: './scatterplot.html'
+  },
+  {
+    title: 'TreeMap',
+    link: './treeMap.html'
   }
 ];
 

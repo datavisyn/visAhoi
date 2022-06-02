@@ -79,5 +79,6 @@
 <style>
   .visahoi-onboarding-ui {
     position: absolute;
+    pointer-events: none;
   }
 </style>

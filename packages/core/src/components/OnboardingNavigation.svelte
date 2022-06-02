@@ -29,5 +29,6 @@
     display: flex;
     flex-direction: var(--flexDirection);
     align-items: center;
+    pointer-events: all;
   }
 </style>

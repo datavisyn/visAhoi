@@ -5,7 +5,7 @@
     visWidth,
     visXPosition,
     visYPosition,
-    markerInformation
+    markerInformation,
   } from "./stores";
   import Marker from "./Marker.svelte";
 
@@ -19,7 +19,7 @@
   });
 </script>
 
-<svg viewBox={viewBox} class="visahoi-markers">
+<svg {viewBox} class="visahoi-markers">
   {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
     <Marker markerInformation={marker} order={index + 1} />
   {/each}
@@ -27,7 +27,7 @@
 
 <style>
   svg {
-    pointer-events: all;
+    pointer-events: none;
     width: 100%;
     height: 100%;
     position: absolute;
