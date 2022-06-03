@@ -55,14 +55,24 @@ function makePlotly(x, y) {
   return Plotly.newPlot("vis", traces, layout, config);
 }
 
-const getAhoiConfig = () => {
+const getAhoiConfig = () => {  
   const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.SCATTERPLOT, chart);
-  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-    ...d,
-    text: "test123"
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d, i) => ({
+    ...d,    
+    marker: {
+          fontSize: '15px',
+          id: i
+        }
   }));
+  // const editDefault = defaultOnboardingMessages.map((d,i) => ({
+  //   ...d,
+  //   marker: {
+  //     fontSize: '6px',
+  //     id: i
+  //   }
+  // }))
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
+    onboardingMessages: extendedOnboardingMessages,
   }
   return ahoiConfig;
 }
