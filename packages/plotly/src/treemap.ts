@@ -92,6 +92,15 @@ import {
           offset: {left: -40, top:-30}
         }
       },
+
+      gapDesc: {
+        value: (chart.data[0].labels[3]) ? chart.data[0].labels[3] : chart.data[0].labels[0] ,
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -40, top:-60}
+        }
+      },
+
       otherDesc: {
         value: (chart.data[0].labels[2]) ? chart.data[0].labels[2] : chart.data[0].labels[1] ? chart.data[0].labels[1]: chart.data[0].labels[0],
         anchor: {

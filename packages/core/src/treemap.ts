@@ -6,6 +6,7 @@ export interface IOnboardingTreemapSpec extends IOnboardingSpec {
   desc?: ISpecProp;
   subDesc?: ISpecProp;
   otherDesc?: ISpecProp;
+  gapDesc?: ISpecProp;
   interactingDesc?: ISpecProp;
   maxValueDesc?: ISpecProp;
   minValueDesc?: ISpecProp;
@@ -24,7 +25,7 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
       requires: ['chartTitle'],
       text: `The chart shows the ${spec.chartTitle?.value}.`,
       title: 'Reading the chart',
-      onboardingStage: analyzing,
+      onboardingStage: reading,
       marker: {
         id: "unique-marker-id-1"
       }
@@ -42,7 +43,7 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
     {
       anchor: getAnchor(spec.subDesc, visElement),
       requires: ['subDesc'],
-      text: `The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
+      text: `The area covered by the whole treemap is subdivided recursively into sub-categories according to their quantitative values, level by level.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -59,6 +60,16 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
         id: "unique-marker-id-4"
       }
     },
+    {
+      anchor: getAnchor(spec.gapDesc, visElement),
+      requires: ['gapDesc'],
+      text: `Items within a sub-category are represented by rectangles that are closely packed together with increasingly larger gaps to the neighboring categories.`,
+      title: 'Reading the chart',
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-5"
+      }
+    },
 
     {
       anchor: getAnchor(spec.interactingDesc, visElement),
@@ -67,7 +78,7 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: "unique-marker-id-5"
+        id: "unique-marker-id-6"
       }
     },
 
@@ -78,18 +89,18 @@ function generateMessages(spec: IOnboardingTreemapSpec, visElement: Element): IO
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: "unique-marker-id-6"
+        id: "unique-marker-id-7"
       }
     },
 
     {
       anchor: getAnchor(spec.minValueDesc, visElement),
       requires: ['minValueDesc', 'minValue'],
-      text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value`,
+      text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: "unique-marker-id-7"
+        id: "unique-marker-id-8"
       }
     }
     
