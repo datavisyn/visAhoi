@@ -30,7 +30,7 @@ import '../public/data/jobsplan.json'
 // };
 
 const opt = {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  // "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "An example of treemap layout for hierarchical data.",
   "width": 960,
   "height": 500,
@@ -58,7 +58,7 @@ const opt = {
   "data": [
     {
       "name": "tree",
-      "url": "../public/data/jobsplan.json",
+      "url": "./data/jobsplan.json",
       "transform": [
         {
           "type": "stratify",
@@ -94,17 +94,18 @@ const opt = {
       "type": "ordinal",
       "domain": {"data": "nodes", "field": "name"},
       "range": [
-        "#3182bd", "#6baed6", "#9ecae1", "#c6dbef", "#e6550d",
-        "#fd8d3c", "#fdae6b", "#fdd0a2", "#31a354", "#74c476",
-        "#a1d99b", "#c7e9c0", "#756bb1", "#9e9ac8", "#bcbddc",
-        "#dadaeb", "#636363", "#969696", "#bdbdbd", "#d9d9d9"
+        "#80b1d3",
+        "#80b1d3",
+        "#fdb462",
+        "#b3de69",
+        "#fccde5"
       ]
     },
     {
       "name": "size",
       "type": "ordinal",
       "domain": [0, 1, 2, 3],
-      "range": [256, 28, 20, 14]
+      "range": [100, 25, 20, 14]
     },
     {
       "name": "opacity",
@@ -172,7 +173,6 @@ const opt = {
     }
   ]
 }
-
 let chart = null;
 let onboardingUI = null;
 
