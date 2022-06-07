@@ -15,8 +15,8 @@
   style="--flexDirection:{$navigationAlignment}; height: {navigationHeight +
     'px'}"
 >
-  {#each $onboardingStages as stage}
-    <OnboardingNavigationItem {stage} />
+  {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
+    <OnboardingNavigationItem {stage} {index} />
   {/each}
   <OnboardingNavigationMainItem />
 </div>
