@@ -1,36 +1,8 @@
 import embed from 'vega-embed';
 import debounce from "lodash.debounce";
-import '../public/data/jobsplan.json'
-
-// Options for the vega embed
-// const opt = {
-//   'title': 'American Jobs Plan',
-//   'data': [
-//     {
-//       'url' : '../public/data/jobsplan.json',  
-//       'transform': [
-//         {
-//           'type': 'stratify',
-//           'key': 'id',
-//           'parentKey': 'parent'
-//         },
-//         {'type': 'treemap'}
-//       ]    
-//     }
-//   ],
-//     'marks': [
-//       {
-//         'type': 'rect'
-//       }
-//     ]
-  
-//   // theme: 'default',
-//   // actions: false,
-//   // renderer: 'svg',
-// };
+import '../public/data/jobsplan.json';
 
 const opt = {
-  // "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "An example of treemap layout for hierarchical data.",
   "width": 960,
   "height": 500,
@@ -137,7 +109,8 @@ const opt = {
       "from": {"data": "leaves"},
       "encode": {
         "enter": {
-          "stroke": {"value": "#fff"}
+          "stroke": {"value": "#fff"},
+          "tooltip": {"signal": "{'title': datum.name, 'value': datum.size}"}
         },
         "update": {
           "x": {"field": "x0"},
@@ -175,11 +148,6 @@ const opt = {
 }
 let chart = null;
 let onboardingUI = null;
-
-// const debouncedResize = debounce(async (event) => {
-//   const config = await getAhoiConfig();
-//   onboardingUI?.updateOnboarding(config)
-// }, 250);
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
