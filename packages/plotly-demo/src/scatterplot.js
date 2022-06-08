@@ -61,7 +61,8 @@ const getAhoiConfig = () => {
     ...message,
     marker: {
       ...message.marker,
-      fontSize: '10px'
+      fontSize: '12px',
+      radius: 10
     }
   }));
   
