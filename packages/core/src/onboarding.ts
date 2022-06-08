@@ -1,39 +1,94 @@
-import OnboardingUI from './components/OnboardingUI.svelte';
-import { onboardingMessages, navigationAlignment, onboardingStages, showBackdrop, backdropOpacity } from './components/stores.js';
+import OnboardingUI from "./components/OnboardingUI.svelte";
+import {
+  onboardingMessages,
+  navigationAlignment,
+  onboardingStages,
+  showBackdrop,
+  backdropOpacity,
+} from "./components/stores.js";
 import debounce from "lodash.debounce";
-import { IAhoiConfig, NavigationAlignment } from './interfaces';
+import {
+  IAhoiConfig,
+  IMarker,
+  IOnboardingMessage,
+  IOnboardingStage,
+  NavigationAlignment,
+} from "./interfaces";
+import { v4 as uuidv4 } from "uuid";
+import { get } from "svelte/store";
 
 let onboardingUI: OnboardingUI;
-export const injectOnboarding = (ahoiConfig: IAhoiConfig, visElement: Element, alignment: NavigationAlignment) => {
+export const injectOnboarding = (
+  ahoiConfig: IAhoiConfig,
+  visElement: Element,
+  alignment: NavigationAlignment
+) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages);
-  onboardingStages.set([...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage))])
+  const stageIds = ahoiConfig.onboardingMessages.map(
+    (m) => m.onboardingStage.id
+  );
+  onboardingStages.set([
+    ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
+  ]);
   navigationAlignment.set(alignment);
-  if(ahoiConfig?.backdrop?.show !== null && ahoiConfig?.backdrop?.show !== undefined) {
+  if (
+    ahoiConfig?.backdrop?.show !== null &&
+    ahoiConfig?.backdrop?.show !== undefined
+  ) {
     showBackdrop.set(ahoiConfig?.backdrop?.show);
   }
-  if(ahoiConfig?.backdrop?.opacity !== null && ahoiConfig?.backdrop?.opacity !== undefined) {
-    backdropOpacity.set(ahoiConfig?.backdrop?.opacity)
+  if (
+    ahoiConfig?.backdrop?.opacity !== null &&
+    ahoiConfig?.backdrop?.opacity !== undefined
+  ) {
+    backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
   }
 
-  const ref = {update: () => {}}
+  const ref = { update: () => {} };
 
-
-  const updateOnboarding = (b) => {
-    onboardingMessages.set(b.onboardingMessages);
+  const updateOnboarding = (config: IAhoiConfig) => {
+    onboardingMessages.set(config.onboardingMessages);
     ref.update();
-  }
+  };
 
   onboardingUI = new OnboardingUI({
     target: document.body as Element,
     props: {
       ref,
-      visElement
-    }
+      visElement,
+    },
   });
   return {
     updateOnboarding: debounce(updateOnboarding),
     removeOnboarding: () => {
       onboardingUI.$destroy();
-    }
+    },
+  };
+};
+
+export const getOnboardingStages = (): IOnboardingStage[] => {
+  return get(onboardingStages);
+};
+
+export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
+  if (!stage.id) {
+    stage.id = "some-new-id";
   }
-}
+  return stage;
+};
+
+export const createBasicOnboardingMessage = (
+  message: Pick<
+    IOnboardingMessage,
+    "title" | "text" | "onboardingStage" | "anchor"
+  >
+) => {
+  const marker: IMarker = {
+    id: `marker-${uuidv4()}`,
+  };
+  const onboardingMessage: IOnboardingMessage = {
+    marker,
+    ...message,
+  };
+  return onboardingMessage;
+};

@@ -23,7 +23,7 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       requires: ['chartTitle'],
       text: `The chart shows the ${spec.chartTitle?.value}.`,
       title: 'Reading the chart',
-      onboardingStage: analyzing,
+      onboardingStage: reading,
       marker: {
         id: "unique-marker-id-1"
       }
