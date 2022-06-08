@@ -100,6 +100,7 @@
 
   .visahoi-tooltip.hidden {
     display: none;
+    visibility: hidden;
   }
 
   .visahoi-tooltip-title {
