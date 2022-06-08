@@ -12,6 +12,7 @@ import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
+import { treemapFactory } from './treemap';
 
 // just pass them through
 export {
@@ -57,6 +58,11 @@ export const generateBasicAnnotations = (
     case EVisualizationType.SCATTERPLOT:
       onboardingMessages = scatterplotFactory(chart, coords, visElement);
       break;
+
+    case EVisualizationType.TREEMAP:
+      onboardingMessages = treemapFactory(chart, coords, visElement);
+      break;
+
 
     default:
       throw new Error(
