@@ -10,7 +10,7 @@ import { IOnboardingScatterplotSpec, scatterplot } from "./scatterplot";
 import "@fortawesome/fontawesome-free/js/fontawesome.js";
 import "@fortawesome/fontawesome-free/js/solid.js";
 import { onboardingStages } from "./components/stores";
-import { IOnboardingTreemapSpec, treemap } from './treemap';
+import { IOnboardingTreemapSpec, treemap } from "./treemap";
 
 export * from "./onboarding";
 export * from "./interfaces";
@@ -18,7 +18,7 @@ export { IOnboardingBarChartSpec } from "./bar-chart";
 export { IOnboardingChangeMatrixSpec } from "./change-matrix";
 export { IOnboardingHorizonGraphSpec } from "./horizon-graph";
 export { IOnboardingScatterplotSpec } from "./scatterplot";
-export { IOnboardingTreemapSpec } from './treemap';
+export { IOnboardingTreemapSpec } from "./treemap";
 
 export function generateMessages(
   visType: EVisualizationType,
@@ -49,14 +49,17 @@ export function generateMessages(
       break;
 
     case EVisualizationType.SCATTERPLOT:
-    messages = scatterplot.generateMessages(
-      <IOnboardingScatterplotSpec>spec,
-      visElement
-    );
-    break;
+      messages = scatterplot.generateMessages(
+        <IOnboardingScatterplotSpec>spec,
+        visElement
+      );
+      break;
 
     case EVisualizationType.TREEMAP:
-      messages = treemap.generateMessages(<IOnboardingTreemapSpec>spec, visElement);
+      messages = treemap.generateMessages(
+        <IOnboardingTreemapSpec>spec,
+        visElement
+      );
       break;
   }
   onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))]);
