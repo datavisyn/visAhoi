@@ -4,26 +4,29 @@ import '../public/data/jobsplan.json';
 
 const opt = {
   "description": "An example of treemap layout for hierarchical data.",
-  "width": 960,
-  "height": 500,
-  "padding": 2.5,
+  "width": 1200,
+  "height": 650,  
+  "padding": {
+    "left": (window.innerWidth / 2) - 600,
+    "top": 30
+  },
   "autosize": "none",
 
   "signals": [
     {
       "name": "layout", "value": "squarify",
-      "bind": {
-        "input": "select",
-        "options": [
-          "squarify",
-          "binary",
-          "slicedice"
-        ]
-      }
+      // "bind": {
+      //   "input": "select",
+      //   "options": [
+      //     "squarify",
+      //     "binary",
+      //     "slicedice"
+      //   ]
+      // }
     },
     {
       "name": "aspectRatio", "value": 1.6,
-      "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
+      // "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
     }
   ],
 
@@ -77,7 +80,7 @@ const opt = {
       "name": "size",
       "type": "ordinal",
       "domain": [0, 1, 2, 3],
-      "range": [100, 25, 20, 14]
+      "range": [120, 25, 20, 14]
     },
     {
       "name": "opacity",
