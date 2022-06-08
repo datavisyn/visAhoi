@@ -70,7 +70,7 @@ const getAhoiConfig = () => {
           fontSize: '10px'}
     })),    
   }
-  console.log(ahoiConfig)
+  
   return ahoiConfig;
 }
 
