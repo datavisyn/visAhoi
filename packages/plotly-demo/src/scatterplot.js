@@ -57,23 +57,20 @@ function makePlotly(x, y) {
 
 const getAhoiConfig = () => {  
   const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.SCATTERPLOT, chart);
-  const extendedOnboardingMessages = defaultOnboardingMessages.map((d, i) => ({
-    ...d,    
-    marker: {
-          fontSize: '15px',
-          id: i
-        }
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+    ...d,
+    text: 'test123',
   }));
-  // const editDefault = defaultOnboardingMessages.map((d,i) => ({
-  //   ...d,
-  //   marker: {
-  //     fontSize: '6px',
-  //     id: i
-  //   }
-  // }))
+  
   const ahoiConfig = {
-    onboardingMessages: extendedOnboardingMessages,
+    onboardingMessages: defaultOnboardingMessages.map((message) => ({
+      ...message,     
+        marker: {
+          ...message.marker,
+          fontSize: '10px'}
+    })),    
   }
+  console.log(ahoiConfig)
   return ahoiConfig;
 }
 
