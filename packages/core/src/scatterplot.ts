@@ -17,6 +17,7 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
   const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage;
   const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage;
 
+  debugger;
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
@@ -79,7 +80,13 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       }
     }
   ];
-
+debugger;
+const messages1 = messages;
+messages1.map((mes) => {
+  if(mes.title === 'Reading the chart') {
+    console.log(mes);
+  }
+})
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 };
