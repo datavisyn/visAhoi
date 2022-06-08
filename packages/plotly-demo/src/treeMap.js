@@ -1,8 +1,10 @@
 import Plotly from 'plotly.js-dist';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/plotly';
 import debounce from "lodash.debounce";
 import { importCsv } from './util';
 
 let chart = null;
+let showOnboarding = false;
 let onboardingUI = null;
 
 const debouncedResize = debounce((event) => {
@@ -55,4 +57,30 @@ const makePlotly = (label, parent, value, color) => {
     return Plotly.newPlot('vis', traces, layout, config)
 }
 
+const getAhoiConfig = () => {
+    const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.TREEMAP, chart);
+    const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+      ...d,
+      text: "test123"
+    }));
+    const ahoiConfig = {
+      onboardingMessages: defaultOnboardingMessages,
+    }
+    return ahoiConfig;
+  }
+
+  const registerEventListener = () => {    
+    const helpIcon = document.getElementById("show-onboarding");
+    if(!helpIcon) { return; }
+    helpIcon.addEventListener('click', async () => {
+      showOnboarding = !showOnboarding;      
+      if(showOnboarding) {      
+        onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, getAhoiConfig());
+      } else {
+        onboardingUI?.removeOnboarding();
+      }      
+    })
+  }
+
+registerEventListener();
 render();
