@@ -5,7 +5,7 @@ import '../public/data/jobsplan.json';
 const opt = {
   "description": "An example of treemap layout for hierarchical data.",
   "width": 1200,
-  "height": 650,  
+  "height": 600,  
   "padding": {
     "left": (window.innerWidth / 2) - 600,
     "top": 30
@@ -157,16 +157,10 @@ const debouncedResize = debounce((event) => {
 }, 250);
 
 
-async function render() {
-  const response = await fetch('./data/jobsplan.json');
-  const json = await response.json();  
-  console.log(json);
-
+async function render() {  
   chart = await embed('#vis', opt);
   window.addEventListener("resize", debouncedResize);
 };
-
-
 
 // registerEventListener();
 render();
