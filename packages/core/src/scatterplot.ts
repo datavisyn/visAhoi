@@ -80,13 +80,6 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       }
     }
   ];
-debugger;
-const messages1 = messages;
-messages1.map((mes) => {
-  if(mes.title === 'Reading the chart') {
-   console.log(mes);
-  }
-})
 
 
   // Filter for messages where all template variables are available in the spec
