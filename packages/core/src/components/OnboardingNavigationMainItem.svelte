@@ -10,8 +10,6 @@
       showOnboardingSteps.update((v) => !v);
     }
   };
-
-  $: iconClass = $showOnboardingSteps ? "fas fa-times" : "fas fa-question";
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
@@ -20,7 +18,13 @@
     style="background-color: {$activeOnboardingStage?.color ||
       navigationMainItemDefaultColor}"
   >
-    <i class:test={$showOnboardingSteps} />
+    {#if $showOnboardingSteps}
+      <span><i class="fas fa-times" /></span>
+    {:else if $activeOnboardingStage?.title === "Reading"}
+      <span><i class="fas fa-glasses" /></span>
+    {:else}
+      <span><i class="fas fa-question" /></span>
+    {/if}
   </div>
 
   <span class="visahoi-stage-title"
@@ -33,14 +37,6 @@
 </div>
 
 <style>
-  /* Fontawesome pseudo classes  */
-  .test::before {
-    content: "\f128";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
-  }
-  /* */
-
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;
