@@ -11,8 +11,6 @@
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
-  import Marker from "./Marker.svelte";
-  import { get } from "svelte/store";
   import NavigationMarker from "./NavigationMarker.svelte";
 
   export let height: number;
@@ -21,8 +19,9 @@
       ? height
       : $onboardingStages.length * 100;
 
+  $: console.log("navigarion height:", navigationHeight);
   $: console.log($markerInformation);
-  $: console.log($activeOnboardingStage);
+  // $: console.log($activeOnboardingStage);
 
   $: viewBox = `${$visXPosition + window.scrollX + 20} ${
     $visYPosition + window.scrollY + 30
@@ -31,10 +30,10 @@
 
 <div
   class="visahoi-navigation-container"
-  style="--flexDirection:{$navigationAlignment}; height: {navigationHeight +
-    'px'}"
+  style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
   <!-- <div class:navigation-marker={$activeOnboardingStage}> -->
+
   <svg {viewBox} class:visahoi-navigation-markers={$activeOnboardingStage}>
     {#each $markerInformation as marker, index}
       <NavigationMarker markerInformation={marker} order={index + 1} />
@@ -77,6 +76,8 @@
     width: 100px;
     height: 100px;
     position: absolute;
+    display: flex;
+    flex-direction: column;
     /* background-color: blue; */
     overflow: visible;
   }

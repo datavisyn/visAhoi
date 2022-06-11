@@ -9,13 +9,16 @@
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
-  $: console.log($activeMarker?.marker.id, "marker_id");
-  $: console.log(marker.id, "Navigation marker marker info");
+  // $: console.log($activeMarker?.marker.id, "marker_id");
+  // $: console.log(marker, "Navigation marker marker info");
   const handleClick = () => {
-    console.log(markerInformation.message.onboardingStage.id, "handle click");
+    console.log(markerInformation.message.onboardingStage, "handle click");
     activeOnboardingStage.update(
       (v) => markerInformation.message.onboardingStage
     );
+    console.log($activeOnboardingStage, "active onboarding");
+    // console.log(order);
+    // console.log($activeOnboardingStage);
     // activeOnboardingStage.update((v) =>
     //   v?.id
     //     ? (v = markerInformation.message.onboardingStage)
