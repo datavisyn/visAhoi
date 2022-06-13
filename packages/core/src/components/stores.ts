@@ -19,6 +19,7 @@ export const navigationAlignment = initializeStoreValue<NavigationAlignment>('co
 export const onboardingStages = initializeStoreValue<IOnboardingStage[]>([]);
 export const activeOnboardingStage = initializeStoreValue<IOnboardingStage | null>(null);
 export const activeMarker = initializeStoreValue<IMarkerInformation | null>(null);
+export const selectedMarker = initializeStoreValue<IMarkerInformation | null>(null);
 export const showBackdrop = initializeStoreValue<boolean>(true);
 export const backdropOpacity = initializeStoreValue<number>(0.15);
 
@@ -37,4 +38,5 @@ export const resetStore = () => {
   onboardingStages.reset();
   activeOnboardingStage.reset();
   activeMarker.reset();
+  selectedMarker.reset();
 }
