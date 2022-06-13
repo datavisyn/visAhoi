@@ -1,7 +1,6 @@
 <script lang="ts">
   import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
-  import { get } from "svelte/store";
 
   const handleClick = () => {
     if ($activeOnboardingStage) {
@@ -20,8 +19,6 @@
   >
     {#if $showOnboardingSteps}
       <span><i class="fas fa-times" /></span>
-    {:else if $activeOnboardingStage?.title === "Reading"}
-      <span><i class="fas fa-glasses" /></span>
     {:else}
       <span><i class="fas fa-question" /></span>
     {/if}
