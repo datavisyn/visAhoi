@@ -11,13 +11,12 @@
 </script>
 
 <div
-  id="visahoi-navigation-container"
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: {navigationHeight +
     'px'}"
 >
-  {#each $onboardingStages as stage}
-    <OnboardingNavigationItem {stage} />
+  {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
+    <OnboardingNavigationItem {stage} {index} />
   {/each}
   <OnboardingNavigationMainItem />
 </div>
@@ -30,6 +29,6 @@
     display: flex;
     flex-direction: var(--flexDirection);
     align-items: center;
-    /* pointer-events: all; */
+    pointer-events: all;
   }
 </style>

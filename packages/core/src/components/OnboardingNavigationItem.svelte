@@ -7,10 +7,11 @@
     showOnboardingSteps,
   } from "./stores.js";
   export let stage: IOnboardingStage;
+  export let index: number;
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
-  const bottom: string = stage.order * 75 + "px";
+  const bottom: string = (index + 1) * 75 + "px";
 </script>
 
 <div
@@ -43,7 +44,7 @@
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
     margin: 5px;
-    width: 40px;
+    width: 80px;
     bottom: var(--bottom);
     opacity: 1;
     z-index: 15;

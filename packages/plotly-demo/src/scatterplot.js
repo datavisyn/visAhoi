@@ -55,28 +55,36 @@ function makePlotly(x, y) {
   return Plotly.newPlot("vis", traces, layout, config);
 }
 
-const getAhoiConfig = () => {
+const getAhoiConfig = () => {  
   const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.SCATTERPLOT, chart);
-  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-    ...d,
-    text: "test123"
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((message) => ({
+    ...message,
+    marker: {
+      ...message.marker,
+      fontSize: '12px',
+      radius: 10
+    }
   }));
+  
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
+    onboardingMessages: extendedOnboardingMessages    
   }
+  
   return ahoiConfig;
 }
 
 const registerEventListener = () => {
+  
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
+    showOnboarding = !showOnboarding;
     if(showOnboarding) {
       onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, getAhoiConfig());
     } else {
       onboardingUI?.removeOnboarding();
     }
-    showOnboarding = !showOnboarding;
+    
   })
 }
 

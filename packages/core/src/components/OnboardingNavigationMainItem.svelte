@@ -43,7 +43,7 @@
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
     margin: 5px;
-    width: 40px;
+    width: 80px;
     bottom: 0;
     opacity: 1;
     z-index: 15;

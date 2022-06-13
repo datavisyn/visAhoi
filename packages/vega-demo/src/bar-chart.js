@@ -38,17 +38,17 @@ const getAhoiConfig = async () => {
   return ahoiConfig;
 }
 
-const registerEventListener = () => {
+const registerEventListener = () => {  
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
+    showOnboarding = !showOnboarding;
     if(showOnboarding) {
       const config = await getAhoiConfig();
       onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, config);
     } else {
       onboardingUI?.removeOnboarding();
-    }
-    showOnboarding = !showOnboarding;
+    }    
   })
 }
 
