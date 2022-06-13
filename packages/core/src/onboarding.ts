@@ -72,8 +72,9 @@ export const getOnboardingStages = (): IOnboardingStage[] => {
 
 export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
   if (!stage.id) {
-    stage.id = "some-new-id";
+    stage.id = `visahoi-stage-${uuidv4()}`;
   }
+  onboardingStages.set([...get(onboardingStages), stage]);
   return stage;
 };
 
@@ -84,7 +85,7 @@ export const createBasicOnboardingMessage = (
   >
 ) => {
   const marker: IMarker = {
-    id: `marker-${uuidv4()}`,
+    id: `visahoi-marker-${uuidv4()}`,
   };
   const onboardingMessage: IOnboardingMessage = {
     marker,
