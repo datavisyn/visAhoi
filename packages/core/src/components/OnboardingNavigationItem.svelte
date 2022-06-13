@@ -5,8 +5,6 @@
     navigationAlignment,
     activeOnboardingStage,
     showOnboardingSteps,
-    shownMarker,
-    markerInformation,
   } from "./stores.js";
   export let stage: IOnboardingStage;
   export let index: number;

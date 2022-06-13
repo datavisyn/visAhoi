@@ -11,11 +11,9 @@
   const { marker } = markerInformation;
   const handleClick = () => {
     if ($activeMarker?.marker.id === marker.id) {
-      console.log("if part");
       activeMarker.set(null);
     } else {
       activeMarker.set(markerInformation);
-      console.log("else part");
     }
   };
 

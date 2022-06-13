@@ -19,11 +19,7 @@
       ? height
       : $onboardingStages.length * 100;
 
-  $: console.log("navigarion height:", navigationHeight);
-  $: console.log($markerInformation);
-  // $: console.log($activeOnboardingStage);
-
-  $: viewBox = `${$visXPosition + window.scrollX + 20} ${
+  $: viewBox = `${$visXPosition + window.scrollX - 1770} ${
     $visYPosition + window.scrollY + 30
   } ${$visWidth} ${$visHeight}`;
 </script>
@@ -32,14 +28,13 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  <!-- <div class:navigation-marker={$activeOnboardingStage}> -->
-
-  <svg {viewBox} class:visahoi-navigation-markers={$activeOnboardingStage}>
-    {#each $markerInformation as marker, index}
-      <NavigationMarker markerInformation={marker} order={index + 1} />
-    {/each}
-  </svg>
-  <!-- </div> -->
+  <div class="test">
+    <svg {viewBox} class:visahoi-navigation-markers={$activeOnboardingStage}>
+      {#each $markerInformation as marker, index}
+        <NavigationMarker markerInformation={marker} order={index + 1} />
+      {/each}
+    </svg>
+  </div>
 
   {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
     <OnboardingNavigationItem {stage} {index} />
@@ -48,6 +43,9 @@
 </div>
 
 <style>
+  .test {
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+  }
   .visahoi-navigation-container {
     position: absolute;
     bottom: 15px;
@@ -78,6 +76,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
+    transition: opacity 0.5s ease, bottom 0.5s ease;
     /* background-color: blue; */
     overflow: visible;
   }

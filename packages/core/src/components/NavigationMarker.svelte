@@ -9,40 +9,21 @@
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
-  // $: console.log($activeMarker?.marker.id, "marker_id");
-  // $: console.log(marker, "Navigation marker marker info");
+
   const handleClick = () => {
-    console.log(markerInformation.message.onboardingStage, "handle click");
     activeOnboardingStage.update(
       (v) => markerInformation.message.onboardingStage
     );
-    console.log($activeOnboardingStage, "active onboarding");
-    // console.log(order);
-    // console.log($activeOnboardingStage);
-    // activeOnboardingStage.update((v) =>
-    //   v?.id
-    //     ? (v = markerInformation.message.onboardingStage)
-    //     : markerInformation.message.onboardingStage[0].id
-    // );
 
-    if ($activeOnboardingStage === markerInformation.message.onboardingStage) {
-      activeMarker.set(markerInformation);
-    } else {
+    if ($activeMarker?.marker.id === marker.id) {
       activeMarker.set(null);
+    } else {
+      activeMarker.set(markerInformation);
     }
-
-    // activeOnboardingStage.update((v) => (v?.id  ? v.id = markerInformation.message.onboardingStage.id : stage));
-    // if ($activeMarker?.marker.id === marker.id) {
-    //   activeMarker.set(null);
-    // } else {
-    //   activeMarker.set(markerInformation);
-    // }
-
-    console.log("Navigation marker clicked");
   };
 
-  const xaxis = -100;
-  const yaxis = 20 * (5 * order);
+  const xaxis = 80;
+  const yaxis = 20 * (16 * order);
 </script>
 
 <g id={getMarkerDomId(marker.id)} text-anchor="middle" on:click={handleClick}>
@@ -59,24 +40,15 @@
     }`}
     cx={xaxis}
     cy={yaxis}
-    r="15"
+    r="100"
   />
-  <!-- <text
-    style="user-select:none"
-    fill="white"
-    x={markerInformation.anchorPosition.x}
-    y={markerInformation.anchorPosition.y}
-    >{typeof marker?.content == "string" ? marker.content : order}</text
-  > -->
 </g>
 
 <style>
   circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     fill: var(--backgroundColor);
     transition: fill 0.2s ease;
+    margin: 5px;
   }
 
   circle.active {
