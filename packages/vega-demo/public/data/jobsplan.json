@@ -1,0 +1,198 @@
+[
+    {
+      "id": 1,
+      "name": "American Jobs Plan",
+      "size": 2308
+    },
+    {
+      
+          "id": 2,
+          "name": "Community Infrastructure",
+          "parent": 1,
+          "size": 707          
+    },
+    {
+      
+      "id": 3,
+      "name": "Transportation",
+      "parent": 1,
+      "size": 621
+    
+    },
+    {
+      
+      "id": 4,
+      "name": "Workforce Development",
+      "parent": 1,
+      "size": 580
+    
+    },
+    {
+      
+        "id": 5,
+        "name": "Elder care",
+        "parent": 1,
+        "size": 400
+      
+    },
+    {
+      
+      "id": 6,
+      "name": "Clean drinking water",
+      "parent": 2,
+      "size": 111
+    
+    },
+    {
+      
+      "id": 7,
+      "name": "Broadband",
+      "parent": 2,
+      "size": 100
+    
+    },
+    {
+      
+      "id": 8,
+      "name": "Electric",
+      "parent": 2,
+      "size": 100
+    
+    },
+    {
+      
+      "id": 9,
+      "name": "Housing",
+      "parent": 2,
+      "size": 213
+    
+    },
+    {
+      
+        "id": 10,
+        "name": "Schools and VA hospitals",
+        "parent": 2,
+        "size": 155
+      
+      },
+      {
+      
+        "id": 11,
+        "name": "Other",
+        "parent": 2,
+        "size": 28
+      
+      },
+      {
+      
+        "id": 12,
+        "name": "Electrifying vehicles",
+        "parent": 3,
+        "size": 174
+      
+      },
+      {
+      
+        "id": 13,
+        "name": "Bridge and road repair",
+        "parent": 3,
+        "size": 115
+      
+      },
+      {
+      
+        "id": 14,
+        "name": "Modernizing public transit",
+        "parent": 3,
+        "size": 85
+      
+      },
+      {
+      
+        "id": 15,
+        "name": "Rail service",
+        "parent": 3,
+        "size": 80
+      
+      },
+      {
+      
+        "id": 16,
+        "name": "Ports",
+        "parent": 3,
+        "size": 42
+      
+      },
+      {
+      
+        "id": 17,
+        "name": "Redress historic inequities",
+        "parent": 3,
+        "size": 45
+      
+      },
+      {
+      
+        "id": 18,
+        "name": "Infrastructure",
+        "parent": 3,
+        "size": 50
+      
+      },
+      {
+      
+        "id": 19,
+        "name": "Other",
+        "parent": 3,
+        "size": 30
+      
+      },
+      {
+      
+        "id": 20,
+        "name": "Research & development",
+        "parent": 4,
+        "size": 180
+      
+      },
+      {
+      
+        "id": 21,
+        "name": "Manufacturing",
+        "parent": 4,
+        "size": 300
+      
+      },
+      {
+      
+        "id": 22,
+        "name": "Workforce development",
+        "parent": 4,
+        "size": 100
+      
+      },
+      {
+      
+        "id": 23,
+        "name": "Workforce development",
+        "parent": 4,
+        "size": 100
+      
+      },
+      {
+      
+        "id": 24,
+        "name": "Home/community-based care",
+        "parent": 5,
+        "size": 400
+      
+      }
+
+
+
+
+
+
+    
+  
+  ]
