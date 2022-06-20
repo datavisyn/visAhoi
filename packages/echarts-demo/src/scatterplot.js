@@ -67,8 +67,7 @@ const getAhoiConfig = () => {
   return ahoiConfig;
 }
 
-const registerEventListener = () => { 
-  console.log(showOnboarding)   
+const registerEventListener = () => {  
   const helpIcon = document.getElementById("show-onboarding");
   if(!helpIcon) { return; }
   helpIcon.addEventListener('click', async () => {
