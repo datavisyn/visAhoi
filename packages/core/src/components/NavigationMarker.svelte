@@ -10,9 +10,10 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  const { hoverBackgroundColor, backgroundColor } =
+  const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
+  const { onboardingStage } = markerInformation.message;
 
   const bottom: string = order * 50 + 15 + "px";
 
@@ -26,6 +27,8 @@
     );
 
     if ($activeMarker?.marker.id === marker.id) {
+      // const elementId = getMarkerDomId(marker.id);
+      // document.getElementById(elementId)?.style.opacity = 1 ? 0.5 : 1;
       activeMarker.set(null);
     } else {
       activeMarker.set(markerInformation);
@@ -34,12 +37,14 @@
 </script>
 
 <div
-  style="--background-color:{backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
-    backgroundColor}; --bottom:{bottom}"
+  style="--bottom:{bottom}"
   class="visahoi-marker-navigation-item {$activeOnboardingStage}"
   on:click={handleClick}
 >
   <div
+    style="--active-background-color:{activeBackgroundColor ||
+      hoverBackgroundColor}; --background-color:{backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
+      backgroundColor};"
     id="visahoi-marker-navigation-{getMarkerDomId(marker.id)}"
     class="visahoi-marker-navigation-item-circle {$activeOnboardingStage}"
   />

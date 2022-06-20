@@ -5,11 +5,8 @@
     markerInformation,
     activeOnboardingStage,
     selectedMarker,
-    visHeight,
-    visWidth,
-    visXPosition,
-    visYPosition,
     activeMarker,
+    showOnboardingNavigation,
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
@@ -17,10 +14,14 @@
   import { getMarkerDomId } from "../utils.js";
 
   export let height: number;
+
   const navigationHeight =
     $onboardingStages.length * 100 > height
       ? height
       : $onboardingStages.length * 100;
+
+  debugger;
+  console.log($showOnboardingNavigation, showOnboardingNavigation);
 
   const navNext = () => {
     console.log("next item");
@@ -49,7 +50,7 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  {#if $activeOnboardingStage}
+  {#if $activeOnboardingStage && $showOnboardingNavigation}
     {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
       <NavigationMarker markerInformation={marker} order={index + 1} />
     {/each}

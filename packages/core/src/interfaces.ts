@@ -67,6 +67,7 @@ export interface IBackdropConfig {
 export interface IAhoiConfig {
   onboardingMessages: IOnboardingMessage[];
   backdrop: IBackdropConfig;
+  showOnboardingNavigation?: boolean;
 }
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";
@@ -84,7 +85,7 @@ export interface IOnboardingMessage {
   title: string;
   onboardingStage: IOnboardingStage;
   tooltipPosition?: TooltipPosition;
-  marker: IMarker;
+  marker: IMarker;  
 }
 
 
