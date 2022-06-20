@@ -14,7 +14,7 @@
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
   <div
     class="visahoi-navigation-item-circle"
-    style="background-color: {$activeOnboardingStage?.color ||
+    style="background-color: {$activeOnboardingStage?.backgroundColor ||
       navigationMainItemDefaultColor}"
   >
     {#if $showOnboardingSteps}
