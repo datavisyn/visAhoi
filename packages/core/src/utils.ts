@@ -26,7 +26,7 @@ const getDomNodeByTextContent = (
         },
       }
     )
-    .nextNode()!.parentElement;
+    .nextNode()!?.parentElement;
 
 /**
  * Returns the anchor for the requested onboarding specification.

@@ -3,7 +3,7 @@ import { IOnboardingTreemapSpec } from "@visahoi/core/src/treemap";
 
   function extractOnboardingSpec(chart, coords): IOnboardingTreemapSpec {    
     const options = chart._model?.option?.series[0]; 
-    const childrenData = chart._model.option.series[0].data[0].children;
+    const childrenData = chart._model?.option?.series[0].data[0].children;
 
     let maxValue, minValue, maxChildName, minChildName;    
     let childrenArr = [chart._model.option.series[0].data[0].children];        
@@ -47,8 +47,7 @@ import { IOnboardingTreemapSpec } from "@visahoi/core/src/treemap";
       },
 
       gapDesc: {
-        // value: (options?.data[0]?.children[1]?.name) ? options?.data[0]?.children[1]?.name : options?.data[0]?.children[0]?.name ,
-        value: options?.data[0]?.children[1]?.name,
+        value: (options?.data[0]?.children[1]?.name) ? options?.data[0]?.children[1]?.name : options?.data[0]?.children[0]?.name ,        
         anchor: {
           findDomNodeByValue: true,
           offset: {left: -40, top:-40}
@@ -56,8 +55,7 @@ import { IOnboardingTreemapSpec } from "@visahoi/core/src/treemap";
       },
 
       otherDesc: {
-        // value: (options?.data[0]?.children[2]?.name) ? options?.data[0]?.children[2]?.name : options?.data[0]?.children[1]?.name ? options?.data[0]?.children[1]?.name : options?.data[0]?.children[0]?.name,
-        value: options?.data[0]?.children[2]?.name,
+        value: (options?.data[0]?.children[2]?.name) ? options?.data[0]?.children[2]?.name : options?.data[0]?.children[1]?.name ? options?.data[0]?.children[1]?.name : options?.data[0]?.children[0]?.name,        
         anchor: {
           findDomNodeByValue: true,
           offset: {left: -60, top: -30}
