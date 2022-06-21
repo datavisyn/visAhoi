@@ -1,21 +1,49 @@
-<script lang="ts">
+<script>
+const { default: logger }=require("..");
+
+</script>
+<async script lang="ts">
   import { IMarkerInformation } from "../interfaces";
   import {
     activeMarker,
     activeOnboardingStage,
+    onboardingMessages,
     selectedMarker,
+    markerInformation as markInfo,
   } from "./stores";
   import { getMarkerDomId } from "../utils";
+  import { tick } from "svelte";
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
+  
+  <!-- let arrValue: IMarkerInformation[] = [];
+  debugger; -->
+
+  $markInfo.map(async (message) => {    
+    if (message.message.onboardingStage.title === $activeOnboardingStage?.title) {
+      
+      // console.log('In the if part')
+      // arrValue.push(message);
+      // console.log(arrValue, "arrValue");
+      selectedMarker.set(message);
+      activeOnboardingStage.update(
+        (v) => $selectedMarker?.message.onboardingStage
+      );
+      activeMarker.set($selectedMarker);
+      console.log("selectedMarker");
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
+      await tick();
+      document.getElementById(elementId)?.style.opacity = 1;
+    }   
+  });
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
   const { onboardingStage } = markerInformation.message;
 
-  const bottom: string = order * 50 + 15 + "px";
+  $: bottom = order * 50 + 15 + "px";
 
   const handleClick = (event) => {
     const elementId = event.target.id;
@@ -34,7 +62,7 @@
       activeMarker.set(markerInformation);
     }
   };
-</script>
+</async>
 
 <div
   style="--bottom:{bottom}"
