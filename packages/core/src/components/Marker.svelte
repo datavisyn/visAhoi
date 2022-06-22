@@ -6,7 +6,7 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  console.log(markerInformation, "Marker info from the marker_1");
+  // console.log(markerInformation, "Marker info from the marker_1");
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;

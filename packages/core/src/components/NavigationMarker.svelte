@@ -13,9 +13,15 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  let arrValue: IMarkerInformation[] = [];
-  // let previousMarkerId;
+  $: bottom = order * 50 + 15 + "px";
 
+  const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
+    markerInformation.message.onboardingStage;
+  const { marker } = markerInformation;
+
+  let arrValue: IMarkerInformation[] = [];
+
+  /**First navigation marker which belongs to the activeOnboarding stage is selected */
   $markInfo.map(async (message) => {
     if (
       message.message.onboardingStage.title === $activeOnboardingStage?.title
@@ -34,30 +40,9 @@
       document.getElementById(elementId)?.style.opacity = 1;
     }
   });
-  // if(arrValue) {
-  // selectedMarker.set(message);
-  //     activeOnboardingStage.update(
-  //       (v) => $selectedMarker?.message.onboardingStage
-  //     );
-  //     activeMarker.set($selectedMarker);
-  //     console.log("selectedMarker");
-  //     const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
-  //     // await tick();
-  //     document.getElementById(elementId)?.style.opacity = 1;
-  // }
-
-  const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
-    markerInformation.message.onboardingStage;
-  const { marker } = markerInformation;
-  const { onboardingStage } = markerInformation.message;
-
-  $: bottom = order * 50 + 15 + "px";
 
   const handleClick = (event) => {
-    console.log("check the previous marker");
     if ($previousMarkerId) {
-      console.log($previousMarkerId, "previousMar2");
-      console.log("Previous marker");
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
@@ -72,8 +57,6 @@
     );
 
     if ($activeMarker?.marker.id === marker.id) {
-      // const elementId = getMarkerDomId(marker.id);
-      // document.getElementById(elementId)?.style.opacity = 1 ? 0.5 : 1;
       activeMarker.set(null);
     } else {
       activeMarker.set(markerInformation);
