@@ -7,6 +7,7 @@
     selectedMarker,
     activeMarker,
     previousMarkerId,
+    showOnboardingNavigation,
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
@@ -90,13 +91,13 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  {#if $activeOnboardingStage}
+  {#if $activeOnboardingStage && $showOnboardingNavigation}
     {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
       <NavigationMarker markerInformation={marker} order={index + 1} />
     {/each}
   {/if}
 
-  {#if $activeOnboardingStage}
+  {#if $activeOnboardingStage && $showOnboardingNavigation}
     <div
       id="navigation-next"
       style="--bottom-height: {nextHeight}"
