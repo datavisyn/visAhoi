@@ -4,9 +4,12 @@ import { IOnboardingTreemapSpec } from "@visahoi/core/src/treemap";
   function extractOnboardingSpec(chart, coords): IOnboardingTreemapSpec {    
     const options = chart._model?.option?.series[0]; 
     const childrenData = chart._model?.option?.series[0].data[0].children;
-
-    let maxValue, minValue, maxChildName, minChildName;    
-    let childrenArr = [chart._model.option.series[0].data[0].children];        
+    const childrenArr = [chart._model.option.series[0].data[0].children];
+   
+    let maxValue: number | null = null;
+    let minValue: number | null = null;
+    let maxChildName: string = "";
+    let minChildName: string = "";   
     
     childrenArr.map((child) => {
       maxValue = Math.max(...child.map((d) => d.value));
