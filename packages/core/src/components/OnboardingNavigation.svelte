@@ -6,6 +6,7 @@
     activeOnboardingStage,
     selectedMarker,
     activeMarker,
+    previousMarkerId,
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
@@ -16,25 +17,42 @@
   $: prevHeight = $markerInformation.length * 80 - 50 + "px";
   let index: number;
 
+  // $: nextElementId = document.getElementById("navigation-next");
+  // $: prevElementId = document.getElementById("navigation-previous");
+
+  console.log("edited test njh");
+
   const navNext = () => {
+    if ($previousMarkerId) {
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      document.getElementById(elementId)?.style.opacity = 0.5;
+    }
+    const elementId = document.getElementById("navigation-previous");
+    elementId?.style.pointerEvents = "all";
+    elementId?.style.opacity = 1;
+
     if (!$selectedMarker) {
-      console.log("no selected marker");
       const elementId = document.getElementById("navigation-next");
       elementId?.style.pointerEvents = "none";
       elementId?.style.opacity = 0.5;
     }
+
     if ($selectedMarker) {
-      console.log("selected marker");
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker.marker.id) {
-          console.log($selectedMarker?.marker.id);
           index = i + 1;
+          if (index + 1 === $markerInformation.length) {
+            const elementId = document.getElementById("navigation-next");
+            elementId?.style.pointerEvents = "none";
+            elementId?.style.opacity = 0.5;
+          }
         }
       });
       selectedMarker.set($markerInformation[index]);
       activeOnboardingStage.update(
         (v) => $selectedMarker?.message.onboardingStage
       );
+      previousMarkerId.set($selectedMarker.marker.id);
       activeMarker.set($selectedMarker);
       const markerId = getMarkerDomId($selectedMarker.marker.id);
       const elementId = `visahoi-marker-navigation-${markerId}`;
@@ -43,28 +61,65 @@
   };
 
   const navPrev = () => {
+    if ($previousMarkerId) {
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      document.getElementById(elementId)?.style.opacity = 0.5;
+    }
+    const elementId = document.getElementById("navigation-next");
+    elementId?.style.pointerEvents = "all";
+    elementId?.style.opacity = 1;
+
     if (!$selectedMarker) {
-      const elementId = document.getElementById("navigation-previous");
+      const elementId = document.getElementById("navigation-prev");
       elementId?.style.pointerEvents = "none";
       elementId?.style.opacity = 0.5;
     }
     if ($selectedMarker) {
-      $markerInformation.map((marker, index) => {
-        // if($selectedMarker?.marker.id )
+      $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker.marker.id) {
-          console.log($selectedMarker?.marker.id);
-          selectedMarker.set($markerInformation[index - 1]);
+          index = i - 1;
+          if (index === 0) {
+            const elementId = document.getElementById("navigation-previous");
+            elementId?.style.pointerEvents = "none";
+            elementId?.style.opacity = 0.5;
+          }
         }
       });
+      selectedMarker.set($markerInformation[index]);
       activeOnboardingStage.update(
         (v) => $selectedMarker?.message.onboardingStage
       );
       activeMarker.set($selectedMarker);
+      previousMarkerId.set($selectedMarker.marker.id);
       const markerId = getMarkerDomId($selectedMarker.marker.id);
       const elementId = `visahoi-marker-navigation-${markerId}`;
       document.getElementById(elementId)?.style.opacity = 1;
     }
   };
+
+  // const navPrev = () => {
+  //   if (!$selectedMarker) {
+  //     const elementId = document.getElementById("navigation-previous");
+  //     elementId?.style.pointerEvents = "none";
+  //     elementId?.style.opacity = 0.5;
+  //   }
+  //   if ($selectedMarker) {
+  //     $markerInformation.map((marker, index) => {
+  //       // if($selectedMarker?.marker.id )
+  //       if (marker.marker.id === $selectedMarker.marker.id) {
+  //         console.log($selectedMarker?.marker.id);
+  //         selectedMarker.set($markerInformation[index - 1]);
+  //       }
+  //     });
+  //     activeOnboardingStage.update(
+  //       (v) => $selectedMarker?.message.onboardingStage
+  //     );
+  //     activeMarker.set($selectedMarker);
+  //     const markerId = getMarkerDomId($selectedMarker.marker.id);
+  //     const elementId = `visahoi-marker-navigation-${markerId}`;
+  //     document.getElementById(elementId)?.style.opacity = 1;
+  //   }
+  // };
 </script>
 
 <div

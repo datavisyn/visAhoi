@@ -23,6 +23,7 @@ export const selectedMarker = initializeStoreValue<IMarkerInformation | null>(nu
 export const showBackdrop = initializeStoreValue<boolean>(true);
 export const backdropOpacity = initializeStoreValue<number>(0.15);
 export const showOnboardingNavigation = initializeStoreValue<boolean>(false);
+export const previousMarkerId = initializeStoreValue<string | undefined>('');
 
 export const visXPosition = writable<number>(0);
 export const visYPosition = writable<number>(0);

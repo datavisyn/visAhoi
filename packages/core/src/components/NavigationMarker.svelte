@@ -1,14 +1,10 @@
-<script>
-const { default: logger }=require("..");
-
-</script>
-<async script lang="ts">
+<script lang="ts">
   import { IMarkerInformation } from "../interfaces";
   import {
     activeMarker,
     activeOnboardingStage,
-    onboardingMessages,
     selectedMarker,
+    previousMarkerId,
     markerInformation as markInfo,
   } from "./stores";
   import { getMarkerDomId } from "../utils";
@@ -16,27 +12,39 @@ const { default: logger }=require("..");
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
-  
-  <!-- let arrValue: IMarkerInformation[] = [];
-  debugger; -->
 
-  $markInfo.map(async (message) => {    
-    if (message.message.onboardingStage.title === $activeOnboardingStage?.title) {
-      
-      // console.log('In the if part')
-      // arrValue.push(message);
-      // console.log(arrValue, "arrValue");
-      selectedMarker.set(message);
+  let arrValue: IMarkerInformation[] = [];
+  // let previousMarkerId;
+
+  $markInfo.map(async (message) => {
+    if (
+      message.message.onboardingStage.title === $activeOnboardingStage?.title
+    ) {
+      arrValue.push(message);
+      selectedMarker.set(arrValue[0]);
+
       activeOnboardingStage.update(
         (v) => $selectedMarker?.message.onboardingStage
       );
       activeMarker.set($selectedMarker);
-      console.log("selectedMarker");
-      const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
+      previousMarkerId.set($selectedMarker?.marker.id);
+
       await tick();
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
       document.getElementById(elementId)?.style.opacity = 1;
-    }   
+    }
   });
+  // if(arrValue) {
+  // selectedMarker.set(message);
+  //     activeOnboardingStage.update(
+  //       (v) => $selectedMarker?.message.onboardingStage
+  //     );
+  //     activeMarker.set($selectedMarker);
+  //     console.log("selectedMarker");
+  //     const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
+  //     // await tick();
+  //     document.getElementById(elementId)?.style.opacity = 1;
+  // }
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -46,9 +54,18 @@ const { default: logger }=require("..");
   $: bottom = order * 50 + 15 + "px";
 
   const handleClick = (event) => {
+    console.log("check the previous marker");
+    if ($previousMarkerId) {
+      console.log($previousMarkerId, "previousMar2");
+      console.log("Previous marker");
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      document.getElementById(elementId)?.style.opacity = 0.5;
+    }
+
     const elementId = event.target.id;
     selectedMarker.set(markerInformation);
     document.getElementById(elementId)?.style.opacity = 1;
+    previousMarkerId.set(markerInformation.marker.id);
 
     activeOnboardingStage.update(
       (v) => markerInformation.message.onboardingStage
@@ -62,7 +79,7 @@ const { default: logger }=require("..");
       activeMarker.set(markerInformation);
     }
   };
-</async>
+</script>
 
 <div
   style="--bottom:{bottom}"
