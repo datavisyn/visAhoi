@@ -52,7 +52,6 @@
   };
 
   const navPrev = () => {
-    console.log("checking");
     if ($previousMarkerId) {
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;
