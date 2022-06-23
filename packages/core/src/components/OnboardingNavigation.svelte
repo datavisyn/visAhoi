@@ -14,9 +14,21 @@
   import NavigationMarker from "./NavigationMarker.svelte";
   import { getMarkerDomId } from "../utils.js";
 
-  $: nextHeight = $markerInformation.length * 80 + "px";
-  $: prevHeight = $markerInformation.length * 80 - 50 + "px";
+  $: nextHeight = $markerInformation.length * 45 + 75 + "px";
+  $: prevHeight = $markerInformation.length * 45 + 50 + "px";
+
   let index: number;
+
+  // $markerInformation.map((maker, i) => {
+  //   if (maker.marker.id === $previousMarkerId) {
+  //     index = i - 1;
+  //     if (index + 1 === $markerInformation.length) {
+  //       const elementId = document.getElementById("navigation-next");
+  //       elementId?.style.pointerEvents = "none";
+  //       elementId?.style.opacity = 0.5;
+  //     }
+  //   }
+  // });
 
   const navNext = () => {
     if ($previousMarkerId) {
@@ -91,30 +103,32 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  {#if $activeOnboardingStage && $showOnboardingNavigation}
-    {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
-      <NavigationMarker markerInformation={marker} order={index + 1} />
-    {/each}
-  {/if}
+  <div class="test-class">
+    {#if $activeOnboardingStage && $showOnboardingNavigation}
+      {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
+        <NavigationMarker markerInformation={marker} order={index + 1} />
+      {/each}
+    {/if}
 
-  {#if $activeOnboardingStage && $showOnboardingNavigation}
-    <div
-      id="navigation-next"
-      style="--bottom-height: {nextHeight}"
-      class="next"
-      on:click={navNext}
-    >
-      <span><i class="fas fa-chevron-up" /></span>
-    </div>
-    <div
-      id="navigation-previous"
-      style="--bottom-height: {prevHeight}"
-      class="previous"
-      on:click={navPrev}
-    >
-      <span><i class="fas fa-chevron-down" /></span>
-    </div>
-  {/if}
+    {#if $activeOnboardingStage && $showOnboardingNavigation}
+      <div
+        id="navigation-next"
+        style="--bottom-height: {nextHeight}"
+        class="next"
+        on:click={navNext}
+      >
+        <span><i class="fas fa-chevron-up" /></span>
+      </div>
+      <div
+        id="navigation-previous"
+        style="--bottom-height: {prevHeight}"
+        class="previous"
+        on:click={navPrev}
+      >
+        <span><i class="fas fa-chevron-down" /></span>
+      </div>
+    {/if}
+  </div>
 
   {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
     <OnboardingNavigationItem {stage} {index} />
@@ -123,14 +137,30 @@
 </div>
 
 <style>
+  .test-class {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+    /* margin-bottom: 10px; */
+    width: 80px;
+    bottom: 20px;
+    opacity: 1;
+    z-index: 15;
+  }
   .next {
     position: absolute;
     bottom: var(--bottom-height);
+    margin-bottom: 15px;
   }
 
   .previous {
     position: absolute;
     bottom: var(--bottom-height);
+    margin-bottom: 15px;
   }
 
   .visahoi-navigation-container {

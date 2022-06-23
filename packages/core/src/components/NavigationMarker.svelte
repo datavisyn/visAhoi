@@ -13,7 +13,7 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  $: bottom = order * 50 + 15 + "px";
+  $: bottom = order * 45 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -86,7 +86,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    /* transition: opacity 0.5s ease, bottom 0.5s ease; */
+    transition: opacity 0.5s ease, bottom 0.5s ease;
     margin: 5px;
     width: 80px;
     bottom: var(--bottom);
@@ -98,13 +98,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     margin: 5px;
     opacity: 0.5;
     background-color: var(--background-color);
-    /* transition: background-color 0.2s ease; */
+    transition: background-color 0.2s ease;
   }
 
   .visahoi-marker-navigation-item-circle:hover {
