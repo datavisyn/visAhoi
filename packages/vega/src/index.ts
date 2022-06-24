@@ -4,6 +4,7 @@ import { barChartFactory } from './bar-chart';
 import { changeMatrixFactory } from './change-matrix';
 import { horizonGraphFactory } from './horizon-graph';
 import { scatterplotFactory } from './scatterplot';
+import { treemapFactory } from './treemap';
 
 /**
  *
@@ -51,6 +52,10 @@ import { scatterplotFactory } from './scatterplot';
 
     case EVisualizationType.SCATTERPLOT:
       onboardingMessages = scatterplotFactory(vegaSpec, d3Data, visElement);
+      break;
+
+    case EVisualizationType.TREEMAP: 
+      onboardingMessages = treemapFactory(vegaSpec, d3Data, visElement);
       break;
 
     default:

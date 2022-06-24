@@ -9,16 +9,24 @@ import {
  * Returns the dom node which contains the passed text
  * @param textContent the text content of the dom node which should be found
  */
+ let targetDomNode: HTMLElement | null;
+
 const getDomNodeByTextContent = (
   textContent: string,
   visElement: Element
-): HTMLElement | null =>
-  document
+): HTMLElement | null => {
+  debugger
+  console.log(textContent, visElement)
+  return document
     .createNodeIterator(
       visElement, // The root node of the chart
       NodeFilter.SHOW_TEXT, // Look for text nodes only
       {
+        
         acceptNode(node) {
+          debugger;
+          
+          console.log(new RegExp(textContent).test(node.textContent as string) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT)
           // The filter method of interface NodeFilter
           return new RegExp(textContent).test(node.textContent as string) // Check if text contains target string
             ? NodeFilter.FILTER_ACCEPT // Found: accept node
@@ -26,7 +34,8 @@ const getDomNodeByTextContent = (
         },
       }
     )
-    .nextNode()!.parentElement;
+    .nextNode()!?.parentElement;
+}
 
 /**
  * Returns the anchor for the requested onboarding specification.
@@ -41,12 +50,19 @@ export const getAnchor = (
     // if prop is undefined -> return
     return;
   } else if (prop.anchor?.findDomNodeByValue) {
+    
     // the dom node should be found by it's content
     // TODO: can findDomNodeByValue be removed?
-    const targetDomNode = getDomNodeByTextContent(
+      targetDomNode = getDomNodeByTextContent(
       prop.domNodeValue ? prop.domNodeValue : prop.value,
       visElement
-    );
+    );    
+
+    if (targetDomNode === undefined) {
+       targetDomNode = document.getElementById('vis');
+    }
+    
+    console.log(targetDomNode, 'The target dom node')
     // if no node was found by the given text return undefined, otherwise return the dom node
     return targetDomNode
       ? Object.assign({ element: targetDomNode }, prop.anchor || {})

@@ -1,16 +1,29 @@
 import embed from 'vega-embed';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/vega';
 import debounce from "lodash.debounce";
 import '../public/data/jobsplan.json';
 
+let chart = null;
+let onboardingUI = null;
+let showOnboarding = false;
+
+debugger;
 const opt = {
+  "title": "American jobs plan",
   "description": "An example of treemap layout for hierarchical data.",
-  "width": 1200,
-  "height": 600,  
-  "padding": {
-    "left": (window.innerWidth / 2) - 600,
-    "top": 30
+  "actions": {
+    export: false,
+    source: false,
+    compiled: false,
+    editor: false
   },
-  "autosize": "none",
+  // "width": 1200,
+  // "height": 500,  
+  "autosize": { "type": "fit", "contains": "padding" },
+  
+  // 
+  "padding": 5,
+  // "autosize": "none",
 
   "signals": [
     {
@@ -27,6 +40,16 @@ const opt = {
     {
       "name": "aspectRatio", "value": 1.6,
       // "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
+    },
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [{ "events": "window:resize", "update": "containerSize()[0]" }]
+    },
+    {
+      "name": "height",
+      "init": "containerSize()[1]",
+      "on": [{ "events": "window:resize", "update": "containerSize()[1]" }]
     }
   ],
 
@@ -149,8 +172,7 @@ const opt = {
     }
   ]
 }
-let chart = null;
-let onboardingUI = null;
+
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
@@ -162,5 +184,32 @@ async function render() {
   window.addEventListener("resize", debouncedResize);
 };
 
-// registerEventListener();
+const getAhoiConfig = async () => {
+  const defaultOnboardingMessages = await generateBasicAnnotations(EVisualizationType.TREEMAP, chart);
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+    ...d,
+    text: "test123"
+  }));
+  const ahoiConfig = {
+    onboardingMessages: defaultOnboardingMessages,
+  }
+  return ahoiConfig;
+}
+
+const registerEventListener = () => {  
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', async () => {
+    showOnboarding = !showOnboarding;
+    if(showOnboarding) {
+      debugger;
+      const config = await getAhoiConfig();
+      onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, config);
+    } else {
+      onboardingUI?.removeOnboarding();
+    }    
+  })
+}
+
+registerEventListener();
 render();
