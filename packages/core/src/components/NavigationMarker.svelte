@@ -5,6 +5,7 @@
     activeOnboardingStage,
     selectedMarker,
     previousMarkerId,
+    initialIndexId,
     markerInformation as markInfo,
   } from "./stores";
   import { getMarkerDomId } from "../utils";
@@ -12,7 +13,11 @@
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
+  export let ix: number | null;
 
+  let ixNumber: number | null;
+
+  $: ix = ixNumber;
   $: bottom = order * 45 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
@@ -38,6 +43,13 @@
       await tick();
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
       document.getElementById(elementId)?.style.opacity = 1;
+    }
+  });
+
+  $markInfo.map((maker, i) => {
+    if (maker.marker.id === $previousMarkerId) {
+      initialIndexId.set(i);
+      // ixNumber = i;
     }
   });
 

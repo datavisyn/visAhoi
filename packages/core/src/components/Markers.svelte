@@ -17,12 +17,6 @@
   activeOnboardingStage.subscribe((value) => {
     currentOnboardingStage = value?.id;
   });
-
-  $: console.log($markerInformation, "Marker info from markers");
-  $: console.log(
-    $activeOnboardingStage?.id,
-    "Active onboarding stage from the markers"
-  );
 </script>
 
 <svg {viewBox} class="visahoi-markers">
