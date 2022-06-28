@@ -9,21 +9,28 @@
       showOnboardingSteps.update((v) => !v);
     }
   };
-
-  $: iconClass = $activeOnboardingStage ? "fas fa-times" : "fas fa-question";
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
   <div
     class="visahoi-navigation-item-circle"
-    style="background-color: {$activeOnboardingStage?.color ||
+    style="background-color: {$activeOnboardingStage?.backgroundColor ||
       navigationMainItemDefaultColor}"
   >
-    <i class={iconClass} />
+    {#if $showOnboardingSteps}
+      <span><i class="fas fa-times" /></span>
+    {:else}
+      <span><i class="fas fa-question" /></span>
+    {/if}
   </div>
+
   <span class="visahoi-stage-title"
-    >{$activeOnboardingStage?.title || "Help"}</span
-  >
+    >{$activeOnboardingStage
+      ? $activeOnboardingStage?.title
+      : $showOnboardingSteps
+      ? "Close"
+      : "Help"}
+  </span>
 </div>
 
 <style>
