@@ -48,8 +48,16 @@
 
   $markInfo.map((maker, i) => {
     if (maker.marker.id === $previousMarkerId) {
-      initialIndexId.set(i);
+      debugger;
+      if (i === 0 || i === $markInfo.length - 1) {
+        initialIndexId.set(i);
+        console.log($initialIndexId, "initial index id");
+        ixNumber = i;
+        console.log(ixNumber);
+      }
+
       // ixNumber = i;
+      // console.log(ixNumber);
     }
   });
 
@@ -67,6 +75,19 @@
     activeOnboardingStage.update(
       (v) => markerInformation.message.onboardingStage
     );
+
+    // if ($selectedMarker) {
+    //   $markInfo.map((marker, i) => {
+    //     if (marker.marker.id === $selectedMarker.marker.id) {
+    //       if (i === $markInfo.length - 1) {
+    //         ixNumber = i;
+    //         console.log("ix number", ixNumber);
+    //         // navNextOpacity = 0.5;
+    //         // navNextPointerEvent = "none";
+    //       }
+    //     }
+    //   });
+    // }
 
     if ($activeMarker?.marker.id === marker.id) {
       activeMarker.set(null);

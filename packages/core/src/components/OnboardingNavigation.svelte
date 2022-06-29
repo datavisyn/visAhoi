@@ -19,95 +19,159 @@
   $: nextHeight = $markerInformation.length * 45 + 75 + "px";
   $: prevHeight = $markerInformation.length * 45 + 50 + "px";
 
+  $: navNextOpacity = 1;
+  $: navPreviousOpacity = 1;
+  $: navNextPointerEvent = "all";
+  $: navPreviousPointerEvent = "all";
+
   let index: number;
   let ix: number | null = null;
-
   $: indexId = ix;
+  debugger;
 
-  const navNext = () => {
-    //check the initial index id to disable navigation next icon
-    if ($initialIndexId === $markerInformation.length - 1) {
+  console.log("check it again -2");
+  $: console.log("indexId from onboarding navigation", indexId);
+  $: test = indexId === 4 ? "test is true" : "test is false";
+  // $: console.log(test, "A sample test");
+
+  $: test1 = async () => {
+    if (indexId === $markerInformation.length - 1) {
+      debugger;
+      console.log("It is true the id is 4..");
+      await tick();
       const elementId = document.getElementById("navigation-next");
       elementId?.style.pointerEvents = "none";
       elementId?.style.opacity = 0.5;
-      initialIndexId.set(null);
-    } else {
-      if ($previousMarkerId) {
-        const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
-        document.getElementById(elementId)?.style.opacity = 0.5;
-      }
 
+      // const elementId = document.getElementById("navigation-previous");
+      // elementId?.style.pointerEvents = "all";
+      // elementId?.style.opacity = 1;
+
+      // navNextOpacity = 0.5;
+      // navNextPointerEvent = "none";
+
+      // console.log(navNextOpacity, "next opacity");
+      // console.log(navNextPointerEvent, "Pointer event");
+    }
+    if (indexId === 0) {
+      debugger;
+      console.log("It is true the id is 0..");
+      await tick();
       const elementId = document.getElementById("navigation-previous");
-      elementId?.style.pointerEvents = "all";
-      elementId?.style.opacity = 1;
+      elementId?.style.pointerEvents = "none";
+      elementId?.style.opacity = 0.5;
 
-      if ($selectedMarker) {
-        $markerInformation.map((marker, i) => {
-          if (marker.marker.id === $selectedMarker.marker.id) {
-            index = i + 1;
-            if (index + 1 === $markerInformation.length) {
-              const elementId = document.getElementById("navigation-next");
-              elementId?.style.pointerEvents = "none";
-              elementId?.style.opacity = 0.5;
-            }
+      // const elementId = document.getElementById("navigation-next");
+      // elementId?.style.pointerEvents = "all";
+      // elementId?.style.opacity = 1;
+
+      // navPreviousOpacity = 0.5;
+      // navPreviousPointerEvent = "none";
+
+      console.log(navPreviousOpacity, "next opacity");
+      console.log(navPreviousPointerEvent, "Pointer event");
+    }
+  };
+  $: test1();
+
+  // $: indexId = ix;
+  // navNextOpacity = $initialIndexId === $markerInformation.length - 1 ? 0.5 : 1;
+  // console.log(navNextOpacity, "navigation next opacity");
+
+  const navNext = () => {
+    //check the initial index id to disable navigation next icon
+    // if ($initialIndexId === $markerInformation.length - 1) {
+    //   navNextPointerEvent = "none";
+    //   navNextOpacity = 0.5;
+    //   initialIndexId.set(null);
+    // } else {
+    if ($previousMarkerId) {
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      document.getElementById(elementId)?.style.opacity = 0.5;
+    }
+    const elementId = document.getElementById("navigation-previous");
+    elementId?.style.pointerEvents = "all";
+    elementId?.style.opacity = 1;
+
+    // navPreviousOpacity = 1;
+    // navPreviousPointerEvent = "all";
+
+    if ($selectedMarker) {
+      $markerInformation.map((marker, i) => {
+        if (marker.marker.id === $selectedMarker.marker.id) {
+          index = i + 1;
+          if (index + 1 === $markerInformation.length) {
+            const elementId = document.getElementById("navigation-next");
+            elementId?.style.pointerEvents = "none";
+            elementId?.style.opacity = 0.5;
+
+            // navNextOpacity = 0.5;
+            // navNextPointerEvent = "none";
           }
-        });
+        }
+      });
 
-        selectedMarker.set($markerInformation[index]);
-        activeOnboardingStage.update(
-          (v) => $selectedMarker?.message.onboardingStage
-        );
-        previousMarkerId.set($selectedMarker.marker.id);
-        activeMarker.set($selectedMarker);
-        const markerId = getMarkerDomId($selectedMarker.marker.id);
+      selectedMarker.set($markerInformation[index]);
+      activeOnboardingStage.update(
+        (v) => $selectedMarker?.message.onboardingStage
+      );
+      previousMarkerId.set($selectedMarker?.marker.id);
+      activeMarker.set($selectedMarker);
+      const markerId = getMarkerDomId($selectedMarker?.marker.id);
+      const elementId = `visahoi-marker-navigation-${markerId}`;
+      document.getElementById(elementId)?.style.opacity = 1;
+    }
+    // }
+  };
+
+  const navPrev = () => {
+    debugger;
+    // check the initial index id to disable navigation previous icon
+    // if ($initialIndexId === 0) {
+    //   navPreviousPointerEvent = "none";
+    //   navPreviousOpacity = 0.5;
+    //   initialIndexId.set(null);
+    // } else {
+    if ($previousMarkerId) {
+      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      document.getElementById(elementId)?.style.opacity = 0.5;
+    }
+    const elementId = document.getElementById("navigation-next");
+    elementId?.style.pointerEvents = "all";
+    elementId?.style.opacity = 1;
+
+    // navNextOpacity = 1;
+    // navNextPointerEvent = "all";
+
+    if ($selectedMarker) {
+      $markerInformation.map((marker, i) => {
+        if (marker.marker.id === $selectedMarker.marker.id) {
+          index = i - 1;
+          if (index === 0) {
+            console.log("Its is from inside");
+            const elementId = document.getElementById("navigation-previous");
+            elementId?.style.pointerEvents = "none";
+            elementId?.style.opacity = 0.5;
+
+            // navPreviousOpacity = 0.5;
+            // navPreviousPointerEvent = "none";
+          }
+        }
+      });
+
+      selectedMarker.set($markerInformation[index]);
+      activeOnboardingStage.update(
+        (v) => $selectedMarker?.message.onboardingStage
+      );
+      activeMarker.set($selectedMarker);
+      previousMarkerId.set($selectedMarker?.marker.id);
+      const markerId = getMarkerDomId($selectedMarker?.marker.id);
+      if (markerId) {
         const elementId = `visahoi-marker-navigation-${markerId}`;
         document.getElementById(elementId)?.style.opacity = 1;
       }
     }
-  };
-
-  const navPrev = () => {
-    //check the initial index id to disable navigation previous icon
-    if ($initialIndexId === 0) {
-      const elementId = document.getElementById("navigation-previous");
-      elementId?.style.pointerEvents = "none";
-      elementId?.style.opacity = 0.5;
-      initialIndexId.set(null);
-    } else {
-      if ($previousMarkerId) {
-        const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
-        document.getElementById(elementId)?.style.opacity = 0.5;
-      }
-
-      const elementId = document.getElementById("navigation-next");
-      elementId?.style.pointerEvents = "all";
-      elementId?.style.opacity = 1;
-
-      if ($selectedMarker) {
-        $markerInformation.map((marker, i) => {
-          if (marker.marker.id === $selectedMarker.marker.id) {
-            index = i - 1;
-            if (index === 0) {
-              const elementId = document.getElementById("navigation-previous");
-              elementId?.style.pointerEvents = "none";
-              elementId?.style.opacity = 0.5;
-            }
-          }
-        });
-
-        selectedMarker.set($markerInformation[index]);
-        activeOnboardingStage.update(
-          (v) => $selectedMarker?.message.onboardingStage
-        );
-        activeMarker.set($selectedMarker);
-        previousMarkerId.set($selectedMarker?.marker.id);
-        const markerId = getMarkerDomId($selectedMarker?.marker.id);
-        if (markerId) {
-          const elementId = `visahoi-marker-navigation-${markerId}`;
-          document.getElementById(elementId)?.style.opacity = 1;
-        }
-      }
-    }
+    // }
   };
 </script>
 
@@ -118,6 +182,7 @@
   <div class="visahoi-navigation-marker-container">
     {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
+        <!-- <NavigationMarker markerInformation={marker} order={index + 1} /> -->
         <NavigationMarker
           bind:ix
           markerInformation={marker}
@@ -127,6 +192,12 @@
     {/if}
 
     {#if $activeOnboardingStage && $showOnboardingNavigation}
+      <!-- <div
+        id="navigation-next"
+        style="--bottom-height: {nextHeight}; --opacity: {navNextOpacity}; --pointerEvents: {navNextPointerEvent}"
+        class="visahoi-navigation-next"
+        on:click={navNext}
+      > -->
       <div
         id="navigation-next"
         style="--bottom-height: {nextHeight}"
@@ -135,6 +206,12 @@
       >
         <span><i class="fas fa-chevron-up" /></span>
       </div>
+      <!-- <div
+        id="navigation-previous"
+        style="--bottom-height: {prevHeight}; --opacity: {navPreviousOpacity}; --pointerEvents: {navPreviousPointerEvent}"
+        class="visahoi-navigation-previous"
+        on:click={navPrev}
+      > -->
       <div
         id="navigation-previous"
         style="--bottom-height: {prevHeight}"
@@ -171,12 +248,16 @@
     position: absolute;
     bottom: var(--bottom-height);
     margin-bottom: 15px;
+    /* opacity: var(--opacity);
+    pointer-events: var(--pointerEvents); */
   }
 
   .visahoi-navigation-previous {
     position: absolute;
     bottom: var(--bottom-height);
     margin-bottom: 15px;
+    /* opacity: var(--opacity);
+    pointer-events: var(--pointerEvents); */
   }
 
   .visahoi-navigation-container {
