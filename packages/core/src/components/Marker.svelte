@@ -2,16 +2,48 @@
   import { IMarkerInformation } from "../interfaces";
   import { activeMarker } from "./stores";
   import { getMarkerDomId } from "../utils";
+  import { tick } from "svelte";
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
   console.log(markerInformation, "Marker info from the marker");
 
+  $: testMarker = { marker };
+  $: testOnboarding = {
+    activeBackgroundColor,
+    hoverBackgroundColor,
+    backgroundColor,
+  };
+  // console.log(testMarkerInfo, "testMarker info");
+
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
+
+  // $: console.log(testMarker, "TestMarker info");
+  // $: console.log(testOnboarding, "TEST onboarding");
+
+  $: testfn = async () => {
+    await tick();
+    console.log(testMarker, "inside await");
+    console.log(testOnboarding, "TEST onboarding");
+  };
+
+  $: testfn();
+
+  // const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
+  //   testMarkerInfo.message.onboardingStage;
+  // const { marker } = testMarkerInfo;
+
+  console.log(marker, "Marker from testMarkerInfo");
+  // console.log(
+  //   testMarkerInfo.message.onboardingStage,
+  //   "onboarding stage from testMarker info"
+  // );
+
   const handleClick = () => {
+    console.log(testMarker, "Testmarker inside handle click");
     if ($activeMarker?.marker.id === marker.id) {
       activeMarker.set(null);
     } else {

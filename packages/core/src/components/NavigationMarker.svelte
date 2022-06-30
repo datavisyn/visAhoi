@@ -48,12 +48,12 @@
 
   $markInfo.map((maker, i) => {
     if (maker.marker.id === $previousMarkerId) {
-      debugger;
+      // debugger;
       if (i === 0 || i === $markInfo.length - 1) {
         initialIndexId.set(i);
-        console.log($initialIndexId, "initial index id");
+        // console.log($initialIndexId, "initial index id");
         ixNumber = i;
-        console.log(ixNumber);
+        // console.log(ixNumber);
       }
 
       // ixNumber = i;
@@ -76,18 +76,33 @@
       (v) => markerInformation.message.onboardingStage
     );
 
-    // if ($selectedMarker) {
-    //   $markInfo.map((marker, i) => {
-    //     if (marker.marker.id === $selectedMarker.marker.id) {
-    //       if (i === $markInfo.length - 1) {
-    //         ixNumber = i;
-    //         console.log("ix number", ixNumber);
-    //         // navNextOpacity = 0.5;
-    //         // navNextPointerEvent = "none";
-    //       }
-    //     }
-    //   });
-    // }
+    if ($selectedMarker) {
+      $markInfo.map((marker, i) => {
+        if (marker.marker.id === $selectedMarker.marker.id) {
+          ixNumber = i;
+          console.log("Marker id is equal to selected marker id", ixNumber);
+          // if (i === $markInfo.length - 1) {
+          //   ixNumber = i;
+          //   console.log("ix number", ixNumber);
+          //   // navNextOpacity = 0.5;
+          //   // navNextPointerEvent = "none";
+          // }
+
+          // if (i === 0) {
+          //   ixNumber = i;
+          //   console.log("ix number", ixNumber);
+          //   // navNextOpacity = 0.5;
+          //   // navNextPointerEvent = "none";
+          // }
+
+          // if (i !== 0 || i !== $markInfo.length - 1) {
+          //   debugger;
+          //   ixNumber = i;
+          //   console.log("ix number rom not equal", ixNumber);
+          // }
+        }
+      });
+    }
 
     if ($activeMarker?.marker.id === marker.id) {
       activeMarker.set(null);

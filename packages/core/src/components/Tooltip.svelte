@@ -1,10 +1,15 @@
 <script lang="ts">
-  import { activeMarker, activeOnboardingStage } from "./stores";
+  import {
+    activeMarker,
+    activeOnboardingStage,
+    previousOnboardingStage,
+  } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
+  import { tick } from "svelte";
 
   export let visElement;
 
@@ -24,19 +29,37 @@
   };
 
   activeOnboardingStage.subscribe((onboardingStage) => {
+    // debugger;
     if (!onboardingStage) {
+      activeMarker.set(null);
+    }
+    if (onboardingStage?.id === "reading-the-chart") {
+      activeMarker.set(null);
+    }
+    if (onboardingStage !== $previousOnboardingStage) {
+      // console.log("It is same");
       activeMarker.set(null);
     }
   });
 
-  activeMarker.subscribe((marker) => {
+  activeMarker.subscribe(async (marker) => {
+    // debugger;
+    await tick();
     const tooltipElement = document.getElementById(tooltipId);
     const arrowElement = document.getElementById(arrowId);
+    // console.log(marker, "Marker");
     if (marker) {
       activeMarkerInformation = marker;
+      // console.log(activeMarkerInformation);
+      // const markerElement = document.getElementById(
+      //   `visahoi-marker-${marker.marker.id}`
+      // );
       const markerElement = document.getElementById(
         getMarkerDomId(marker.marker.id)
       );
+      // console.log(markerElement, "Marker Element");
+      // console.log(tooltipElement, "Tooltip Element");
+      // console.log(marker.tooltip.position, marker.anchorPosition);
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
           placement: marker.tooltip.position as TooltipPosition,
