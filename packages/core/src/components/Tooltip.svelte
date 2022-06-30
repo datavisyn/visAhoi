@@ -33,13 +33,6 @@
     if (!onboardingStage) {
       activeMarker.set(null);
     }
-    if (onboardingStage?.id === "reading-the-chart") {
-      activeMarker.set(null);
-    }
-    if (onboardingStage !== $previousOnboardingStage) {
-      // console.log("It is same");
-      activeMarker.set(null);
-    }
   });
 
   activeMarker.subscribe(async (marker) => {
@@ -50,16 +43,12 @@
     // console.log(marker, "Marker");
     if (marker) {
       activeMarkerInformation = marker;
-      // console.log(activeMarkerInformation);
-      // const markerElement = document.getElementById(
-      //   `visahoi-marker-${marker.marker.id}`
-      // );
       const markerElement = document.getElementById(
         getMarkerDomId(marker.marker.id)
       );
-      // console.log(markerElement, "Marker Element");
+      console.log(markerElement, "Marker Element");
       // console.log(tooltipElement, "Tooltip Element");
-      // console.log(marker.tooltip.position, marker.anchorPosition);
+
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
           placement: marker.tooltip.position as TooltipPosition,

@@ -7,6 +7,7 @@
     previousMarkerId,
     initialIndexId,
     markerInformation as markInfo,
+    showOnboarding,
   } from "./stores";
   import { getMarkerDomId } from "../utils";
   import { tick } from "svelte";
@@ -62,6 +63,7 @@
   });
 
   const handleClick = (event) => {
+    showOnboarding.set(true);
     if ($previousMarkerId) {
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;

@@ -6,8 +6,10 @@
     visXPosition,
     visYPosition,
     markerInformation,
+    testMarkerInformation,
   } from "./stores";
   import Marker from "./Marker.svelte";
+  import { tick } from "svelte";
 
   $: viewBox = `${$visXPosition + window.scrollX} ${
     $visYPosition + window.scrollY
@@ -16,15 +18,32 @@
   let currentOnboardingStage;
   activeOnboardingStage.subscribe((value) => {
     currentOnboardingStage = value?.id;
-    console.log(currentOnboardingStage, "current onboarding stage");
   });
-  $: console.log($markerInformation, "Marker information from markers");
+
+  // const test1 = $markerInformation?.filter(
+  //   (m) => m.message.onboardingStage.id === $activeOnboardingStage?.id
+  // );
+
+  $: test = $markerInformation?.filter(
+    (m) => m.message.onboardingStage.id === $activeOnboardingStage?.id
+  );
+  debugger;
+  $: testMarkerInformation.update((v) => test);
+
+  $: console.log($testMarkerInformation, "test Marker information");
+
+  // $: console.log(test1, "test1");
+  $: console.log(test, "Marker information from markers");
 </script>
 
 <svg {viewBox} class="visahoi-markers">
   {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
     <Marker markerInformation={marker} order={index + 1} />
   {/each}
+
+  <!-- {#each $testMarkerInformation as marker, index}
+    <Marker markerInformation={marker} order={index + 1} />
+  {/each} -->
 </svg>
 
 <style>

@@ -34,10 +34,10 @@
   // $: console.log("indexId from onboarding navigation", indexId);
   $: test = indexId === 4 ? "test is true" : "test is false";
   // $: console.log(test, "A sample test");
-  console.log("IxNumber", indexId);
+  // console.log("IxNumber", indexId);
 
   $: test1 = async () => {
-    console.log(indexId, "IxNumber");
+    // console.log(indexId, "IxNumber");
     switch (indexId) {
       case 0: {
         await tick();
@@ -47,6 +47,7 @@
         break;
       }
       case $markerInformation.length - 1: {
+        await tick();
         const elementId = document.getElementById("navigation-next");
         elementId?.style.pointerEvents = "none";
         elementId?.style.opacity = 0.5;
@@ -57,7 +58,7 @@
       //   console.log("It is null");
       // }
       default: {
-        console.log("index id fron not hghjg", indexId);
+        // console.log("index id fron not hghjg", indexId);
         await tick();
         const preElementId = document.getElementById("navigation-previous");
         preElementId?.style.pointerEvents = "all";
@@ -84,8 +85,8 @@
     //   initialIndexId.set(null);
     // } else {
     if ($previousMarkerId) {
-      console.log($markerInformation);
-      console.log("Previous Marker id", $previousMarkerId);
+      // console.log($markerInformation);
+      // console.log("Previous Marker id", $previousMarkerId);
       $markerInformation.map((m) => {
         if (m.marker.id === $previousMarkerId) {
           $previousOnboardingStage = m.message.onboardingStage;
