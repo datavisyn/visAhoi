@@ -36,7 +36,7 @@ export const generateBasicAnnotations = (
 
   if (chart === null) {
     console.error("Chart cannot be null");
-    return null;
+    return [];
   }
 
   // TODO: coords

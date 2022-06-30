@@ -26,8 +26,8 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
       value: "area",
       anchor: {
         coords: {
-          x: (t._polygons[0].xmax / 2),
-          y: t._polygons[0].ymax,
+          x: (t?._polygons[0].xmax / 2),
+          y: t?._polygons[0].ymax,
         }
       },
     },
@@ -47,8 +47,8 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
       value: chart.layout.xaxis.title.text,
       anchor: {
         coords: {
-          x: (t._polygons[0].xmax / 3*2),
-          y: (t._polygons[0].ymax / 3*2),
+          x: (t?._polygons[0].xmax / 3*2),
+          y: (t?._polygons[0].ymax / 3*2),
         }
       }
     },
