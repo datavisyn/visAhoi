@@ -7,8 +7,8 @@
     previousOnboardingStage,
     selectedMarker,
     activeMarker,
-    initialIndexId,
     previousMarkerId,
+    markerIndexId,
     showOnboardingNavigation,
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
@@ -30,7 +30,7 @@
   $: indexId = ix;
 
   $: enableDisableNavIcons = async () => {
-    switch (indexId) {
+    switch ($markerIndexId) {
       case 0: {
         await tick();
         const elementId = document.getElementById("navigation-previous");

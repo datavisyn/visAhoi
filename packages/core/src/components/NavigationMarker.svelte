@@ -5,7 +5,7 @@
     activeOnboardingStage,
     selectedMarker,
     previousMarkerId,
-    initialIndexId,
+    markerIndexId,
     markerInformation as markInfo,
     showOnboarding,
   } from "./stores";
@@ -47,16 +47,16 @@
     }
   });
 
-  $markInfo.map((maker, i) => {
-    if (maker.marker.id === $previousMarkerId) {
-      if (i === 0 || i === $markInfo.length - 1) {
-        initialIndexId.set(i);
-        // console.log($initialIndexId, "initial index id");
+  $: getNavSelectedMarkerIndex = () => {
+    $markInfo.map((maker, i) => {
+      if (maker.marker.id === $previousMarkerId) {
         ixNumber = i;
-        // console.log(ixNumber);
+        markerIndexId.set(i);
       }
-    }
-  });
+    });
+  };
+
+  $: getNavSelectedMarkerIndex();
 
   const handleClick = (event) => {
     if ($previousMarkerId) {

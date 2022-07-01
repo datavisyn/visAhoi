@@ -20,8 +20,6 @@
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
 
-  console.log("From the tooltip element");
-
   const closeTooltip = () => {
     activeMarker.set(null);
   };

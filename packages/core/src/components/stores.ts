@@ -25,7 +25,7 @@ export const showBackdrop = initializeStoreValue<boolean>(true);
 export const backdropOpacity = initializeStoreValue<number>(0.15);
 export const showOnboardingNavigation = initializeStoreValue<boolean>(false);
 export const previousMarkerId = initializeStoreValue<string | undefined>('');
-export const initialIndexId = initializeStoreValue<number | null>(null);
+export const markerIndexId = initializeStoreValue<number | null>(null);
 
 export const visXPosition = writable<number>(0);
 export const visYPosition = writable<number>(0);
@@ -45,5 +45,5 @@ export const resetStore = () => {
   previousOnboardingStage.reset();
   activeMarker.reset();
   selectedMarker.reset();
-  initialIndexId.reset();
+  markerIndexId.reset();
 }
