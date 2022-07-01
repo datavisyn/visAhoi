@@ -28,16 +28,8 @@
   let index: number;
   let ix: number | null = null;
   $: indexId = ix;
-  // debugger;
 
-  // console.log("check it again -2");
-  // $: console.log("indexId from onboarding navigation", indexId);
-  $: test = indexId === 4 ? "test is true" : "test is false";
-  // $: console.log(test, "A sample test");
-  // console.log("IxNumber", indexId);
-
-  $: test1 = async () => {
-    // console.log(indexId, "IxNumber");
+  $: enableDisableNavIcons = async () => {
     switch (indexId) {
       case 0: {
         await tick();
@@ -71,7 +63,7 @@
     }
   };
 
-  $: test1();
+  $: enableDisableNavIcons();
 
   // $: indexId = ix;
   // navNextOpacity = $initialIndexId === $markerInformation.length - 1 ? 0.5 : 1;
@@ -87,12 +79,13 @@
     if ($previousMarkerId) {
       // console.log($markerInformation);
       // console.log("Previous Marker id", $previousMarkerId);
-      $markerInformation.map((m) => {
-        if (m.marker.id === $previousMarkerId) {
-          $previousOnboardingStage = m.message.onboardingStage;
-          console.log($previousOnboardingStage, "previous testb marker");
-        }
-      });
+
+      // $markerInformation.map((m) => {
+      //   if (m.marker.id === $previousMarkerId) {
+      //     $previousOnboardingStage = m.message.onboardingStage;
+      //     console.log($previousOnboardingStage, "previous testb marker");
+      //   }
+      // });
 
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;

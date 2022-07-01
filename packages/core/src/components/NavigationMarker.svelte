@@ -49,21 +49,16 @@
 
   $markInfo.map((maker, i) => {
     if (maker.marker.id === $previousMarkerId) {
-      // debugger;
       if (i === 0 || i === $markInfo.length - 1) {
         initialIndexId.set(i);
         // console.log($initialIndexId, "initial index id");
         ixNumber = i;
         // console.log(ixNumber);
       }
-
-      // ixNumber = i;
-      // console.log(ixNumber);
     }
   });
 
   const handleClick = (event) => {
-    showOnboarding.set(true);
     if ($previousMarkerId) {
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;
@@ -80,28 +75,8 @@
 
     if ($selectedMarker) {
       $markInfo.map((marker, i) => {
-        if (marker.marker.id === $selectedMarker.marker.id) {
+        if (marker.marker.id === $selectedMarker?.marker.id) {
           ixNumber = i;
-          console.log("Marker id is equal to selected marker id", ixNumber);
-          // if (i === $markInfo.length - 1) {
-          //   ixNumber = i;
-          //   console.log("ix number", ixNumber);
-          //   // navNextOpacity = 0.5;
-          //   // navNextPointerEvent = "none";
-          // }
-
-          // if (i === 0) {
-          //   ixNumber = i;
-          //   console.log("ix number", ixNumber);
-          //   // navNextOpacity = 0.5;
-          //   // navNextPointerEvent = "none";
-          // }
-
-          // if (i !== 0 || i !== $markInfo.length - 1) {
-          //   debugger;
-          //   ixNumber = i;
-          //   console.log("ix number rom not equal", ixNumber);
-          // }
         }
       });
     }

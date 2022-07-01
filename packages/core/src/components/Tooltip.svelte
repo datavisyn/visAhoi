@@ -1,9 +1,5 @@
 <script lang="ts">
-  import {
-    activeMarker,
-    activeOnboardingStage,
-    previousOnboardingStage,
-  } from "./stores";
+  import { activeMarker, activeOnboardingStage } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
@@ -24,30 +20,28 @@
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
 
+  console.log("From the tooltip element");
+
   const closeTooltip = () => {
     activeMarker.set(null);
   };
 
   activeOnboardingStage.subscribe((onboardingStage) => {
-    // debugger;
     if (!onboardingStage) {
       activeMarker.set(null);
     }
   });
 
   activeMarker.subscribe(async (marker) => {
-    // debugger;
     await tick();
     const tooltipElement = document.getElementById(tooltipId);
     const arrowElement = document.getElementById(arrowId);
-    // console.log(marker, "Marker");
+
     if (marker) {
       activeMarkerInformation = marker;
       const markerElement = document.getElementById(
         getMarkerDomId(marker.marker.id)
       );
-      console.log(markerElement, "Marker Element");
-      // console.log(tooltipElement, "Tooltip Element");
 
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
