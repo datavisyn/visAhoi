@@ -7,7 +7,6 @@
     previousMarkerId,
     markerIndexId,
     markerInformation as markInfo,
-    showOnboarding,
   } from "./stores";
   import { getMarkerDomId } from "../utils";
   import { tick } from "svelte";
@@ -34,10 +33,18 @@
     ) {
       arrValue.push(message);
       selectedMarker.set(arrValue[0]);
+      // activeMarker.set(arrValue[0])
+
+      // const activeMarkerInfo = $markInfo.filter((m) => m.marker.id === $activeMarker?.marker.id)
 
       activeOnboardingStage.update(
         (v) => $selectedMarker?.message.onboardingStage
       );
+
+      // activeOnboardingStage.update(
+      //   (v) => activeMarkerInfo[0]?.message.onboardingStage
+      // );
+
       activeMarker.set($selectedMarker);
       previousMarkerId.set($selectedMarker?.marker.id);
 

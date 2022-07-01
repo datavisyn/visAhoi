@@ -30,19 +30,29 @@
   $: indexId = ix;
 
   $: enableDisableNavIcons = async () => {
+    // debugger;
+    console.log("Navigation marker.....", $markerIndexId);
     switch ($markerIndexId) {
       case 0: {
         await tick();
-        const elementId = document.getElementById("navigation-previous");
-        elementId?.style.pointerEvents = "none";
-        elementId?.style.opacity = 0.5;
+        const preElementId = document.getElementById("navigation-previous");
+        preElementId?.style.pointerEvents = "none";
+        preElementId?.style.opacity = 0.5;
+
+        const nextElementId = document.getElementById("navigation-next");
+        nextElementId?.style.pointerEvents = "all";
+        nextElementId?.style.opacity = 1;
         break;
       }
       case $markerInformation.length - 1: {
         await tick();
-        const elementId = document.getElementById("navigation-next");
-        elementId?.style.pointerEvents = "none";
-        elementId?.style.opacity = 0.5;
+        const nextElementId = document.getElementById("navigation-next");
+        nextElementId?.style.pointerEvents = "none";
+        nextElementId?.style.opacity = 0.5;
+
+        const preElementId = document.getElementById("navigation-previous");
+        preElementId?.style.pointerEvents = "all";
+        preElementId?.style.opacity = 1;
         break;
       }
 
