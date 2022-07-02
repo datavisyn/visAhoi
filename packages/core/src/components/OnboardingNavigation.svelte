@@ -136,6 +136,7 @@
   };
 
   const navPrev = () => {
+    console.log("Previous", $previousMarkerId);
     // debugger;
     // check the initial index id to disable navigation previous icon
     // if ($initialIndexId === 0) {

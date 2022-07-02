@@ -19,40 +19,8 @@
     markerInformation.message.onboardingStage.hoverBackgroundColor;
   $: marker = markerInformation.marker;
 
-  console.log("check it again");
-
   const handleClick = () => {
     if ($activeMarker?.marker.id === marker.id) {
-      const elementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
-      );
-      elementId?.style.opacity = 0.5;
-      const firstMarker = $markInfo.filter(
-        (m) =>
-          m.message.onboardingStage.id ===
-          $activeMarker?.message.onboardingStage.id
-      )[0];
-
-      const firstElementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${firstMarker?.marker.id}`
-      );
-      firstElementId?.style.opacity = 1;
-      $markInfo.map((maker, i) => {
-        if (maker.marker.id === firstMarker?.marker.id) {
-          markerIndexId.set(i);
-          console.log("Check it agaain new");
-        }
-      });
-      previousMarkerId.set(firstMarker?.marker.id);
-
-      // console.log(
-      //   $markInfo.filter(
-      //     (m) =>
-      //       m.message.onboardingStage.id ===
-      //       $activeMarker?.message.onboardingStage.id
-      //   )
-      // );
-
       activeMarker.set(null);
 
       // $markInfo.map((marker, i) => {
