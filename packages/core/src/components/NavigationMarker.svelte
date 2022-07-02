@@ -13,11 +13,7 @@
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
-  export let ix: number | null;
 
-  let ixNumber: number | null;
-
-  $: ix = ixNumber;
   $: bottom = order * 45 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
@@ -26,6 +22,8 @@
 
   let arrValue: IMarkerInformation[] = [];
 
+  console.log("After removing bindings and console");
+
   /**First navigation marker which belongs to the activeOnboarding stage is selected */
   $markInfo.map(async (message) => {
     if (
@@ -33,17 +31,10 @@
     ) {
       arrValue.push(message);
       selectedMarker.set(arrValue[0]);
-      // activeMarker.set(arrValue[0])
-
-      // const activeMarkerInfo = $markInfo.filter((m) => m.marker.id === $activeMarker?.marker.id)
 
       activeOnboardingStage.update(
         (v) => $selectedMarker?.message.onboardingStage
       );
-
-      // activeOnboardingStage.update(
-      //   (v) => activeMarkerInfo[0]?.message.onboardingStage
-      // );
 
       activeMarker.set($selectedMarker);
       previousMarkerId.set($selectedMarker?.marker.id);
@@ -57,7 +48,6 @@
   $: getNavSelectedMarkerIndex = () => {
     $markInfo.map((maker, i) => {
       if (maker.marker.id === $previousMarkerId) {
-        ixNumber = i;
         markerIndexId.set(i);
       }
     });
@@ -83,7 +73,7 @@
     if ($selectedMarker) {
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
-          ixNumber = i;
+          markerIndexId.set(i);
         }
       });
     }
@@ -99,9 +89,9 @@
 <div
   style="--bottom:{bottom}"
   class="visahoi-marker-navigation-item {$activeOnboardingStage}"
-  on:click={handleClick}
 >
   <div
+    on:click={handleClick}
     style="--active-background-color:{activeBackgroundColor ||
       hoverBackgroundColor}; --background-color:{backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
       backgroundColor};"

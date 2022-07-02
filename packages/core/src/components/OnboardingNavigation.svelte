@@ -4,7 +4,6 @@
     onboardingStages,
     markerInformation,
     activeOnboardingStage,
-    previousOnboardingStage,
     selectedMarker,
     activeMarker,
     previousMarkerId,
@@ -20,18 +19,8 @@
   $: nextHeight = $markerInformation.length * 45 + 75 + "px";
   $: prevHeight = $markerInformation.length * 45 + 50 + "px";
 
-  $: navNextOpacity = 1;
-  $: navPreviousOpacity = 1;
-  $: navNextPointerEvent = "all";
-  $: navPreviousPointerEvent = "all";
-
   let index: number;
-  let ix: number | null = null;
-  $: indexId = ix;
-
   $: enableDisableNavIcons = async () => {
-    // debugger;
-    console.log("Navigation marker.....", $markerIndexId);
     switch ($markerIndexId) {
       case 0: {
         await tick();
@@ -55,12 +44,7 @@
         preElementId?.style.opacity = 1;
         break;
       }
-
-      // case null: {
-      //   console.log("It is null");
-      // }
       default: {
-        // console.log("index id fron not hghjg", indexId);
         await tick();
         const preElementId = document.getElementById("navigation-previous");
         preElementId?.style.pointerEvents = "all";
@@ -75,37 +59,14 @@
 
   $: enableDisableNavIcons();
 
-  // $: indexId = ix;
-  // navNextOpacity = $initialIndexId === $markerInformation.length - 1 ? 0.5 : 1;
-  // console.log(navNextOpacity, "navigation next opacity");
-
   const navNext = () => {
-    //check the initial index id to disable navigation next icon
-    // if ($initialIndexId === $markerInformation.length - 1) {
-    //   navNextPointerEvent = "none";
-    //   navNextOpacity = 0.5;
-    //   initialIndexId.set(null);
-    // } else {
     if ($previousMarkerId) {
-      // console.log($markerInformation);
-      // console.log("Previous Marker id", $previousMarkerId);
-
-      // $markerInformation.map((m) => {
-      //   if (m.marker.id === $previousMarkerId) {
-      //     $previousOnboardingStage = m.message.onboardingStage;
-      //     console.log($previousOnboardingStage, "previous testb marker");
-      //   }
-      // });
-
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
     const elementId = document.getElementById("navigation-previous");
     elementId?.style.pointerEvents = "all";
     elementId?.style.opacity = 1;
-
-    // navPreviousOpacity = 1;
-    // navPreviousPointerEvent = "all";
 
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
@@ -115,9 +76,6 @@
             const elementId = document.getElementById("navigation-next");
             elementId?.style.pointerEvents = "none";
             elementId?.style.opacity = 0.5;
-
-            // navNextOpacity = 0.5;
-            // navNextPointerEvent = "none";
           }
         }
       });
@@ -132,18 +90,9 @@
       const elementId = `visahoi-marker-navigation-${markerId}`;
       document.getElementById(elementId)?.style.opacity = 1;
     }
-    // }
   };
 
   const navPrev = () => {
-    console.log("Previous", $previousMarkerId);
-    // debugger;
-    // check the initial index id to disable navigation previous icon
-    // if ($initialIndexId === 0) {
-    //   navPreviousPointerEvent = "none";
-    //   navPreviousOpacity = 0.5;
-    //   initialIndexId.set(null);
-    // } else {
     if ($previousMarkerId) {
       const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
       document.getElementById(elementId)?.style.opacity = 0.5;
@@ -152,21 +101,14 @@
     elementId?.style.pointerEvents = "all";
     elementId?.style.opacity = 1;
 
-    // navNextOpacity = 1;
-    // navNextPointerEvent = "all";
-
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker.marker.id) {
           index = i - 1;
           if (index === 0) {
-            // console.log("Its is from inside");
             const elementId = document.getElementById("navigation-previous");
             elementId?.style.pointerEvents = "none";
             elementId?.style.opacity = 0.5;
-
-            // navPreviousOpacity = 0.5;
-            // navPreviousPointerEvent = "none";
           }
         }
       });
@@ -183,7 +125,6 @@
         document.getElementById(elementId)?.style.opacity = 1;
       }
     }
-    // }
   };
 </script>
 
@@ -194,22 +135,11 @@
   <div class="visahoi-navigation-marker-container">
     {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
-        <!-- <NavigationMarker markerInformation={marker} order={index + 1} /> -->
-        <NavigationMarker
-          bind:ix
-          markerInformation={marker}
-          order={index + 1}
-        />
+        <NavigationMarker markerInformation={marker} order={index + 1} />
       {/each}
     {/if}
 
     {#if $activeOnboardingStage && $showOnboardingNavigation}
-      <!-- <div
-        id="navigation-next"
-        style="--bottom-height: {nextHeight}; --opacity: {navNextOpacity}; --pointerEvents: {navNextPointerEvent}"
-        class="visahoi-navigation-next"
-        on:click={navNext}
-      > -->
       <div
         id="navigation-next"
         style="--bottom-height: {nextHeight}"
@@ -218,12 +148,6 @@
       >
         <span><i class="fas fa-chevron-up" /></span>
       </div>
-      <!-- <div
-        id="navigation-previous"
-        style="--bottom-height: {prevHeight}; --opacity: {navPreviousOpacity}; --pointerEvents: {navPreviousPointerEvent}"
-        class="visahoi-navigation-previous"
-        on:click={navPrev}
-      > -->
       <div
         id="navigation-previous"
         style="--bottom-height: {prevHeight}"
@@ -250,7 +174,6 @@
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
-    /* margin-bottom: 10px; */
     width: 80px;
     bottom: 20px;
     opacity: 1;

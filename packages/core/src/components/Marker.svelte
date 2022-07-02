@@ -22,12 +22,6 @@
   const handleClick = () => {
     if ($activeMarker?.marker.id === marker.id) {
       activeMarker.set(null);
-
-      // $markInfo.map((marker, i) => {
-      //   if (marker.marker.id === $activeMarker?.marker.id) {
-      //     markerIndexId.reset();
-      //   }
-      // });
     } else {
       activeMarker.set(markerInformation);
       const preElementId = document.getElementById(
@@ -39,7 +33,6 @@
       );
       elementId?.style.opacity = 1;
       previousMarkerId.set($activeMarker?.marker.id);
-      console.log($previousMarkerId, "previous marker id");
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $activeMarker?.marker.id) {
           markerIndexId.set(i);

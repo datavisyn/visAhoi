@@ -20,20 +20,18 @@ export const onboardingStages = initializeStoreValue<IOnboardingStage[]>([]);
 export const activeOnboardingStage = initializeStoreValue<IOnboardingStage | null>(null);
 export const activeMarker = initializeStoreValue<IMarkerInformation | null>(null);
 export const selectedMarker = initializeStoreValue<IMarkerInformation | null>(null);
-export const previousOnboardingStage = initializeStoreValue<IOnboardingStage | null>(null);
 export const showBackdrop = initializeStoreValue<boolean>(true);
 export const backdropOpacity = initializeStoreValue<number>(0.15);
 export const showOnboardingNavigation = initializeStoreValue<boolean>(false);
 export const previousMarkerId = initializeStoreValue<string | undefined>('');
 export const markerIndexId = initializeStoreValue<number | null>(null);
 
+
 export const visXPosition = writable<number>(0);
 export const visYPosition = writable<number>(0);
 export const visHeight = writable<number>(0);
 export const visWidth = writable<number>(0);
 export const markerInformation = writable<IMarkerInformation[]>([]);
-export const testMarkerInformation = writable<IMarkerInformation[]>([]);
-
 
 export const resetStore = () => {
   showOnboarding.reset();
@@ -41,8 +39,7 @@ export const resetStore = () => {
   onboardingMessages.reset();
   navigationAlignment.reset();
   onboardingStages.reset();
-  activeOnboardingStage.reset();
-  previousOnboardingStage.reset();
+  activeOnboardingStage.reset();  
   activeMarker.reset();
   selectedMarker.reset();
   markerIndexId.reset();

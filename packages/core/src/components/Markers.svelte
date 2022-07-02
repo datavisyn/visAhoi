@@ -6,7 +6,6 @@
     visXPosition,
     visYPosition,
     markerInformation,
-    testMarkerInformation,
   } from "./stores";
   import Marker from "./Marker.svelte";
 
