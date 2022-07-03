@@ -8,7 +8,7 @@
     markerIndexId,
     markerInformation as markInfo,
   } from "./stores";
-  import { getMarkerDomId } from "../utils";
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
   import { tick } from "svelte";
 
   export let markerInformation: IMarkerInformation;
@@ -21,8 +21,6 @@
   const { marker } = markerInformation;
 
   let arrValue: IMarkerInformation[] = [];
-
-  console.log("After removing bindings and console");
 
   /**First navigation marker which belongs to the activeOnboarding stage is selected */
   $markInfo.map(async (message) => {
@@ -40,7 +38,7 @@
       previousMarkerId.set($selectedMarker?.marker.id);
 
       await tick();
-      const elementId = `visahoi-marker-navigation-visahoi-marker-${$selectedMarker?.marker.id}`;
+      const elementId = getNavigationMarkerDomId($selectedMarker?.marker.id);
       document.getElementById(elementId)?.style.opacity = 1;
     }
   });
@@ -57,7 +55,7 @@
 
   const handleClick = (event) => {
     if ($previousMarkerId) {
-      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      const elementId = getNavigationMarkerDomId($previousMarkerId);
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
 

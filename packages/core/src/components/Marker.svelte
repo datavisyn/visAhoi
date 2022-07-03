@@ -5,8 +5,9 @@
     previousMarkerId,
     markerIndexId,
     markerInformation as markInfo,
+    selectedMarker,
   } from "./stores";
-  import { getMarkerDomId } from "../utils";
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
@@ -25,14 +26,16 @@
     } else {
       activeMarker.set(markerInformation);
       const preElementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`
+        getNavigationMarkerDomId($previousMarkerId)
       );
       preElementId?.style.opacity = 0.5;
       const elementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
+        getNavigationMarkerDomId($activeMarker?.marker.id)
       );
       elementId?.style.opacity = 1;
+      selectedMarker.set($activeMarker);
       previousMarkerId.set($activeMarker?.marker.id);
+
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $activeMarker?.marker.id) {
           markerIndexId.set(i);

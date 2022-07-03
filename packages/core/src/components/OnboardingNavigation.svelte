@@ -13,13 +13,14 @@
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
   import NavigationMarker from "./NavigationMarker.svelte";
-  import { getMarkerDomId } from "../utils.js";
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils.js";
   import { tick } from "svelte";
 
   $: nextHeight = $markerInformation.length * 45 + 75 + "px";
   $: prevHeight = $markerInformation.length * 45 + 50 + "px";
 
   let index: number;
+
   $: enableDisableNavIcons = async () => {
     switch ($markerIndexId) {
       case 0: {
@@ -61,7 +62,7 @@
 
   const navNext = () => {
     if ($previousMarkerId) {
-      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      const elementId = getNavigationMarkerDomId($previousMarkerId);
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
     const elementId = document.getElementById("navigation-previous");
@@ -94,7 +95,7 @@
 
   const navPrev = () => {
     if ($previousMarkerId) {
-      const elementId = `visahoi-marker-navigation-visahoi-marker-${$previousMarkerId}`;
+      const elementId = getNavigationMarkerDomId($previousMarkerId);
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
     const elementId = document.getElementById("navigation-next");
