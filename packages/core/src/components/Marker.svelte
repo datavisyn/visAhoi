@@ -84,6 +84,7 @@
     fill="white"
     x={markerInformation.anchorPosition.x}
     y={markerInformation.anchorPosition.y}
+    font-size={markerInformation.marker.fontSize}
     >{typeof marker?.content == "string" ? marker.content : order}</text
   >
 </g>

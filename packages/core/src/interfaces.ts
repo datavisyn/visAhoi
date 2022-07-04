@@ -2,10 +2,11 @@
  * Supported chart types
  */
 export enum EVisualizationType {
-  BAR_CHART = "bar-chart",
-  CHANGE_MATRIX = "change-matrix",
-  HORIZON_GRAPH = "horizon-graph",
-  SCATTERPLOT = "scatterplot",
+  BAR_CHART = 'bar-chart',
+  CHANGE_MATRIX = 'change-matrix',
+  HORIZON_GRAPH = 'horizon-graph',
+  SCATTERPLOT = 'scatterplot',
+  TREEMAP = 'treemap'
 }
 
 export interface IBackdrop {
