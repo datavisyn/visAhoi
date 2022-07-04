@@ -13,6 +13,18 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
   const areaNodesData = Array.from(areaNodes).map((point: any) => point.__data__);
 
   const t = areaNodesData[0][0].trace;
+  // const t = undefined;
+  if (t === undefined) {    
+    return {
+      chartTitle: {
+        value: chart.layout.title.text,
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -20, top: 10}
+        }
+      },
+  }
+}
 
   return {
     chartTitle: {
@@ -26,8 +38,8 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
       value: "area",
       anchor: {
         coords: {
-          x: (t?._polygons[0].xmax / 2),
-          y: t?._polygons[0].ymax,
+          x: (t._polygons[0].xmax / 2),
+          y: t._polygons[0].ymax,
         }
       },
     },
@@ -47,8 +59,8 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
       value: chart.layout.xaxis.title.text,
       anchor: {
         coords: {
-          x: (t?._polygons[0].xmax / 3*2),
-          y: (t?._polygons[0].ymax / 3*2),
+          x: (t._polygons[0].xmax / 3*2),
+          y: (t._polygons[0].ymax / 3*2),
         }
       }
     },
@@ -65,6 +77,6 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
 }
 
 export function horizonGraphFactory(chart, coords, visElementId: Element): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  const onbordingSpec = extractOnboardingSpec(chart, coords);  
   return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }
