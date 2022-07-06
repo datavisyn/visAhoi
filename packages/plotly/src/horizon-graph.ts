@@ -15,7 +15,7 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
   const t = areaNodesData[0][0].trace;
   
   if (t === undefined || t === null)  {
-    console.error('The trace is null or undefined, therefore not all onboarding messages can be shown');    
+    console.error('Error: The trace is null or undefined, therefore not all onboarding messages can be shown.');    
     return {      
       chartTitle: {
         value: chart.layout.title.text,
