@@ -13,7 +13,7 @@ import { changeMatrixFactory } from "./change-matrix";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { treemapFactory } from "./treemap";
-
+import { heatmapFactory } from "./heatmap";
 // just pass them through
 export {
   createBasicOnboardingMessage,
@@ -40,10 +40,10 @@ export const generateBasicAnnotations = (
   }
 
   // TODO: coords
-  const chartTitlePosition = chart._fullLayout._dfltTitle;
+  const chartTitlePosition = chart?._fullLayout?._dfltTitle;
   coords["chartTitle"] = {
-    x: chartTitlePosition.x,
-    y: chartTitlePosition.y + 20,
+    x: chartTitlePosition?.x,
+    y: chartTitlePosition?.y + 20,
   };
 
   let onboardingMessages: IOnboardingMessage[];
@@ -69,11 +69,15 @@ export const generateBasicAnnotations = (
       onboardingMessages = treemapFactory(chart, coords, visElement);
       break;
 
-    default:
+    case EVisualizationType.HEATMAP:
+      onboardingMessages = heatmapFactory(chart, coords, visElement);
+      break;
+
       throw new Error(
         `No onboarding for visualization type ${visType} available.`
       );
   }
+  console.log(onboardingMessages, "from the plotly index");
   return onboardingMessages;
 };
 
