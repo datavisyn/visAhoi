@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { activeMarker, activeOnboardingStage } from "./stores";
+  import {
+    activeMarker,
+    activeOnboardingStage,
+    selectedMarker,
+    markerInformation,
+    markerIndexId,
+  } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
@@ -21,6 +27,22 @@
   const arrowId = tooltipId + "-arrow";
 
   const closeTooltip = () => {
+    // The active marker is closed and navigation marker is not highlighted.
+    // The selectedMarker is set to the initial marker in the activeOnboarding stage.
+    const elementId = document.getElementById(
+      `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
+    );
+    elementId?.style.opacity = 0.5;
+
+    const activeOnboardingStageMarkers = $markerInformation.filter(
+      (m) => m.message.onboardingStage === $activeOnboardingStage
+    );
+    selectedMarker.set(activeOnboardingStageMarkers[0]);
+    $markerInformation.map((marker, i) => {
+      if (marker.marker.id === $selectedMarker?.marker.id) {
+        markerIndexId.set(i);
+      }
+    });
     activeMarker.set(null);
   };
 

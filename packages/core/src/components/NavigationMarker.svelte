@@ -77,7 +77,23 @@
     }
 
     if ($activeMarker?.marker.id === marker.id) {
+      // The active marker is closed and navigation marker is not highlighted.
+      // The selectedMarker is set to the initial marker in the activeOnboarding stage.
       activeMarker.set(null);
+      const elementId = document.getElementById(
+        `visahoi-marker-navigation-visahoi-marker-${marker.id}`
+      );
+      elementId?.style.opacity = 0.5;
+
+      const activeOnboardingStageMarkers = $markInfo.filter(
+        (m) => m.message.onboardingStage === $activeOnboardingStage
+      );
+      selectedMarker.set(activeOnboardingStageMarkers[0]);
+      $markInfo.map((marker, i) => {
+        if (marker.marker.id === $selectedMarker?.marker.id) {
+          markerIndexId.set(i);
+        }
+      });
     } else {
       activeMarker.set(markerInformation);
     }
