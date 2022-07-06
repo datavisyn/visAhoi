@@ -14,7 +14,7 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  $: bottom = order * 45 + 15 + "px";
+  $: bottom = order * 35 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -91,7 +91,8 @@
   <div
     on:click={handleClick}
     style="--active-background-color:{activeBackgroundColor ||
-      hoverBackgroundColor}; --background-color:{backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
+      hoverBackgroundColor}; --background-color:{activeBackgroundColor ||
+      backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
       backgroundColor};"
     id="visahoi-marker-navigation-{getMarkerDomId(marker.id)}"
     class="visahoi-marker-navigation-item-circle {$activeOnboardingStage}"
@@ -108,7 +109,7 @@
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
     margin: 5px;
-    width: 80px;
+    width: 30px;
     bottom: var(--bottom);
     opacity: 1;
     z-index: 15;

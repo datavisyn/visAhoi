@@ -16,8 +16,8 @@
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils.js";
   import { tick } from "svelte";
 
-  $: nextHeight = $markerInformation.length * 45 + 75 + "px";
-  $: prevHeight = $markerInformation.length * 45 + 50 + "px";
+  $: nextHeight = $markerInformation.length * 35 + 75 + "px";
+  $: prevHeight = $markerInformation.length * 35 + 50 + "px";
 
   let index: number;
 
