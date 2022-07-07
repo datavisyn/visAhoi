@@ -15,6 +15,7 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
   )).__data__;
   const t = heatmapData[0].trace;
   console.log(t, "trace node");
+  console.log(chart.layout);
 
   return {
     chartTitle: {
@@ -28,6 +29,26 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
       value: t.type,
       anchor: {
         sel: ".heatmaplayer > .hm > image",
+      },
+    },
+    legendDescription: {
+      value: t.colorbar.title.text,
+      anchor: {
+        sel: ".infolayer > .colorbar",
+        offset: { top: -10 },
+      },
+    },
+    xAxis: {
+      value: chart.layout.xaxis.title.text,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -20 },
+      },
+    },
+    yAxis: {
+      value: chart.layout.yaxis.title.text,
+      anchor: {
+        sel: ".infolayer .ytitle",
       },
     },
   };
