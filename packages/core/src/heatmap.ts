@@ -32,7 +32,6 @@ function generateMessages(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
 
-  console.log(spec, "Spec");
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
