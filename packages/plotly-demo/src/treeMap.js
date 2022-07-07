@@ -56,7 +56,7 @@ const makePlotly = (label, parent, value, color) => {
     responsive: true,
   };
   const layout = {
-    // title: 'Jobs Plan',
+    title: 'Jobs Plan',
   };
   return Plotly.newPlot('vis', traces, layout, config);
 };
