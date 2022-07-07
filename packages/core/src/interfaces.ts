@@ -2,11 +2,11 @@
  * Supported chart types
  */
 export enum EVisualizationType {
-  BAR_CHART = 'bar-chart',
-  CHANGE_MATRIX = 'change-matrix',
-  HORIZON_GRAPH = 'horizon-graph',
-  SCATTERPLOT = 'scatterplot',
-  TREEMAP = 'treemap'
+  BAR_CHART = "bar-chart",
+  CHANGE_MATRIX = "change-matrix",
+  HORIZON_GRAPH = "horizon-graph",
+  SCATTERPLOT = "scatterplot",
+  TREEMAP = "treemap",
 }
 
 export interface IBackdrop {
@@ -68,6 +68,7 @@ export interface IBackdropConfig {
 export interface IAhoiConfig {
   onboardingMessages: IOnboardingMessage[];
   backdrop: IBackdropConfig;
+  showHelpCloseText?: boolean;
 }
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";

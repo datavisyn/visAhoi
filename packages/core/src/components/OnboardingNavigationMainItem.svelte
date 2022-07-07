@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
+  import {
+    showOnboardingSteps,
+    activeOnboardingStage,
+    showHideCloseText,
+  } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
   const handleClick = () => {
@@ -24,12 +28,22 @@
     {/if}
   </div>
 
+  <!-- <span class="visahoi-stage-title"
+    >{$activeOnboardingStage
+      ? $activeOnboardingStage?.title
+      : $showOnboardingSteps && $showHideCloseText
+      ? "Close"
+      : "Help"}
+  </span> -->
+
   <span class="visahoi-stage-title"
     >{$activeOnboardingStage
       ? $activeOnboardingStage?.title
-      : $showOnboardingSteps
+      : $showOnboardingSteps && $showHideCloseText
       ? "Close"
-      : "Help"}
+      : $showHideCloseText
+      ? "Help"
+      : ""}
   </span>
 </div>
 

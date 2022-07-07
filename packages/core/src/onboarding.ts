@@ -5,6 +5,7 @@ import {
   onboardingStages,
   showBackdrop,
   backdropOpacity,
+  showHideCloseText,
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
@@ -42,6 +43,9 @@ export const injectOnboarding = (
     ahoiConfig?.backdrop?.opacity !== undefined
   ) {
     backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
+  }
+  if (ahoiConfig?.showHelpCloseText === false) {
+    showHideCloseText.set(ahoiConfig?.showHelpCloseText);
   }
 
   const ref = { update: () => {} };
