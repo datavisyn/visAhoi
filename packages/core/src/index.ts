@@ -72,7 +72,6 @@ export function generateMessages(
       break;
   }
   onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))]);
-  console.log(messages, "Message from the index.ts");
   return messages;
 }
 

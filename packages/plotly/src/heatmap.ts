@@ -6,16 +6,10 @@ import {
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
 
 function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
-  debugger;
-  console.log("chart psrts:", chart.querySelectorAll(".plot"));
-  console.log("Chart", chart.data);
-
   const heatmapData = (<any>(
     Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]
   )).__data__;
   const t = heatmapData[0].trace;
-  console.log(t, "trace node");
-  console.log(chart.layout);
 
   return {
     chartTitle: {
@@ -38,17 +32,32 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
         offset: { top: -10 },
       },
     },
+    axisDescription: {
+      value: t?.xaxis?.title?.text,
+      anchor: {
+        sel: ".infolayer > .g-xtitle",
+        offset: { top: -10, left: -50 },
+      },
+    },
     xAxis: {
       value: chart.layout.xaxis.title.text,
-      anchor: {
-        findDomNodeByValue: true,
-        offset: { left: -20 },
-      },
     },
     yAxis: {
       value: chart.layout.yaxis.title.text,
+    },
+    hoverDescription: {
+      value: t?.xaxis?.title?.text,
       anchor: {
-        sel: ".infolayer .ytitle",
+        // sel: ".infolayer > .g-xtitle",
+        sel: ".cartesianlayer > .subplot xy > .gridlayer",
+        offset: { top: -10, left: -50 },
+      },
+    },
+    missingDataDescription: {
+      value: t?.xaxis?.title?.text,
+      anchor: {
+        sel: ".cartesianlayer > .subplot xy > .gridlayer",
+        offset: { top: -10, left: -50 },
       },
     },
   };

@@ -77,7 +77,6 @@ export const generateBasicAnnotations = (
         `No onboarding for visualization type ${visType} available.`
       );
   }
-  console.log(onboardingMessages, "from the plotly index");
   return onboardingMessages;
 };
 

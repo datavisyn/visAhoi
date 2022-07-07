@@ -10,8 +10,6 @@ let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
 
-console.log('Testing');
-
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);

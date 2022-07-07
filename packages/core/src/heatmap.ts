@@ -14,6 +14,8 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   heatmapDescription?: ISpecProp;
   legendDescription?: ISpecProp;
   axisDescription?: ISpecProp;
+  hoverDescription?: ISpecProp;
+  missingDataDescription?: ISpecProp;
 }
 
 function generateMessages(
@@ -69,7 +71,27 @@ function generateMessages(
       title: "Reading the chart",
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-3",
+        id: "unique-marker-id-4",
+      },
+    },
+    {
+      anchor: getAnchor(spec.hoverDescription, visElement),
+      requires: ["hoverDescription"],
+      text: "Eesg",
+      title: "Interacting with the chart",
+      onboardingStage: interacting,
+      marker: {
+        id: "unique-marker-id-5",
+      },
+    },
+    {
+      anchor: getAnchor(spec.missingDataDescription, visElement),
+      requires: ["missingDataDescription"],
+      text: "Eesg",
+      title: "Analyzing the chart",
+      onboardingStage: analyzing,
+      marker: {
+        id: "unique-marker-id-6",
       },
     },
   ];

@@ -31,7 +31,6 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
   const maxX = Math.max(...xVals);
   const maxXIndex = xVals.indexOf(maxX);
   const maxY = yVals[maxXIndex];
-  console.log(chart, "Chart from scatterplot");
 
   return {
     chartTitle: {
