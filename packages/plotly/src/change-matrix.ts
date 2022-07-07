@@ -1,4 +1,3 @@
-
 import {
   EVisualizationType,
   IOnboardingMessage,
@@ -6,29 +5,34 @@ import {
   generateMessages,
 } from "@visahoi/core";
 
-function extractOnboardingSpec(chart: any, coords): IOnboardingChangeMatrixSpec {
-  const heatmapData = (<any>Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]).__data__;
+function extractOnboardingSpec(
+  chart: any,
+  coords
+): IOnboardingChangeMatrixSpec {
+  const heatmapData = (<any>(
+    Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]
+  )).__data__;
   const t = heatmapData[0].trace;
 
   return {
     chartTitle: {
-      value: chart.layout.title.text,
+      value: chart?.layout?.title?.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: {left: -20, top: 10}
-      }
+        offset: { left: -20, top: 10 },
+      },
     },
     type: {
       value: t.type,
       anchor: {
-        sel: '.heatmaplayer > .hm > image'
-      }
+        sel: ".heatmaplayer > .hm > image",
+      },
     },
     legendTitle: {
       value: t.colorbar.title.text,
       anchor: {
-        sel: '.infolayer > .colorbar',
-        offset: {top: -10}
+        sel: ".infolayer > .colorbar",
+        offset: { top: -10 },
       },
     },
     yMin: {
@@ -47,14 +51,14 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingChangeMatrixSpec 
       value: chart.layout.xaxis.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: {left: -20}
-      }
+        offset: { left: -20 },
+      },
     },
     yAxis: {
       value: chart.layout.yaxis.title.text,
       anchor: {
-        sel: '.infolayer .ytitle'
-      }
+        sel: ".infolayer .ytitle",
+      },
     },
     // xAxisLabel (e.g. 01, 02, …)
     // yAxisLabel (e.g. -5, 0, 5, ...)
@@ -62,7 +66,15 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingChangeMatrixSpec 
   };
 }
 
-export function changeMatrixFactory(chart, coords, visElementId: Element): IOnboardingMessage[] {
+export function changeMatrixFactory(
+  chart,
+  coords,
+  visElementId: Element
+): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords);
-  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
+  return generateMessages(
+    EVisualizationType.CHANGE_MATRIX,
+    onbordingSpec,
+    visElementId
+  );
 }
