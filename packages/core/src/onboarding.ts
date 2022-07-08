@@ -30,7 +30,8 @@ export const injectOnboarding = (
   onboardingStages.set([
     ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
   ]);
-  navigationAlignment.set(alignment);
+  navigationAlignment.set("row");
+  console.log(alignment, " alignment");
   if (
     ahoiConfig?.backdrop?.show !== null &&
     ahoiConfig?.backdrop?.show !== undefined

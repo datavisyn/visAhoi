@@ -12,11 +12,12 @@
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
   const bottom: string = (index + 1) * 75 + "px";
+  const right: string = (index + 1) * 75 + "px";
 </script>
 
 <div
   style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
-    stage.backgroundColor}; --bottom:{bottom}"
+    stage.backgroundColor}; --bottom:{bottom}; --right: {right}"
   class="visahoi-navigation-item {!$showOnboardingSteps ||
   $activeOnboardingStage
     ? 'removed'
@@ -42,10 +43,11 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
+    /* transition: opacity 0.5s ease, bottom 0.5s ease;     */
+    transition: opacity 0.5s ease, right 0.5s ease;
     margin: 5px;
     width: 80px;
-    bottom: var(--bottom);
+    /* bottom: var(--bottom); */
     opacity: 1;
     z-index: 15;
   }
@@ -86,6 +88,17 @@
   .vertical {
     bottom: calc(var(--order) * 100px);
   } */
+
+  .horizontal {
+    right: var(--right);
+    /* transition: opacity 0.5s ease, right 0.5s ease; */
+    bottom: 0;
+  }
+
+  .vertical {
+    bottom: var(--bottom);
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+  }
 
   .visahoi-stage-title {
     font-weight: bold;
