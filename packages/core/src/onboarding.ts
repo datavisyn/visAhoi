@@ -5,6 +5,7 @@ import {
   onboardingStages,
   showBackdrop,
   backdropOpacity,
+  showOnboardingNavigation
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
@@ -22,8 +23,13 @@ export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
   alignment: NavigationAlignment
-) => {
-  onboardingMessages.set(ahoiConfig.onboardingMessages);
+) => {  
+  onboardingMessages.set(ahoiConfig.onboardingMessages);  
+  
+  if(ahoiConfig?.showOnboardingNavigation) {
+  showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
+  }
+  
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );

@@ -16,7 +16,8 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
   const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING) as IOnboardingStage;
   const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage;
   const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage;
-
+  
+  
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
@@ -79,6 +80,7 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       }
     }
   ];
+
 
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
