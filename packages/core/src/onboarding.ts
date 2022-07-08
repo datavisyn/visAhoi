@@ -5,7 +5,8 @@ import {
   onboardingStages,
   showBackdrop,
   backdropOpacity,
-  showOnboardingNavigation
+  showHideCloseText,
+  showOnboardingNavigation,
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
@@ -23,13 +24,13 @@ export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
   alignment: NavigationAlignment
-) => {  
-  onboardingMessages.set(ahoiConfig.onboardingMessages);  
-  
-  if(ahoiConfig?.showOnboardingNavigation) {
-  showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
+) => {
+  onboardingMessages.set(ahoiConfig.onboardingMessages);
+
+  if (ahoiConfig?.showOnboardingNavigation) {
+    showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
   }
-  
+
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );
@@ -48,6 +49,9 @@ export const injectOnboarding = (
     ahoiConfig?.backdrop?.opacity !== undefined
   ) {
     backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
+  }
+  if (ahoiConfig?.showHelpCloseText === false) {
+    showHideCloseText.set(ahoiConfig?.showHelpCloseText);
   }
 
   const ref = { update: () => {} };

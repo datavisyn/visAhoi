@@ -2,6 +2,7 @@
   import {
     showOnboardingSteps,
     activeOnboardingStage,
+    showHideCloseText,
     showOnboardingNavigation,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
@@ -35,9 +36,11 @@
   <span class="visahoi-stage-title"
     >{$activeOnboardingStage
       ? $activeOnboardingStage?.title
-      : $showOnboardingSteps
+      : $showOnboardingSteps && $showHideCloseText
       ? "Close"
-      : "Help"}
+      : $showHideCloseText
+      ? "Help"
+      : ""}
   </span>
 </div>
 
