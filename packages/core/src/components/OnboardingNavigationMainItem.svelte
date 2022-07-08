@@ -3,6 +3,8 @@
     showOnboardingSteps,
     activeOnboardingStage,
     navigationAlignment,
+    showHideCloseText,
+    showOnboardingNavigation,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
@@ -15,6 +17,10 @@
   };
   console.log("Testing it ");
   $: console.log($navigationAlignment, "Navigation alignment");
+
+  const toggleNavigation = () => {
+    showOnboardingNavigation.set(!$showOnboardingNavigation);
+  };
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
@@ -33,13 +39,46 @@
   <span class="visahoi-stage-title"
     >{$activeOnboardingStage
       ? $activeOnboardingStage?.title
-      : $showOnboardingSteps
+      : $showOnboardingSteps && $showHideCloseText
       ? "Close"
-      : "Help"}
+      : $showHideCloseText
+      ? "Help"
+      : ""}
   </span>
 </div>
 
+<div class="toggle-button">
+  {#if $showOnboardingNavigation}
+    <span class="test-span" on:click={toggleNavigation}>
+      <i class="fas fa-solid fa-toggle-on" />
+    </span>
+  {:else}
+    <span class="test-span" on:click={toggleNavigation}>
+      <i
+        class="fas fa-solid fa-toggle-off"
+        style="width: 20px, height:20px"
+        on:click={toggleNavigation}
+      />
+    </span>
+  {/if}
+</div>
+
 <style>
+  /* .test-span {
+    width: 50px;
+    height: 50px;
+  } */
+  .toggle-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 80px;
+    /* height: 80px; */
+    opacity: 1;
+    z-index: 15;
+  }
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;

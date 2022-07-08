@@ -1,7 +1,9 @@
 import * as echarts from 'echarts';
 import debounce from "lodash.debounce";
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
 
 let chart = null;
+let showOnboarding = false;
 let onboardingUI = null;
 
 const debouncedResize = debounce((event) => {
@@ -82,11 +84,37 @@ chart.setOption(options);
 return chart;
 }
 
+const getAhoiConfig = () => {
+  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.TREEMAP, chart);
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+    ...d,
+    text: "test123"
+  }));
+  const ahoiConfig = {
+    onboardingMessages: defaultOnboardingMessages,
+  }
+  return ahoiConfig;
+}
+
+const registerEventListener = () => {    
+  const helpIcon = document.getElementById("show-onboarding");
+  if(!helpIcon) { return; }
+  helpIcon.addEventListener('click', async () => {
+    showOnboarding = !showOnboarding;
+    if(showOnboarding) {
+      onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, getAhoiConfig());
+    } else {
+      onboardingUI?.removeOnboarding();
+    }    
+  })
+}
+
 
 const createChart = (renderer = 'svg') => {    
   const vis = document.getElementById("vis");
   chart = echarts.init(vis, null, {renderer});
   window.addEventListener("resize", () => chart.resize());
+  registerEventListener();
   render();
 }
 

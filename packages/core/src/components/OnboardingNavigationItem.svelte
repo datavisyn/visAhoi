@@ -1,6 +1,5 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
-
   import {
     navigationAlignment,
     activeOnboardingStage,
@@ -8,9 +7,11 @@
   } from "./stores.js";
   export let stage: IOnboardingStage;
   export let index: number;
+
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
+
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 75 + "px";
 </script>
