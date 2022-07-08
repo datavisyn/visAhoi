@@ -108,6 +108,7 @@ import {
           offset: {left: -80, top: -30}
         }
       },
+      
       interactingDesc:{
         value: chart.data[0].labels[0],
         anchor: {
@@ -115,6 +116,7 @@ import {
           offset: {left: -20, top: -30}
         }
       },
+    
       maxValueDesc: {        
         value: maxLabel,
         anchor: {
@@ -122,6 +124,7 @@ import {
           offset: {left: -20, top: -30}
         }
       },
+
       minValueDesc: {        
         value: minLabel,
         anchor: {
@@ -129,9 +132,11 @@ import {
           offset: {left: -20, top: -20}
         }
       },
+
       maxValue: {
         value: maxVal,        
       },
+      
       minValue: {
         value: minVal
       }  
