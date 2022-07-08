@@ -34,8 +34,8 @@ function generateMessages(
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
-  let messages: IOnboardingMessage[];
-  messages = [
+
+  const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.desc, visElement),
       requires: ["desc"],
