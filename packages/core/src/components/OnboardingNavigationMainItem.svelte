@@ -3,6 +3,7 @@
     showOnboardingSteps,
     activeOnboardingStage,
     showHideCloseText,
+    showOnboardingNavigation,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
@@ -12,6 +13,10 @@
     } else {
       showOnboardingSteps.update((v) => !v);
     }
+  };
+
+  const toggleNavigation = () => {
+    showOnboardingNavigation.set(!$showOnboardingNavigation);
   };
 </script>
 
@@ -39,7 +44,38 @@
   </span>
 </div>
 
+<div class="toggle-button">
+  {#if $showOnboardingNavigation}
+    <span class="test-span" on:click={toggleNavigation}>
+      <i class="fas fa-solid fa-toggle-on" />
+    </span>
+  {:else}
+    <span class="test-span" on:click={toggleNavigation}>
+      <i
+        class="fas fa-solid fa-toggle-off"
+        style="width: 20px, height:20px"
+        on:click={toggleNavigation}
+      />
+    </span>
+  {/if}
+</div>
+
 <style>
+  /* .test-span {
+    width: 50px;
+    height: 50px;
+  } */
+  .toggle-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 80px;
+    /* height: 80px; */
+    opacity: 1;
+    z-index: 15;
+  }
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;

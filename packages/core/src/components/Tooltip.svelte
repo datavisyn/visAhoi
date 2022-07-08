@@ -1,10 +1,17 @@
 <script lang="ts">
-  import { activeMarker, activeOnboardingStage } from "./stores";
+  import {
+    activeMarker,
+    activeOnboardingStage,
+    selectedMarker,
+    markerInformation,
+    markerIndexId,
+  } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
+  import { tick } from "svelte";
 
   export let visElement;
 
@@ -20,6 +27,22 @@
   const arrowId = tooltipId + "-arrow";
 
   const closeTooltip = () => {
+    // The active marker is closed and navigation marker is not highlighted.
+    // The selectedMarker is set to the initial marker in the activeOnboarding stage.
+    const elementId = document.getElementById(
+      `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
+    );
+    elementId?.style.opacity = 0.5;
+
+    const activeOnboardingStageMarkers = $markerInformation.filter(
+      (m) => m.message.onboardingStage === $activeOnboardingStage
+    );
+    selectedMarker.set(activeOnboardingStageMarkers[0]);
+    $markerInformation.map((marker, i) => {
+      if (marker.marker.id === $selectedMarker?.marker.id) {
+        markerIndexId.set(i);
+      }
+    });
     activeMarker.set(null);
   };
 
@@ -29,14 +52,17 @@
     }
   });
 
-  activeMarker.subscribe((marker) => {
+  activeMarker.subscribe(async (marker) => {
+    await tick();
     const tooltipElement = document.getElementById(tooltipId);
     const arrowElement = document.getElementById(arrowId);
+
     if (marker) {
       activeMarkerInformation = marker;
       const markerElement = document.getElementById(
         getMarkerDomId(marker.marker.id)
       );
+
       if (markerElement && tooltipElement) {
         createPopper(markerElement, tooltipElement, {
           placement: marker.tooltip.position as TooltipPosition,
