@@ -99,3 +99,16 @@ export const createPopperTooltip = (anchor, tooltip) => {
 export const getMarkerDomId = (id: string): string => {
   return `visahoi-marker-${id}`;
 };
+
+
+/**
+ * returns the markerId with the visahoi navigation prefix
+ * this id is used for the navigation marker dom element
+ * @param id
+ * @returns
+ */
+ export const getNavigationMarkerDomId = (id: string): string => {
+  return `visahoi-marker-navigation-visahoi-marker-${id}`;
+};
+
+

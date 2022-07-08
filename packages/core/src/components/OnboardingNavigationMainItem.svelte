@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
+  import {
+    showOnboardingSteps,
+    activeOnboardingStage,
+    showOnboardingNavigation,
+  } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
   const handleClick = () => {
@@ -10,23 +14,65 @@
     }
   };
 
-  $: iconClass = $activeOnboardingStage ? "fas fa-times" : "fas fa-question";
+  const toggleNavigation = () => {
+    showOnboardingNavigation.set(!$showOnboardingNavigation);
+  };
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
   <div
     class="visahoi-navigation-item-circle"
-    style="background-color: {$activeOnboardingStage?.color ||
+    style="background-color: {$activeOnboardingStage?.backgroundColor ||
       navigationMainItemDefaultColor}"
   >
-    <i class={iconClass} />
+    {#if $showOnboardingSteps}
+      <span><i class="fas fa-times" /></span>
+    {:else}
+      <span><i class="fas fa-question" /></span>
+    {/if}
   </div>
+
   <span class="visahoi-stage-title"
-    >{$activeOnboardingStage?.title || "Help"}</span
-  >
+    >{$activeOnboardingStage
+      ? $activeOnboardingStage?.title
+      : $showOnboardingSteps
+      ? "Close"
+      : "Help"}
+  </span>
+</div>
+
+<div class="toggle-button">
+  {#if $showOnboardingNavigation}
+    <span class="test-span" on:click={toggleNavigation}>
+      <i class="fas fa-solid fa-toggle-on" />
+    </span>
+  {:else}
+    <span class="test-span" on:click={toggleNavigation}>
+      <i
+        class="fas fa-solid fa-toggle-off"
+        style="width: 20px, height:20px"
+        on:click={toggleNavigation}
+      />
+    </span>
+  {/if}
 </div>
 
 <style>
+  /* .test-span {
+    width: 50px;
+    height: 50px;
+  } */
+  .toggle-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 80px;
+    /* height: 80px; */
+    opacity: 1;
+    z-index: 15;
+  }
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;

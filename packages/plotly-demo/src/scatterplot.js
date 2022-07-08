@@ -67,7 +67,8 @@ const getAhoiConfig = () => {
   }));
   
   const ahoiConfig = {
-    onboardingMessages: extendedOnboardingMessages    
+    onboardingMessages: defaultOnboardingMessages,
+    // showOnboardingNavigation: true,
   }
   
   return ahoiConfig;
@@ -80,7 +81,7 @@ const registerEventListener = () => {
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
     if(showOnboarding) {
-      onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, getAhoiConfig());
+      onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, getAhoiConfig());      
     } else {
       onboardingUI?.removeOnboarding();
     }

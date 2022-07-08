@@ -13,6 +13,19 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
   const areaNodesData = Array.from(areaNodes).map((point: any) => point.__data__);
 
   const t = areaNodesData[0][0].trace;
+  
+  if (t === undefined || t === null)  {
+    console.error('Error: The trace is null or undefined, therefore not all onboarding messages can be shown.');    
+    return {      
+      chartTitle: {
+        value: chart.layout.title.text,
+        anchor: {
+          findDomNodeByValue: true,
+          offset: {left: -20, top: 10}
+        }
+      },
+  }
+}
 
   return {
     chartTitle: {
@@ -65,6 +78,6 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingHorizonGraphSpec 
 }
 
 export function horizonGraphFactory(chart, coords, visElementId: Element): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  const onbordingSpec = extractOnboardingSpec(chart, coords);  
   return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }

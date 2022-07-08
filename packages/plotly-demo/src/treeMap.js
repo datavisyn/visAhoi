@@ -38,6 +38,7 @@ const makePlotly = (label, parent, value, color) => {
     const traces = [
         {
             type: 'treemap',
+            branchvalues: "total",
             labels: label,
             parents: parent,
             values: value,

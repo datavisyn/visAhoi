@@ -12,7 +12,7 @@ import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
-import { treemapFactory } from './treemap';
+import { treemapFactory } from "./treemap";
 
 // just pass them through
 export {
@@ -33,6 +33,12 @@ export const generateBasicAnnotations = (
 ): IOnboardingMessage[] => {
   const coords = {};
   const visElement = chart;
+
+  if (chart === null) {
+    console.error("Chart cannot be null");
+    return [];
+  }
+
   // TODO: coords
   const chartTitlePosition = chart._fullLayout._dfltTitle;
   coords["chartTitle"] = {
@@ -62,7 +68,6 @@ export const generateBasicAnnotations = (
     case EVisualizationType.TREEMAP:
       onboardingMessages = treemapFactory(chart, coords, visElement);
       break;
-
 
     default:
       throw new Error(
