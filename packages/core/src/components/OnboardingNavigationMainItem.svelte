@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
+  import {
+    showOnboardingSteps,
+    activeOnboardingStage,
+    navigationAlignment,
+  } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
   const handleClick = () => {
@@ -9,6 +13,8 @@
       showOnboardingSteps.update((v) => !v);
     }
   };
+  console.log("Testing it ");
+  $: console.log($navigationAlignment, "Navigation alignment");
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
