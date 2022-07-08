@@ -76,7 +76,8 @@ const getAhoiConfig = () => {
   );
 
   const ahoiConfig = {
-    onboardingMessages: extendedOnboardingMessages,
+    onboardingMessages: defaultOnboardingMessages,
+    // showOnboardingNavigation: true,
   };
 
   return ahoiConfig;

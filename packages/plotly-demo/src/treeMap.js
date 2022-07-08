@@ -72,6 +72,7 @@ const getAhoiConfig = () => {
   }));
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
+    showHelpCloseText: false,
   };
   return ahoiConfig;
 };
