@@ -48,18 +48,17 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
     hoverDescription: {
       value: t?.xaxis?.title?.text,
       anchor: {
-        // sel: ".infolayer > .g-xtitle",
-        sel: ".cartesianlayer > .subplot xy > .gridlayer",
-        offset: { top: -10, left: -50 },
+        sel: ".cartesianlayer",
+        offset: { top: -50, left: -120 },
       },
     },
-    missingDataDescription: {
-      value: t?.xaxis?.title?.text,
-      anchor: {
-        sel: ".cartesianlayer > .subplot xy > .gridlayer",
-        offset: { top: -10, left: -50 },
-      },
-    },
+    // missingDataDescription: {
+    //   value: t?.xaxis?.title?.text,
+    //   anchor: {
+    //     // sel: ".cartesianlayer > .subplot xy > .gridlayer",
+    //     offset: { top: -10, left: -50 },
+    //   },
+    // },
   };
 }
 

@@ -76,23 +76,23 @@ function generateMessages(
     {
       anchor: getAnchor(spec.hoverDescription, visElement),
       requires: ["hoverDescription"],
-      text: "Eesg",
+      text: "Hover over the chart to get the dedicated value for each cell.",
       title: "Interacting with the chart",
       onboardingStage: interacting,
       marker: {
         id: "unique-marker-id-5",
       },
     },
-    {
-      anchor: getAnchor(spec.missingDataDescription, visElement),
-      requires: ["missingDataDescription"],
-      text: "Eesg",
-      title: "Analyzing the chart",
-      onboardingStage: analyzing,
-      marker: {
-        id: "unique-marker-id-6",
-      },
-    },
+    // {
+    //   anchor: getAnchor(spec.missingDataDescription, visElement),
+    //   requires: ["missingDataDescription"],
+    //   text: "Eesg",
+    //   title: "Analyzing the chart",
+    //   onboardingStage: analyzing,
+    //   marker: {
+    //     id: "unique-marker-id-6",
+    //   },
+    // },
   ];
 
   // Filter for messages where all template variables are available in the spec
