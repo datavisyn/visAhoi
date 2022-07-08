@@ -32,157 +32,87 @@ function generateMessages(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
   let messages: IOnboardingMessage[];
+  messages = [
+    {
+      anchor: getAnchor(spec.type, visElement),
+      requires: ["type"],
+      text: `The chart is made out of ${spec.type?.value} elements.`,
+      title: "Reading the chart",
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-2",
+      },
+    },
+    {
+      anchor: getAnchor(spec.xAxis, visElement),
+      requires: ["xAxis", "yAxis"],
+      text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
+      title: "Reading the chart",
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-3",
+      },
+    },
+    {
+      anchor: getAnchor(spec.positiveColor, visElement),
+      requires: ["yAxis", "positiveColor"],
+      text: `Light ${createColorRect(
+        spec.positiveColor?.value
+      )} areas indicate a moderate positive ${spec.yAxis?.value} and dark
+        ${createColorRect(spec.positiveColor?.value)} areas a high positive ${
+        spec.yAxis?.value
+      }.`,
+      title: "Reading the chart",
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-4",
+      },
+    },
+    {
+      anchor: getAnchor(spec.negativeColor, visElement),
+      requires: ["yAxis", "negativeColor"],
+      text: `${createColorRect(
+        spec.negativeColor?.value
+      )} areas indicate a very low negative ${spec.yAxis?.value}.`,
+      title: "Reading the chart",
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-5",
+      },
+    },
+    {
+      anchor: spec.yMin?.anchor,
+      requires: ["yAxis", "yMin"],
+      text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
+      title: "Reading the chart",
+      onboardingStage: using,
+      marker: {
+        id: "unique-marker-id-6",
+      },
+    },
+    {
+      anchor: spec.yMax?.anchor,
+      requires: ["yAxis", "yMax"],
+      text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
+      title: "Reading the chart",
+      onboardingStage: using,
+      marker: {
+        id: "unique-marker-id-7",
+      },
+    },
+  ];
 
-  if (spec.chartTitle?.value === undefined) {
-    messages = [
-      {
-        anchor: getAnchor(spec.type, visElement),
-        requires: ["type"],
-        text: `The chart is made out of ${spec.type?.value} elements.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-1",
-        },
+  if (spec.chartTitle?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.chartTitle, visElement),
+      requires: ["chartTitle"],
+      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      title: "Reading the chart",
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-1",
       },
-      {
-        anchor: getAnchor(spec.xAxis, visElement),
-        requires: ["xAxis", "yAxis"],
-        text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-2",
-        },
-      },
-      {
-        anchor: getAnchor(spec.positiveColor, visElement),
-        requires: ["yAxis", "positiveColor"],
-        text: `Light ${createColorRect(
-          spec.positiveColor?.value
-        )} areas indicate a moderate positive ${spec.yAxis?.value} and dark
-          ${createColorRect(spec.positiveColor?.value)} areas a high positive ${
-          spec.yAxis?.value
-        }.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-3",
-        },
-      },
-      {
-        anchor: getAnchor(spec.negativeColor, visElement),
-        requires: ["yAxis", "negativeColor"],
-        text: `${createColorRect(
-          spec.negativeColor?.value
-        )} areas indicate a very low negative ${spec.yAxis?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-4",
-        },
-      },
-      {
-        anchor: spec.yMin?.anchor,
-        requires: ["yAxis", "yMin"],
-        text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: using,
-        marker: {
-          id: "unique-marker-id-5",
-        },
-      },
-      {
-        anchor: spec.yMax?.anchor,
-        requires: ["yAxis", "yMax"],
-        text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: using,
-        marker: {
-          id: "unique-marker-id-6",
-        },
-      },
-    ];
-  } else {
-    messages = [
-      {
-        anchor: getAnchor(spec.chartTitle, visElement),
-        requires: ["chartTitle"],
-        text: `The chart shows the ${spec.chartTitle?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-1",
-        },
-      },
-      {
-        anchor: getAnchor(spec.type, visElement),
-        requires: ["type"],
-        text: `The chart is made out of ${spec.type?.value} elements.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-2",
-        },
-      },
-      {
-        anchor: getAnchor(spec.xAxis, visElement),
-        requires: ["xAxis", "yAxis"],
-        text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-3",
-        },
-      },
-      {
-        anchor: getAnchor(spec.positiveColor, visElement),
-        requires: ["yAxis", "positiveColor"],
-        text: `Light ${createColorRect(
-          spec.positiveColor?.value
-        )} areas indicate a moderate positive ${spec.yAxis?.value} and dark
-          ${createColorRect(spec.positiveColor?.value)} areas a high positive ${
-          spec.yAxis?.value
-        }.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-4",
-        },
-      },
-      {
-        anchor: getAnchor(spec.negativeColor, visElement),
-        requires: ["yAxis", "negativeColor"],
-        text: `${createColorRect(
-          spec.negativeColor?.value
-        )} areas indicate a very low negative ${spec.yAxis?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: reading,
-        marker: {
-          id: "unique-marker-id-5",
-        },
-      },
-      {
-        anchor: spec.yMin?.anchor,
-        requires: ["yAxis", "yMin"],
-        text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: using,
-        marker: {
-          id: "unique-marker-id-6",
-        },
-      },
-      {
-        anchor: spec.yMax?.anchor,
-        requires: ["yAxis", "yMax"],
-        text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-        title: "Reading the chart",
-        onboardingStage: using,
-        marker: {
-          id: "unique-marker-id-7",
-        },
-      },
-    ];
+    });
   }
 
   // Filter for messages where all template variables are available in the spec
