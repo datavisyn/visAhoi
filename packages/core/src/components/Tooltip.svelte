@@ -5,6 +5,7 @@
     selectedMarker,
     markerInformation,
     markerIndexId,
+    isEditModeActive,
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
@@ -45,6 +46,8 @@
     });
     activeMarker.set(null);
   };
+
+  const deleteOnboardingMessage = () => {};
 
   activeOnboardingStage.subscribe((onboardingStage) => {
     if (!onboardingStage) {
@@ -99,6 +102,14 @@
 >
   <div class="visahoi-tooltip-title">
     <b>{$activeMarker?.tooltip.title}</b>
+
+    <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
+    {#if $isEditModeActive}
+      <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
+        <i class="fas fa-trash" />
+      </div>
+    {/if}
+
     <div class="visahoi-close-tooltip" on:click={closeTooltip}>
       <i class="fas fa-times" />
     </div>
@@ -144,6 +155,11 @@
   }
 
   .visahoi-tooltip-title > .visahoi-close-tooltip {
+    cursor: pointer;
+  }
+
+  .visahoi-delete-tooltip {
+    /* margin-right: 1px; */
     cursor: pointer;
   }
 
