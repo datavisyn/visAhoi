@@ -7,6 +7,7 @@
     previousMarkerId,
     markerIndexId,
     markerInformation as markInfo,
+    navigationAlignment,
   } from "./stores";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
   import { tick } from "svelte";
@@ -15,6 +16,7 @@
   export let order: number;
 
   $: bottom = order * 35 + 15 + "px";
+  $: right = order * 35 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -100,9 +102,23 @@
   };
 </script>
 
+<!-- <div
+  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+    stage.backgroundColor}; --bottom:{bottom}; --right: {right}"
+  class="visahoi-navigation-item {!$showOnboardingSteps ||
+  $activeOnboardingStage
+    ? 'removed'
+    : ''}
+    {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
+  on:click={handleClick}
+> -->
+
 <div
-  style="--bottom:{bottom}"
-  class="visahoi-marker-navigation-item {$activeOnboardingStage}"
+  style="--bottom:{bottom}; --right: {right}"
+  class="visahoi-marker-navigation-item {$activeOnboardingStage} {$navigationAlignment ===
+  'row'
+    ? 'horizontal'
+    : 'vertical'}"
 >
   <div
     on:click={handleClick}
@@ -123,10 +139,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
+    /* transition: opacity 0.5s ease, bottom 0.5s ease; */
     margin: 5px;
     width: 30px;
-    bottom: var(--bottom);
+    /* bottom: var(--bottom); */
     opacity: 1;
     z-index: 15;
   }
@@ -146,5 +162,16 @@
 
   .visahoi-marker-navigation-item-circle:hover {
     opacity: 1;
+  }
+
+  .horizontal {
+    right: var(--right);
+    transition: opacity 0.5s ease, right 0.5s ease;
+    bottom: 0;
+  }
+
+  .vertical {
+    bottom: var(--bottom);
+    transition: opacity 0.5s ease, bottom 0.5s ease;
   }
 </style>

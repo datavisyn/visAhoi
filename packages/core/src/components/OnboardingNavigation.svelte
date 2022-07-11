@@ -140,7 +140,7 @@
       {/each}
     {/if}
 
-    {#if $activeOnboardingStage && $showOnboardingNavigation}
+    <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       <div
         id="navigation-next"
         style="--bottom-height: {nextHeight}"
@@ -153,6 +153,29 @@
         id="navigation-previous"
         style="--bottom-height: {prevHeight}"
         class="visahoi-navigation-previous"
+        on:click={navPrev}
+      >
+        <span><i class="fas fa-chevron-down" /></span>
+      </div>
+    {/if} -->
+
+    {#if $activeOnboardingStage && $showOnboardingNavigation}
+      <div
+        id="navigation-next"
+        style="--bottom-height: {nextHeight}"
+        class="visahoi-navigation-next {$navigationAlignment === 'row'
+          ? 'horizontal'
+          : 'vertical'}"
+        on:click={navNext}
+      >
+        <span><i class="fas fa-chevron-up" /></span>
+      </div>
+      <div
+        id="navigation-previous"
+        style="--bottom-height: {prevHeight}"
+        class="visahoi-navigation-previous {$navigationAlignment === 'row'
+          ? 'horizontal'
+          : 'vertical'}"
         on:click={navPrev}
       >
         <span><i class="fas fa-chevron-down" /></span>
@@ -174,7 +197,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
+    /* transition: opacity 0.5s ease, bottom 0.5s ease; */
     width: 80px;
     bottom: 20px;
     opacity: 1;
@@ -182,7 +205,7 @@
   }
   .visahoi-navigation-next {
     position: absolute;
-    bottom: var(--bottom-height);
+    /* bottom: var(--bottom-height); */
     margin-bottom: 15px;
     /* opacity: var(--opacity);
     pointer-events: var(--pointerEvents); */
@@ -204,5 +227,16 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
+  }
+
+  .horizontal {
+    right: var(--bottom-height);
+    transition: opacity 0.5s ease, right 0.5s ease;
+    bottom: 0;
+  }
+
+  .vertical {
+    bottom: var(--bottom-height);
+    transition: opacity 0.5s ease, bottom 0.5s ease;
   }
 </style>

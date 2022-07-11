@@ -45,9 +45,10 @@
     justify-content: center;
     cursor: pointer;
     /* transition: opacity 0.5s ease, bottom 0.5s ease;     */
-    transition: opacity 0.5s ease, right 0.5s ease;
+    /* transition: opacity 0.5s ease, right 0.5s ease; */
     margin: 5px;
-    width: 80px;
+    /* width: 80px; */
+    width: 40px;
     /* bottom: var(--bottom); */
     opacity: 1;
     z-index: 15;
@@ -92,7 +93,7 @@
 
   .horizontal {
     right: var(--right);
-    /* transition: opacity 0.5s ease, right 0.5s ease; */
+    transition: opacity 0.5s ease, right 0.5s ease;
     bottom: 0;
   }
 

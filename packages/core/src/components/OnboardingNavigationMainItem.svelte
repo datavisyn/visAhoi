@@ -15,8 +15,6 @@
       showOnboardingSteps.update((v) => !v);
     }
   };
-  console.log("Testing it ");
-  $: console.log($navigationAlignment, "Navigation alignment");
 
   const toggleNavigation = () => {
     showOnboardingNavigation.set(!$showOnboardingNavigation);
