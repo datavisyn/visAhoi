@@ -47,7 +47,16 @@
     activeMarker.set(null);
   };
 
-  const deleteOnboardingMessage = () => {};
+  const deleteOnboardingMessage = () => {
+    $markerInformation.map((m, i) => {
+      if (m.marker.id === $activeMarker?.marker.id) {
+        const tempMarkerInformation = $markerInformation;
+        tempMarkerInformation.splice(i, 1);
+        closeTooltip();
+        markerInformation.set(tempMarkerInformation);
+      }
+    });
+  };
 
   activeOnboardingStage.subscribe((onboardingStage) => {
     if (!onboardingStage) {
