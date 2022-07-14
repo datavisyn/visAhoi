@@ -6,6 +6,7 @@
     markerInformation,
     markerIndexId,
     isEditModeActive,
+    onboardingStages,
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
@@ -48,14 +49,36 @@
   };
 
   const deleteOnboardingMessage = () => {
+    // Delete onboarding message for the active marker.
     $markerInformation.map((m, i) => {
       if (m.marker.id === $activeMarker?.marker.id) {
         const tempMarkerInformation = $markerInformation;
         tempMarkerInformation.splice(i, 1);
         closeTooltip();
         markerInformation.set(tempMarkerInformation);
+
+        // check whether the onboarding message deleted is the last message of the activeOboarding stage.
+        // If it is then show all the onboarding stages.
+        $onboardingStages.map((o, i) => {
+          const res = $markerInformation.find(
+            (m) => m.message.onboardingStage.id === o.id
+          );
+          if (res === undefined) {
+            const tempOnboardinStages = $onboardingStages;
+            tempOnboardinStages.splice(i, 1);
+            onboardingStages.set(tempOnboardinStages);
+            activeOnboardingStage.set(null);
+          }
+        });
       }
     });
+
+    // Console message is shown when all the onboarding messages are delete
+    if ($onboardingStages.length === 0) {
+      console.error(
+        "No onboarding messages are available!!!. It seems that you have deleted all the onboarding messages"
+      );
+    }
   };
 
   activeOnboardingStage.subscribe((onboardingStage) => {
