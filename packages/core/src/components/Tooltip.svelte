@@ -13,7 +13,7 @@
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
-  import { onMount, tick } from "svelte";
+  import { onDestroy, onMount, tick } from "svelte";
 
   export let visElement;
 
@@ -25,88 +25,34 @@
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
+  let eleRef: HTMLElement;
+  let observer: MutationObserver;
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
-  let eleRef;
-  let eleRef1;
-  $: elementText = eleRef1?.textContent;
-  $: editable = $isEditModeActive ? true : false;
-
-  // $: console.log("Element:", eleRef);
-
-  // $: console.log(elementText, "Element text");
-
-  // $: if (elementText !== undefined) {
-  //   console.log(elementText);
-  // }
-
-  // $: if (eleRef1) {
-  //   console.log("Element ref b tag", eleRef1);
-  // }
-
-  // $: if (eleRef) {
-  //   console.log("The element reference is found");
-  //   const observer = new MutationObserver(mutate1);
-  //   const config = {
-  //     characterData: true,
-  //     characterDataOldValue: true,
-  //   };
-  //   observer.observe(eleRef, config);
-  // }
-
-  // const mutate1 = (mutations: MutationRecord[]) => {
-  //   console.log("Inside the mutate1 function");
-  //   mutations.map((m) => console.log(m));
-  // };
-
-  // onMount(() => {
-  //   debugger;
-  //   console.log("Test");
-  //   const observer = new MutationObserver((records) => {
-  //     console.log(records, "records");
-  //     // const els = records[0].removedNodes
-  //     // console.log(els);
-  //   });
-
-  //   observer.observe(eleRef1, { characterData: true });
-  // });
 
   onMount(() => {
-    console.log("In the mount");
-    const observer = new MutationObserver((mutations) => {
-      console.log(mutations);
+    observer = new MutationObserver((mutations) => {
       const newValue: string | null = mutations[0].target.nodeValue;
-      console.log(newValue, "new value ");
-      console.log($markerInformation, "Marker information");
       const tempMarkerInformation = $markerInformation;
       tempMarkerInformation.map((m) => {
         if (m.marker.id === $activeMarker?.marker.id) {
-          console.log("the active marker is: ", m.marker.id);
           if (newValue) {
             m.message.title = newValue;
             m.tooltip.title = newValue;
           }
         }
       });
-      console.log(tempMarkerInformation, "temporary marker infotzzr");
       markerInformation.set(tempMarkerInformation);
     });
-    // observer.observe(eleRef, { childList: true });
-
-    // setTimeout(() => {
-    //   eleRef.children[0].remove();
-    // }, 1000);
-
+    // setTimeout(() => (eleRef.innerHTML = "Test"), 1000);
     observer.observe(eleRef.children[0].childNodes[0], {
       characterData: true,
-      // characterDataOldValue: true,
-      // attributes: false,
-      // childList: true,
-      // subtree: false,
+      attributes: true,
     });
-    // setTimeout(() => {
-    //   eleRef.children[0].textContent = "sample";
-    // }, 8000);
+  });
+
+  onDestroy(() => {
+    observer.disconnect();
   });
 
   const closeTooltip = () => {
@@ -127,31 +73,6 @@
       }
     });
     activeMarker.set(null);
-  };
-
-  // const mutate = (mutations) => {
-  //   console.log("Inside the mutate");
-  //   debugger;
-  //   console.log(mutations);
-  //   mutations.map((m) => console.log(m));
-  // };
-
-  const keyUp = () => {
-    const el = document.querySelector("#testId");
-    console.log(el);
-    console.log(el?.children[0], "First child");
-    console.log(el?.children[0].textContent, "Inner textContent");
-
-    // const observer = new MutationObserver(mutate);
-    // const config = {
-    //   characterData: true,
-    //   characterDataOldValue: true,
-    // };
-    // if (el) observer.observe(el, config);
-  };
-
-  const testing = () => {
-    console.log("changed");
   };
 
   const deleteOnboardingMessage = () => {
@@ -194,21 +115,6 @@
   });
 
   activeMarker.subscribe(async (marker) => {
-    // const el = document.querySelector("#testId");
-    // console.log(el);
-    // console.log(el?.children[0], "First child");
-    // console.log(el?.children[0].textContent, "Inner textContent");
-
-    // const observer = new MutationObserver(mutate);
-    // const config = {
-    //   characterData: true,
-    //   characterDataOldValue: true,
-    // };
-    // if (el) observer.observe(el, config);
-
-    // debugger;
-
-    // el?.innerHTML = "Testing";
     await tick();
     const tooltipElement = document.getElementById(tooltipId);
     const arrowElement = document.getElementById(arrowId);
@@ -253,13 +159,13 @@
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
 >
+  <!-- {#key $activeMarker?.marker.id} -->
   <div
     bind:this={eleRef}
-    contenteditable={editable}
+    contenteditable={$isEditModeActive}
     class="visahoi-tooltip-title"
-    on:change={testing}
   >
-    <b bind:this={eleRef1}>{$activeMarker?.tooltip.title}</b>
+    <b>{$activeMarker?.tooltip.title}</b>
 
     <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
     {#if $isEditModeActive}
@@ -272,6 +178,8 @@
       <i class="fas fa-times" />
     </div>
   </div>
+  <!-- {/key} -->
+
   <div class="visahoi-tooltip-content">
     {@html sanitizeHtml(
       activeMarkerInformation?.tooltip.text,
@@ -317,7 +225,7 @@
   }
 
   .visahoi-delete-tooltip {
-    /* margin-right: 1px; */
+    margin-left: 3px;
     cursor: pointer;
   }
 
