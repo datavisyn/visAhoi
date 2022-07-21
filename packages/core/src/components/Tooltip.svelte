@@ -25,13 +25,16 @@
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
-  let eleRef: HTMLElement;
-  let observer: MutationObserver;
+  let titleElement: HTMLElement;
+  let contentElement: HTMLElement;
+  let titleObserver: MutationObserver;
+  let contentObserver: MutationObserver;
+
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
 
   onMount(() => {
-    observer = new MutationObserver((mutations) => {
+    titleObserver = new MutationObserver((mutations) => {
       const newValue: string | null = mutations[0].target.nodeValue;
       const tempMarkerInformation = $markerInformation;
       tempMarkerInformation.map((m) => {
@@ -44,15 +47,34 @@
       });
       markerInformation.set(tempMarkerInformation);
     });
-    // setTimeout(() => (eleRef.innerHTML = "Test"), 1000);
-    observer.observe(eleRef.children[0].childNodes[0], {
+
+    contentObserver = new MutationObserver((mutations) => {
+      const newContent: string | null = mutations[0].target.nodeValue;
+      const tempMarkerInformation = $markerInformation;
+      tempMarkerInformation.map((m) => {
+        if (m.marker.id === $activeMarker?.marker.id) {
+          if (newContent) {
+            m.message.text = newContent;
+            m.tooltip.text = newContent;
+          }
+        }
+      });
+    });
+
+    titleObserver.observe(titleElement.children[0].childNodes[0], {
       characterData: true,
       attributes: true,
+    });
+    contentObserver.observe(contentElement, {
+      childList: true,
+      characterData: true,
+      subtree: true,
     });
   });
 
   onDestroy(() => {
-    observer.disconnect();
+    titleObserver.disconnect();
+    contentObserver.disconnect();
   });
 
   const closeTooltip = () => {
@@ -161,7 +183,7 @@
 >
   <!-- {#key $activeMarker?.marker.id} -->
   <div
-    bind:this={eleRef}
+    bind:this={titleElement}
     contenteditable={$isEditModeActive}
     class="visahoi-tooltip-title"
   >
@@ -180,7 +202,11 @@
   </div>
   <!-- {/key} -->
 
-  <div class="visahoi-tooltip-content">
+  <div
+    bind:this={contentElement}
+    contenteditable={$isEditModeActive}
+    class="visahoi-tooltip-content"
+  >
     {@html sanitizeHtml(
       activeMarkerInformation?.tooltip.text,
       sanitizerOptions
