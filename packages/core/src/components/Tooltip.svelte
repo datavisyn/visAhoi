@@ -5,13 +5,15 @@
     selectedMarker,
     markerInformation,
     markerIndexId,
+    isEditModeActive,
+    onboardingStages,
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
-  import { tick } from "svelte";
+  import { onDestroy, onMount, tick } from "svelte";
 
   export let visElement;
 
@@ -23,8 +25,57 @@
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
+  let titleElement: HTMLElement;
+  let contentElement: HTMLElement;
+  let titleObserver: MutationObserver;
+  let contentObserver: MutationObserver;
+
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
+
+  onMount(() => {
+    titleObserver = new MutationObserver((mutations) => {
+      const newValue: string | null = mutations[0].target.nodeValue;
+      const tempMarkerInformation = $markerInformation;
+      tempMarkerInformation.map((m) => {
+        if (m.marker.id === $activeMarker?.marker.id) {
+          if (newValue) {
+            m.message.title = newValue;
+            m.tooltip.title = newValue;
+          }
+        }
+      });
+      markerInformation.set(tempMarkerInformation);
+    });
+
+    contentObserver = new MutationObserver((mutations) => {
+      const newContent: string | null = mutations[0].target.nodeValue;
+      const tempMarkerInformation = $markerInformation;
+      tempMarkerInformation.map((m) => {
+        if (m.marker.id === $activeMarker?.marker.id) {
+          if (newContent) {
+            m.message.text = newContent;
+            m.tooltip.text = newContent;
+          }
+        }
+      });
+    });
+
+    titleObserver.observe(titleElement.children[0].childNodes[0], {
+      characterData: true,
+      attributes: true,
+    });
+    contentObserver.observe(contentElement, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+  });
+
+  onDestroy(() => {
+    titleObserver.disconnect();
+    contentObserver.disconnect();
+  });
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
@@ -44,6 +95,39 @@
       }
     });
     activeMarker.set(null);
+  };
+
+  const deleteOnboardingMessage = () => {
+    // Delete onboarding message for the active marker.
+    $markerInformation.map((m, i) => {
+      if (m.marker.id === $activeMarker?.marker.id) {
+        const tempMarkerInformation = $markerInformation;
+        tempMarkerInformation.splice(i, 1);
+        closeTooltip();
+        markerInformation.set(tempMarkerInformation);
+
+        // check whether the onboarding message deleted is the last message of the activeOboarding stage.
+        // If it is then show all the onboarding stages.
+        $onboardingStages.map((o, i) => {
+          const res = $markerInformation.find(
+            (m) => m.message.onboardingStage.id === o.id
+          );
+          if (res === undefined) {
+            const tempOnboardinStages = $onboardingStages;
+            tempOnboardinStages.splice(i, 1);
+            onboardingStages.set(tempOnboardinStages);
+            activeOnboardingStage.set(null);
+          }
+        });
+      }
+    });
+
+    // Console message is shown when all the onboarding messages are delete
+    if ($onboardingStages.length === 0) {
+      console.error(
+        "No onboarding messages are available!!!. It seems that you have deleted all the onboarding messages"
+      );
+    }
   };
 
   activeOnboardingStage.subscribe((onboardingStage) => {
@@ -97,13 +181,32 @@
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
 >
-  <div class="visahoi-tooltip-title">
+  <!-- {#key $activeMarker?.marker.id} -->
+  <div
+    bind:this={titleElement}
+    contenteditable={$isEditModeActive}
+    class="visahoi-tooltip-title"
+  >
     <b>{$activeMarker?.tooltip.title}</b>
+
+    <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
+    {#if $isEditModeActive}
+      <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
+        <i class="fas fa-trash" />
+      </div>
+    {/if}
+
     <div class="visahoi-close-tooltip" on:click={closeTooltip}>
       <i class="fas fa-times" />
     </div>
   </div>
-  <div class="visahoi-tooltip-content">
+  <!-- {/key} -->
+
+  <div
+    bind:this={contentElement}
+    contenteditable={$isEditModeActive}
+    class="visahoi-tooltip-content"
+  >
     {@html sanitizeHtml(
       activeMarkerInformation?.tooltip.text,
       sanitizerOptions
@@ -144,6 +247,11 @@
   }
 
   .visahoi-tooltip-title > .visahoi-close-tooltip {
+    cursor: pointer;
+  }
+
+  .visahoi-delete-tooltip {
+    margin-left: 3px;
     cursor: pointer;
   }
 

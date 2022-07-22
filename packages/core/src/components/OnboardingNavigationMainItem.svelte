@@ -4,8 +4,11 @@
     activeOnboardingStage,
     showHideCloseText,
     showOnboardingNavigation,
+    isEditModeActive,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
+
+  $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
 
   const handleClick = () => {
     if ($activeOnboardingStage) {
@@ -17,6 +20,10 @@
 
   const toggleNavigation = () => {
     showOnboardingNavigation.set(!$showOnboardingNavigation);
+  };
+
+  const toggleEditMode = () => {
+    isEditModeActive.set(!$isEditModeActive);
   };
 </script>
 
@@ -44,9 +51,13 @@
   </span>
 </div>
 
+<div class="visahoi-edit-mode-button">
+  <button on:click={toggleEditMode}>{buttonLabel}</button>
+</div>
+
 <div class="toggle-button">
   {#if $showOnboardingNavigation}
-    <span class="test-span" on:click={toggleNavigation}>
+    <span on:click={toggleNavigation}>
       <i class="fas fa-solid fa-toggle-on" />
     </span>
   {:else}
@@ -61,10 +72,12 @@
 </div>
 
 <style>
-  /* .test-span {
-    width: 50px;
-    height: 50px;
-  } */
+  .visahoi-edit-mode-button {
+    position: absolute;
+    bottom: 1em;
+    right: 2em;
+  }
+
   .toggle-button {
     position: absolute;
     display: flex;
@@ -76,6 +89,7 @@
     opacity: 1;
     z-index: 15;
   }
+
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;
