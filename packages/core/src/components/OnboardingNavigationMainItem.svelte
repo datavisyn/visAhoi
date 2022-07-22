@@ -5,6 +5,8 @@
     showHideCloseText,
     showOnboardingNavigation,
     isEditModeActive,
+    onboardingStages,
+    markerInformation,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
@@ -25,6 +27,29 @@
   const toggleEditMode = () => {
     isEditModeActive.set(!$isEditModeActive);
   };
+
+  const deleteOnboardingStage = () => {
+    const tempOnboardingStages = $onboardingStages;
+
+    tempOnboardingStages.map((onboardingStage, i) => {
+      if (onboardingStage.id === $activeOnboardingStage?.id) {
+        tempOnboardingStages.splice(i, 1);
+      }
+
+      const tempMarkerInformation = $markerInformation.filter(
+        (m) => m.message.onboardingStage.id !== $activeOnboardingStage?.id
+      );
+
+      markerInformation.set(tempMarkerInformation);
+      onboardingStages.set(tempOnboardingStages);
+
+      if ($onboardingStages.length === 0) {
+        console.error(
+          "No onboarding stages available. It seems that you have deleted all the onboarding stages."
+        );
+      }
+    });
+  };
 </script>
 
 <div class="visahoi-navigation-main-item" on:click={handleClick}>
@@ -37,6 +62,12 @@
       <span><i class="fas fa-times" /></span>
     {:else}
       <span><i class="fas fa-question" /></span>
+    {/if}
+
+    {#if $activeOnboardingStage}
+      <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
+        <i class="fas fa-trash" />
+      </div>
     {/if}
   </div>
 
@@ -122,5 +153,18 @@
 
   .visahoi-stage-title {
     font-weight: bold;
+  }
+
+  .visahoi-delete-stage {
+    position: absolute;
+    margin-left: 110px;
+  }
+
+  /* .visahoi-delete-stage > i {
+    color: black;
+  } */
+
+  .fa-trash {
+    color: black;
   }
 </style>
