@@ -31,6 +31,38 @@ export const injectOnboarding = (
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
   }
 
+  if (ahoiConfig.setOnboardingStage) {
+    const tempOnboardingStages = get(onboardingStages);
+
+    for (const stage of tempOnboardingStages) {
+      if (stage.id === ahoiConfig.setOnboardingStage.id) {
+        stage.order = ahoiConfig.setOnboardingStage.order
+          ? ahoiConfig.setOnboardingStage.order
+          : stage.order;
+        stage.title = ahoiConfig.setOnboardingStage.title
+          ? ahoiConfig.setOnboardingStage.title
+          : stage.title;
+        stage.activeBackgroundColor = ahoiConfig.setOnboardingStage
+          .activeBackgroundColor
+          ? ahoiConfig.setOnboardingStage.activeBackgroundColor
+          : stage.activeBackgroundColor;
+        stage.backgroundColor = ahoiConfig.setOnboardingStage.backgroundColor
+          ? ahoiConfig.setOnboardingStage.backgroundColor
+          : stage.backgroundColor;
+        stage.hoverBackgroundColor = ahoiConfig.setOnboardingStage
+          .hoverBackgroundColor
+          ? ahoiConfig.setOnboardingStage.hoverBackgroundColor
+          : stage.hoverBackgroundColor;
+        stage.iconClass = ahoiConfig.setOnboardingStage.iconClass
+          ? ahoiConfig.setOnboardingStage.iconClass
+          : stage.iconClass;
+        break;
+      }
+    }
+
+    onboardingStages.set(tempOnboardingStages);
+  }
+
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );

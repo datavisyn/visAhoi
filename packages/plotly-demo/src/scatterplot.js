@@ -77,7 +77,11 @@ const getAhoiConfig = () => {
 
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
-    // showOnboardingNavigation: true,
+    setOnboardingStage: {
+      id: 'reading-the-chart',
+      title: 'Testing',
+      // iconClass: 'fas fa-hand-point-up',
+    },
   };
 
   return ahoiConfig;
