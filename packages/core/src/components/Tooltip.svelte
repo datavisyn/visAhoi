@@ -137,6 +137,18 @@
   });
 
   activeMarker.subscribe(async (marker) => {
+    // console.log(marker, "Marker11");
+    // $markerInformation.map((m) => {
+    //   if (m.marker.id === marker?.marker.id) {
+    //     console.log(m, "m");
+    //   }
+    // });
+    // if (marker) {
+    //   setTimeout(() => {
+    //     marker.tooltip.title = marker?.message.title;
+    //   }, 1000);
+    // }
+    // console.log(marker);
     await tick();
     const tooltipElement = document.getElementById(tooltipId);
     const arrowElement = document.getElementById(arrowId);
