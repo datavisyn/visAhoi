@@ -31,11 +31,12 @@
   const deleteOnboardingStage = () => {
     const tempOnboardingStages = $onboardingStages;
 
+    // The stage is removed from the array
     tempOnboardingStages.map((onboardingStage, i) => {
       if (onboardingStage.id === $activeOnboardingStage?.id) {
         tempOnboardingStages.splice(i, 1);
       }
-
+      // The onboarding messages for the stage is filtered out
       const tempMarkerInformation = $markerInformation.filter(
         (m) => m.message.onboardingStage.id !== $activeOnboardingStage?.id
       );
@@ -64,7 +65,7 @@
       <span><i class="fas fa-question" /></span>
     {/if}
 
-    {#if $activeOnboardingStage}
+    {#if $activeOnboardingStage && $isEditModeActive}
       <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
         <i class="fas fa-trash" />
       </div>
@@ -92,7 +93,7 @@
       <i class="fas fa-solid fa-toggle-on" />
     </span>
   {:else}
-    <span class="test-span" on:click={toggleNavigation}>
+    <span on:click={toggleNavigation}>
       <i
         class="fas fa-solid fa-toggle-off"
         style="width: 20px, height:20px"
