@@ -9,7 +9,6 @@
     activeOnboardingStage,
   } from "./stores";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
-  import { tick } from "svelte";
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
@@ -42,23 +41,8 @@
         }
       });
     } else {
-      // let test1;
-      // $markInfo.map((m) => {
-      //   if (m.marker.id === markerInformation.marker.id) {
-      //     test1 = m;
-      //     test1.tooltip.title = "test";
-      //   }
-      // });
-      // const tt = $markInfo.filter(
-      //   (m) => m.marker.id === markerInformation.marker.id
-      // );
-      // console.log(tt, "tt1");
-
-      // activeMarker.set(test1);
-      // console.log($activeMarker, "Test1");
       activeMarker.set(markerInformation);
-      // console.log($activeMarker, "marker information");
-      // await tick();
+
       const preElementId = document.getElementById(
         getNavigationMarkerDomId($previousMarkerId)
       );

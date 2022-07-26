@@ -13,7 +13,7 @@
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
-  import { onDestroy, onMount, tick } from "svelte";
+  import { tick } from "svelte";
 
   export let visElement;
 
@@ -54,7 +54,6 @@
   };
 
   const saveChanges = () => {
-    console.log("txt: ", tempText);
     const tempMarkerInformation = $markerInformation;
     tempMarkerInformation.map((m) => {
       if (m.marker.id === $activeMarker?.marker.id) {
@@ -112,18 +111,6 @@
   });
 
   activeMarker.subscribe(async (marker) => {
-    // console.log(marker, "Marker11");
-    // $markerInformation.map((m) => {
-    //   if (m.marker.id === marker?.marker.id) {
-    //     console.log(m, "m");
-    //   }
-    // });
-    // if (marker) {
-    //   setTimeout(() => {
-    //     marker.tooltip.title = marker?.message.title;
-    //   }, 1000);
-    // }
-    // console.log(marker);
     await tick();
     const tooltipElement = document.getElementById(tooltipId);
     const arrowElement = document.getElementById(arrowId);
@@ -171,52 +158,50 @@
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
 >
-  {#key $activeMarker?.marker.id}
-    <div class="visahoi-tooltip-title">
-      {#if editTooltip}
-        <input type="text" bind:value={tempTitle} />
-      {:else}
-        <b>{$activeMarker?.tooltip.title}</b>
-      {/if}
+  <div class="visahoi-tooltip-title">
+    {#if editTooltip}
+      <input class="visahoi-edit-title" type="text" bind:value={tempTitle} />
+    {:else}
+      <b>{$activeMarker?.tooltip.title}</b>
+    {/if}
 
-      <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
-      {#if $isEditModeActive && !editTooltip}
-        <div
-          class="visahoi-edit-tooltip"
-          on:click={() => {
-            editTooltip = true;
-            // set title of current tooltip
-            tempTitle = $activeMarker?.tooltip.title || "";
-          }}
-        >
-          <i class="fas fa-pen" />
-        </div>
-        <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
-          <i class="fas fa-trash" />
-        </div>
-      {/if}
-
-      {#if editTooltip}
-        <div class="visahoi-save-changes" on:click={saveChanges}>
-          <i class="fas fa-check" />
-        </div>
-      {/if}
-
+    <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
+    {#if $isEditModeActive && !editTooltip}
       <div
-        class="visahoi-close-tooltip"
-        on:click={editTooltip
-          ? () => {
-              editTooltip = false;
-            }
-          : closeTooltip}
+        class="visahoi-edit-tooltip"
+        on:click={() => {
+          editTooltip = true;
+          // set title of current tooltip
+          tempTitle = $activeMarker?.tooltip.title || "";
+        }}
       >
-        <i class="fas fa-times" />
+        <i class="fas fa-pen" />
       </div>
+      <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
+        <i class="fas fa-trash" />
+      </div>
+    {/if}
+
+    {#if editTooltip}
+      <div class="visahoi-save-changes" on:click={saveChanges}>
+        <i class="fas fa-check" />
+      </div>
+    {/if}
+
+    <div
+      class="visahoi-close-tooltip"
+      on:click={editTooltip
+        ? () => {
+            editTooltip = false;
+          }
+        : closeTooltip}
+    >
+      <i class="fas fa-times" />
     </div>
-  {/key}
+  </div>
 
   {#if editTooltip}
-    <textarea rows="4" bind:value={tempText} class="visahoi-tooltip-content" />
+    <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
     <div class="visahoi-tooltip-content">
       {@html sanitizeHtml(
@@ -230,6 +215,43 @@
 </div>
 
 <style>
+  .visahoi-edit-tooltip {
+    margin-right: 1px;
+    cursor: pointer;
+  }
+
+  .visahoi-edit-title {
+    width: 80%;
+    color: white;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+  }
+
+  .visahoi-edit-title:focus {
+    outline: 1px solid white;
+    border: 1px white;
+  }
+
+  .visahoi-tooltip-textarea {
+    min-height: 50px;
+    width: 194px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: Arial;
+    resize: none;
+    overflow: hidden;
+  }
+
+  .visahoi-tooltip-textarea:focus {
+    outline: none;
+  }
+
+  .visahoi-save-changes {
+    cursor: pointer;
+  }
+
   .visahoi-tooltip {
     padding: 0;
     display: inline-block;
@@ -265,7 +287,7 @@
   }
 
   .visahoi-delete-tooltip {
-    margin-left: 3px;
+    margin: 0px 3px;
     cursor: pointer;
   }
 
@@ -274,14 +296,6 @@
     color: black;
     font-size: 13px;
     padding: 3px;
-  }
-
-  textarea.visahoi-tooltip-content {
-    text-align: left;
-    font-family: Arial;
-    resize: none;
-    overflow: hidden;
-    min-height: 50px;
   }
 
   .visahoi-popperjs-arrow,
