@@ -78,6 +78,9 @@ const getAhoiConfig = () => {
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
     // showOnboardingNavigation: true,
+    deleteOnboardingStage: {
+      id: 'using-the-chart',
+    },
   };
 
   return ahoiConfig;

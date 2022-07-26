@@ -27,6 +27,28 @@ export const injectOnboarding = (
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages);
 
+  if (ahoiConfig?.deleteOnboardingStage) {
+    const stages: IOnboardingStage[] = get(onboardingStages);
+    const messages: IOnboardingMessage[] = get(onboardingMessages);
+
+    debugger;
+    stages.map((m, i) => {
+      if (m.id === ahoiConfig.deleteOnboardingStage.id) {
+        stages.splice(i, 1);
+      }
+    });
+
+    // messages.map((m, i) => {
+    //   if (m.onboardingStage.id === ahoiConfig.deleteOnboardingStage.id) {
+    //     messages.splice(i, 1);
+    //   }
+    // });
+
+    onboardingStages.set(stages);
+    // onboardingMessages.set(messages);
+    // console.log(get(onboardingMessages), "Onboarding messages");
+  }
+
   if (ahoiConfig?.showOnboardingNavigation) {
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
   }
@@ -34,9 +56,9 @@ export const injectOnboarding = (
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );
-  onboardingStages.set([
-    ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
-  ]);
+  // onboardingStages.set([
+  //   ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
+  // ]);
   navigationAlignment.set(alignment);
   if (
     ahoiConfig?.backdrop?.show !== null &&
