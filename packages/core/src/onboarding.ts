@@ -31,7 +31,6 @@ export const injectOnboarding = (
     const stages: IOnboardingStage[] = get(onboardingStages);
     const messages: IOnboardingMessage[] = get(onboardingMessages);
 
-    debugger;
     stages.map((m, i) => {
       if (m.id === ahoiConfig.deleteOnboardingStage.id) {
         stages.splice(i, 1);
