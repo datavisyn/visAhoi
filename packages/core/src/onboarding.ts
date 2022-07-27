@@ -79,6 +79,16 @@ export const injectOnboarding = (
 
   const updateOnboarding = (config: IAhoiConfig) => {
     onboardingMessages.set(config.onboardingMessages);
+    // if (config.deleteOnboardingStage) {
+    //   console.log("It is ...");
+    //   const messages: IOnboardingMessage[] = get(onboardingMessages);
+    //   messages.map((m, i) => {
+    //     if (m.onboardingStage.id === ahoiConfig.deleteOnboardingStage.id) {
+    //       messages.splice(i, 1);
+    //     }
+    //   });
+    //   onboardingMessages.set(messages);
+    // }
     ref.update();
   };
 
