@@ -226,26 +226,21 @@
     font-weight: bold;
     background: transparent;
     border: none;
-  }
-
-  .visahoi-edit-title:focus {
     outline: 1px solid white;
-    border: 1px white;
   }
 
   .visahoi-tooltip-textarea {
     min-height: 50px;
-    width: 194px;
-    background: transparent;
+    width: 190px;
+    margin-top: 3px;
+    margin-left: 3px;
+    background: white;
     border: none;
+    outline: 1px solid black;
     text-align: left;
     font-family: Arial;
     resize: none;
     overflow: hidden;
-  }
-
-  .visahoi-tooltip-textarea:focus {
-    outline: none;
   }
 
   .visahoi-save-changes {
@@ -260,6 +255,7 @@
     pointer-events: all;
     z-index: 2000;
     border: 2px solid var(--stage-color);
+    background: white;
     border-radius: 4px;
   }
 
