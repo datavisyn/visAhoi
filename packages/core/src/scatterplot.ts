@@ -33,17 +33,7 @@ function generateMessages(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
 
-  const messages = [
-    {
-      anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ["chartTitle"],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
-      title: "Reading the chart",
-      onboardingStage: reading,
-      marker: {
-        id: "unique-marker-id-1",
-      },
-    },
+  const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ["type"],
@@ -95,6 +85,19 @@ function generateMessages(
       },
     },
   ];
+
+  if (spec.chartTitle?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.chartTitle, visElement),
+      requires: ["chartTitle"],
+      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      title: "Reading the chart",
+      onboardingStage: reading,
+      marker: {
+        id: "unique-marker-id-1",
+      },
+    });
+  }
 
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) =>
