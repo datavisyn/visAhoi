@@ -10,6 +10,7 @@ import debounce from 'lodash.debounce';
 let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
+let deleteStageId = null;
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
@@ -75,10 +76,19 @@ const getAhoiConfig = () => {
       },
     }),
   );
-  deleteOnboardingStage('reading-the-chart');
+
+  // To delete the onboarding stage
+  deleteStageId = 'reading-the-chart';
+  deleteOnboardingStage(deleteStageId);
 
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
+    //Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
+
+    onboardingMessages: deleteStageId
+      ? defaultOnboardingMessages.filter(
+          (m) => m.onboardingStage.id !== deleteStageId,
+        )
+      : defaultOnboardingMessages,
     // showOnboardingNavigation: true,
   };
 

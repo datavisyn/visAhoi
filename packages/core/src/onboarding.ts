@@ -34,9 +34,9 @@ export const injectOnboarding = (
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );
-  onboardingStages.set([
-    ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
-  ]);
+  // onboardingStages.set([
+  //   ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
+  // ]);
   navigationAlignment.set(alignment);
   if (
     ahoiConfig?.backdrop?.show !== null &&
@@ -105,11 +105,7 @@ export const createBasicOnboardingMessage = (
 };
 
 export const deleteOnboardingStage = (id: string) => {
-  console.log("delete ...");
-  console.log(id, "Id");
-
   const stages: IOnboardingStage[] = get(onboardingStages);
-  console.log(stages);
   stages.map((m, i) => {
     if (m.id === id) {
       stages.splice(i, 1);
