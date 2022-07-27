@@ -3,6 +3,7 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
+  deleteOnboardingStage,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
@@ -74,6 +75,7 @@ const getAhoiConfig = () => {
       },
     }),
   );
+  deleteOnboardingStage('reading-the-chart');
 
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,

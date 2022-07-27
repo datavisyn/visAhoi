@@ -103,3 +103,17 @@ export const createBasicOnboardingMessage = (
   };
   return onboardingMessage;
 };
+
+export const deleteOnboardingStage = (id: string) => {
+  console.log("delete ...");
+  console.log(id, "Id");
+
+  const stages: IOnboardingStage[] = get(onboardingStages);
+  console.log(stages);
+  stages.map((m, i) => {
+    if (m.id === id) {
+      stages.splice(i, 1);
+    }
+  });
+  return onboardingStages.set(stages);
+};
