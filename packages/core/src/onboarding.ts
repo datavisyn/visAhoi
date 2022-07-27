@@ -20,6 +20,7 @@ import { v4 as uuidv4 } from "uuid";
 import { get } from "svelte/store";
 
 let onboardingUI: OnboardingUI;
+
 export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
@@ -31,41 +32,10 @@ export const injectOnboarding = (
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
   }
 
-  if (ahoiConfig.setOnboardingStage) {
-    const tempOnboardingStages = get(onboardingStages);
-
-    for (const stage of tempOnboardingStages) {
-      if (stage.id === ahoiConfig.setOnboardingStage.id) {
-        stage.order = ahoiConfig.setOnboardingStage.order
-          ? ahoiConfig.setOnboardingStage.order
-          : stage.order;
-        stage.title = ahoiConfig.setOnboardingStage.title
-          ? ahoiConfig.setOnboardingStage.title
-          : stage.title;
-        stage.activeBackgroundColor = ahoiConfig.setOnboardingStage
-          .activeBackgroundColor
-          ? ahoiConfig.setOnboardingStage.activeBackgroundColor
-          : stage.activeBackgroundColor;
-        stage.backgroundColor = ahoiConfig.setOnboardingStage.backgroundColor
-          ? ahoiConfig.setOnboardingStage.backgroundColor
-          : stage.backgroundColor;
-        stage.hoverBackgroundColor = ahoiConfig.setOnboardingStage
-          .hoverBackgroundColor
-          ? ahoiConfig.setOnboardingStage.hoverBackgroundColor
-          : stage.hoverBackgroundColor;
-        stage.iconClass = ahoiConfig.setOnboardingStage.iconClass
-          ? ahoiConfig.setOnboardingStage.iconClass
-          : stage.iconClass;
-        break;
-      }
-    }
-
-    onboardingStages.set(tempOnboardingStages);
-  }
-
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );
+
   onboardingStages.set([
     ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
   ]);
@@ -134,4 +104,30 @@ export const createBasicOnboardingMessage = (
     ...message,
   };
   return onboardingMessage;
+};
+
+export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
+  const tempOnboardingStages = get(onboardingStages);
+
+  for (const tempStage of tempOnboardingStages) {
+    if (tempStage.id === stage.id) {
+      tempStage.order = stage.order ? stage.order : tempStage.order;
+      tempStage.title = stage.title ? stage.title : tempStage.title;
+      tempStage.activeBackgroundColor = stage.activeBackgroundColor
+        ? stage.activeBackgroundColor
+        : tempStage.activeBackgroundColor;
+      tempStage.backgroundColor = stage.backgroundColor
+        ? stage.backgroundColor
+        : tempStage.backgroundColor;
+      tempStage.hoverBackgroundColor = stage.hoverBackgroundColor
+        ? stage.hoverBackgroundColor
+        : tempStage.hoverBackgroundColor;
+      tempStage.iconClass = stage.iconClass
+        ? stage.iconClass
+        : tempStage.iconClass;
+      break;
+    }
+  }
+
+  return onboardingStages.set(tempOnboardingStages);
 };
