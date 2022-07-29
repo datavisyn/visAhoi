@@ -10,6 +10,8 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
     Array.from(<NodeList>chart.querySelectorAll(".hm"))[0]
   )).__data__;
   const t = heatmapData[0].trace;
+  console.log(heatmapData, "heatmapData..3");
+  console.log(t);
 
   return {
     chartTitle: {
@@ -23,6 +25,7 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
       value: t.type,
       anchor: {
         sel: ".heatmaplayer > .hm > image",
+        offset: { left: -50, top: -30 },
       },
     },
     legendDescription: {
@@ -36,7 +39,7 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
       value: t?.xaxis?.title?.text,
       anchor: {
         sel: ".infolayer > .g-xtitle",
-        offset: { top: -10, left: -50 },
+        offset: { top: 20, right: 60 },
       },
     },
     xAxis: {

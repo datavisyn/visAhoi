@@ -10,6 +10,7 @@ let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
 
+console.log('TEst..1');
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);
@@ -23,18 +24,18 @@ const makePlotly = () => {
   const data = [
     {
       z: [
-        [1, null, 30, 50, 1],
-        [20, 1, 60, 80, 30],
-        [30, 60, 1, -10, 20],
+        [14, null, 19, 24, 16],
+        [17, 15, 28, 33, 20],
+        [19, 23, 29, 18, 18],
       ],
       x: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
       y: ['Morning', 'Afternoon', 'Evening'],
       type: 'heatmap',
       hoverongaps: false,
       colorscale: [
-        [0, '#4682b4'],
-        [0.5, '#FDFDFD'],
-        [1, '#D2B48C'],
+        [0, '#337ab7'],
+        [0.5, '#f5f5f5'],
+        [1, '#ec6836'],
       ],
     },
   ];

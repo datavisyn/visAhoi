@@ -46,7 +46,8 @@ function generateMessages(
     {
       anchor: getAnchor(spec.heatmapDescription, visElement),
       requires: ["heatmapDescription"],
-      text: "Heatmaps visualise data through variations in colouring. It is useful for cross-examining multivariate data.",
+      // text: "Heatmaps visualise data through variations in colouring. It is useful for cross-examining multivariate data.",
+      text: "It is based on colored cells.",
       title: "Reading the chart",
       onboardingStage: reading,
       marker: {
@@ -56,7 +57,8 @@ function generateMessages(
     {
       anchor: getAnchor(spec.legendDescription, visElement),
       requires: ["legendDescription"],
-      text: "Legend helps to successfully read a heatmap. Categorical data is colour-coded, while numerical data requires a colour scale that blends from one colour to another, in order to represent the difference in high and low values.",
+      // text: "Legend helps to successfully read a heatmap. Categorical data is colour-coded, while numerical data requires a colour scale that blends from one colour to another, in order to represent the difference in high and low values.",
+      text: "A deep [red] color indicates a high temperature whereas a deep [blue] color indicates a low temperature. Medium values (22°C - 26°C) are visualized by a neutral light gray.",
       title: "Reading the chart",
       onboardingStage: reading,
       marker: {
@@ -66,7 +68,8 @@ function generateMessages(
     {
       anchor: getAnchor(spec.axisDescription, visElement),
       requires: ["xAxis", "yAxis"],
-      text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
+      // text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
+      text: "The average temperature per day time is plotted in rows and the weekday in columns.",
       title: "Reading the chart",
       onboardingStage: reading,
       marker: {
