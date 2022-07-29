@@ -80,6 +80,10 @@ export const getOnboardingStages = (): IOnboardingStage[] => {
   return get(onboardingStages);
 };
 
+export const getOnboardingMessages = (): IOnboardingMessage[] => {
+  return get(onboardingMessages);
+};
+
 export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
   if (!stage.id) {
     stage.id = `visahoi-stage-${uuidv4()}`;
