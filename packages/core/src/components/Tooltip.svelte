@@ -125,7 +125,7 @@
     // Console message is shown when all the onboarding messages are delete
     if ($onboardingStages.length === 0) {
       console.error(
-        "No onboarding messages are available!!!. It seems that you have deleted all the onboarding messages"
+        "No onboarding stages are available. It seems that all onboarding stages have been deleted."
       );
     }
   };
