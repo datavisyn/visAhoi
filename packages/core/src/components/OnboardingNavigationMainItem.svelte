@@ -74,8 +74,19 @@
 <style>
   .visahoi-edit-mode-button {
     position: absolute;
-    bottom: 1em;
+    bottom: 1.5em;
     right: 2em;
+  }
+
+  .visahoi-edit-mode-button > button {
+    width: 140px;
+    border-radius: 15px;
+    padding: 12px 20px;
+    background-color: grey;
+    border: none;
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
   }
 
   .toggle-button {

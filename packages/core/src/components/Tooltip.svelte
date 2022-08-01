@@ -99,7 +99,7 @@
     // Console message is shown when all the onboarding messages are delete
     if ($onboardingStages.length === 0) {
       console.error(
-        "No onboarding messages are available!!!. It seems that you have deleted all the onboarding messages"
+        "No onboarding messages are available. It seems that all onboarding messages have been deleted."
       );
     }
   };
@@ -158,45 +158,50 @@
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
 >
-  <div class="visahoi-tooltip-title">
-    {#if editTooltip}
-      <input class="visahoi-edit-title" type="text" bind:value={tempTitle} />
-    {:else}
-      <b>{$activeMarker?.tooltip.title}</b>
-    {/if}
+  <div class="visahoi-tooltip-header">
+    <div class="visahoi-tooltip-title">
+      {#if editTooltip}
+        <input class="visahoi-edit-title" type="text" bind:value={tempTitle} />
+      {:else}
+        <b>{$activeMarker?.tooltip.title}</b>
+      {/if}
+    </div>
 
     <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
-    {#if $isEditModeActive && !editTooltip}
+
+    <div class="visahoi-header-icons">
+      {#if $isEditModeActive && !editTooltip}
+        <div
+          class="visahoi-edit-tooltip"
+          on:click={() => {
+            editTooltip = true;
+            // set title of current tooltip
+            tempTitle = $activeMarker?.tooltip.title || "";
+          }}
+        >
+          <i class="fas fa-pen" />
+        </div>
+        <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
+          <i class="fas fa-trash" />
+        </div>
+      {/if}
+
+      {#if editTooltip}
+        <div class="visahoi-save-changes" on:click={saveChanges}>
+          <i class="fas fa-check" />
+        </div>
+      {/if}
+
       <div
-        class="visahoi-edit-tooltip"
-        on:click={() => {
-          editTooltip = true;
-          // set title of current tooltip
-          tempTitle = $activeMarker?.tooltip.title || "";
-        }}
+        class="visahoi-close-tooltip"
+        on:click={editTooltip
+          ? () => {
+              editTooltip = false;
+            }
+          : closeTooltip}
       >
-        <i class="fas fa-pen" />
+        <i class="fas fa-times" />
       </div>
-      <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
-        <i class="fas fa-trash" />
-      </div>
-    {/if}
-
-    {#if editTooltip}
-      <div class="visahoi-save-changes" on:click={saveChanges}>
-        <i class="fas fa-check" />
-      </div>
-    {/if}
-
-    <div
-      class="visahoi-close-tooltip"
-      on:click={editTooltip
-        ? () => {
-            editTooltip = false;
-          }
-        : closeTooltip}
-    >
-      <i class="fas fa-times" />
     </div>
   </div>
 
@@ -215,13 +220,25 @@
 </div>
 
 <style>
+  .visahoi-tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--stage-color);
+  }
+
+  .visahoi-header-icons {
+    background-color: var(--stage-color);
+    display: flex;
+    justify-content: end;
+    color: white;
+  }
   .visahoi-edit-tooltip {
-    margin-right: 1px;
+    margin-right: 5px;
     cursor: pointer;
   }
 
   .visahoi-edit-title {
-    width: 80%;
+    width: 90%;
     color: white;
     font-weight: bold;
     background: transparent;
@@ -245,6 +262,7 @@
 
   .visahoi-save-changes {
     cursor: pointer;
+    margin-right: 6px;
   }
 
   .visahoi-tooltip {
@@ -269,21 +287,26 @@
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     padding: 3px;
     font-size: 13px;
+  }
+
+  .visahoi-tooltip-title {
+    display: flex;
   }
 
   .visahoi-tooltip-title > b {
     margin-right: 13px;
   }
 
-  .visahoi-tooltip-title > .visahoi-close-tooltip {
+  .visahoi-close-tooltip {
     cursor: pointer;
+    margin-right: 2px;
   }
 
   .visahoi-delete-tooltip {
-    margin: 0px 3px;
+    margin-right: 5px;
     cursor: pointer;
   }
 
