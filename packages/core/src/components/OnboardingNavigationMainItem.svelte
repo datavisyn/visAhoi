@@ -4,8 +4,13 @@
     activeOnboardingStage,
     showHideCloseText,
     showOnboardingNavigation,
+    isEditModeActive,
+    onboardingStages,
+    markerInformation,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
+
+  $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
 
   const handleClick = () => {
     if ($activeOnboardingStage) {
@@ -17,6 +22,34 @@
 
   const toggleNavigation = () => {
     showOnboardingNavigation.set(!$showOnboardingNavigation);
+  };
+
+  const toggleEditMode = () => {
+    isEditModeActive.set(!$isEditModeActive);
+  };
+
+  const deleteOnboardingStage = () => {
+    const tempOnboardingStages = $onboardingStages;
+
+    // The stage is removed from the array
+    tempOnboardingStages.map((onboardingStage, i) => {
+      if (onboardingStage.id === $activeOnboardingStage?.id) {
+        tempOnboardingStages.splice(i, 1);
+      }
+      // The onboarding messages for the stage is filtered out
+      const tempMarkerInformation = $markerInformation.filter(
+        (m) => m.message.onboardingStage.id !== $activeOnboardingStage?.id
+      );
+
+      markerInformation.set(tempMarkerInformation);
+      onboardingStages.set(tempOnboardingStages);
+
+      if ($onboardingStages.length === 0) {
+        console.error(
+          "No onboarding stages available. It seems that you have deleted all the onboarding stages."
+        );
+      }
+    });
   };
 </script>
 
@@ -31,6 +64,12 @@
     {:else}
       <span><i class="fas fa-question" /></span>
     {/if}
+
+    {#if $activeOnboardingStage && $isEditModeActive}
+      <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
+        <i class="fas fa-trash" />
+      </div>
+    {/if}
   </div>
 
   <span class="visahoi-stage-title"
@@ -44,13 +83,17 @@
   </span>
 </div>
 
+<div class="visahoi-edit-mode-button">
+  <button on:click={toggleEditMode}>{buttonLabel}</button>
+</div>
+
 <div class="toggle-button">
   {#if $showOnboardingNavigation}
-    <span class="test-span" on:click={toggleNavigation}>
+    <span on:click={toggleNavigation}>
       <i class="fas fa-solid fa-toggle-on" />
     </span>
   {:else}
-    <span class="test-span" on:click={toggleNavigation}>
+    <span on:click={toggleNavigation}>
       <i
         class="fas fa-solid fa-toggle-off"
         style="width: 20px, height:20px"
@@ -61,10 +104,12 @@
 </div>
 
 <style>
-  /* .test-span {
-    width: 50px;
-    height: 50px;
-  } */
+  .visahoi-edit-mode-button {
+    position: absolute;
+    bottom: 1em;
+    right: 2em;
+  }
+
   .toggle-button {
     position: absolute;
     display: flex;
@@ -76,6 +121,7 @@
     opacity: 1;
     z-index: 15;
   }
+
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;
@@ -108,5 +154,18 @@
 
   .visahoi-stage-title {
     font-weight: bold;
+  }
+
+  .visahoi-delete-stage {
+    position: absolute;
+    margin-left: 110px;
+  }
+
+  /* .visahoi-delete-stage > i {
+    color: black;
+  } */
+
+  .fa-trash {
+    color: black;
   }
 </style>

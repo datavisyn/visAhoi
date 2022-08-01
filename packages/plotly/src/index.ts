@@ -8,6 +8,7 @@ import {
   createBasicOnboardingMessage,
   getOnboardingStages,
   getOnboardingMessages,
+  deleteOnboardingStage,
 } from "@visahoi/core";
 import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
@@ -21,6 +22,7 @@ export {
   createBasicOnboardingStage,
   getOnboardingStages,
   getOnboardingMessages,
+  deleteOnboardingStage,
 };
 
 /**
