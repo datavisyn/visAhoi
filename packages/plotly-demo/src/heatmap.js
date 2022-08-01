@@ -10,7 +10,6 @@ let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
 
-console.log('TEst..1');
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);
@@ -42,10 +41,10 @@ const makePlotly = () => {
   const layout = {
     title: 'Average temperature in a week',
     xaxis: {
-      title: 'Day',
+      title: 'Weekday',
     },
     yaxis: {
-      title: 'Parts of Day',
+      title: 'Average temperature per day time',
     },
   };
   const config = {
