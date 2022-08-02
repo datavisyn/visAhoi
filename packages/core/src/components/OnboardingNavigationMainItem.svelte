@@ -78,16 +78,17 @@
 <style>
   .visahoi-edit-mode-button {
     position: absolute;
-    bottom: 1.5em;
-    right: 2em;
+    bottom: 0;
+    right: 3em;
   }
 
   .visahoi-edit-mode-button > button {
-    width: 140px;
+    width: 125px;
     border-radius: 15px;
-    padding: 12px 20px;
+    padding: 5px;
     border: none;
     color: white;
+    font-size: 13px;
     font-weight: bold;
     white-space: nowrap;
   }

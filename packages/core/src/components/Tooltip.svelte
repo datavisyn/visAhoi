@@ -179,16 +179,16 @@
             tempTitle = $activeMarker?.tooltip.title || "";
           }}
         >
-          <i class="fas fa-pen" />
+          <span style="font-size: 13px"><i class="fas fa-pen" /></span>
         </div>
         <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
-          <i class="fas fa-trash" />
+          <span style="font-size: 13px"><i class="fas fa-trash" /></span>
         </div>
       {/if}
 
       {#if editTooltip}
         <div class="visahoi-save-changes" on:click={saveChanges}>
-          <i class="fas fa-check" />
+          <span style="font-size: 13px"><i class="fas fa-check" /></span>
         </div>
       {/if}
 
@@ -200,7 +200,7 @@
             }
           : closeTooltip}
       >
-        <i class="fas fa-times" />
+        <span style="font-size: 13px"><i class="fas fa-times" /></span>
       </div>
     </div>
   </div>
