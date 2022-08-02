@@ -8,12 +8,15 @@
   export let stage: IOnboardingStage;
   export let index: number;
 
+  console.log("Changes1");
+
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
 
   const bottom: string = (index + 1) * 75 + "px";
-  const right: string = (index + 1) * 75 + "px";
+  const right: string = (index + 1) * 40 + index * 45 + "px";
+  $: console.log(right, "Right");
 </script>
 
 <div
