@@ -8,15 +8,12 @@
   export let stage: IOnboardingStage;
   export let index: number;
 
-  console.log("Changes1");
-
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
 
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 40 + index * 45 + "px";
-  $: console.log(right, "Right");
 </script>
 
 <div
@@ -47,12 +44,12 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    /* transition: opacity 0.5s ease, bottom 0.5s ease;     */
-    /* transition: opacity 0.5s ease, right 0.5s ease; */
+    /* transition: opacity 0.5s ease, bottom 0.5s ease; */
     margin: 5px;
-    /* width: 80px; */
-    width: 40px;
-    /* bottom: var(--bottom); */
+    width: 80px;
+    bottom: var(--bottom);
+    /* right: -2; */
+
     opacity: 1;
     z-index: 15;
   }
@@ -95,13 +92,12 @@
   } */
 
   .horizontal {
-    right: var(--right);
     transition: opacity 0.5s ease, right 0.5s ease;
-    bottom: 0;
+    right: var(--right);
   }
 
   .vertical {
-    bottom: var(--bottom);
+    /* bottom: var(--bottom); */
     transition: opacity 0.5s ease, bottom 0.5s ease;
   }
 
