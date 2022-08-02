@@ -46,7 +46,7 @@
 
       if ($onboardingStages.length === 0) {
         console.error(
-          "No onboarding stages available. It seems that you have deleted all the onboarding stages."
+          "No onboarding stages are available. It seems that all onboarding stages have been deleted."
         );
       }
     });
