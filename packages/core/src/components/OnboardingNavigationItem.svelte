@@ -14,6 +14,10 @@
 
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 40 + index * 45 + "px";
+  const bottom1: string = "0px";
+  const right1: string = "0px";
+
+  console.log("Rigk");
 </script>
 
 <div
@@ -48,6 +52,7 @@
     margin: 5px;
     width: 80px;
     bottom: var(--bottom);
+    /* right: var(--right); */
     /* right: -2; */
 
     opacity: 1;
@@ -93,7 +98,7 @@
 
   .horizontal {
     transition: opacity 0.5s ease, right 0.5s ease;
-    right: var(--right);
+    /* right: var(--right); */
   }
 
   .vertical {
