@@ -91,6 +91,7 @@
     font-size: 13px;
     font-weight: bold;
     white-space: nowrap;
+    cursor: pointer;
   }
 
   .toggle-button {
