@@ -16,7 +16,7 @@
   export let order: number;
 
   $: bottom = order * 35 + 15 + "px";
-  $: right = order * 35 + 15 + "px";
+  $: right = order * 35 + 35 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -116,7 +116,7 @@
 <div
   style="--bottom:{bottom}; --right: {right}"
   class="visahoi-marker-navigation-item {$activeOnboardingStage} {$navigationAlignment ===
-  'row'
+  'column'
     ? 'horizontal'
     : 'vertical'}"
 >
@@ -167,7 +167,7 @@
   .horizontal {
     right: var(--right);
     transition: opacity 0.5s ease, right 0.5s ease;
-    bottom: 0;
+    bottom: 8px;
   }
 
   .vertical {

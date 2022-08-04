@@ -163,22 +163,32 @@
       <div
         id="navigation-next"
         style="--bottom-height: {nextHeight}"
-        class="visahoi-navigation-next {$navigationAlignment === 'row'
+        class="visahoi-navigation-next {$navigationAlignment === 'column'
           ? 'horizontal'
           : 'vertical'}"
         on:click={navNext}
       >
-        <span><i class="fas fa-chevron-up" /></span>
+        {#if $navigationAlignment === "row"}
+          <span><i class="fas fa-chevron-up" /></span>
+        {:else}
+          <span class="navigation-left"><i class="fas fa-chevron-left" /></span>
+        {/if}
       </div>
       <div
         id="navigation-previous"
         style="--bottom-height: {prevHeight}"
-        class="visahoi-navigation-previous {$navigationAlignment === 'row'
+        class="visahoi-navigation-previous {$navigationAlignment === 'column'
           ? 'horizontal'
           : 'vertical'}"
         on:click={navPrev}
       >
-        <span><i class="fas fa-chevron-down" /></span>
+        {#if $navigationAlignment === "row"}
+          <span><i class="fas fa-chevron-down" /></span>
+        {:else}
+          <span class="navigation-right"
+            ><i class="fas fa-chevron-right" /></span
+          >
+        {/if}
       </div>
     {/if}
   </div>
@@ -190,6 +200,13 @@
 </div>
 
 <style>
+  .navigation-left {
+    margin-right: 40px;
+  }
+
+  .navigation-right {
+    margin-right: 30px;
+  }
   .visahoi-navigation-marker-container {
     position: absolute;
     display: flex;

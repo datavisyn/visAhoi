@@ -70,6 +70,7 @@ export interface IAhoiConfig {
   backdrop: IBackdropConfig;
   showHelpCloseText?: boolean;
   showOnboardingNavigation: boolean;
+  alignment: NavigationAlignment;
 }
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";

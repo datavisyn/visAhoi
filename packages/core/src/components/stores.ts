@@ -23,7 +23,7 @@ export const onboardingMessages = initializeStoreValue<IOnboardingMessage[]>(
   []
 );
 export const navigationAlignment =
-  initializeStoreValue<NavigationAlignment>("column");
+  initializeStoreValue<NavigationAlignment>("row");
 export const onboardingStages = initializeStoreValue<IOnboardingStage[]>([]);
 export const activeOnboardingStage =
   initializeStoreValue<IOnboardingStage | null>(null);

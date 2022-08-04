@@ -27,6 +27,10 @@ export const injectOnboarding = (
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages);
 
+  if (ahoiConfig?.alignment) {
+    navigationAlignment.set(ahoiConfig.alignment);
+  }
+
   if (ahoiConfig?.showOnboardingNavigation) {
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
   }
@@ -37,8 +41,6 @@ export const injectOnboarding = (
   onboardingStages.set([
     ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
   ]);
-  // navigationAlignment.set(alignment) /** The alignment should be set here */
-  navigationAlignment.set("column");
 
   if (
     ahoiConfig?.backdrop?.show !== null &&
