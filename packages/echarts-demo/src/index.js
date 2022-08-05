@@ -1,25 +1,28 @@
-
 const demos = [
   {
     title: 'Bar Chart',
-    link: './svg/bar-chart.html'
+    link: './svg/bar-chart.html',
   },
   {
     title: 'Change Matrix',
-    link: './svg/change-matrix.html'
+    link: './svg/change-matrix.html',
   },
   {
     title: 'Horizon Graph',
-    link: './svg/horizon-graph.html'
+    link: './svg/horizon-graph.html',
   },
   {
     title: 'Scatterplot',
-    link: './svg/scatterplot.html'
+    link: './svg/scatterplot.html',
   },
   {
     title: 'Treemap',
-    link: './svg/treemap.html'
-  }
+    link: './svg/treemap.html',
+  },
+  {
+    title: 'Heatmap',
+    link: './svg/heatmap.html',
+  },
   // {
   //   title: 'Bar Chart Canvas',
   //   link: './canvas/bar-chart.html'
