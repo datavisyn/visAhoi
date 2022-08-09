@@ -5,6 +5,8 @@
     selectedMarker,
     markerInformation,
     markerIndexId,
+    isEditModeActive,
+    onboardingStages,
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
@@ -15,6 +17,10 @@
 
   export let visElement;
 
+  let tempTitle = "";
+  let tempText = "";
+  let editTooltip: boolean = false;
+
   const sanitizerOptions = {
     allowedTags: ["span", "b", "em", "strong"],
     allowedClasses: {
@@ -23,6 +29,7 @@
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
+
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
 
@@ -46,6 +53,57 @@
     activeMarker.set(null);
   };
 
+  const saveChanges = () => {
+    const tempMarkerInformation = $markerInformation;
+    tempMarkerInformation.map((m) => {
+      if (m.marker.id === $activeMarker?.marker.id) {
+        if (tempTitle) {
+          m.message.title = tempTitle;
+          m.tooltip.title = tempTitle;
+        }
+        if (tempText) {
+          m.message.text = tempText;
+          m.tooltip.text = tempText;
+        }
+      }
+    });
+    markerInformation.set(tempMarkerInformation);
+    editTooltip = false;
+  };
+
+  const deleteOnboardingMessage = () => {
+    // Delete onboarding message for the active marker.
+    $markerInformation.map((m, i) => {
+      if (m.marker.id === $activeMarker?.marker.id) {
+        const tempMarkerInformation = $markerInformation;
+        tempMarkerInformation.splice(i, 1);
+        closeTooltip();
+        markerInformation.set(tempMarkerInformation);
+
+        // check whether the onboarding message deleted is the last message of the activeOboarding stage.
+        // If it is then show all the onboarding stages.
+        $onboardingStages.map((o, i) => {
+          const res = $markerInformation.find(
+            (m) => m.message.onboardingStage.id === o.id
+          );
+          if (res === undefined) {
+            const tempOnboardinStages = $onboardingStages;
+            tempOnboardinStages.splice(i, 1);
+            onboardingStages.set(tempOnboardinStages);
+            activeOnboardingStage.set(null);
+          }
+        });
+      }
+    });
+
+    // Console message is shown when all the onboarding messages are delete
+    if ($onboardingStages.length === 0) {
+      console.error(
+        "No onboarding messages are available. It seems that all onboarding messages have been deleted."
+      );
+    }
+  };
+
   activeOnboardingStage.subscribe((onboardingStage) => {
     if (!onboardingStage) {
       activeMarker.set(null);
@@ -58,6 +116,9 @@
     const arrowElement = document.getElementById(arrowId);
 
     if (marker) {
+      // set title of current tooltip
+      tempTitle = marker.tooltip.title;
+      tempText = marker.tooltip.text;
       activeMarkerInformation = marker;
       const markerElement = document.getElementById(
         getMarkerDomId(marker.marker.id)
@@ -97,22 +158,127 @@
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
 >
-  <div class="visahoi-tooltip-title">
-    <b>{$activeMarker?.tooltip.title}</b>
-    <div class="visahoi-close-tooltip" on:click={closeTooltip}>
-      <i class="fas fa-times" />
+  <div class="visahoi-tooltip-header">
+    <div class="visahoi-tooltip-title">
+      {#if editTooltip}
+        <input class="visahoi-edit-title" type="text" bind:value={tempTitle} />
+      {:else}
+        <b>{$activeMarker?.tooltip.title}</b>
+      {/if}
+    </div>
+
+    <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
+
+    <div class="visahoi-header-icons">
+      {#if $isEditModeActive && !editTooltip}
+        <div
+          class="visahoi-edit-tooltip"
+          on:click={() => {
+            editTooltip = true;
+            // set title of current tooltip
+            tempTitle = $activeMarker?.tooltip.title || "";
+          }}
+        >
+          <span style="font-size: 13px"
+            ><i class="fas fa-pen" title="Edit" /></span
+          >
+        </div>
+        <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
+          <span style="font-size: 13px"
+            ><i class="fas fa-trash" title="Delete" /></span
+          >
+        </div>
+      {/if}
+
+      {#if editTooltip}
+        <div class="visahoi-save-changes" on:click={saveChanges}>
+          <span style="font-size: 13px"
+            ><i class="fas fa-check" title="Save" /></span
+          >
+        </div>
+      {/if}
+
+      <div
+        class="visahoi-close-tooltip"
+        on:click={editTooltip
+          ? () => {
+              editTooltip = false;
+            }
+          : closeTooltip}
+      >
+        {#if editTooltip}
+          <span style="font-size: 13px">
+            <i class="fas fa-times" title="Cancel" /></span
+          >
+        {:else}
+          <span style="font-size: 13px">
+            <i class="fas fa-times" title="Close" /></span
+          >
+        {/if}
+      </div>
     </div>
   </div>
-  <div class="visahoi-tooltip-content">
-    {@html sanitizeHtml(
-      activeMarkerInformation?.tooltip.text,
-      sanitizerOptions
-    )}
-  </div>
+
+  {#if editTooltip}
+    <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
+  {:else}
+    <div class="visahoi-tooltip-content">
+      {@html sanitizeHtml(
+        activeMarkerInformation?.tooltip.text,
+        sanitizerOptions
+      )}
+    </div>
+  {/if}
+
   <div id={arrowId} class="visahoi-popperjs-arrow" data-popper-arrow />
 </div>
 
 <style>
+  .visahoi-tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--stage-color);
+  }
+
+  .visahoi-header-icons {
+    background-color: var(--stage-color);
+    display: flex;
+    justify-content: end;
+    color: white;
+  }
+  .visahoi-edit-tooltip {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  .visahoi-edit-title {
+    width: 90%;
+    color: white;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    outline: 1px solid white;
+  }
+
+  .visahoi-tooltip-textarea {
+    min-height: 50px;
+    width: 190px;
+    margin-top: 3px;
+    margin-left: 3px;
+    background: white;
+    border: none;
+    outline: 1px solid black;
+    text-align: left;
+    font-family: Arial;
+    resize: none;
+    overflow: hidden;
+  }
+
+  .visahoi-save-changes {
+    cursor: pointer;
+    margin-right: 6px;
+  }
+
   .visahoi-tooltip {
     padding: 0;
     display: inline-block;
@@ -121,6 +287,7 @@
     pointer-events: all;
     z-index: 2000;
     border: 2px solid var(--stage-color);
+    background: white;
     border-radius: 4px;
   }
 
@@ -134,16 +301,26 @@
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     padding: 3px;
     font-size: 13px;
+  }
+
+  .visahoi-tooltip-title {
+    display: flex;
   }
 
   .visahoi-tooltip-title > b {
     margin-right: 13px;
   }
 
-  .visahoi-tooltip-title > .visahoi-close-tooltip {
+  .visahoi-close-tooltip {
+    cursor: pointer;
+    margin-right: 2px;
+  }
+
+  .visahoi-delete-tooltip {
+    margin-right: 5px;
     cursor: pointer;
   }
 
