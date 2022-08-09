@@ -180,12 +180,12 @@
           }}
         >
           <span style="font-size: 13px"
-            ><i class="fas fa-pen" title="edit" /></span
+            ><i class="fas fa-pen" title="Edit" /></span
           >
         </div>
         <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
           <span style="font-size: 13px"
-            ><i class="fas fa-trash" title="delete" /></span
+            ><i class="fas fa-trash" title="Delete" /></span
           >
         </div>
       {/if}
@@ -193,7 +193,7 @@
       {#if editTooltip}
         <div class="visahoi-save-changes" on:click={saveChanges}>
           <span style="font-size: 13px"
-            ><i class="fas fa-check" title="save" /></span
+            ><i class="fas fa-check" title="Save" /></span
           >
         </div>
       {/if}
@@ -208,11 +208,11 @@
       >
         {#if editTooltip}
           <span style="font-size: 13px">
-            <i class="fas fa-times" title="cancel" /></span
+            <i class="fas fa-times" title="Cancel" /></span
           >
         {:else}
           <span style="font-size: 13px">
-            <i class="fas fa-times" title="close" /></span
+            <i class="fas fa-times" title="Close" /></span
           >
         {/if}
       </div>
