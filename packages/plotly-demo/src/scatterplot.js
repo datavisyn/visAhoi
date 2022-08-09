@@ -4,6 +4,8 @@ import {
   ahoi,
   EVisualizationType,
   deleteOnboardingStage,
+  setOnboardingStage,
+  getOnboardingMessages,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
@@ -78,8 +80,15 @@ const getAhoiConfig = () => {
   );
 
   // To delete the onboarding stage
-  deleteStageId = 'reading-the-chart';
-  deleteOnboardingStage(deleteStageId);
+  // deleteStageId = 'reading-the-chart';
+  // deleteOnboardingStage(deleteStageId);
+
+  // Set onboarding stage
+  setOnboardingStage({
+    id: 'using-the-chart',
+    title: 'Interact',
+    order: 4,
+  });
 
   const ahoiConfig = {
     //Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
@@ -91,7 +100,6 @@ const getAhoiConfig = () => {
       : defaultOnboardingMessages,
     // showOnboardingNavigation: true,
   };
-
   return ahoiConfig;
 };
 
