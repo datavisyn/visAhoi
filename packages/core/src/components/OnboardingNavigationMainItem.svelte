@@ -84,7 +84,11 @@
 </div>
 
 <div class="visahoi-edit-mode-button">
-  <button on:click={toggleEditMode}>{buttonLabel}</button>
+  <button
+    style="background-color: {$activeOnboardingStage?.backgroundColor ||
+      navigationMainItemDefaultColor}"
+    on:click={toggleEditMode}>{buttonLabel}</button
+  >
 </div>
 
 <div class="toggle-button">
@@ -106,8 +110,20 @@
 <style>
   .visahoi-edit-mode-button {
     position: absolute;
-    bottom: 1em;
-    right: 2em;
+    bottom: 0;
+    right: 3em;
+  }
+
+  .visahoi-edit-mode-button > button {
+    width: 125px;
+    border-radius: 15px;
+    padding: 5px;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
   }
 
   .toggle-button {
