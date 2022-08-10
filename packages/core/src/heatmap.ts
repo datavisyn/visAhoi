@@ -55,7 +55,7 @@ function generateMessages(
     {
       anchor: getAnchor(spec.legendDescription, visElement),
       requires: ["legendDescription"],
-      text: "A deep [red] color indicates a high temperature whereas a deep [blue] color indicates a low temperature. Medium values are visualized by a neutral light gray.",
+      text: "A deep red color indicates a high temperature whereas a deep blue color indicates a low temperature. Medium values are visualized by a neutral light gray.",
       title: "Reading the chart",
       onboardingStage: reading,
       marker: {
