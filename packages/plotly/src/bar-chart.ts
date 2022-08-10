@@ -15,17 +15,17 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
 
   return {
     chartTitle: {
-      value: chart.layout.title.text,
+      value: chart?.layout?.title?.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: {left: -20, top: 10}
-      }
+        offset: { left: -20, top: 10 },
+      },
     },
     type: {
       value: t.type,
       anchor: {
-        sel: '.bars > .points > .point:nth-child(4)',
-      }
+        sel: ".bars > .points > .point:nth-child(4)",
+      },
     },
     orientation: {
       value: t.orientation === "v" ? "vertical" : "horizontal",
@@ -42,12 +42,14 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
     yMin: {
       value: t._extremes.y.min[0].val.toFixed(1), // 0 = first trace
       anchor: {
-        sel: '.bars > .points > .point:nth-child(2)',      }
+        sel: ".bars > .points > .point:nth-child(2)",
+      },
     },
     yMax: {
       value: t._extremes.y.max[0].val.toFixed(1),
       anchor: {
-        sel: '.bars > .points > .point:nth-child(7)',      }
+        sel: ".bars > .points > .point:nth-child(7)",
+      },
     },
     xMin: {
       value: t._extremes.x.min[0].val, // 0 = first trace
@@ -59,23 +61,31 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
       value: chart.layout.xaxis.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: {left: -20, bottom: 10}
-      }
+        offset: { left: -20, bottom: 10 },
+      },
     },
     yAxisTitle: {
       value: chart.layout.yaxis.title.text,
       anchor: {
-        sel: '.infolayer .ytitle',
-        offset: {top: -25, right: 10}
-      }
-    }
+        sel: ".infolayer .ytitle",
+        offset: { top: -25, right: 10 },
+      },
+    },
     // xAxisLabel (e.g. 01, 02, …)
     // yAxisLabel (e.g. -5, 0, 5, ...)
     // Title (Average Temperature in Oslo)
   };
 }
 
-export function barChartFactory(chart: Element, coords, visElementId: Element): IOnboardingMessage[] {
+export function barChartFactory(
+  chart: Element,
+  coords,
+  visElementId: Element
+): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords);
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
+  return generateMessages(
+    EVisualizationType.BAR_CHART,
+    onbordingSpec,
+    visElementId
+  );
 }

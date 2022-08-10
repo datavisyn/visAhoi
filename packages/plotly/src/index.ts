@@ -7,6 +7,9 @@ import {
   createBasicOnboardingStage,
   createBasicOnboardingMessage,
   getOnboardingStages,
+  getOnboardingMessages,
+  deleteOnboardingStage,
+  setOnboardingStage,
 } from "@visahoi/core";
 import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
@@ -19,6 +22,9 @@ export {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
   getOnboardingStages,
+  getOnboardingMessages,
+  deleteOnboardingStage,
+  setOnboardingStage,
 };
 
 /**
@@ -36,7 +42,7 @@ export const generateBasicAnnotations = (
 
   if (chart === null) {
     console.error("Chart cannot be null");
-    return null;
+    return [];
   }
 
   // TODO: coords

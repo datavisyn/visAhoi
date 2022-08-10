@@ -69,6 +69,8 @@ export interface IBackdropConfig {
 export interface IAhoiConfig {
   onboardingMessages: IOnboardingMessage[];
   backdrop: IBackdropConfig;
+  showHelpCloseText?: boolean;
+  showOnboardingNavigation: boolean;
 }
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";
@@ -93,6 +95,16 @@ export enum EDefaultOnboardingStages {
   READING = "reading-the-chart",
   USING = "using-the-chart",
   ANALYZING = "analyze-the-chart",
+}
+
+export enum EDefaultOnboardingStageNavigation {
+  PREVIOUS = "previous",
+  NEXT = "next",
+}
+
+export interface IOnboardingStageNavigation {
+  id: string;
+  backgroundColor: string;
 }
 
 export type OnboardingStage = string;

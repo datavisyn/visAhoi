@@ -5,6 +5,8 @@ import {
   onboardingStages,
   showBackdrop,
   backdropOpacity,
+  showHideCloseText,
+  showOnboardingNavigation,
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
@@ -18,15 +20,22 @@ import { v4 as uuidv4 } from "uuid";
 import { get } from "svelte/store";
 
 let onboardingUI: OnboardingUI;
+
 export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
   alignment: NavigationAlignment
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages);
+
+  if (ahoiConfig?.showOnboardingNavigation) {
+    showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
+  }
+
   const stageIds = ahoiConfig.onboardingMessages.map(
     (m) => m.onboardingStage.id
   );
+
   onboardingStages.set([
     ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
   ]);
@@ -42,6 +51,9 @@ export const injectOnboarding = (
     ahoiConfig?.backdrop?.opacity !== undefined
   ) {
     backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
+  }
+  if (ahoiConfig?.showHelpCloseText === false) {
+    showHideCloseText.set(ahoiConfig?.showHelpCloseText);
   }
 
   const ref = { update: () => {} };
@@ -70,6 +82,10 @@ export const getOnboardingStages = (): IOnboardingStage[] => {
   return get(onboardingStages);
 };
 
+export const getOnboardingMessages = (): IOnboardingMessage[] => {
+  return get(onboardingMessages);
+};
+
 export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
   if (!stage.id) {
     stage.id = `visahoi-stage-${uuidv4()}`;
@@ -92,4 +108,43 @@ export const createBasicOnboardingMessage = (
     ...message,
   };
   return onboardingMessage;
+};
+
+export const deleteOnboardingStage = (id: string) => {
+  const stages: IOnboardingStage[] = get(onboardingStages);
+  stages.map((m, i) => {
+    if (m.id === id) {
+      stages.splice(i, 1);
+    }
+  });
+  return onboardingStages.set(stages);
+};
+
+export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
+  if (stage.id === undefined) {
+    console.error("Provide the id of stage to be updated");
+    return null;
+  } else {
+    const tempOnboardingStages = get(onboardingStages);
+    for (const tempStage of tempOnboardingStages) {
+      if (tempStage.id === stage.id) {
+        tempStage.order = stage.order ? stage.order : tempStage.order;
+        tempStage.title = stage.title ? stage.title : tempStage.title;
+        tempStage.activeBackgroundColor = stage.activeBackgroundColor
+          ? stage.activeBackgroundColor
+          : tempStage.activeBackgroundColor;
+        tempStage.backgroundColor = stage.backgroundColor
+          ? stage.backgroundColor
+          : tempStage.backgroundColor;
+        tempStage.hoverBackgroundColor = stage.hoverBackgroundColor
+          ? stage.hoverBackgroundColor
+          : tempStage.hoverBackgroundColor;
+        tempStage.iconClass = stage.iconClass
+          ? stage.iconClass
+          : tempStage.iconClass;
+        break;
+      }
+    }
+    return onboardingStages.set(tempOnboardingStages);
+  }
 };

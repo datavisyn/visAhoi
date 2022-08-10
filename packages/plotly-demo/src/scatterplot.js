@@ -1,92 +1,126 @@
-import Plotly from 'plotly.js-dist'
-import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/plotly';
-import debounce from "lodash.debounce";
+import Plotly from 'plotly.js-dist';
+import {
+  generateBasicAnnotations,
+  ahoi,
+  EVisualizationType,
+  deleteOnboardingStage,
+  setOnboardingStage,
+  getOnboardingMessages,
+} from '@visahoi/plotly';
+import debounce from 'lodash.debounce';
 
 let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
+let deleteStageId = null;
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig())
+  onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);
 
 async function render() {
   const response = await fetch('../data/cars.json');
   const data = await response.json();
-  const {x, y} = processData(data);
+  const { x, y } = processData(data);
   chart = await makePlotly(x, y);
-  window.addEventListener("resize", debouncedResize);
+  window.addEventListener('resize', debouncedResize);
 }
 
 function processData(allRows) {
-  const x = Object.values(allRows).map((d) => d["Horsepower"]);
-  const y = Object.values(allRows).map((d) => d["Miles_per_Gallon"]);
-  return {x, y};
+  const x = Object.values(allRows).map((d) => d['Horsepower']);
+  const y = Object.values(allRows).map((d) => d['Miles_per_Gallon']);
+  return { x, y };
 }
 
 function makePlotly(x, y) {
-  document.getElementById("plot");
+  document.getElementById('plot');
   const traces = [
     {
-      type: "scatter",
-      mode: "markers",
+      type: 'scatter',
+      mode: 'markers',
       x,
       y,
       marker: {
-        size: 5
-      }
-    }
+        size: 5,
+      },
+    },
   ];
 
   const layout = {
-    title: "Some title of cars or something",
+    title: 'Some title of cars or something',
     xaxis: {
-      title: "Horsepower",
+      title: 'Horsepower',
     },
     yaxis: {
-      title: "Miles per Gallon"
-    }
+      title: 'Miles per Gallon',
+    },
   };
 
   const config = {
-    responsive: true
+    responsive: true,
   };
 
-  return Plotly.newPlot("vis", traces, layout, config);
+  return Plotly.newPlot('vis', traces, layout, config);
 }
 
-const getAhoiConfig = () => {  
-  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.SCATTERPLOT, chart);
-  const extendedOnboardingMessages = defaultOnboardingMessages.map((message) => ({
-    ...message,
-    marker: {
-      ...message.marker,
-      fontSize: '12px',
-      radius: 10
-    }
-  }));
-  
+const getAhoiConfig = () => {
+  const defaultOnboardingMessages = generateBasicAnnotations(
+    EVisualizationType.SCATTERPLOT,
+    chart,
+  );
+  const extendedOnboardingMessages = defaultOnboardingMessages.map(
+    (message) => ({
+      ...message,
+      marker: {
+        ...message.marker,
+        fontSize: '12px',
+        radius: 10,
+      },
+    }),
+  );
+
+  // To delete the onboarding stage
+  // deleteStageId = 'reading-the-chart';
+  // deleteOnboardingStage(deleteStageId);
+
+  // Set onboarding stage
+  setOnboardingStage({
+    id: 'using-the-chart',
+    title: 'Interact',
+    order: 4,
+  });
+
   const ahoiConfig = {
-    onboardingMessages: extendedOnboardingMessages    
-  }
-  
+    //Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
+
+    onboardingMessages: deleteStageId
+      ? defaultOnboardingMessages.filter(
+          (m) => m.onboardingStage.id !== deleteStageId,
+        )
+      : defaultOnboardingMessages,
+    // showOnboardingNavigation: true,
+  };
   return ahoiConfig;
-}
+};
 
 const registerEventListener = () => {
-  
-  const helpIcon = document.getElementById("show-onboarding");
-  if(!helpIcon) { return; }
+  const helpIcon = document.getElementById('show-onboarding');
+  if (!helpIcon) {
+    return;
+  }
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
-    if(showOnboarding) {
-      onboardingUI = await ahoi(EVisualizationType.SCATTERPLOT, chart, getAhoiConfig());
+    if (showOnboarding) {
+      onboardingUI = await ahoi(
+        EVisualizationType.SCATTERPLOT,
+        chart,
+        getAhoiConfig(),
+      );
     } else {
       onboardingUI?.removeOnboarding();
     }
-    
-  })
-}
+  });
+};
 
 registerEventListener();
 render();

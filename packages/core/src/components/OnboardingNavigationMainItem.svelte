@@ -1,6 +1,16 @@
 <script lang="ts">
-  import { showOnboardingSteps, activeOnboardingStage } from "./stores.js";
+  import {
+    showOnboardingSteps,
+    activeOnboardingStage,
+    showHideCloseText,
+    showOnboardingNavigation,
+    isEditModeActive,
+    onboardingStages,
+    markerInformation,
+  } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
+
+  $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
 
   const handleClick = () => {
     if ($activeOnboardingStage) {
@@ -8,6 +18,38 @@
     } else {
       showOnboardingSteps.update((v) => !v);
     }
+  };
+
+  const toggleNavigation = () => {
+    showOnboardingNavigation.set(!$showOnboardingNavigation);
+  };
+
+  const toggleEditMode = () => {
+    isEditModeActive.set(!$isEditModeActive);
+  };
+
+  const deleteOnboardingStage = () => {
+    const tempOnboardingStages = $onboardingStages;
+
+    // The stage is removed from the array
+    tempOnboardingStages.map((onboardingStage, i) => {
+      if (onboardingStage.id === $activeOnboardingStage?.id) {
+        tempOnboardingStages.splice(i, 1);
+      }
+      // The onboarding messages for the stage is filtered out
+      const tempMarkerInformation = $markerInformation.filter(
+        (m) => m.message.onboardingStage.id !== $activeOnboardingStage?.id
+      );
+
+      markerInformation.set(tempMarkerInformation);
+      onboardingStages.set(tempOnboardingStages);
+
+      if ($onboardingStages.length === 0) {
+        console.error(
+          "No onboarding stages are available. It seems that all onboarding stages have been deleted."
+        );
+      }
+    });
   };
 </script>
 
@@ -22,18 +64,80 @@
     {:else}
       <span><i class="fas fa-question" /></span>
     {/if}
+
+    {#if $activeOnboardingStage && $isEditModeActive}
+      <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
+        <i class="fas fa-trash" />
+      </div>
+    {/if}
   </div>
 
   <span class="visahoi-stage-title"
     >{$activeOnboardingStage
       ? $activeOnboardingStage?.title
-      : $showOnboardingSteps
+      : $showOnboardingSteps && $showHideCloseText
       ? "Close"
-      : "Help"}
+      : $showHideCloseText
+      ? "Help"
+      : ""}
   </span>
 </div>
 
+<div class="visahoi-edit-mode-button">
+  <button
+    style="background-color: {$activeOnboardingStage?.backgroundColor ||
+      navigationMainItemDefaultColor}"
+    on:click={toggleEditMode}>{buttonLabel}</button
+  >
+</div>
+
+<div class="toggle-button">
+  {#if $showOnboardingNavigation}
+    <span on:click={toggleNavigation}>
+      <i class="fas fa-solid fa-toggle-on" />
+    </span>
+  {:else}
+    <span on:click={toggleNavigation}>
+      <i
+        class="fas fa-solid fa-toggle-off"
+        style="width: 20px, height:20px"
+        on:click={toggleNavigation}
+      />
+    </span>
+  {/if}
+</div>
+
 <style>
+  .visahoi-edit-mode-button {
+    position: absolute;
+    bottom: 0;
+    right: 3em;
+  }
+
+  .visahoi-edit-mode-button > button {
+    width: 125px;
+    border-radius: 15px;
+    padding: 5px;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .toggle-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 80px;
+    /* height: 80px; */
+    opacity: 1;
+    z-index: 15;
+  }
+
   .visahoi-navigation-main-item {
     position: absolute;
     display: flex;
@@ -66,5 +170,18 @@
 
   .visahoi-stage-title {
     font-weight: bold;
+  }
+
+  .visahoi-delete-stage {
+    position: absolute;
+    margin-left: 110px;
+  }
+
+  /* .visahoi-delete-stage > i {
+    color: black;
+  } */
+
+  .fa-trash {
+    color: black;
   }
 </style>

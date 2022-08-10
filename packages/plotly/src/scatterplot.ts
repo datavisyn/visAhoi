@@ -34,7 +34,7 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
 
   return {
     chartTitle: {
-      value: chart.layout.title.text,
+      value: chart?.layout?.title?.text,
       anchor: {
         findDomNodeByValue: true,
         offset: { left: -20, top: 10 },
