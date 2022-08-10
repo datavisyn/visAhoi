@@ -7,6 +7,7 @@ export enum EVisualizationType {
   HORIZON_GRAPH = "horizon-graph",
   SCATTERPLOT = "scatterplot",
   TREEMAP = "treemap",
+  HEATMAP = "heatmap",
 }
 
 export interface IBackdrop {

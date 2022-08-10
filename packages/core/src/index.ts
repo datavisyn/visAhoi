@@ -7,10 +7,11 @@ import { barChart, IOnboardingBarChartSpec } from "./bar-chart";
 import { changeMatrix, IOnboardingChangeMatrixSpec } from "./change-matrix";
 import { horizonGraph, IOnboardingHorizonGraphSpec } from "./horizon-graph";
 import { IOnboardingScatterplotSpec, scatterplot } from "./scatterplot";
-import "@fortawesome/fontawesome-free/js/fontawesome.js";
-import "@fortawesome/fontawesome-free/js/solid.js";
 import { onboardingStages } from "./components/stores";
 import { IOnboardingTreemapSpec, treemap } from "./treemap";
+import { IOnboardingHeatmapSpec, heatmap } from "./heatmap";
+import "@fortawesome/fontawesome-free/js/fontawesome.js";
+import "@fortawesome/fontawesome-free/js/solid.js";
 
 export * from "./onboarding";
 export * from "./interfaces";
@@ -26,6 +27,7 @@ export function generateMessages(
   visElement: Element
 ): IOnboardingMessage[] {
   let messages: IOnboardingMessage[] = [];
+
   switch (visType) {
     case EVisualizationType.BAR_CHART:
       messages = barChart.generateMessages(
@@ -58,6 +60,13 @@ export function generateMessages(
     case EVisualizationType.TREEMAP:
       messages = treemap.generateMessages(
         <IOnboardingTreemapSpec>spec,
+        visElement
+      );
+      break;
+
+    case EVisualizationType.HEATMAP:
+      messages = heatmap.generateMessages(
+        <IOnboardingHeatmapSpec>spec,
         visElement
       );
       break;

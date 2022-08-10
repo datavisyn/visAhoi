@@ -1,24 +1,28 @@
 const demos = [
   {
     title: 'Bar Chart',
-    link: './bar-chart.html'
+    link: './bar-chart.html',
   },
   {
     title: 'Change Matrix',
-    link: './change-matrix.html'
+    link: './change-matrix.html',
   },
   {
     title: 'Horizon Graph',
-    link: './horizon-graph.html'
+    link: './horizon-graph.html',
   },
   {
     title: 'Scatterplot',
-    link: './scatterplot.html'
+    link: './scatterplot.html',
   },
   {
     title: 'TreeMap',
-    link: './treeMap.html'
-  }
+    link: './treeMap.html',
+  },
+  {
+    title: 'Heatmap',
+    link: './heatmap.html',
+  },
 ];
 
 const ul = document.createElement('ul');
