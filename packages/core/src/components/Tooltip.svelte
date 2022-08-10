@@ -13,7 +13,7 @@
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
-  import { tick } from "svelte";
+  import { onDestroy, onMount, tick } from "svelte";
 
   export let visElement;
 
@@ -321,6 +321,11 @@
 
   .visahoi-delete-tooltip {
     margin-right: 5px;
+    cursor: pointer;
+  }
+
+  .visahoi-delete-tooltip {
+    margin-left: 3px;
     cursor: pointer;
   }
 
