@@ -7,6 +7,8 @@ import {
   backdropOpacity,
   showHideCloseText,
   showOnboardingNavigation,
+  isEditModeActive,
+  activeOnboardingStage,
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
@@ -147,4 +149,9 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
     }
     return onboardingStages.set(tempOnboardingStages);
   }
+};
+
+export const setEditMode = (value: boolean) => {
+  console.log(get(isEditModeActive), "Is edit mode Active");
+  return isEditModeActive.set(value);
 };

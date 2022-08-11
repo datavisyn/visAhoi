@@ -6,17 +6,25 @@ import {
   deleteOnboardingStage,
   setOnboardingStage,
   getOnboardingMessages,
+  setEditMode,
+  getActiveOnboardingStage,
+  // getActiveOnboardingStage,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
 let chart = null;
 let showOnboarding = false;
+let editMode = false;
 let onboardingUI = null;
 let deleteStageId = null;
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);
+
+// function toggleEditMode (event) {
+//   console.log('Test');
+// }
 
 async function render() {
   const response = await fetch('../data/cars.json');
@@ -105,12 +113,18 @@ const getAhoiConfig = () => {
 
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');
+  const editButton = document.getElementById('editModeButton');
   if (!helpIcon) {
     return;
   }
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
+
     if (showOnboarding) {
+      editButton.style.display = 'block';
+      editButton.style.position = 'absolute';
+      editButton.style.bottom = '9em';
+      editButton.style.right = '12em';
       onboardingUI = await ahoi(
         EVisualizationType.SCATTERPLOT,
         chart,
@@ -118,7 +132,18 @@ const registerEventListener = () => {
       );
     } else {
       onboardingUI?.removeOnboarding();
+      editButton.style.display = 'none';
     }
+  });
+  editButton.addEventListener('click', async () => {
+    editMode = !editMode;
+    if (editMode) {
+      editButton.innerText = 'Exit edit mode';
+    } else {
+      editButton.innerText = 'Enter edit mode';
+    }
+    setEditMode(editMode);
+    console.log(editMode, 'Edit mode');
   });
 };
 

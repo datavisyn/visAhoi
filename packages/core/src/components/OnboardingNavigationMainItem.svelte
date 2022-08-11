@@ -83,13 +83,16 @@
   </span>
 </div>
 
-<div class="visahoi-edit-mode-button">
-  <button
-    style="background-color: {$activeOnboardingStage?.backgroundColor ||
-      navigationMainItemDefaultColor}"
-    on:click={toggleEditMode}>{buttonLabel}</button
-  >
-</div>
+<!-- This button is shown only to edit onboarding messages and stages  -->
+<!-- {#if editMode}
+  <div class="visahoi-edit-mode-button">
+    <button
+      style="background-color: {$activeOnboardingStage?.backgroundColor ||
+        navigationMainItemDefaultColor}"
+      on:click={toggleEditMode}>{buttonLabel}</button
+    >
+  </div>
+{/if} -->
 
 <div class="toggle-button">
   {#if $showOnboardingNavigation}
