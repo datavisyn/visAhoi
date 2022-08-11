@@ -7,8 +7,6 @@ import {
   setOnboardingStage,
   getOnboardingMessages,
   setEditMode,
-  getActiveOnboardingStage,
-  // getActiveOnboardingStage,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
