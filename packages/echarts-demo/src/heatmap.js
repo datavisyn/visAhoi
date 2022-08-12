@@ -42,27 +42,43 @@ const createPlot = () => {
     return [item[1], item[0], item[2] || '-'];
   });
   const option = {
+    title: {
+      text: 'Average temperature in a week',
+      left: 'center',
+    },
     tooltip: {
       position: 'right',
     },
     grid: {
       height: '70%',
-      top: '5%',
+      top: '10%',
     },
     xAxis: {
+      name: 'Weekday',
       type: 'category',
       data: day,
       splitArea: {
         show: true,
       },
+      nameLocation: 'middle',
+      nameGap: 35,
     },
     yAxis: {
+      name: 'Average temperature per day',
       type: 'category',
       data: dayTime,
       splitArea: {
         show: true,
       },
+      nameLocation: 'middle',
+      nameGap: 75,
+      axisName: {
+        fontWeight: 'bold',
+      },
     },
+    // labelLayout: {
+    //   fontSize: '30px',
+    // },
     visualMap: {
       min: 0,
       max: 10,
@@ -72,9 +88,9 @@ const createPlot = () => {
       bottom: '50%',
       height: '80%',
     },
+    itemStyle: {},
     series: [
       {
-        name: 'Punch Card',
         type: 'heatmap',
         data: data,
         label: {
@@ -82,8 +98,9 @@ const createPlot = () => {
         },
         emphasis: {
           itemStyle: {
-            shadowBlur: 10,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
+            fontWeight: 'bold',
+            // shadowBlur: 10,
+            // shadowColor: 'rgba(0, 0, 0, 0.5)',
           },
         },
       },
@@ -95,7 +112,6 @@ const createPlot = () => {
 };
 
 const registerEventListener = () => {
-  showOnboarding = !showOnboarding;
   const helpIcon = document.getElementById('show-onboarding');
   if (!helpIcon) {
     return;
@@ -104,7 +120,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding;
     if (showOnboarding) {
       onboardingUI = await ahoi(
-        EVisualizationType.HEATMAP,
+        EVisualizationType.TREEMAP,
         chart,
         getAhoiConfig(),
       );
@@ -118,7 +134,7 @@ const createChart = (renderer = 'svg') => {
   const vis = document.getElementById('vis');
   chart = echarts.init(vis, null, { renderer });
   window.addEventListener('resize', () => chart.resize());
-  // registerEventListener();
+  registerEventListener();
   render();
 };
 
