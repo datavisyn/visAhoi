@@ -10,9 +10,9 @@ let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
 
-// const debouncedResize = debounce((event) => {
-//   onboardingUI?.updateOnboarding(getAhoiConfig());
-// }, 250);
+const debouncedResize = debounce((event) => {
+  onboardingUI?.updateOnboarding(getAhoiConfig());
+}, 250);
 
 const render = () => {
   chart = createPlot();
@@ -23,47 +23,42 @@ const createPlot = () => {
   const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const dayTime = ['Morning', 'Afternoon', 'Evening'];
   const data = [
-    {
-      z: [
-        [0, 0, 1],
-        [0, 1, 0],
-        [0, 2, 30],
-        [0, 3, 50],
-        [0, 4, 1],
-        [1, 0, 20],
-        [1, 1, 1],
-        [1, 2, 60],
-        [1, 3, 80],
-        [1, 4, 30],
-        [2, 0, 30],
-        [2, 1, 60],
-        [2, 2, 1],
-        [2, 3, -10],
-        [2, 4, 20],
-      ].map(function (item) {
-        return [item[1], item[0], item[2] || '-'];
-      }),
-    },
-  ];
-
-  const options = {
+    [0, 0, 1],
+    [0, 1, 0],
+    [0, 2, 30],
+    [0, 3, 50],
+    [0, 4, 1],
+    [1, 0, 20],
+    [1, 1, 1],
+    [1, 2, 60],
+    [1, 3, 80],
+    [1, 4, 30],
+    [2, 0, 30],
+    [2, 1, 60],
+    [2, 2, 1],
+    [2, 3, -10],
+    [2, 4, 20],
+  ].map(function (item) {
+    return [item[1], item[0], item[2] || '-'];
+  });
+  const option = {
     tooltip: {
-      position: 'top',
+      position: 'right',
     },
     grid: {
-      height: '50%',
-      top: '10%',
+      height: '70%',
+      top: '5%',
     },
     xAxis: {
       type: 'category',
-      data: dayTime,
+      data: day,
       splitArea: {
         show: true,
       },
     },
     yAxis: {
       type: 'category',
-      data: day,
+      data: dayTime,
       splitArea: {
         show: true,
       },
@@ -72,9 +67,10 @@ const createPlot = () => {
       min: 0,
       max: 10,
       calculable: true,
-      orient: 'horizontal',
-      left: 'center',
-      bottom: '15%',
+      orient: 'vertical',
+      right: '3%',
+      bottom: '50%',
+      height: '80%',
     },
     series: [
       {
@@ -94,28 +90,9 @@ const createPlot = () => {
     ],
   };
 
-  const config = {
-    responsive: true,
-  };
-
-  chart.setOption(options);
+  chart.setOption(option);
   return chart;
 };
-
-// const getAhoiConfig = () => {
-//   const defaultOnboardingMessages = generateBasicAnnotations(
-//     EVisualizationType.HEATMAP,
-//     chart,
-//   );
-//   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-//     ...d,
-//     text: 'test123',
-//   }));
-//   const ahoiConfig = {
-//     onboardingMessages: defaultOnboardingMessages,
-//   };
-//   return ahoiConfig;
-// };
 
 const registerEventListener = () => {
   showOnboarding = !showOnboarding;
