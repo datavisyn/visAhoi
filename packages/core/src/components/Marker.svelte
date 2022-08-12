@@ -42,6 +42,7 @@
       });
     } else {
       activeMarker.set(markerInformation);
+
       const preElementId = document.getElementById(
         getNavigationMarkerDomId($previousMarkerId)
       );

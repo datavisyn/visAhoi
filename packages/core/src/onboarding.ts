@@ -82,6 +82,10 @@ export const getOnboardingStages = (): IOnboardingStage[] => {
   return get(onboardingStages);
 };
 
+export const getOnboardingMessages = (): IOnboardingMessage[] => {
+  return get(onboardingMessages);
+};
+
 export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
   if (!stage.id) {
     stage.id = `visahoi-stage-${uuidv4()}`;
@@ -104,6 +108,16 @@ export const createBasicOnboardingMessage = (
     ...message,
   };
   return onboardingMessage;
+};
+
+export const deleteOnboardingStage = (id: string) => {
+  const stages: IOnboardingStage[] = get(onboardingStages);
+  stages.map((m, i) => {
+    if (m.id === id) {
+      stages.splice(i, 1);
+    }
+  });
+  return onboardingStages.set(stages);
 };
 
 export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {

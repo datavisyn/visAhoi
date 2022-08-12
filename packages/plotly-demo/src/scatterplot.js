@@ -3,13 +3,16 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
+  deleteOnboardingStage,
   setOnboardingStage,
+  getOnboardingMessages,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
 let chart = null;
 let showOnboarding = false;
 let onboardingUI = null;
+let deleteStageId = null;
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
@@ -76,16 +79,27 @@ const getAhoiConfig = () => {
     }),
   );
 
+  // To delete the onboarding stage
+  // deleteStageId = 'reading-the-chart';
+  // deleteOnboardingStage(deleteStageId);
+
+  // Set onboarding stage
   setOnboardingStage({
-    id: 'reading-the-chart',
-    title: 'Read',
+    id: 'using-the-chart',
+    title: 'Interact',
     order: 4,
   });
 
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-  };
+    //Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
 
+    onboardingMessages: deleteStageId
+      ? defaultOnboardingMessages.filter(
+          (m) => m.onboardingStage.id !== deleteStageId,
+        )
+      : defaultOnboardingMessages,
+    // showOnboardingNavigation: true,
+  };
   return ahoiConfig;
 };
 
