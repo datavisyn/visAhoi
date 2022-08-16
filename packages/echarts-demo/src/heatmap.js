@@ -1,9 +1,9 @@
 import * as echarts from 'echarts';
-// import {
-//   generateBasicAnnotations,
-//   ahoi,
-//   EVisualizationType,
-// } from '@visahoi/plotly';
+import {
+  generateBasicAnnotations,
+  ahoi,
+  EVisualizationType,
+} from '@visahoi/echarts';
 import debounce from 'lodash.debounce';
 
 let chart = null;
@@ -111,6 +111,21 @@ const createPlot = () => {
   return chart;
 };
 
+const getAhoiConfig = () => {
+  const defaultOnboardingMessages = generateBasicAnnotations(
+    EVisualizationType.HEATMAP,
+    chart,
+  );
+  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+    ...d,
+    text: 'test123',
+  }));
+  const ahoiConfig = {
+    onboardingMessages: defaultOnboardingMessages,
+  };
+  return ahoiConfig;
+};
+
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');
   if (!helpIcon) {
@@ -118,9 +133,10 @@ const registerEventListener = () => {
   }
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
+    console.log(showOnboarding, 'Show onboarding');
     if (showOnboarding) {
       onboardingUI = await ahoi(
-        EVisualizationType.TREEMAP,
+        EVisualizationType.HEATMAP,
         chart,
         getAhoiConfig(),
       );
