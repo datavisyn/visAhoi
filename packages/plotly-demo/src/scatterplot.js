@@ -6,11 +6,13 @@ import {
   deleteOnboardingStage,
   setOnboardingStage,
   getOnboardingMessages,
+  setEditMode,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
 let chart = null;
 let showOnboarding = false;
+let editMode = false;
 let onboardingUI = null;
 let deleteStageId = null;
 
@@ -105,12 +107,15 @@ const getAhoiConfig = () => {
 
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');
+  const editButton = document.getElementById('editModeButton');
   if (!helpIcon) {
     return;
   }
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
+
     if (showOnboarding) {
+      editButton.style.display = 'block';
       onboardingUI = await ahoi(
         EVisualizationType.SCATTERPLOT,
         chart,
@@ -118,7 +123,17 @@ const registerEventListener = () => {
       );
     } else {
       onboardingUI?.removeOnboarding();
+      editButton.style.display = 'none';
     }
+  });
+  editButton.addEventListener('click', async () => {
+    editMode = !editMode;
+    if (editMode) {
+      editButton.innerText = 'Exit edit mode';
+    } else {
+      editButton.innerText = 'Enter edit mode';
+    }
+    setEditMode(editMode);
   });
 };
 

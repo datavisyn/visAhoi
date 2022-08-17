@@ -29,7 +29,6 @@ function generateMessages(
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
-  console.log("check-4");
 
   const messages = [
     {
