@@ -20,10 +20,6 @@ const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);
 
-// function toggleEditMode (event) {
-//   console.log('Test');
-// }
-
 async function render() {
   const response = await fetch('../data/cars.json');
   const data = await response.json();
@@ -120,9 +116,6 @@ const registerEventListener = () => {
 
     if (showOnboarding) {
       editButton.style.display = 'block';
-      editButton.style.position = 'absolute';
-      editButton.style.bottom = '9em';
-      editButton.style.right = '12em';
       onboardingUI = await ahoi(
         EVisualizationType.SCATTERPLOT,
         chart,
@@ -141,7 +134,6 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode';
     }
     setEditMode(editMode);
-    console.log(editMode, 'Edit mode');
   });
 };
 

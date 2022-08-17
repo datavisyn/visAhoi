@@ -152,6 +152,5 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
 };
 
 export const setEditMode = (value: boolean) => {
-  console.log(get(isEditModeActive), "Is edit mode Active");
   return isEditModeActive.set(value);
 };

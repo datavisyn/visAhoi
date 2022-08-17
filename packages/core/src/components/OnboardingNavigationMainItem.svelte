@@ -83,17 +83,6 @@
   </span>
 </div>
 
-<!-- This button is shown only to edit onboarding messages and stages  -->
-<!-- {#if editMode}
-  <div class="visahoi-edit-mode-button">
-    <button
-      style="background-color: {$activeOnboardingStage?.backgroundColor ||
-        navigationMainItemDefaultColor}"
-      on:click={toggleEditMode}>{buttonLabel}</button
-    >
-  </div>
-{/if} -->
-
 <div class="toggle-button">
   {#if $showOnboardingNavigation}
     <span on:click={toggleNavigation}>
@@ -111,24 +100,6 @@
 </div>
 
 <style>
-  .visahoi-edit-mode-button {
-    position: absolute;
-    bottom: 0;
-    right: 3em;
-  }
-
-  .visahoi-edit-mode-button > button {
-    width: 125px;
-    border-radius: 15px;
-    padding: 5px;
-    border: none;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-
   .toggle-button {
     position: absolute;
     display: flex;
@@ -179,10 +150,6 @@
     position: absolute;
     margin-left: 110px;
   }
-
-  /* .visahoi-delete-stage > i {
-    color: black;
-  } */
 
   .fa-trash {
     color: black;
