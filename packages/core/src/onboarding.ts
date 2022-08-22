@@ -34,13 +34,17 @@ export const injectOnboarding = (
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
   }
 
-  const stageIds = ahoiConfig.onboardingMessages.map(
-    (m) => m.onboardingStage.id
-  );
+  // de-duplicate onboarding stages
+  const uniqueStages: IOnboardingStage[] = ahoiConfig.onboardingMessages
+    .map((m) => m.onboardingStage)
+    .reduce((prev: IOnboardingStage[], next: IOnboardingStage) => {
+      if (prev.map((p) => p.id).includes(next.id)) {
+        return prev;
+      }
+      return [...prev, next];
+    }, [] as IOnboardingStage[]);
+  onboardingStages.set(uniqueStages);
 
-  onboardingStages.set([
-    ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
-  ]);
   navigationAlignment.set(alignment);
   if (
     ahoiConfig?.backdrop?.show !== null &&
@@ -85,6 +89,7 @@ export const getOnboardingStages = (): IOnboardingStage[] => {
 };
 
 export const getOnboardingMessages = (): IOnboardingMessage[] => {
+  console.log(get(onboardingMessages));
   return get(onboardingMessages);
 };
 
