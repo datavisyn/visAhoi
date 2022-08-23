@@ -74,21 +74,12 @@
   };
 
   const deleteOnboardingMessage = () => {
+    const activeMarkerId = $activeMarker?.marker.id;
     // Delete onboarding message for the active marker.
     $markerInformation.map((m, i) => {
-      if (m.marker.id === $activeMarker?.marker.id) {
+      if (m.marker.id === activeMarkerId) {
         const tempMarkerInformation = $markerInformation;
 
-        $onboardingMessages.map((m, i) => {
-          if (m.marker.id === $activeMarker?.marker.id) {
-            const tempOnboardingMessage = $onboardingMessages;
-            tempOnboardingMessage.splice(i, 1);
-            closeTooltip();
-
-            onboardingMessages.set(tempOnboardingMessage);
-            // console.log(getOnboardingMessages(), "onboarding message");
-          }
-        });
         tempMarkerInformation.splice(i, 1);
         closeTooltip();
         markerInformation.set(tempMarkerInformation);
@@ -106,6 +97,15 @@
             activeOnboardingStage.set(null);
           }
         });
+      }
+    });
+
+    $onboardingMessages.map((m, i) => {
+      if (m.marker.id === activeMarkerId) {
+        const tempOnboardingMessage = $onboardingMessages;
+        tempOnboardingMessage.splice(i, 1);
+        onboardingMessages.set(tempOnboardingMessage);
+        // console.log(getOnboardingMessages(), "onboarding message");
       }
     });
 
