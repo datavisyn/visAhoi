@@ -89,7 +89,6 @@ export const getOnboardingStages = (): IOnboardingStage[] => {
 };
 
 export const getOnboardingMessages = (): IOnboardingMessage[] => {
-  console.log(get(onboardingMessages));
   return get(onboardingMessages);
 };
 
