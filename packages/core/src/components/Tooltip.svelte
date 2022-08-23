@@ -7,6 +7,7 @@
     markerIndexId,
     isEditModeActive,
     onboardingStages,
+    onboardingMessages,
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
@@ -14,6 +15,7 @@
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
   import { onDestroy, onMount, tick } from "svelte";
+  import { getOnboardingMessages } from "../onboarding";
 
   export let visElement;
 
@@ -72,10 +74,12 @@
   };
 
   const deleteOnboardingMessage = () => {
+    const activeMarkerId = $activeMarker?.marker.id;
     // Delete onboarding message for the active marker.
     $markerInformation.map((m, i) => {
-      if (m.marker.id === $activeMarker?.marker.id) {
+      if (m.marker.id === activeMarkerId) {
         const tempMarkerInformation = $markerInformation;
+
         tempMarkerInformation.splice(i, 1);
         closeTooltip();
         markerInformation.set(tempMarkerInformation);
@@ -93,6 +97,15 @@
             activeOnboardingStage.set(null);
           }
         });
+      }
+    });
+
+    $onboardingMessages.map((m, i) => {
+      if (m.marker.id === activeMarkerId) {
+        const tempOnboardingMessage = $onboardingMessages;
+        tempOnboardingMessage.splice(i, 1);
+        onboardingMessages.set(tempOnboardingMessage);
+        // console.log(getOnboardingMessages(), "onboarding message");
       }
     });
 
