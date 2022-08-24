@@ -7,6 +7,7 @@
     isEditModeActive,
     onboardingStages,
     markerInformation,
+    onboardingMessages,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
@@ -29,19 +30,25 @@
   };
 
   const deleteOnboardingStage = () => {
+    const stageId = $activeOnboardingStage?.id;
     const tempOnboardingStages = $onboardingStages;
 
     // The stage is removed from the array
     tempOnboardingStages.map((onboardingStage, i) => {
-      if (onboardingStage.id === $activeOnboardingStage?.id) {
+      if (onboardingStage.id === stageId) {
         tempOnboardingStages.splice(i, 1);
       }
       // The onboarding messages for the stage is filtered out
       const tempMarkerInformation = $markerInformation.filter(
-        (m) => m.message.onboardingStage.id !== $activeOnboardingStage?.id
+        (m) => m.message.onboardingStage.id !== stageId
+      );
+
+      const tempOnboardingMessage = $onboardingMessages.filter(
+        (message) => message.onboardingStage.id !== stageId
       );
 
       markerInformation.set(tempMarkerInformation);
+      onboardingMessages.set(tempOnboardingMessage);
       onboardingStages.set(tempOnboardingStages);
 
       if ($onboardingStages.length === 0) {
@@ -50,6 +57,7 @@
         );
       }
     });
+    console.log($onboardingMessages, "onboarding messages");
   };
 </script>
 
