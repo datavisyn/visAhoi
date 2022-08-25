@@ -89,7 +89,6 @@ const getAhoiConfig = () => {
   setOnboardingStage({
     id: 'using-the-chart',
     title: 'Interact',
-    order: 4,
   });
 
   const ahoiConfig = {

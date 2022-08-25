@@ -133,7 +133,7 @@ export const defaultOnboardingStages: Map<
       hoverBackgroundColor: "rgb(92, 59, 112)",
       backgroundColor: "rgb(123, 80, 150)",
       activeBackgroundColor: "rgb(76, 46, 94)",
-      order: 1,
+      order: 3,
     },
   ],
   [
@@ -153,7 +153,7 @@ export const defaultOnboardingStages: Map<
       title: "Analyzing",
       iconClass: "fas fa-lightbulb",
       backgroundColor: "rgb(254, 128, 41)",
-      order: 3,
+      order: 1,
     },
   ],
 ]);
