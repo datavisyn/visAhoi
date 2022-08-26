@@ -92,11 +92,11 @@
 
 <div class="toggle-button">
   {#if $showOnboardingNavigation}
-    <span on:click={toggleNavigation}>
+    <span title="Disable navigation steps" on:click={toggleNavigation}>
       <i class="fas fa-solid fa-toggle-on" />
     </span>
   {:else}
-    <span on:click={toggleNavigation}>
+    <span title="Enable navigation steps" on:click={toggleNavigation}>
       <i
         class="fas fa-solid fa-toggle-off"
         style="width: 20px, height:20px"
@@ -155,7 +155,7 @@
 
   .visahoi-delete-stage {
     position: absolute;
-    margin-left: 110px;
+    margin-left: 80px;
   }
 
   .fa-trash {
