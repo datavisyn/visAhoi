@@ -88,6 +88,8 @@
       const activeOnboardingStageMarkers = $markInfo.filter(
         (m) => m.message.onboardingStage === $activeOnboardingStage
       );
+
+      // selectedMarker.set(activeOnboardingStageMarkers[0]);
       selectedMarker.set(activeOnboardingStageMarkers[0]);
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
