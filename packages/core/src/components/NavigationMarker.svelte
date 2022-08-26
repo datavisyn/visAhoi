@@ -19,7 +19,6 @@
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
-  $: console.log(markerInformation, "Marker information");
 
   let arrValue: IMarkerInformation[] = [];
 
