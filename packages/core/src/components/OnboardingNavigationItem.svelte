@@ -10,6 +10,8 @@
 
   const bottom: string = (index + 1) * 75 + "px";
 
+  console.log("Test it-3!");
+
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
@@ -25,13 +27,16 @@
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-  <div class="visahoi-navigation-item-circle">
-    <i
-      class={!$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
-        ? stage.iconClass
-        : "fas fa-times"}
-    />
-  </div>
+  {#key $activeOnboardingStage}
+    <div class="visahoi-navigation-item-circle">
+      <i
+        class={!$activeOnboardingStage ||
+        stage.id !== $activeOnboardingStage?.id
+          ? stage.iconClass
+          : "fas fa-times"}
+      />
+    </div>
+  {/key}
   <span class="visahoi-stage-title">{stage.title}</span>
 </div>
 
