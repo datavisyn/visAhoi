@@ -25,13 +25,16 @@
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-  <div class="visahoi-navigation-item-circle">
-    <i
-      class={!$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
-        ? stage.iconClass
-        : "fas fa-times"}
-    />
-  </div>
+  {#key $activeOnboardingStage}
+    <div class="visahoi-navigation-item-circle">
+      <i
+        class={!$activeOnboardingStage ||
+        stage.id !== $activeOnboardingStage?.id
+          ? stage.iconClass
+          : "fas fa-times"}
+      />
+    </div>
+  {/key}
   <span class="visahoi-stage-title">{stage.title}</span>
 </div>
 
