@@ -7,6 +7,7 @@ import {
   setOnboardingStage,
   getOnboardingMessages,
   setEditMode,
+  createBasicOnboardingStage,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
@@ -133,6 +134,11 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode';
     }
     setEditMode(editMode);
+    // createBasicOnboardingStage({
+    //   title: 'New stage',
+    //   iconClass: 'fas fa-flask',
+    //   backgroundColor: 'tomato',
+    // });
   });
 };
 

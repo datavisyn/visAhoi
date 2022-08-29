@@ -9,9 +9,6 @@
   export let index: number;
 
   const bottom: string = (index + 1) * 75 + "px";
-
-  console.log("Test it-3!");
-
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
