@@ -39,7 +39,7 @@ function generateMessages(
     {
       anchor: getAnchor(spec.desc, visElement),
       requires: ["desc"],
-      text: `The treemap visualization shows the breakdown of hierarchical data level by level.The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
+      text: `The treemap visualization shows the breakdown of hierarchical data level by level. The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
       title: "Reading the chart",
       onboardingStage: reading,
       marker: {
