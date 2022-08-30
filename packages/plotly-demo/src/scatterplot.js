@@ -92,7 +92,7 @@ const getAhoiConfig = () => {
     iconClass: 'fas fa-microphone',
     backgroundColor: 'red',
     hoverBackgroundColor: 'orange',
-    activeBackgroundColor: 'yellow',
+    activeBackgroundColor: 'orange',
     order: 5,
   });
 
