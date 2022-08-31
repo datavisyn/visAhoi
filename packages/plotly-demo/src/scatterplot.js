@@ -89,6 +89,11 @@ const getAhoiConfig = () => {
   setOnboardingStage({
     id: 'using-the-chart',
     title: 'Interact',
+    iconClass: 'fas fa-microphone',
+    backgroundColor: 'red',
+    hoverBackgroundColor: 'orange',
+    activeBackgroundColor: 'orange',
+    order: 5,
   });
 
   const ahoiConfig = {
