@@ -89,6 +89,7 @@ export interface IOnboardingMessage {
   onboardingStage: IOnboardingStage;
   tooltipPosition?: TooltipPosition;
   marker: IMarker;
+  order?: number;
 }
 
 export enum EDefaultOnboardingStages {
