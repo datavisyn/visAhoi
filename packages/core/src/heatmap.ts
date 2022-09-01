@@ -40,6 +40,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-1",
       },
+      id: "unique-message-id-2",
     },
     {
       anchor: getAnchor(spec.heatmapDescription, visElement),
@@ -50,6 +51,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-2",
       },
+      id: "unique-message-id-2",
     },
     {
       anchor: getAnchor(spec.legendDescription, visElement),
@@ -60,6 +62,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-3",
       },
+      id: "unique-message-id-3",
     },
     {
       anchor: getAnchor(spec.axisDescription, visElement),
@@ -70,6 +73,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-4",
       },
+      id: "unique-message-id-4",
     },
     {
       anchor: getAnchor(spec.hoverDescription, visElement),
@@ -80,6 +84,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-5",
       },
+      id: "unique-message-id-5",
     },
   ];
 

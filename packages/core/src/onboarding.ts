@@ -9,6 +9,7 @@ import {
   showOnboardingNavigation,
   isEditModeActive,
   activeOnboardingStage,
+  markerInformation,
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
@@ -112,6 +113,7 @@ export const createBasicOnboardingMessage = (
   const onboardingMessage: IOnboardingMessage = {
     marker,
     ...message,
+    id: "",
   };
   return onboardingMessage;
 };
@@ -156,27 +158,41 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
 };
 
 export const setOnboardingMessage = (message: Partial<IOnboardingMessage>) => {
+  console.log(get(onboardingMessages));
+  console.log(get(markerInformation), "Marker iformation");
   if (message.marker?.id === undefined) {
-    console.error("Provide the id of stage to be updated");
+    console.error("Provide the id of message to be updated");
     return null;
   } else {
-    debugger;
     const tempOnboardingMessages = get(onboardingMessages);
+    const tempMarkerInfo = get(markerInformation);
     for (const tempMessage of tempOnboardingMessages) {
       if (tempMessage.marker.id === message.marker.id) {
         tempMessage.anchor = message.anchor
           ? message.anchor
           : tempMessage.anchor;
         tempMessage.text = message.text ? message.text : tempMessage.text;
+
         tempMessage.title = message.title ? message.title : tempMessage.title;
-        tempMessage.anchor = message.anchor
-          ? message.anchor
-          : tempMessage.anchor;
+
+        break;
+      }
+    }
+    for (const tempMarker of tempMarkerInfo) {
+      if (tempMarker.marker.id === message.marker.id) {
+        tempMarker.tooltip.title = message.title
+          ? message.title
+          : tempMarker.tooltip.title;
+        tempMarker.tooltip.text = message.text
+          ? message.text
+          : tempMarker.tooltip.text;
+
         break;
       }
     }
 
-    console.log(onboardingMessages.set(tempOnboardingMessages));
+    markerInformation.set(tempMarkerInfo);
+    onboardingMessages.set(tempOnboardingMessages);
     return onboardingMessages.set(tempOnboardingMessages);
   }
 };

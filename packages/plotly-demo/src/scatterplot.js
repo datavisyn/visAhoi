@@ -17,8 +17,6 @@ let editMode = false;
 let onboardingUI = null;
 let deleteStageId = null;
 
-console.log('set-1');
-
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
 }, 250);
@@ -112,13 +110,6 @@ const getAhoiConfig = () => {
   return ahoiConfig;
 };
 
-setOnboardingMessage({
-  marker: {
-    id: 'unique-marker-id-4',
-  },
-  title: 'test-1',
-});
-
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');
   const editButton = document.getElementById('editModeButton');
@@ -148,6 +139,14 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode';
     }
     setEditMode(editMode);
+
+    setOnboardingMessage({
+      marker: {
+        id: 'unique-marker-id-6',
+      },
+      title: 'test-1',
+      text: 'testing....',
+    });
   });
 };
 

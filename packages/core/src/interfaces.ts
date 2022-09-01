@@ -82,6 +82,7 @@ export interface IMarker {
   id: string;
 }
 export interface IOnboardingMessage {
+  id: string;
   anchor: OnboardingAnchor | undefined;
   requires?: string[]; // TODO: remove optional again
   text: string;

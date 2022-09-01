@@ -45,6 +45,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-2",
       },
+      id: "unique-message-id-2",
     },
     {
       anchor: getAnchor(spec.subDesc, visElement),
@@ -55,6 +56,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-3",
       },
+      id: "unique-message-id-3",
     },
     {
       anchor: getAnchor(spec.otherDesc, visElement),
@@ -65,6 +67,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-4",
       },
+      id: "unique-message-id-4",
     },
     {
       anchor: getAnchor(spec.gapDesc, visElement),
@@ -75,6 +78,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-5",
       },
+      id: "unique-message-id-5",
     },
 
     {
@@ -86,6 +90,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-6",
       },
+      id: "unique-message-id-6",
     },
 
     {
@@ -97,6 +102,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-7",
       },
+      id: "unique-message-id-7",
     },
 
     {
@@ -108,6 +114,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-8",
       },
+      id: "unique-message-id-8",
     },
   ];
 
@@ -121,6 +128,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-1",
       },
+      id: "unique-message-id-1",
     });
   }
 
