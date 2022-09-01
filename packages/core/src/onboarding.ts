@@ -158,16 +158,14 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
 };
 
 export const setOnboardingMessage = (message: Partial<IOnboardingMessage>) => {
-  console.log(get(onboardingMessages));
-  console.log(get(markerInformation), "Marker iformation");
-  if (message.marker?.id === undefined) {
+  if (message.id === undefined) {
     console.error("Provide the id of message to be updated");
     return null;
   } else {
     const tempOnboardingMessages = get(onboardingMessages);
     const tempMarkerInfo = get(markerInformation);
     for (const tempMessage of tempOnboardingMessages) {
-      if (tempMessage.marker.id === message.marker.id) {
+      if (tempMessage.id === message.id) {
         tempMessage.anchor = message.anchor
           ? message.anchor
           : tempMessage.anchor;
@@ -179,7 +177,7 @@ export const setOnboardingMessage = (message: Partial<IOnboardingMessage>) => {
       }
     }
     for (const tempMarker of tempMarkerInfo) {
-      if (tempMarker.marker.id === message.marker.id) {
+      if (tempMarker.message.id === message.id) {
         tempMarker.tooltip.title = message.title
           ? message.title
           : tempMarker.tooltip.title;

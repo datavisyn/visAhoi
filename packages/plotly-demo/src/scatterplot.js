@@ -141,9 +141,7 @@ const registerEventListener = () => {
     setEditMode(editMode);
 
     setOnboardingMessage({
-      marker: {
-        id: 'unique-marker-id-6',
-      },
+      id: 'unique-message-id-6',
       title: 'test-1',
       text: 'testing....',
     });
