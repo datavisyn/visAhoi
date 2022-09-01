@@ -25,7 +25,7 @@
     "watch-plotly": "npm run start"
   },
   "dependencies": {
-    "@visahoi/plotly": "2.0.0",
+    "@visahoi/plotly": "3.0.0",
     "plotly.js": "^2.2.1",
     "plotly.js-dist": "^2.8.3",
     "lodash.debounce": "^4.0.8"
