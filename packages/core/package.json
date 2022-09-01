@@ -1,0 +1,53 @@
+{
+  "name": "@visahoi/core",
+  "version": "3.0.0",
+  "description": "Core library for the visualization onboarding",
+  "keywords": [
+    "visualization",
+    "onboarding"
+  ],
+  "author": "FFG SEVA Consortium",
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/core#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "rollup -c",
+    "watch-plotly": "npm run compile -- --watch",
+    "watch-echarts": "npm run compile -- --watch",
+    "watch-vega": "npm run compile -- --watch"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "4.1.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "8.2.5",
+    "@tsconfig/svelte": "2.0.1",
+    "postcss": "^8.3.9",
+    "postcss-import": "^14.0.2",
+    "rollup": "^2.3.4",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-postcss": "^4.0.1",
+    "rollup-plugin-svelte": "^7.0.0",
+    "svelte": "^3.49.0",
+    "svelte-preprocess": "4.7.4",
+    "tslib": "^2.3.1",
+    "typescript": "^4.3.5",
+    "uuid": "^8.3.2"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@popperjs/core": "^2.10.2",
+    "lodash.debounce": "^4.0.8",
+    "sanitize-html": "^2.6.1"
+  }
+}

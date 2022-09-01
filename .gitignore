@@ -1,0 +1,15 @@
+lerna-debug.log
+.sass-cache
+.jekyll-metadata
+.DS_Store
+/.idea
+/.vscode
+/build
+/docs/_site
+/docs/Gemfile.lock
+/node_modules
+/packages/*/node_modules
+/packages/*/build
+/packages/*/LICENSE
+dist
+tsconfig.tsbuildinfo

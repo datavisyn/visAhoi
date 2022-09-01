@@ -1,0 +1,49 @@
+{
+  "name": "@visahoi/echarts",
+  "version": "3.0.0",
+  "description": "Echarts adapter for the visualization onboarding library",
+  "keywords": [
+    "visualization",
+    "onboarding",
+    "echarts"
+  ],
+  "author": "FFG SEVA Consortium",
+  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/echarts#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "rollup -c",
+    "watch-echarts": "npm run compile -- --watch"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "@rollup/plugin-typescript": "8.2.5",
+    "@tsconfig/svelte": "2.0.1",
+    "postcss": "^8.3.9",
+    "postcss-import": "^14.0.2",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-postcss": "^4.0.1",
+    "rollup-plugin-svelte": "^7.0.0",
+    "svelte": "^3.0.0",
+    "svelte-preprocess": "4.7.4",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@visahoi/core": "^3.0.0",
+    "d3": "^7.0.0",
+    "echarts": "^5.1.2"
+  }
+}

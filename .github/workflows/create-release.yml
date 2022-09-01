@@ -15,19 +15,23 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: main
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Reset main branch
+        run: |
+          git fetch origin develop:develop
+          git reset --hard develop
       - name: Change version number
         id: version
         run: |
           echo -n "::set-output name=next_tag::"
-          npm version --no-git-tag-version ${{ github.event.inputs.versionName }}
-      - name: Create pull request into master
+          lerna version ${{ github.event.inputs.versionName }} --no-private --no-git-tag-version --yes --no-push
+      - name: Create pull request into main
         uses: peter-evans/create-pull-request@v4
         with:
           branch: release/${{ steps.version.outputs.next_tag }}
           commit-message: 'chore: release ${{ steps.version.outputs.next_tag }}'
-          base: master
+          base: main
           title: Release ${{ steps.version.outputs.next_tag }}
           labels: release
           reviewers: dvdanielamoitzi

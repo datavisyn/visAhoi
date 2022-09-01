@@ -1,0 +1,13 @@
+{
+  "devOptions": {
+    "bundle": false,
+    "port": 8083
+  },
+  "mount": {
+    "public": "/",
+    "src": "/dist"
+  },
+  "plugins": [],
+  "workspaceRoot": "..",
+  "target": "es2017"
+}
