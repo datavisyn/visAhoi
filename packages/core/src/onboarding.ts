@@ -104,7 +104,7 @@ export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
 export const createBasicOnboardingMessage = (
   message: Pick<
     IOnboardingMessage,
-    "title" | "text" | "onboardingStage" | "anchor"
+    "title" | "text" | "onboardingStage" | "anchor" |"id"
   >
 ) => {
   const marker: IMarker = {
@@ -113,7 +113,6 @@ export const createBasicOnboardingMessage = (
   const onboardingMessage: IOnboardingMessage = {
     marker,
     ...message,
-    id: "",
   };
   return onboardingMessage;
 };
@@ -157,7 +156,7 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
   }
 };
 
-export const setOnboardingMessage = (message: Partial<IOnboardingMessage>) => {
+export const setOnboardingMessage = (message: Pick<IOnboardingMessage, "title" | "text" | "id">) => {
   if (message.id === undefined) {
     console.error("Provide the id of message to be updated");
     return null;
@@ -166,9 +165,9 @@ export const setOnboardingMessage = (message: Partial<IOnboardingMessage>) => {
     const tempMarkerInfo = get(markerInformation);
     for (const tempMessage of tempOnboardingMessages) {
       if (tempMessage.id === message.id) {
-        tempMessage.anchor = message.anchor
-          ? message.anchor
-          : tempMessage.anchor;
+        // tempMessage.anchor = message.anchor
+        //   ? message.anchor
+        //   : tempMessage.anchor;
         tempMessage.text = message.text ? message.text : tempMessage.text;
 
         tempMessage.title = message.title ? message.title : tempMessage.title;
