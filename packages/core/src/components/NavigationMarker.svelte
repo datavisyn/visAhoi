@@ -14,7 +14,7 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  $: bottom = order * 35 + 15 + "px";
+  // $: bottom = order * 35 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -23,11 +23,20 @@
   let arrValue: IMarkerInformation[] = [];
 
   /**First navigation marker which belongs to the activeOnboarding stage is selected */
+  // $markInfo.map(async (message) => {
+  //   if (
+  //     message.message.onboardingStage.title === $activeOnboardingStage?.title
+  //   ) {
+  //     arrValue.push(message);
+  //   }
+  // });
+
   $markInfo.map(async (message) => {
     if (
       message.message.onboardingStage.title === $activeOnboardingStage?.title
     ) {
       arrValue.push(message);
+      // selectedMarker.set(arrValue[arrValue.length - 1]);
       selectedMarker.set(arrValue[0]);
 
       activeOnboardingStage.update(
@@ -99,13 +108,11 @@
     } else {
       activeMarker.set(markerInformation);
     }
+    console.log($activeMarker, "Active marker");
   };
 </script>
 
-<div
-  style="--bottom:{bottom}"
-  class="visahoi-marker-navigation-item {$activeOnboardingStage}"
->
+<div class="visahoi-navigation-wrapper">
   <div
     on:click={handleClick}
     style="--active-background-color:{activeBackgroundColor ||
@@ -118,6 +125,12 @@
 </div>
 
 <style>
+  .visahoi-navigation-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+  }
   .visahoi-marker-navigation-item {
     position: absolute;
     display: flex;

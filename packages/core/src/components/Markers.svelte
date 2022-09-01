@@ -8,6 +8,7 @@
     markerInformation,
   } from "./stores";
   import Marker from "./Marker.svelte";
+  import Backdrop from "./Backdrop.svelte";
 
   $: viewBox = `${$visXPosition + window.scrollX} ${
     $visYPosition + window.scrollY

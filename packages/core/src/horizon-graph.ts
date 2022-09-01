@@ -43,6 +43,7 @@ function generateMessages(
         id: "unique-marker-id-2",
       },
       id: "unique-message-id-2",
+      order: 2,
     },
     {
       anchor: getAnchor(spec.xAxis, visElement),
@@ -54,6 +55,7 @@ function generateMessages(
         id: "unique-marker-id-3",
       },
       id: "unique-message-id-3",
+      order: 3,
     },
     {
       anchor: getAnchor(spec.positiveColor, visElement),
@@ -70,6 +72,7 @@ function generateMessages(
         id: "unique-marker-id-4",
       },
       id: "unique-message-id-4",
+      order: 4,
     },
     {
       anchor: getAnchor(spec.negativeColor, visElement),
@@ -83,6 +86,7 @@ function generateMessages(
         id: "unique-marker-id-5",
       },
       id: "unique-message-id-5",
+      order: 5,
     },
     {
       anchor: spec.yMin?.anchor,
@@ -94,6 +98,7 @@ function generateMessages(
         id: "unique-marker-id-6",
       },
       id: "unique-message-id-6",
+      order: 6,
     },
     {
       anchor: spec.yMax?.anchor,
@@ -105,6 +110,7 @@ function generateMessages(
         id: "unique-marker-id-7",
       },
       id: "unique-message-id-7",
+      order: 7,
     },
   ];
 
@@ -119,6 +125,7 @@ function generateMessages(
         id: "unique-marker-id-1",
       },
       id: "unique-message-id-1",
+      order: 1,
     });
   }
 

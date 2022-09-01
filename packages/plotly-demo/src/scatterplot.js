@@ -8,6 +8,8 @@ import {
   setOnboardingMessage,
   getOnboardingMessages,
   setEditMode,
+  createBasicOnboardingStage,
+  createBasicOnboardingMessage,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
@@ -71,6 +73,7 @@ const getAhoiConfig = () => {
     EVisualizationType.SCATTERPLOT,
     chart,
   );
+
   const extendedOnboardingMessages = defaultOnboardingMessages.map(
     (message) => ({
       ...message,

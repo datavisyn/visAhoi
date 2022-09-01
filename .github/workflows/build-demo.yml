@@ -34,22 +34,22 @@ jobs:
             packages/echarts-demo/build/
             packages/plotly-demo/build/
             packages/vega-demo/build/
-  deploy:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: gh-pages
-      - name: Remove old demos
-        run: rm -rf ./demos
-      - uses: actions/download-artifact@v2
-        with:
-          name: demos
-          path: ./demos
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          # Required
-          commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
-          # Optional branch to push to, defaults to the current branch
-          branch: gh-pages
+  # deploy:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         ref: gh-pages
+  #     - name: Remove old demos
+  #       run: rm -rf ./demos
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: demos
+  #         path: ./demos
+  #     - uses: stefanzweifel/git-auto-commit-action@v4
+  #       with:
+  #         # Required
+  #         commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
+  #         # Optional branch to push to, defaults to the current branch
+  #         branch: gh-pages

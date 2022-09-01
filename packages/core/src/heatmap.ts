@@ -41,6 +41,7 @@ function generateMessages(
         id: "unique-marker-id-1",
       },
       id: "unique-message-id-2",
+      order: 1,
     },
     {
       anchor: getAnchor(spec.heatmapDescription, visElement),
@@ -52,6 +53,7 @@ function generateMessages(
         id: "unique-marker-id-2",
       },
       id: "unique-message-id-2",
+      order: 2,
     },
     {
       anchor: getAnchor(spec.legendDescription, visElement),
@@ -63,6 +65,7 @@ function generateMessages(
         id: "unique-marker-id-3",
       },
       id: "unique-message-id-3",
+      order: 3,
     },
     {
       anchor: getAnchor(spec.axisDescription, visElement),
@@ -74,6 +77,7 @@ function generateMessages(
         id: "unique-marker-id-4",
       },
       id: "unique-message-id-4",
+      order: 4,
     },
     {
       anchor: getAnchor(spec.hoverDescription, visElement),
@@ -85,6 +89,7 @@ function generateMessages(
         id: "unique-marker-id-5",
       },
       id: "unique-message-id-5",
+      order: 1,
     },
   ];
 

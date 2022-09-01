@@ -44,6 +44,7 @@ function generateMessages(
         id: "unique-marker-id-2",
       },
       id: "unique-message-id-2",
+      order: 1,
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
@@ -55,6 +56,7 @@ function generateMessages(
         id: "unique-marker-id-3",
       },
       id: "unique-message-id-3",
+      order: 1,
     },
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
@@ -66,6 +68,7 @@ function generateMessages(
         id: "unique-marker-id-4",
       },
       id: "unique-message-id-4",
+      order: 2,
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -77,6 +80,7 @@ function generateMessages(
         id: "unique-marker-id-5",
       },
       id: "unique-message-id-5",
+      order: 2,
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
@@ -88,6 +92,7 @@ function generateMessages(
         id: "unique-marker-id-6",
       },
       id: "unique-message-id-6",
+      order: 3,
     },
   ];
 
@@ -102,6 +107,7 @@ function generateMessages(
         id: "unique-marker-id-1",
       },
       id: "unique-message-id-1",
+      order: 1,
     });
   }
 
