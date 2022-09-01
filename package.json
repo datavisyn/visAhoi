@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "onboarding-prototype",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "1.0.0",
   "description": "Semi-Automated Generation of Visualization Onboarding Using High-Level Grammar",
   "main": "index.js",
   "scripts": {
