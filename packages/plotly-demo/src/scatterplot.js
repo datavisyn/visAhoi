@@ -5,6 +5,7 @@ import {
   EVisualizationType,
   deleteOnboardingStage,
   setOnboardingStage,
+  setOnboardingMessage,
   getOnboardingMessages,
   setEditMode,
 } from '@visahoi/plotly';
@@ -15,6 +16,8 @@ let showOnboarding = false;
 let editMode = false;
 let onboardingUI = null;
 let deleteStageId = null;
+
+console.log('set-1');
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig());
@@ -108,6 +111,13 @@ const getAhoiConfig = () => {
   };
   return ahoiConfig;
 };
+
+setOnboardingMessage({
+  marker: {
+    id: 'unique-marker-id-4',
+  },
+  title: 'test-1',
+});
 
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');

@@ -155,6 +155,32 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
   }
 };
 
+export const setOnboardingMessage = (message: Partial<IOnboardingMessage>) => {
+  if (message.marker?.id === undefined) {
+    console.error("Provide the id of stage to be updated");
+    return null;
+  } else {
+    debugger;
+    const tempOnboardingMessages = get(onboardingMessages);
+    for (const tempMessage of tempOnboardingMessages) {
+      if (tempMessage.marker.id === message.marker.id) {
+        tempMessage.anchor = message.anchor
+          ? message.anchor
+          : tempMessage.anchor;
+        tempMessage.text = message.text ? message.text : tempMessage.text;
+        tempMessage.title = message.title ? message.title : tempMessage.title;
+        tempMessage.anchor = message.anchor
+          ? message.anchor
+          : tempMessage.anchor;
+        break;
+      }
+    }
+
+    console.log(onboardingMessages.set(tempOnboardingMessages));
+    return onboardingMessages.set(tempOnboardingMessages);
+  }
+};
+
 export const setEditMode = (value: boolean) => {
   return isEditModeActive.set(value);
 };
