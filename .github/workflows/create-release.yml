@@ -15,8 +15,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: master
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Reset master branch
+        run: |
+          git fetch origin develop:develop
+          git reset --hard develop
       - name: Change version number
         id: version
         run: |
