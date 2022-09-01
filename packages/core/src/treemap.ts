@@ -35,6 +35,8 @@ function generateMessages(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
 
+  console.log("test");
+
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.desc, visElement),
@@ -45,6 +47,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-2",
       },
+      order: 1,
     },
     {
       anchor: getAnchor(spec.subDesc, visElement),
@@ -55,6 +58,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-3",
       },
+      order: 3,
     },
     {
       anchor: getAnchor(spec.otherDesc, visElement),
@@ -65,6 +69,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-4",
       },
+      order: 4,
     },
     {
       anchor: getAnchor(spec.gapDesc, visElement),
@@ -75,6 +80,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-5",
       },
+      order: 5,
     },
 
     {
@@ -121,6 +127,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-1",
       },
+      order: 2,
     });
   }
 

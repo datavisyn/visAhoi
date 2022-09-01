@@ -134,44 +134,46 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  <div class="visahoi-navigation-marker-container">
-    <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
+  {#key $markerInformation}
+    <div class="visahoi-navigation-marker-container">
+      <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
         <NavigationMarker markerInformation={marker} order={index + 1} />
       {/each}
     {/if} -->
 
-    {#if $activeOnboardingStage && $showOnboardingNavigation}
-      {#each $markerInformation.sort((a, b) => {
-        if (a.message.onboardingStage.title === b.message.onboardingStage.title) {
-          return a.message?.order < b.message?.order ? -1 : 1;
-        } else {
-          return a.message.onboardingStage.title > b.message.onboardingStage.title ? -1 : 1;
-        }
-      }) as marker, index}
-        <NavigationMarker markerInformation={marker} order={index + 1} />
-      {/each}
-    {/if}
+      {#if $activeOnboardingStage && $showOnboardingNavigation}
+        {#each $markerInformation.sort((a, b) => {
+          if (a.message.onboardingStage.title === b.message.onboardingStage.title) {
+            return a.message?.order < b.message?.order ? -1 : 1;
+          } else {
+            return a.message.onboardingStage.title > b.message.onboardingStage.title ? -1 : 1;
+          }
+        }) as marker, index}
+          <NavigationMarker markerInformation={marker} order={index + 1} />
+        {/each}
+      {/if}
 
-    {#if $activeOnboardingStage && $showOnboardingNavigation}
-      <div
-        id="navigation-next"
-        style="--bottom-height: {nextHeight}"
-        class="visahoi-navigation-next"
-        on:click={navPrev}
-      >
-        <span><i class="fas fa-chevron-up" /></span>
-      </div>
-      <div
-        id="navigation-previous"
-        style="--bottom-height: {prevHeight}"
-        class="visahoi-navigation-previous"
-        on:click={navNext}
-      >
-        <span><i class="fas fa-chevron-down" /></span>
-      </div>
-    {/if}
-  </div>
+      {#if $activeOnboardingStage && $showOnboardingNavigation}
+        <div
+          id="navigation-next"
+          style="--bottom-height: {nextHeight}"
+          class="visahoi-navigation-next"
+          on:click={navPrev}
+        >
+          <span><i class="fas fa-chevron-up" /></span>
+        </div>
+        <div
+          id="navigation-previous"
+          style="--bottom-height: {prevHeight}"
+          class="visahoi-navigation-previous"
+          on:click={navNext}
+        >
+          <span><i class="fas fa-chevron-down" /></span>
+        </div>
+      {/if}
+    </div>
+  {/key}
 
   {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
     <OnboardingNavigationItem {stage} {index} />
