@@ -8,7 +8,6 @@ import {
   showHideCloseText,
   showOnboardingNavigation,
   isEditModeActive,
-  activeOnboardingStage,
 } from "./components/stores.js";
 import debounce from "lodash.debounce";
 import {
