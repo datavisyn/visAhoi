@@ -47,6 +47,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-2",
       },
+      id: "unique-message-id-2",
       order: 1,
     },
     {
@@ -58,6 +59,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-3",
       },
+      id: "unique-message-id-3",
       order: 3,
     },
     {
@@ -69,6 +71,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-4",
       },
+      id: "unique-message-id-4",
       order: 4,
     },
     {
@@ -80,6 +83,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-5",
       },
+      id: "unique-message-id-5",
       order: 5,
     },
 
@@ -92,6 +96,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-6",
       },
+      id: "unique-message-id-6",
     },
 
     {
@@ -103,6 +108,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-7",
       },
+      id: "unique-message-id-7",
     },
 
     {
@@ -114,6 +120,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-8",
       },
+      id: "unique-message-id-8",
     },
   ];
 
@@ -127,6 +134,7 @@ function generateMessages(
       marker: {
         id: "unique-marker-id-1",
       },
+      id: "unique-message-id-1",
       order: 2,
     });
   }
