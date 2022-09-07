@@ -4,6 +4,7 @@
     navigationAlignment,
     activeOnboardingStage,
     showOnboardingSteps,
+    onboardingStages,
   } from "./stores.js";
   export let stage: IOnboardingStage;
   export let index: number;
@@ -25,7 +26,7 @@
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-  {#key $activeOnboardingStage}
+  {#key $onboardingStages}
     <div class="visahoi-navigation-item-circle">
       <i
         class={!$activeOnboardingStage ||
