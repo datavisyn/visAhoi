@@ -7,6 +7,7 @@
     isEditModeActive,
     onboardingStages,
     markerInformation,
+    onboardingMessages,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
@@ -29,19 +30,25 @@
   };
 
   const deleteOnboardingStage = () => {
+    const stageId = $activeOnboardingStage?.id;
     const tempOnboardingStages = $onboardingStages;
 
     // The stage is removed from the array
     tempOnboardingStages.map((onboardingStage, i) => {
-      if (onboardingStage.id === $activeOnboardingStage?.id) {
+      if (onboardingStage.id === stageId) {
         tempOnboardingStages.splice(i, 1);
       }
       // The onboarding messages for the stage is filtered out
       const tempMarkerInformation = $markerInformation.filter(
-        (m) => m.message.onboardingStage.id !== $activeOnboardingStage?.id
+        (m) => m.message.onboardingStage.id !== stageId
+      );
+
+      const tempOnboardingMessage = $onboardingMessages.filter(
+        (message) => message.onboardingStage.id !== stageId
       );
 
       markerInformation.set(tempMarkerInformation);
+      onboardingMessages.set(tempOnboardingMessage);
       onboardingStages.set(tempOnboardingStages);
 
       if ($onboardingStages.length === 0) {
@@ -83,21 +90,13 @@
   </span>
 </div>
 
-<div class="visahoi-edit-mode-button">
-  <button
-    style="background-color: {$activeOnboardingStage?.backgroundColor ||
-      navigationMainItemDefaultColor}"
-    on:click={toggleEditMode}>{buttonLabel}</button
-  >
-</div>
-
 <div class="toggle-button">
   {#if $showOnboardingNavigation}
-    <span on:click={toggleNavigation}>
+    <span title="Disable navigation steps" on:click={toggleNavigation}>
       <i class="fas fa-solid fa-toggle-on" />
     </span>
   {:else}
-    <span on:click={toggleNavigation}>
+    <span title="Enable navigation steps" on:click={toggleNavigation}>
       <i
         class="fas fa-solid fa-toggle-off"
         style="width: 20px, height:20px"
@@ -108,24 +107,6 @@
 </div>
 
 <style>
-  .visahoi-edit-mode-button {
-    position: absolute;
-    bottom: 0;
-    right: 3em;
-  }
-
-  .visahoi-edit-mode-button > button {
-    width: 125px;
-    border-radius: 15px;
-    padding: 5px;
-    border: none;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-
   .toggle-button {
     position: absolute;
     display: flex;
@@ -174,12 +155,8 @@
 
   .visahoi-delete-stage {
     position: absolute;
-    margin-left: 110px;
+    margin-left: 80px;
   }
-
-  /* .visahoi-delete-stage > i {
-    color: black;
-  } */
 
   .fa-trash {
     color: black;

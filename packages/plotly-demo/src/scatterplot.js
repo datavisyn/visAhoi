@@ -5,12 +5,18 @@ import {
   EVisualizationType,
   deleteOnboardingStage,
   setOnboardingStage,
+  setOnboardingMessage,
   getOnboardingMessages,
+  setEditMode,
+  createBasicOnboardingStage,
+  createBasicOnboardingMessage,
+  getOnboardingStages,
 } from '@visahoi/plotly';
 import debounce from 'lodash.debounce';
 
 let chart = null;
 let showOnboarding = false;
+let editMode = false;
 let onboardingUI = null;
 let deleteStageId = null;
 
@@ -68,6 +74,7 @@ const getAhoiConfig = () => {
     EVisualizationType.SCATTERPLOT,
     chart,
   );
+
   const extendedOnboardingMessages = defaultOnboardingMessages.map(
     (message) => ({
       ...message,
@@ -82,13 +89,6 @@ const getAhoiConfig = () => {
   // To delete the onboarding stage
   // deleteStageId = 'reading-the-chart';
   // deleteOnboardingStage(deleteStageId);
-
-  // Set onboarding stage
-  setOnboardingStage({
-    id: 'using-the-chart',
-    title: 'Interact',
-    order: 4,
-  });
 
   const ahoiConfig = {
     //Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
@@ -105,12 +105,15 @@ const getAhoiConfig = () => {
 
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');
+  const editButton = document.getElementById('editModeButton');
   if (!helpIcon) {
     return;
   }
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
+
     if (showOnboarding) {
+      editButton.style.display = 'block';
       onboardingUI = await ahoi(
         EVisualizationType.SCATTERPLOT,
         chart,
@@ -118,7 +121,23 @@ const registerEventListener = () => {
       );
     } else {
       onboardingUI?.removeOnboarding();
+      editButton.style.display = 'none';
     }
+  });
+  editButton.addEventListener('click', async () => {
+    editMode = !editMode;
+    if (editMode) {
+      editButton.innerText = 'Exit edit mode';
+    } else {
+      editButton.innerText = 'Enter edit mode';
+    }
+    setEditMode(editMode);
+
+    setOnboardingMessage({
+      id: 'unique-message-id-6',
+      title: 'test-1',
+      text: 'testing....',
+    });
   });
 };
 

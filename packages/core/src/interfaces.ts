@@ -82,6 +82,7 @@ export interface IMarker {
   id: string;
 }
 export interface IOnboardingMessage {
+  id: string;
   anchor: OnboardingAnchor | undefined;
   requires?: string[]; // TODO: remove optional again
   text: string;
@@ -89,6 +90,7 @@ export interface IOnboardingMessage {
   onboardingStage: IOnboardingStage;
   tooltipPosition?: TooltipPosition;
   marker: IMarker;
+  order?: number;
 }
 
 export enum EDefaultOnboardingStages {
@@ -133,7 +135,7 @@ export const defaultOnboardingStages: Map<
       hoverBackgroundColor: "rgb(92, 59, 112)",
       backgroundColor: "rgb(123, 80, 150)",
       activeBackgroundColor: "rgb(76, 46, 94)",
-      order: 1,
+      order: 3,
     },
   ],
   [
@@ -153,7 +155,7 @@ export const defaultOnboardingStages: Map<
       title: "Analyzing",
       iconClass: "fas fa-lightbulb",
       backgroundColor: "rgb(254, 128, 41)",
-      order: 3,
+      order: 1,
     },
   ],
 ]);

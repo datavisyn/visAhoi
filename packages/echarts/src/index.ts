@@ -4,6 +4,14 @@ import {
   IAhoiConfig,
   injectOnboarding,
   IOnboardingMessage,
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  deleteOnboardingStage,
+  getOnboardingMessages,
+  getOnboardingStages,
+  setEditMode,
+  setOnboardingMessage,
+  setOnboardingStage,
 } from "@visahoi/core";
 import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
@@ -11,6 +19,18 @@ import { heatmapFactory } from "./heatmap";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { treemapFactory } from "./treemap";
+
+// just pass them through
+export {
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  getOnboardingStages,
+  getOnboardingMessages,
+  deleteOnboardingStage,
+  setOnboardingStage,
+  setOnboardingMessage,
+  setEditMode,
+};
 
 /**
  *
