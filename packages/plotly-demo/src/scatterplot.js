@@ -89,6 +89,17 @@ const getAhoiConfig = () => {
   // deleteStageId = 'reading-the-chart';
   // deleteOnboardingStage(deleteStageId);
 
+  // Set onboarding stage
+  // setOnboardingStage({
+  //   id: 'using-the-chart',
+  //   title: 'Interact',
+  //   iconClass: 'fas fa-microphone',
+  //   backgroundColor: 'red',
+  //   hoverBackgroundColor: 'orange',
+  //   activeBackgroundColor: 'orange',
+  //   order: 5,
+  // });
+
   const ahoiConfig = {
     //Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
 
@@ -105,6 +116,7 @@ const getAhoiConfig = () => {
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding');
   const editButton = document.getElementById('editModeButton');
+  const newButton = document.getElementById('btn-test');
   if (!helpIcon) {
     return;
   }
@@ -131,6 +143,20 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode';
     }
     setEditMode(editMode);
+  });
+
+  newButton.addEventListener('click', async () => {
+    console.log('Test it');
+    setOnboardingStage({
+      id: 'using-the-chart',
+      title: 'Interact',
+      iconClass: 'fas fa-microphone',
+      backgroundColor: 'red',
+      hoverBackgroundColor: 'orange',
+      activeBackgroundColor: 'orange',
+      order: 5,
+    });
+    console.log(getOnboardingStages(), 'new onboarding stage');
   });
 };
 
