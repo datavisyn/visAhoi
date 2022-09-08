@@ -11,6 +11,12 @@ async function extractOnboardingSpec(
   elems: any[]
 ): Promise<IOnboardingTreemapSpec> {
   console.log("chart", vegaSpec);
+
+  console.log(
+    vegaSpec?.marks[1].encode?.enter?.tooltip,
+
+    "name"
+  );
   // debugger;
   // const dataUrl = vegaSpec?.data[0]?.url;
   // const response = await fetch(dataUrl);
@@ -46,8 +52,9 @@ async function extractOnboardingSpec(
       value: vegaSpec?.title,
       anchor: {
         findDomNodeByValue: true,
-        // offset: { right: -700, top: -30 },
-        offset: { left: -20, top: 10 },
+        offset: { right: -30, top: -10 },
+        // offset: { right: -500, top: -30 },
+        // offset: { left: 80, top: 10 },
       },
     },
     // desc: {
