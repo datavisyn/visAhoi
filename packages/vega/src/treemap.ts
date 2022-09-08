@@ -50,16 +50,16 @@ async function extractOnboardingSpec(
         offset: { left: -20, top: 10 },
       },
     },
-    desc: {
-      value: "Elder care",
-      anchor: {
-        findDomNodeByValue: true,
-        offset: {
-          left: -50,
-          top: -60,
-        },
-      },
-    },
+    // desc: {
+    //   value: "Elder care",
+    //   anchor: {
+    //     findDomNodeByValue: true,
+    //     offset: {
+    //       left: -50,
+    //       top: -60,
+    //     },
+    //   },
+    // },
 
     // desc: {
     //   value: data[1].name,
