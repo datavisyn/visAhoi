@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable semi */
 import * as echarts from 'echarts';
 import {
   generateBasicAnnotations,
@@ -22,22 +24,40 @@ const render = () => {
 const createPlot = () => {
   const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const dayTime = ['Morning', 'Afternoon', 'Evening'];
+
+  // const data = [
+  //   [0, 0, 1],
+  //   [0, 1, 0],
+  //   [0, 2, 30],
+  //   [0, 3, 50],
+  //   [0, 4, 1],
+  //   [1, 0, 20],
+  //   [1, 1, 1],
+  //   [1, 2, 60],
+  //   [1, 3, 80],
+  //   [1, 4, 30],
+  //   [2, 0, 30],
+  //   [2, 1, 60],
+  //   [2, 2, 1],
+  //   [2, 3, -10],
+  //   [2, 4, 20],
+  // ]
   const data = [
-    [0, 0, 1],
+    [0, 0, 14],
     [0, 1, 0],
-    [0, 2, 30],
-    [0, 3, 50],
-    [0, 4, 1],
-    [1, 0, 20],
-    [1, 1, 1],
-    [1, 2, 60],
-    [1, 3, 80],
-    [1, 4, 30],
-    [2, 0, 30],
-    [2, 1, 60],
-    [2, 2, 1],
-    [2, 3, -10],
-    [2, 4, 20],
+    [0, 2, 19],
+    [0, 3, 24],
+    [0, 4, 16],
+    [1, 0, 17],
+    [1, 1, 15],
+    [1, 2, 28],
+    [1, 3, 52],
+    [1, 4, 20],
+    [2, 0, 19],
+    [2, 1, 23],
+    [2, 2, 82],
+    [2, 3, 18],
+    [2, 4, 18],
   ].map(function (item) {
     return [item[1], item[0], item[2] || '-'];
   });
@@ -61,6 +81,10 @@ const createPlot = () => {
         show: true,
       },
       nameLocation: 'middle',
+      nameTextStyle: {
+        fontWeight: 'bold',
+        fontSize: '13',
+      },
       nameGap: 35,
     },
     yAxis: {
@@ -71,17 +95,29 @@ const createPlot = () => {
         show: true,
       },
       nameLocation: 'middle',
-      nameGap: 75,
-      axisName: {
+      nameTextStyle: {
         fontWeight: 'bold',
+        fontSize: '13',
       },
+      nameGap: 75,
+      // axisName: {
+      //   fontWeight: 'bold',
+      // },
     },
     // labelLayout: {
     //   fontSize: '30px',
     // },
     visualMap: {
-      min: 0,
-      max: 10,
+      min: 10,
+      max: 100,
+      // inRange: {
+      //   color: ['#337ab7', '#f5f5f5', '#ec6836'], //From smaller to bigger value ->
+      // },
+      // colorscale: [
+      //   [0, '#337ab7'],
+      //   [0.5, '#f5f5f5'],
+      //   [1, '#ec6836'],
+      // ],
       calculable: true,
       orient: 'vertical',
       right: '3%',
