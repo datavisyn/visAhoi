@@ -51,11 +51,11 @@ const createPlot = () => {
     [1, 0, 17],
     [1, 1, 15],
     [1, 2, 28],
-    [1, 3, 52],
+    [1, 3, 44],
     [1, 4, 20],
     [2, 0, 19],
     [2, 1, 23],
-    [2, 2, 82],
+    [2, 2, 48],
     [2, 3, 18],
     [2, 4, 18],
   ].map(function (item) {
@@ -109,10 +109,10 @@ const createPlot = () => {
     // },
     visualMap: {
       min: 10,
-      max: 100,
-      // inRange: {
-      //   color: ['#337ab7', '#f5f5f5', '#ec6836'], //From smaller to bigger value ->
-      // },
+      max: 50,
+      inRange: {
+        color: ['#337ab7', '#f5f5f5', '#ec6836'], //From smaller to bigger value ->
+      },
       // colorscale: [
       //   [0, '#337ab7'],
       //   [0.5, '#f5f5f5'],

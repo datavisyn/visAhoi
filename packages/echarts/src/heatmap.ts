@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable semi */
 /* eslint-disable quotes */
@@ -11,7 +12,13 @@ import { IOnboardingHeatmapSpec } from "@visahoi/core/src/heatmap";
 
 function extractOnboardingSpec(chart, coords): IOnboardingHeatmapSpec {
   const data = chart?._model.option;
-  console.log(data, "Chart detail-1");
+  console.log(data, "Chart detail-5");
+  console.log(data.visualMap[0].max, "max value");
+  const dataArr: number[] = [];
+  data.series[0].data.map((d) => dataArr.push(d[d.length - 1]));
+  console.log(dataArr);
+  const maxValue: number = Math.max.apply(Math, dataArr);
+  const minValue: number = Math.min.apply(Math, dataArr)
 
   return {
     chartTitle: {
@@ -34,6 +41,13 @@ function extractOnboardingSpec(chart, coords): IOnboardingHeatmapSpec {
     },
     yAxis: {
       value: data?.yAxis[0].name,
+    },
+    legendDescription: {
+      value: data.visualMap[0].max,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -40, top: 20 },
+      },
     },
   };
 }
