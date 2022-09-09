@@ -1,4 +1,4 @@
-import OnboardingUI from "./components/OnboardingUI.svelte";
+import OnboardingUI from './components/OnboardingUI.svelte'
 import {
   onboardingMessages,
   navigationAlignment,
@@ -7,30 +7,30 @@ import {
   backdropOpacity,
   showHideCloseText,
   showOnboardingNavigation,
-  isEditModeActive,
-} from "./components/stores.js";
-import debounce from "lodash.debounce";
+  isEditModeActive
+} from './components/stores.js'
+import debounce from 'lodash.debounce'
 import {
   IAhoiConfig,
   IMarker,
   IOnboardingMessage,
   IOnboardingStage,
-  NavigationAlignment,
-} from "./interfaces";
-import { v4 as uuidv4 } from "uuid";
-import { get } from "svelte/store";
+  NavigationAlignment
+} from './interfaces'
+import { v4 as uuidv4 } from 'uuid'
+import { get } from 'svelte/store'
 
-let onboardingUI: OnboardingUI;
+let onboardingUI: OnboardingUI
 
 export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
   alignment: NavigationAlignment
 ) => {
-  onboardingMessages.set(ahoiConfig.onboardingMessages);
+  onboardingMessages.set(ahoiConfig.onboardingMessages)
 
   if (ahoiConfig?.showOnboardingNavigation) {
-    showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
+    showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation)
   }
 
   // de-duplicate onboarding stages
@@ -38,122 +38,122 @@ export const injectOnboarding = (
     .map((m) => m.onboardingStage)
     .reduce((prev: IOnboardingStage[], next: IOnboardingStage) => {
       if (prev.map((p) => p.id).includes(next.id)) {
-        return prev;
+        return prev
       }
-      return [...prev, next];
-    }, [] as IOnboardingStage[]);
-  onboardingStages.set(uniqueStages);
+      return [...prev, next]
+    }, [] as IOnboardingStage[])
+  onboardingStages.set(uniqueStages)
 
-  navigationAlignment.set(alignment);
+  navigationAlignment.set(alignment)
   if (
     ahoiConfig?.backdrop?.show !== null &&
     ahoiConfig?.backdrop?.show !== undefined
   ) {
-    showBackdrop.set(ahoiConfig?.backdrop?.show);
+    showBackdrop.set(ahoiConfig?.backdrop?.show)
   }
   if (
     ahoiConfig?.backdrop?.opacity !== null &&
     ahoiConfig?.backdrop?.opacity !== undefined
   ) {
-    backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
+    backdropOpacity.set(ahoiConfig?.backdrop?.opacity)
   }
   if (ahoiConfig?.showHelpCloseText === false) {
-    showHideCloseText.set(ahoiConfig?.showHelpCloseText);
+    showHideCloseText.set(ahoiConfig?.showHelpCloseText)
   }
 
-  const ref = { update: () => {} };
+  const ref = { update: () => {} }
 
   const updateOnboarding = (config: IAhoiConfig) => {
-    onboardingMessages.set(config.onboardingMessages);
-    ref.update();
-  };
+    onboardingMessages.set(config.onboardingMessages)
+    ref.update()
+  }
 
   onboardingUI = new OnboardingUI({
     target: document.body as Element,
     props: {
       ref,
-      visElement,
-    },
-  });
+      visElement
+    }
+  })
   return {
     updateOnboarding: debounce(updateOnboarding),
     removeOnboarding: () => {
-      onboardingUI.$destroy();
-    },
-  };
-};
+      onboardingUI.$destroy()
+    }
+  }
+}
 
 export const getOnboardingStages = (): IOnboardingStage[] => {
-  return get(onboardingStages);
-};
+  return get(onboardingStages)
+}
 
 export const getOnboardingMessages = (): IOnboardingMessage[] => {
-  return get(onboardingMessages);
-};
+  return get(onboardingMessages)
+}
 
 export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
   if (!stage.id) {
-    stage.id = `visahoi-stage-${uuidv4()}`;
+    stage.id = `visahoi-stage-${uuidv4()}`
   }
-  onboardingStages.set([...get(onboardingStages), stage]);
-  return stage;
-};
+  onboardingStages.set([...get(onboardingStages), stage])
+  return stage
+}
 
 export const createBasicOnboardingMessage = (
   message: Pick<
     IOnboardingMessage,
-    "title" | "text" | "onboardingStage" | "anchor"
+    'title' | 'text' | 'onboardingStage' | 'anchor'
   >
 ) => {
   const marker: IMarker = {
-    id: `visahoi-marker-${uuidv4()}`,
-  };
+    id: `visahoi-marker-${uuidv4()}`
+  }
   const onboardingMessage: IOnboardingMessage = {
     marker,
-    ...message,
-  };
-  return onboardingMessage;
-};
+    ...message
+  }
+  return onboardingMessage
+}
 
 export const deleteOnboardingStage = (id: string) => {
-  const stages: IOnboardingStage[] = get(onboardingStages);
+  const stages: IOnboardingStage[] = get(onboardingStages)
   stages.map((m, i) => {
     if (m.id === id) {
-      stages.splice(i, 1);
+      stages.splice(i, 1)
     }
-  });
-  return onboardingStages.set(stages);
-};
+  })
+  return onboardingStages.set(stages)
+}
 
 export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
   if (stage.id === undefined) {
-    console.error("Provide the id of stage to be updated");
-    return null;
+    console.error('Provide the id of stage to be updated')
+    return null
   } else {
-    const tempOnboardingStages = get(onboardingStages);
+    const tempOnboardingStages = get(onboardingStages)
     for (const tempStage of tempOnboardingStages) {
       if (tempStage.id === stage.id) {
-        tempStage.order = stage.order ? stage.order : tempStage.order;
-        tempStage.title = stage.title ? stage.title : tempStage.title;
+        tempStage.order = stage.order ? stage.order : tempStage.order
+        tempStage.title = stage.title ? stage.title : tempStage.title
         tempStage.activeBackgroundColor = stage.activeBackgroundColor
           ? stage.activeBackgroundColor
-          : tempStage.activeBackgroundColor;
+          : tempStage.activeBackgroundColor
         tempStage.backgroundColor = stage.backgroundColor
           ? stage.backgroundColor
-          : tempStage.backgroundColor;
+          : tempStage.backgroundColor
         tempStage.hoverBackgroundColor = stage.hoverBackgroundColor
           ? stage.hoverBackgroundColor
-          : tempStage.hoverBackgroundColor;
+          : tempStage.hoverBackgroundColor
         tempStage.iconClass = stage.iconClass
           ? stage.iconClass
-          : tempStage.iconClass;
-        break;
+          : tempStage.iconClass
+        break
       }
     }
-    return onboardingStages.set(tempOnboardingStages);
+    return onboardingStages.set(tempOnboardingStages)
   }
-};
+}
 
 export const setEditMode = (value: boolean) => {
-  return isEditModeActive.set(value);
-};
+  return isEditModeActive.set(value)
+}

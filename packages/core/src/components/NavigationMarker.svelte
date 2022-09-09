@@ -108,7 +108,6 @@
     } else {
       activeMarker.set(markerInformation);
     }
-    console.log($activeMarker, "Active marker");
   };
 </script>
 
