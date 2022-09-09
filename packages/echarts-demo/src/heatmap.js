@@ -25,23 +25,6 @@ const createPlot = () => {
   const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const dayTime = ['Morning', 'Afternoon', 'Evening'];
 
-  // const data = [
-  //   [0, 0, 1],
-  //   [0, 1, 0],
-  //   [0, 2, 30],
-  //   [0, 3, 50],
-  //   [0, 4, 1],
-  //   [1, 0, 20],
-  //   [1, 1, 1],
-  //   [1, 2, 60],
-  //   [1, 3, 80],
-  //   [1, 4, 30],
-  //   [2, 0, 30],
-  //   [2, 1, 60],
-  //   [2, 2, 1],
-  //   [2, 3, -10],
-  //   [2, 4, 20],
-  // ]
   const data = [
     [0, 0, 14],
     [0, 1, 0],
@@ -100,24 +83,15 @@ const createPlot = () => {
         fontSize: '13',
       },
       nameGap: 75,
-      // axisName: {
-      //   fontWeight: 'bold',
-      // },
     },
-    // labelLayout: {
-    //   fontSize: '30px',
-    // },
+
     visualMap: {
       min: 10,
       max: 50,
       inRange: {
-        color: ['#337ab7', '#f5f5f5', '#ec6836'], //From smaller to bigger value ->
+        color: ['#337ab7', '#f5f5f5', '#ec6836'], // From smaller to bigger value ->
       },
-      // colorscale: [
-      //   [0, '#337ab7'],
-      //   [0.5, '#f5f5f5'],
-      //   [1, '#ec6836'],
-      // ],
+
       calculable: true,
       orient: 'vertical',
       right: '3%',
@@ -135,8 +109,6 @@ const createPlot = () => {
         emphasis: {
           itemStyle: {
             fontWeight: 'bold',
-            // shadowBlur: 10,
-            // shadowColor: 'rgba(0, 0, 0, 0.5)',
           },
         },
       },
@@ -152,10 +124,10 @@ const getAhoiConfig = () => {
     EVisualizationType.HEATMAP,
     chart,
   );
-  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-    ...d,
-    text: 'test123',
-  }));
+  // const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+  //   ...d,
+  //   text: 'test123',
+  // }));
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
   };
@@ -169,7 +141,6 @@ const registerEventListener = () => {
   }
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding;
-    console.log(showOnboarding, 'Show onboarding');
     if (showOnboarding) {
       onboardingUI = await ahoi(
         EVisualizationType.HEATMAP,
