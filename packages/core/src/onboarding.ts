@@ -7,7 +7,8 @@ import {
   backdropOpacity,
   showHideCloseText,
   showOnboardingNavigation,
-  isEditModeActive
+  isEditModeActive,
+  markerInformation
 } from './components/stores.js'
 import debounce from 'lodash.debounce'
 import {
@@ -102,7 +103,7 @@ export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
 export const createBasicOnboardingMessage = (
   message: Pick<
     IOnboardingMessage,
-    'title' | 'text' | 'onboardingStage' | 'anchor'
+    'title' | 'text' | 'onboardingStage' | 'anchor' |'id'
   >
 ) => {
   const marker: IMarker = {
@@ -151,6 +152,44 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
       }
     }
     return onboardingStages.set(tempOnboardingStages)
+  }
+}
+
+export const setOnboardingMessage = (message: Pick<IOnboardingMessage, 'title' | 'text' | 'id'>) => {
+  if (message.id === undefined) {
+    console.error('Provide the id of message to be updated')
+    return null
+  } else {
+    const tempOnboardingMessages = get(onboardingMessages)
+    const tempMarkerInfo = get(markerInformation)
+    for (const tempMessage of tempOnboardingMessages) {
+      if (tempMessage.id === message.id) {
+        // tempMessage.anchor = message.anchor
+        //   ? message.anchor
+        //   : tempMessage.anchor;
+        tempMessage.text = message.text ? message.text : tempMessage.text
+
+        tempMessage.title = message.title ? message.title : tempMessage.title
+
+        break
+      }
+    }
+    for (const tempMarker of tempMarkerInfo) {
+      if (tempMarker.message.id === message.id) {
+        tempMarker.tooltip.title = message.title
+          ? message.title
+          : tempMarker.tooltip.title
+        tempMarker.tooltip.text = message.text
+          ? message.text
+          : tempMarker.tooltip.text
+
+        break
+      }
+    }
+
+    markerInformation.set(tempMarkerInfo)
+    onboardingMessages.set(tempOnboardingMessages)
+    return onboardingMessages.set(tempOnboardingMessages)
   }
 }
 

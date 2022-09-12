@@ -1,14 +1,33 @@
 import { Result } from "vega-embed";
 import {
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  deleteOnboardingStage,
   EVisualizationType,
+  getOnboardingMessages,
+  getOnboardingStages,
   IAhoiConfig,
   injectOnboarding,
   IOnboardingMessage,
+  setEditMode,
+  setOnboardingMessage,
+  setOnboardingStage,
 } from "@visahoi/core";
 import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
+// just pass them through
+export {
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  getOnboardingStages,
+  getOnboardingMessages,
+  deleteOnboardingStage,
+  setOnboardingStage,
+  setOnboardingMessage,
+  setEditMode,
+};
 
 /**
  *
