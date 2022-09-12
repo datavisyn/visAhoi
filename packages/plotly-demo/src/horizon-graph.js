@@ -1,63 +1,63 @@
-import Plotly from 'plotly.js-dist';
+import Plotly from 'plotly.js-dist'
 import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
   createBasicOnboardingStage,
   getOnboardingStages,
-  createBasicOnboardingMessage,
-} from '@visahoi/plotly';
-import debounce from 'lodash.debounce';
-import { importCsv } from './util';
+  createBasicOnboardingMessage
+} from '@visahoi/plotly'
+import debounce from 'lodash.debounce'
+import { importCsv } from './util'
 
-let chart = null;
-let showOnboarding = false;
-let onboardingUI = null;
+let chart = null
+let showOnboarding = false
+let onboardingUI = null
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
-async function render() {
-  const data = await importCsv('./data/oslo-2018.csv');
-  const { x, y } = processData(data);
-  chart = await makePlotly(x, y);
-  window.addEventListener('resize', debouncedResize);
+async function render () {
+  const data = await importCsv('./data/oslo-2018.csv')
+  const { x, y } = processData(data)
+  chart = await makePlotly(x, y)
+  window.addEventListener('resize', debouncedResize)
 }
 
-function processData(allRows) {
-  const x = [];
-  const y = [];
-  const allX = [];
-  const allY = [];
+function processData (allRows) {
+  const x = []
+  const y = []
+  const allX = []
+  const allY = []
 
   for (let i = 0; i < allRows.length; i++) {
-    const row = allRows[i];
-    const month = `${row.year}-${row.month}`;
+    const row = allRows[i]
+    const month = `${row.year}-${row.month}`
 
-    allX.push(`${row.year}-${row.month}-${row.day}`);
-    allY.push(row.temp);
+    allX.push(`${row.year}-${row.month}-${row.day}`)
+    allY.push(row.temp)
 
     if (x.includes(month)) {
-      const idx = x.indexOf(month);
-      y[idx].push(parseFloat(row.temp));
+      const idx = x.indexOf(month)
+      y[idx].push(parseFloat(row.temp))
     } else {
-      x.push(`${row.year}-${row.month}`);
-      y.push([parseFloat(row.temp)]);
+      x.push(`${row.year}-${row.month}`)
+      y.push([parseFloat(row.temp)])
     }
   }
 
   const averagedYValues = y.map((tempArray) => {
     const sum = tempArray.reduce((a, b) => {
-      return a + b;
-    }, 0);
-    return sum / tempArray.length;
-  });
-  return { x, y: averagedYValues };
+      return a + b
+    }, 0)
+    return sum / tempArray.length
+  })
+  return { x, y: averagedYValues }
 }
 
-function makePlotly(x, y) {
-  document.getElementById('plot');
+function makePlotly (x, y) {
+  document.getElementById('plot')
   const traces = [
     {
       name: 'Between 0 and 15 °C',
@@ -70,9 +70,9 @@ function makePlotly(x, y) {
       mode: 'none', // no extra line + points for values
       line: {
         shape: 'spline',
-        smoothing: 0.25,
+        smoothing: 0.25
       },
-      hovertemplate: '%{y:.2f}',
+      hovertemplate: '%{y:.2f}'
     },
     {
       name: 'More than 15 °C',
@@ -84,9 +84,9 @@ function makePlotly(x, y) {
       mode: 'none', // no extra line + no points for values,
       line: {
         shape: 'spline',
-        smoothing: 0.25,
+        smoothing: 0.25
       },
-      hovertemplate: '%{y:.2f}',
+      hovertemplate: '%{y:.2f}'
     },
     {
       name: 'Less than 0 °C',
@@ -98,49 +98,49 @@ function makePlotly(x, y) {
       mode: 'none', // no extra line + no points for values
       line: {
         shape: 'spline',
-        smoothing: 0.25,
+        smoothing: 0.25
       },
-      //hoverinfo: "x+y"
-      hovertemplate: '-%{y:.2f}',
-    },
-  ];
+      // hoverinfo: "x+y"
+      hovertemplate: '-%{y:.2f}'
+    }
+  ]
 
   const layout = {
     title: 'Average temperature in Oslo, Norway in 2018',
     xaxis: {
       title: 'Month',
       tickformat: '%m',
-      nticks: 12,
+      nticks: 12
     },
     yaxis: {
-      title: 'Average temperature in °C',
+      title: 'Average temperature in °C'
     },
-    showlegend: false,
-  };
+    showlegend: false
+  }
 
   const config = {
-    responsive: true,
-  };
+    responsive: true
+  }
 
-  return Plotly.newPlot('vis', traces, layout, config);
+  return Plotly.newPlot('vis', traces, layout, config)
 }
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.HORIZON_GRAPH,
-    chart,
-  );
+    chart
+  )
   const newOnboardingStage = createBasicOnboardingStage({
     title: 'New stage',
     iconClass: 'fas fa-flask',
-    backgroundColor: 'tomato',
-  });
+    backgroundColor: 'tomato'
+  })
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
-    text: 'test123',
-  }));
-  defaultOnboardingMessages[0].onboardingStage = newOnboardingStage;
-  defaultOnboardingMessages[0].title = 'New stage';
+    text: 'test123'
+  }))
+  defaultOnboardingMessages[0].onboardingStage = newOnboardingStage
+  defaultOnboardingMessages[0].title = 'New stage'
   defaultOnboardingMessages.push(
     createBasicOnboardingMessage({
       text: "This is the newly added onboarding message for the horizon chart. It's absolutely positioned.",
@@ -149,60 +149,60 @@ const getAhoiConfig = () => {
       anchor: {
         coords: {
           x: 250,
-          y: 250,
-        },
-      },
-    }),
-  );
+          y: 250
+        }
+      }
+    })
+  )
   defaultOnboardingMessages.push(
     createBasicOnboardingMessage({
       text: "This is the newly added onboarding message for the horizon chart. It's attached to a selector.",
       title: 'Selector attached message',
       onboardingStage: newOnboardingStage,
       anchor: {
-        sel: '.infolayer .ytitle',
-      },
-    }),
-  );
+        sel: '.infolayer .ytitle'
+      }
+    })
+  )
   defaultOnboardingMessages.push(
     createBasicOnboardingMessage({
       text: "This is the newly added onboarding message for the horizon chart. It's attached to a selector.",
       title: 'Element attached message',
       onboardingStage: newOnboardingStage,
       anchor: {
-        element: document.getElementsByClassName('section-title')[0],
-      },
-    }),
-  );
+        element: document.getElementsByClassName('section-title')[0]
+      }
+    })
+  )
   // const newOnboardingMessage = createBasicOnboardingMessage();
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-    backdrop: {
-      show: false,
-    },
-  };
-  return ahoiConfig;
-};
+    onboardingMessages: defaultOnboardingMessages
+    // backdrop: {
+    //   show: false,
+    // },
+  }
+  return ahoiConfig
+}
 
 const registerEventListener = () => {
-  showOnboarding = !showOnboarding;
-  const helpIcon = document.getElementById('show-onboarding');
+  showOnboarding = !showOnboarding
+  const helpIcon = document.getElementById('show-onboarding')
   if (!helpIcon) {
-    return;
+    return
   }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding;
+    showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
         EVisualizationType.HORIZON_GRAPH,
         chart,
-        getAhoiConfig(),
-      );
+        getAhoiConfig()
+      )
     } else {
-      onboardingUI?.removeOnboarding();
+      onboardingUI?.removeOnboarding()
     }
-  });
-};
+  })
+}
 
-registerEventListener();
-render();
+registerEventListener()
+render()
