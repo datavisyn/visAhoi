@@ -7,8 +7,13 @@ const onboardingUI = null
 
 const opt = {
 //   $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-  title: 'Cars origin and their horsepower based on number of cylinders',
-  description: 'An example of heatmap.',
+  title: {
+    text: 'Cars origin and their horsepower based on number of cylinders',
+
+    fontSize: 14
+
+  },
+  description: 'An example vega-lite heatmap.',
   width: 1200,
   height: 600,
   padding: {
