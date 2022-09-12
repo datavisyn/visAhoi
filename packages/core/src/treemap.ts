@@ -33,7 +33,7 @@ function generateMessages (
   ) as IOnboardingStage
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
-  ) as IOnboardingStage 
+  ) as IOnboardingStage
 
   const messages: IOnboardingMessage[] = [
     {
@@ -89,8 +89,7 @@ function generateMessages (
       onboardingStage: interacting,
       marker: {
         id: 'unique-marker-id-6'
-      },
-      order: 1
+      }
     },
 
     {
@@ -101,8 +100,7 @@ function generateMessages (
       onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-7'
-      },
-      order: 2
+      }
     },
 
     {
@@ -114,7 +112,6 @@ function generateMessages (
       marker: {
         id: 'unique-marker-id-8'
       }
-      order: 1
     }
   ]
 
