@@ -1,40 +1,40 @@
-import Plotly from 'plotly.js-dist';
+import Plotly from 'plotly.js-dist'
 import {
   generateBasicAnnotations,
   ahoi,
-  EVisualizationType,
-} from '@visahoi/plotly';
-import debounce from 'lodash.debounce';
-import { importCsv } from './util';
+  EVisualizationType
+} from '@visahoi/plotly'
+import debounce from 'lodash.debounce'
+import { importCsv } from './util'
 
-let chart = null;
-let showOnboarding = false;
-let onboardingUI = null;
+let chart = null
+let showOnboarding = false
+let onboardingUI = null
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
-async function render() {
-  const data = await importCsv('./data/oslo-2018.csv');
-  const { x, y } = processData(data);
-  chart = await makePlotly(x, y);
-  window.addEventListener('resize', debouncedResize);
+async function render () {
+  const data = await importCsv('./data/oslo-2018.csv')
+  const { x, y } = processData(data)
+  chart = await makePlotly(x, y)
+  window.addEventListener('resize', debouncedResize)
 }
 
-function processData(allRows) {
-  const x = [];
-  const y = [];
-  for (var i = 0; i < allRows.length; i++) {
-    const row = allRows[i];
-    x.push(`${row.year}-${row.month}`);
-    y.push(row.temp);
+function processData (allRows) {
+  const x = []
+  const y = []
+  for (let i = 0; i < allRows.length; i++) {
+    const row = allRows[i]
+    x.push(`${row.year}-${row.month}`)
+    y.push(row.temp)
   }
-  return { x, y };
+  return { x, y }
 }
 
-function makePlotly(x, y) {
-  document.getElementById('plot');
+function makePlotly (x, y) {
+  document.getElementById('plot')
   const traces = [
     {
       type: 'bar',
@@ -44,67 +44,67 @@ function makePlotly(x, y) {
         {
           type: 'aggregate',
           groups: x,
-          aggregations: [{ target: 'y', func: 'avg', enabled: true }],
-        },
+          aggregations: [{ target: 'y', func: 'avg', enabled: true }]
+        }
       ],
       marker: {
-        color: 'lightgrey',
-      },
-    },
-  ];
+        color: 'lightgrey'
+      }
+    }
+  ]
 
   const layout = {
     title: 'Average temperature in Oslo, Norway in 2018',
     xaxis: {
       title: 'Month',
       tickformat: '%m',
-      nticks: 12,
+      nticks: 12
     },
     yaxis: {
-      title: 'Average temperature in °C',
-    },
-  };
+      title: 'Average temperature in °C'
+    }
+  }
 
   const config = {
-    responsive: true,
-  };
+    responsive: true
+  }
 
-  return Plotly.newPlot('vis', traces, layout, config);
+  return Plotly.newPlot('vis', traces, layout, config)
 }
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.BAR_CHART,
-    chart,
-  );
+    chart
+  )
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
-    text: 'test123',
-  }));
+    text: 'test123'
+  }))
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-  };
-  return ahoiConfig;
-};
+    onboardingMessages: defaultOnboardingMessages
+  }
+  return ahoiConfig
+}
 
 const registerEventListener = () => {
-  const helpIcon = document.getElementById('show-onboarding');
+  const helpIcon = document.getElementById('show-onboarding')
   if (!helpIcon) {
-    return;
+    return
   }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding;
+    showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
         EVisualizationType.BAR_CHART,
         chart,
-        getAhoiConfig(),
-      );
+        getAhoiConfig()
+      )
     } else {
-      onboardingUI?.removeOnboarding();
+      onboardingUI?.removeOnboarding()
     }
-  });
-};
+  })
+}
 
-registerEventListener();
-render();
+registerEventListener()
+render()
