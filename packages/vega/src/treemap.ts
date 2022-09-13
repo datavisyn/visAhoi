@@ -1,22 +1,22 @@
 import {
   EVisualizationType,
   IOnboardingMessage,
-  generateMessages,
-} from "@visahoi/core";
-import { Spec } from "vega-typings";
-import { IOnboardingTreemapSpec } from "@visahoi/core/src/treemap";
+  generateMessages
+} from '@visahoi/core'
+import { Spec } from 'vega-typings'
+import { IOnboardingTreemapSpec } from '@visahoi/core/src/treemap'
 
-async function extractOnboardingSpec(
+async function extractOnboardingSpec (
   vegaSpec: Spec,
   elems: any[]
 ): Promise<IOnboardingTreemapSpec> {
-  console.log("chart", vegaSpec);
+  console.log('chart', vegaSpec)
 
   console.log(
     vegaSpec?.marks[1].encode?.enter?.tooltip,
 
-    "name"
-  );
+    'name'
+  )
   // debugger;
   // const dataUrl = vegaSpec?.data[0]?.url;
   // const response = await fetch(dataUrl);
@@ -52,11 +52,11 @@ async function extractOnboardingSpec(
       value: vegaSpec?.title,
       anchor: {
         findDomNodeByValue: true,
-        offset: { right: -30, top: -10 },
+        offset: { right: -30, top: -10 }
         // offset: { right: -500, top: -30 },
         // offset: { left: 80, top: 10 },
-      },
-    },
+      }
+    }
     // desc: {
     //   value: "Elder care",
     //   anchor: {
@@ -83,18 +83,18 @@ async function extractOnboardingSpec(
     //     offset: {left: -20}
     //   },
     // },
-  };
+  }
 }
 
-export async function treemapFactory(
+export async function treemapFactory (
   vegaSpec: Spec,
   elems: any[],
   visElement: Element
 ): Promise<IOnboardingMessage[]> {
-  const onbordingSpec = await extractOnboardingSpec(vegaSpec, elems);
+  const onbordingSpec = await extractOnboardingSpec(vegaSpec, elems)
   return generateMessages(
     EVisualizationType.TREEMAP,
     onbordingSpec,
     visElement
-  );
+  )
 }
