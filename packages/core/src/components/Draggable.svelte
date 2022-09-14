@@ -1,11 +1,12 @@
 <script lang="ts">
-  export let left = 100;
-  export let top = 100;
+  let left = 100;
+  let top = 100;
 
   let moving = false;
 
   function onMouseDown() {
     moving = true;
+    console.log("test");
   }
 
   function onMouseMove(e) {
@@ -18,8 +19,6 @@
   function onMouseUp() {
     moving = false;
   }
-
-  // 	$: console.log(moving);
 </script>
 
 <section
@@ -35,9 +34,7 @@
 <style>
   .draggable {
     width: 200px;
-    user-select: none;
     cursor: move;
-    border: solid 1px gray;
     position: absolute;
   }
 </style>

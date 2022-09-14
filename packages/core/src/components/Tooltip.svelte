@@ -24,6 +24,8 @@
   let tempText = "";
   let editTooltip: boolean = false;
 
+  console.log("Test it");
+
   const sanitizerOptions = {
     allowedTags: ["span", "b", "em", "strong"],
     allowedClasses: {
