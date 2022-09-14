@@ -4,28 +4,44 @@
     navigationAlignment,
     activeOnboardingStage,
     showOnboardingSteps,
+    onboardingStages,
   } from "./stores.js";
   export let stage: IOnboardingStage;
   export let index: number;
+
+  const bottom: string = (index + 1) * 75 + "px";
 
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
 
-  const bottom: string = (index + 1) * 75 + "px";
-  const right: string = (index + 1) * 40 + index * 45 + "px";
+//   const bottom: string = (index + 1) * 75 + "px";
+//   const right: string = (index + 1) * 40 + index * 45 + "px";
+// </script>
+
+// {#if $navigationAlignment === "row"}
+//   <div
+//     style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+//       stage.backgroundColor}; --bottom:{bottom}"
+//     class="visahoi-navigation-item {!$showOnboardingSteps ||
+//     $activeOnboardingStage
+//       ? 'removed'
+//       : ''}"
+//     on:click={handleClick}
+//   >
 </script>
 
-{#if $navigationAlignment === "row"}
-  <div
-    style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
-      stage.backgroundColor}; --bottom:{bottom}"
-    class="visahoi-navigation-item {!$showOnboardingSteps ||
-    $activeOnboardingStage
-      ? 'removed'
-      : ''}"
-    on:click={handleClick}
-  >
+<div
+  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+    stage.backgroundColor}; --bottom:{bottom}"
+  class="visahoi-navigation-item {!$showOnboardingSteps ||
+  $activeOnboardingStage
+    ? 'removed'
+    : ''}
+    {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
+  on:click={handleClick}
+>
+  {#key $onboardingStages || $onboardingStages === null}
     <div class="visahoi-navigation-item-circle">
       <i
         class={!$activeOnboardingStage ||
@@ -34,7 +50,8 @@
           : "fas fa-times"}
       />
     </div>
-    <span class="visahoi-stage-title">{stage.title}</span>
+
+    <!-- <span class="visahoi-stage-title">{stage.title}</span>
   </div>
 {:else}
   <div
@@ -56,7 +73,10 @@
     </div>
     <span class="visahoi-stage-title">{stage.title}</span>
   </div>
-{/if}
+{/if} -->
+  {/key}
+  <span class="visahoi-stage-title">{stage.title}</span>
+</div>
 
 <style>
   .visahoi-horizontal-navigation-item {

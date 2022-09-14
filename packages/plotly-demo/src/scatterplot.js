@@ -1,35 +1,45 @@
-import Plotly from 'plotly.js-dist';
+import Plotly from 'plotly.js-dist'
+// import {
+//   generateBasicAnnotations,
+//   ahoi,
+//   EVisualizationType,
+//   setOnboardingStage,
+//   setOnboardingMessage,
+//   setEditMode
+// } from '@visahoi/plotly'
 import {
   generateBasicAnnotations,
   ahoi,
-  EVisualizationType,
-} from '@visahoi/plotly';
-import debounce from 'lodash.debounce';
+  EVisualizationType
+} from '@visahoi/plotly'
+import debounce from 'lodash.debounce'
 
-let chart = null;
-let showOnboarding = false;
-let onboardingUI = null;
+let chart = null
+let showOnboarding = false
+let editMode = false
+let onboardingUI = null
+const deleteStageId = null
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
-async function render() {
-  const response = await fetch('../data/cars.json');
-  const data = await response.json();
-  const { x, y } = processData(data);
-  chart = await makePlotly(x, y);
-  window.addEventListener('resize', debouncedResize);
+async function render () {
+  const response = await fetch('../data/cars.json')
+  const data = await response.json()
+  const { x, y } = processData(data)
+  chart = await makePlotly(x, y)
+  window.addEventListener('resize', debouncedResize)
 }
 
-function processData(allRows) {
-  const x = Object.values(allRows).map((d) => d['Horsepower']);
-  const y = Object.values(allRows).map((d) => d['Miles_per_Gallon']);
-  return { x, y };
+function processData (allRows) {
+  const x = Object.values(allRows).map((d) => d.Horsepower)
+  const y = Object.values(allRows).map((d) => d.Miles_per_Gallon)
+  return { x, y }
 }
 
-function makePlotly(x, y) {
-  document.getElementById('plot');
+function makePlotly (x, y) {
+  document.getElementById('plot')
   const traces = [
     {
       type: 'scatter',
@@ -37,71 +47,109 @@ function makePlotly(x, y) {
       x,
       y,
       marker: {
-        size: 5,
-      },
-    },
-  ];
+        size: 5
+      }
+    }
+  ]
 
   const layout = {
     title: 'Some title of cars or something',
     xaxis: {
-      title: 'Horsepower',
+      title: 'Horsepower'
     },
     yaxis: {
-      title: 'Miles per Gallon',
-    },
-  };
+      title: 'Miles per Gallon'
+    }
+  }
 
   const config = {
-    responsive: true,
-  };
+    responsive: true
+  }
 
-  return Plotly.newPlot('vis', traces, layout, config);
+  return Plotly.newPlot('vis', traces, layout, config)
 }
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.SCATTERPLOT,
-    chart,
-  );
+    chart
+  )
+
   const extendedOnboardingMessages = defaultOnboardingMessages.map(
     (message) => ({
       ...message,
       marker: {
         ...message.marker,
         fontSize: '12px',
-        radius: 10,
-      },
-    }),
-  );
+        radius: 10
+      }
+    })
+  )
+
+  // To delete the onboarding stage
+  // deleteStageId = 'reading-the-chart';
+  // deleteOnboardingStage(deleteStageId);
 
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-    alignment: 'column',
-    // showOnboardingNavigation: true,
-  };
+    // Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
 
-  return ahoiConfig;
-};
+    onboardingMessages: deleteStageId
+      ? defaultOnboardingMessages.filter(
+        (m) => m.onboardingStage.id !== deleteStageId
+      )
+      : defaultOnboardingMessages
+    // showOnboardingNavigation: true,
+  }
+  return ahoiConfig
+}
 
 const registerEventListener = () => {
-  const helpIcon = document.getElementById('show-onboarding');
+  const helpIcon = document.getElementById('show-onboarding')
+  const editButton = document.getElementById('editModeButton')
+  const newButton = document.getElementById('btn-test')
   if (!helpIcon) {
-    return;
+    return
   }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding;
+    showOnboarding = !showOnboarding
+
     if (showOnboarding) {
+      editButton.style.display = 'block'
       onboardingUI = await ahoi(
         EVisualizationType.SCATTERPLOT,
         chart,
-        getAhoiConfig(),
-      );
+        getAhoiConfig()
+      )
     } else {
-      onboardingUI?.removeOnboarding();
+      onboardingUI?.removeOnboarding()
+      editButton.style.display = 'none'
     }
-  });
-};
+  })
+  editButton.addEventListener('click', async () => {
+    editMode = !editMode
+    if (editMode) {
+      editButton.innerText = 'Exit edit mode'
+    } else {
+      editButton.innerText = 'Enter edit mode'
+    }
+    setEditMode(editMode)
 
-registerEventListener();
-render();
+    setOnboardingMessage({
+      id: 'unique-message-id-6',
+      title: 'test-1',
+      text: 'testing....'
+    })
+  })
+
+  newButton.addEventListener('click', async () => {
+    setOnboardingStage({
+      id: 'using-the-chart',
+      title: 'Interact',
+      iconClass: 'fas fa-microphone',
+      backgroundColor: 'red'
+    })
+  })
+}
+
+registerEventListener()
+render()

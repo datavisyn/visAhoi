@@ -25,22 +25,22 @@
     switch ($markerIndexId) {
       case 0: {
         await tick();
-        const preElementId = document.getElementById("navigation-previous");
+        const preElementId = document.getElementById("navigation-next");
         preElementId?.style.pointerEvents = "none";
         preElementId?.style.opacity = 0.5;
 
-        const nextElementId = document.getElementById("navigation-next");
+        const nextElementId = document.getElementById("navigation-previous");
         nextElementId?.style.pointerEvents = "all";
         nextElementId?.style.opacity = 1;
         break;
       }
       case $markerInformation.length - 1: {
         await tick();
-        const nextElementId = document.getElementById("navigation-next");
+        const nextElementId = document.getElementById("navigation-previous");
         nextElementId?.style.pointerEvents = "none";
         nextElementId?.style.opacity = 0.5;
 
-        const preElementId = document.getElementById("navigation-previous");
+        const preElementId = document.getElementById("navigation-next");
         preElementId?.style.pointerEvents = "all";
         preElementId?.style.opacity = 1;
         break;
@@ -65,7 +65,7 @@
       const elementId = getNavigationMarkerDomId($previousMarkerId);
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
-    const elementId = document.getElementById("navigation-previous");
+    const elementId = document.getElementById("navigation-next");
     elementId?.style.pointerEvents = "all";
     elementId?.style.opacity = 1;
 
@@ -74,7 +74,7 @@
         if (marker.marker.id === $selectedMarker.marker.id) {
           index = i + 1;
           if (index + 1 === $markerInformation.length) {
-            const elementId = document.getElementById("navigation-next");
+            const elementId = document.getElementById("navigation-previous");
             elementId?.style.pointerEvents = "none";
             elementId?.style.opacity = 0.5;
           }
@@ -98,7 +98,7 @@
       const elementId = getNavigationMarkerDomId($previousMarkerId);
       document.getElementById(elementId)?.style.opacity = 0.5;
     }
-    const elementId = document.getElementById("navigation-next");
+    const elementId = document.getElementById("navigation-previous");
     elementId?.style.pointerEvents = "all";
     elementId?.style.opacity = 1;
 
@@ -106,8 +106,9 @@
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker.marker.id) {
           index = i - 1;
+
           if (index === 0) {
-            const elementId = document.getElementById("navigation-previous");
+            const elementId = document.getElementById("navigation-next");
             elementId?.style.pointerEvents = "none";
             elementId?.style.opacity = 0.5;
           }
@@ -133,33 +134,9 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  <div class="visahoi-navigation-marker-container">
-    {#if $activeOnboardingStage && $showOnboardingNavigation}
-      {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
-        <NavigationMarker markerInformation={marker} order={index + 1} />
-      {/each}
-    {/if}
-
-    <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
-      <div
-        id="navigation-next"
-        style="--bottom-height: {nextHeight}"
-        class="visahoi-navigation-next"
-        on:click={navNext}
-      >
-        <span><i class="fas fa-chevron-up" /></span>
-      </div>
-      <div
-        id="navigation-previous"
-        style="--bottom-height: {prevHeight}"
-        class="visahoi-navigation-previous"
-        on:click={navPrev}
-      >
-        <span><i class="fas fa-chevron-down" /></span>
-      </div>
-    {/if} -->
-
-    {#if $activeOnboardingStage && $showOnboardingNavigation}
+  {#key $markerInformation}
+    <div class="visahoi-navigation-marker-container">
+      <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       <div
         id="navigation-next"
         style="--bottom-height: {nextHeight}"
@@ -190,8 +167,40 @@
           >
         {/if}
       </div>
-    {/if}
-  </div>
+    {/if} -->
+      <!-- </div> -->
+      {#if $activeOnboardingStage && $showOnboardingNavigation}
+        {#each $markerInformation.sort((a, b) => {
+          if (a.message.onboardingStage.title === b.message.onboardingStage.title) {
+            return a.message?.order < b.message?.order ? -1 : 1;
+          } else {
+            return a.message.onboardingStage.title > b.message.onboardingStage.title ? -1 : 1;
+          }
+        }) as marker, index}
+          <NavigationMarker markerInformation={marker} order={index + 1} />
+        {/each}
+      {/if}
+
+      {#if $activeOnboardingStage && $showOnboardingNavigation}
+        <div
+          id="navigation-next"
+          style="--bottom-height: {nextHeight}"
+          class="visahoi-navigation-next"
+          on:click={navPrev}
+        >
+          <span><i class="fas fa-chevron-up" /></span>
+        </div>
+        <div
+          id="navigation-previous"
+          style="--bottom-height: {prevHeight}"
+          class="visahoi-navigation-previous"
+          on:click={navNext}
+        >
+          <span><i class="fas fa-chevron-down" /></span>
+        </div>
+      {/if}
+    </div>
+  {/key}
 
   {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
     <OnboardingNavigationItem {stage} {index} />
@@ -216,7 +225,8 @@
     cursor: pointer;
     /* transition: opacity 0.5s ease, bottom 0.5s ease; */
     width: 80px;
-    bottom: 20px;
+    /* bottom: 20px; */
+    bottom: 80px;
     opacity: 1;
     z-index: 15;
   }

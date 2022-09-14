@@ -32,6 +32,7 @@
 
   const setMarkerInformation = () => {
     const updatedMarkerInformation = getMarkerInformation($onboardingMessages);
+
     markerInformation.set(updatedMarkerInformation);
     // update data of active marker
     activeMarker.set(

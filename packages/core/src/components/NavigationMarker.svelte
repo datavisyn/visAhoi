@@ -17,6 +17,7 @@
 
   $: bottom = order * 35 + 15 + "px";
   $: right = order * 35 + 35 + "px";
+  // $: bottom = order * 35 + 15 + "px";
 
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
@@ -25,11 +26,20 @@
   let arrValue: IMarkerInformation[] = [];
 
   /**First navigation marker which belongs to the activeOnboarding stage is selected */
+  // $markInfo.map(async (message) => {
+  //   if (
+  //     message.message.onboardingStage.title === $activeOnboardingStage?.title
+  //   ) {
+  //     arrValue.push(message);
+  //   }
+  // });
+
   $markInfo.map(async (message) => {
     if (
       message.message.onboardingStage.title === $activeOnboardingStage?.title
     ) {
       arrValue.push(message);
+      // selectedMarker.set(arrValue[arrValue.length - 1]);
       selectedMarker.set(arrValue[0]);
 
       activeOnboardingStage.update(
@@ -90,6 +100,8 @@
       const activeOnboardingStageMarkers = $markInfo.filter(
         (m) => m.message.onboardingStage === $activeOnboardingStage
       );
+
+      // selectedMarker.set(activeOnboardingStageMarkers[0]);
       selectedMarker.set(activeOnboardingStageMarkers[0]);
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
@@ -113,13 +125,14 @@
   on:click={handleClick}
 > -->
 
-<div
+<!-- <div
   style="--bottom:{bottom}; --right: {right}"
   class="visahoi-marker-navigation-item {$activeOnboardingStage} {$navigationAlignment ===
   'column'
     ? 'horizontal'
     : 'vertical'}"
->
+> -->
+<div class="visahoi-navigation-wrapper">
   <div
     on:click={handleClick}
     style="--active-background-color:{activeBackgroundColor ||
@@ -132,6 +145,12 @@
 </div>
 
 <style>
+  .visahoi-navigation-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+  }
   .visahoi-marker-navigation-item {
     position: absolute;
     display: flex;

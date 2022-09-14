@@ -1,5 +1,12 @@
-import { ISpecProp, IOnboardingSpec, IOnboardingMessage, defaultOnboardingStages, EDefaultOnboardingStages, IOnboardingStage } from "./interfaces";
-import {getAnchor} from './utils';
+import {
+  ISpecProp,
+  IOnboardingSpec,
+  IOnboardingMessage,
+  defaultOnboardingStages,
+  EDefaultOnboardingStages,
+  IOnboardingStage
+} from './interfaces'
+import { getAnchor } from './utils'
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -12,23 +19,21 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   maxValue?: ISpecProp;
 }
 
-function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element): IOnboardingMessage[] {
-  const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING) as IOnboardingStage;
-  const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage;
-  const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage;
-  
-  
-  const messages = [
-    {
-      anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: "unique-marker-id-1"
-      }
-    },
+function generateMessages (
+  spec: IOnboardingScatterplotSpec,
+  visElement: Element
+): IOnboardingMessage[] {
+  const analyzing = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.ANALYZING
+  ) as IOnboardingStage
+  const reading = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.READING
+  ) as IOnboardingStage
+  const interacting = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.USING
+  ) as IOnboardingStage
+
+  const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
@@ -36,8 +41,10 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: "unique-marker-id-2"
-      }
+        id: 'unique-marker-id-2'
+      },
+      id: 'unique-message-id-2',
+      order: 1
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
@@ -46,8 +53,10 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-3"
-      }
+        id: 'unique-marker-id-3'
+      },
+      id: 'unique-message-id-3',
+      order: 1
     },
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
@@ -56,8 +65,10 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       title: 'Reading the chart',
       onboardingStage: analyzing,
       marker: {
-        id: "unique-marker-id-4"
-      }
+        id: 'unique-marker-id-4'
+      },
+      id: 'unique-message-id-4',
+      order: 2
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -66,8 +77,10 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: "unique-marker-id-5"
-      }
+        id: 'unique-marker-id-5'
+      },
+      id: 'unique-message-id-5',
+      order: 2
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
@@ -76,16 +89,34 @@ function generateMessages(spec: IOnboardingScatterplotSpec, visElement: Element)
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-6"
-      }
+        id: 'unique-marker-id-6'
+      },
+      id: 'unique-message-id-6',
+      order: 3
     }
-  ];
+  ]
 
+  if (spec.chartTitle?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.chartTitle, visElement),
+      requires: ['chartTitle'],
+      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      title: 'Reading the chart',
+      onboardingStage: reading,
+      marker: {
+        id: 'unique-marker-id-1'
+      },
+      id: 'unique-message-id-1',
+      order: 1
+    })
+  }
 
   // Filter for messages where all template variables are available in the spec
-  return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
-};
+  return messages.filter((message) =>
+    message.requires.every((tplVars) => spec[tplVars])
+  )
+}
 
 export const scatterplot = {
   generateMessages
-};
+}

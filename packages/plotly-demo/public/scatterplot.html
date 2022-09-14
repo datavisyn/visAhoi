@@ -18,10 +18,39 @@
       <span id="show-onboarding" title="Show onboarding">
         <i class="fas fa-question-circle"></i> Show onboarding
       </span>
+      <button id="btn-test">Change onboarding stage color</button></button>
     </div>
     <h1>VisAhoi Demo: Plotly - Scatterplot</h1>
-    <div id="vis"></div>
+    <div id="vis">
+      
+    </div>
+    <div>
+      <button id="editModeButton">Enter edit mode</button>
+    </div>
 
-    <script type="module" src="../src/scatterplot.js"></script>
+    <script type="module" src="../src/scatterplot.js">
+      
+      
+    </script>
+    <style>
+      #editModeButton {
+        position: absolute;
+        bottom: calc(100% - 782px);
+        right: 12em;
+        display: none; 
+        margin-left: auto;
+        margin-top: 12px;       
+        width: 125px;
+        border-radius: 15px;
+        padding: 5px;
+        border: none;
+        background-color: gray;
+        color: white;
+        font-size: 13px;
+        font-weight: bold;
+        white-space: nowrap;
+        cursor: pointer;        
+      }
+    </style>
   </body>
 </html>
