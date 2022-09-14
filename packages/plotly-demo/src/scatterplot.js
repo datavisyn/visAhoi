@@ -106,6 +106,7 @@ const getAhoiConfig = () => {
 const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding')
   const editButton = document.getElementById('editModeButton')
+  const newButton = document.getElementById('btn-test')
   if (!helpIcon) {
     return
   }
@@ -137,6 +138,15 @@ const registerEventListener = () => {
       id: 'unique-message-id-6',
       title: 'test-1',
       text: 'testing....'
+    })
+  })
+
+  newButton.addEventListener('click', async () => {
+    setOnboardingStage({
+      id: 'using-the-chart',
+      title: 'Interact',
+      iconClass: 'fas fa-microphone',
+      backgroundColor: 'red'
     })
   })
 }
