@@ -20,14 +20,14 @@ const demos = [
     title: 'Treemap',
     link: './treemap.html'
   }
-];
+]
 
-const ul = document.createElement('ul');
+const ul = document.createElement('ul')
 
 demos.forEach((demo) => {
-  const li = document.createElement('li');
-  li.innerHTML = `<a href="${demo.link}">${demo.title}</a>`;
-  ul.append(li);
-});
+  const li = document.createElement('li')
+  li.innerHTML = `<a href="${demo.link}">${demo.title}</a>`
+  ul.append(li)
+})
 
-document.getElementById('app').append(ul);
+document.getElementById('app').append(ul)

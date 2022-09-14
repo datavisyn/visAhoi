@@ -1,42 +1,42 @@
-import Plotly from 'plotly.js-dist';
+import Plotly from 'plotly.js-dist'
 import {
   generateBasicAnnotations,
   ahoi,
-  EVisualizationType,
-} from '@visahoi/plotly';
-import debounce from 'lodash.debounce';
-import { importCsv } from './util';
+  EVisualizationType
+} from '@visahoi/plotly'
+import debounce from 'lodash.debounce'
+import { importCsv } from './util'
 
-let chart = null;
-let showOnboarding = false;
-let onboardingUI = null;
+let chart = null
+let showOnboarding = false
+let onboardingUI = null
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
 const render = async () => {
-  const data = await importCsv('./data/jobsPlan.csv');
-  const { label, parent, value, color } = processData(data);
-  chart = await makePlotly(label, parent, value, color);
-  window.addEventListener('resize', debouncedResize);
-};
+  const data = await importCsv('./data/jobsPlan.csv')
+  const { label, parent, value, color } = processData(data)
+  chart = await makePlotly(label, parent, value, color)
+  window.addEventListener('resize', debouncedResize)
+}
 
 const processData = (data) => {
-  const label = [];
-  const parent = [];
-  const value = [];
-  const color = [];
+  const label = []
+  const parent = []
+  const value = []
+  const color = []
 
   data.map((d) => {
-    label.push(d.Label);
-    parent.push(d.Parent);
-    value.push(d.Value);
-    color.push(d.Color);
-  });
+    label.push(d.Label)
+    parent.push(d.Parent)
+    value.push(d.Value)
+    color.push(d.Color)
+  })
 
-  return { label, parent, value, color };
-};
+  return { label, parent, value, color }
+}
 
 const makePlotly = (label, parent, value, color) => {
   const traces = [
@@ -47,54 +47,54 @@ const makePlotly = (label, parent, value, color) => {
       parents: parent,
       values: value,
       marker: {
-        colors: color,
+        colors: color
         // colorscale: 'Greys',
-      },
-    },
-  ];
+      }
+    }
+  ]
   const config = {
-    responsive: true,
-  };
+    responsive: true
+  }
   const layout = {
-    title: 'Jobs Plan',
-  };
-  return Plotly.newPlot('vis', traces, layout, config);
-};
+    title: 'Jobs Plan'
+  }
+  return Plotly.newPlot('vis', traces, layout, config)
+}
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.TREEMAP,
-    chart,
-  );
+    chart
+  )
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
-    text: 'test123',
-  }));
+    text: 'test123'
+  }))
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
-    showHelpCloseText: false,
-  };
-  return ahoiConfig;
-};
+    showHelpCloseText: false
+  }
+  return ahoiConfig
+}
 
 const registerEventListener = () => {
-  const helpIcon = document.getElementById('show-onboarding');
+  const helpIcon = document.getElementById('show-onboarding')
   if (!helpIcon) {
-    return;
+    return
   }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding;
+    showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
         EVisualizationType.TREEMAP,
         chart,
-        getAhoiConfig(),
-      );
+        getAhoiConfig()
+      )
     } else {
-      onboardingUI?.removeOnboarding();
+      onboardingUI?.removeOnboarding()
     }
-  });
-};
+  })
+}
 
-registerEventListener();
-render();
+registerEventListener()
+render()
