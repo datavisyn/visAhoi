@@ -1,6 +1,6 @@
-import embed from 'vega-embed';
-import debounce from 'lodash.debounce';
-import '../public/data/jobsplan.json';
+import embed from 'vega-embed'
+import debounce from 'lodash.debounce'
+import '../public/data/jobsplan.json'
 
 const opt = {
   description: 'An example of treemap layout for hierarchical data.',
@@ -8,14 +8,14 @@ const opt = {
   height: 600,
   padding: {
     left: window.innerWidth / 2 - 600,
-    top: 30,
+    top: 30
   },
   autosize: 'none',
 
   signals: [
     {
       name: 'layout',
-      value: 'squarify',
+      value: 'squarify'
       // "bind": {
       //   "input": "select",
       //   "options": [
@@ -27,9 +27,9 @@ const opt = {
     },
     {
       name: 'aspectRatio',
-      value: 1.6,
+      value: 1.6
       // "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
-    },
+    }
   ],
 
   data: [
@@ -40,7 +40,7 @@ const opt = {
         {
           type: 'stratify',
           key: 'id',
-          parentKey: 'parent',
+          parentKey: 'parent'
         },
         {
           type: 'treemap',
@@ -49,20 +49,20 @@ const opt = {
           round: true,
           method: { signal: 'layout' },
           ratio: { signal: 'aspectRatio' },
-          size: [{ signal: 'width' }, { signal: 'height' }],
-        },
-      ],
+          size: [{ signal: 'width' }, { signal: 'height' }]
+        }
+      ]
     },
     {
       name: 'nodes',
       source: 'tree',
-      transform: [{ type: 'filter', expr: 'datum.children' }],
+      transform: [{ type: 'filter', expr: 'datum.children' }]
     },
     {
       name: 'leaves',
       source: 'tree',
-      transform: [{ type: 'filter', expr: '!datum.children' }],
-    },
+      transform: [{ type: 'filter', expr: '!datum.children' }]
+    }
   ],
 
   scales: [
@@ -70,20 +70,20 @@ const opt = {
       name: 'color',
       type: 'ordinal',
       domain: { data: 'nodes', field: 'name' },
-      range: ['#80b1d3', '#80b1d3', '#fdb462', '#b3de69', '#fccde5'],
+      range: ['#80b1d3', '#80b1d3', '#fdb462', '#b3de69', '#fccde5']
     },
     {
       name: 'size',
       type: 'ordinal',
       domain: [0, 1, 2, 3],
-      range: [120, 25, 20, 14],
+      range: [120, 25, 20, 14]
     },
     {
       name: 'opacity',
       type: 'ordinal',
       domain: [0, 1, 2, 3],
-      range: [0.15, 0.5, 0.8, 1.0],
-    },
+      range: [0.15, 0.5, 0.8, 1.0]
+    }
   ],
 
   marks: [
@@ -93,15 +93,15 @@ const opt = {
       interactive: false,
       encode: {
         enter: {
-          fill: { scale: 'color', field: 'name' },
+          fill: { scale: 'color', field: 'name' }
         },
         update: {
           x: { field: 'x0' },
           y: { field: 'y0' },
           x2: { field: 'x1' },
-          y2: { field: 'y1' },
-        },
-      },
+          y2: { field: 'y1' }
+        }
+      }
     },
     {
       type: 'rect',
@@ -109,19 +109,19 @@ const opt = {
       encode: {
         enter: {
           stroke: { value: '#fff' },
-          tooltip: { signal: "{'title': datum.name, 'value': datum.size}" },
+          tooltip: { signal: "{'title': datum.name, 'value': datum.size}" }
         },
         update: {
           x: { field: 'x0' },
           y: { field: 'y0' },
           x2: { field: 'x1' },
           y2: { field: 'y1' },
-          fill: { value: 'transparent' },
+          fill: { value: 'transparent' }
         },
         hover: {
-          fill: { value: 'red' },
-        },
-      },
+          fill: { value: 'red' }
+        }
+      }
     },
     {
       type: 'text',
@@ -135,27 +135,27 @@ const opt = {
           fill: { value: '#000' },
           text: { field: 'name' },
           fontSize: { scale: 'size', field: 'depth' },
-          fillOpacity: { scale: 'opacity', field: 'depth' },
+          fillOpacity: { scale: 'opacity', field: 'depth' }
         },
         update: {
           x: { signal: '0.5 * (datum.x0 + datum.x1)' },
-          y: { signal: '0.5 * (datum.y0 + datum.y1)' },
-        },
-      },
-    },
-  ],
-};
-let chart = null;
-let onboardingUI = null;
+          y: { signal: '0.5 * (datum.y0 + datum.y1)' }
+        }
+      }
+    }
+  ]
+}
+let chart = null
+const onboardingUI = null
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
-async function render() {
-  chart = await embed('#vis', opt);
-  window.addEventListener('resize', debouncedResize);
+async function render () {
+  chart = await embed('#vis', opt)
+  window.addEventListener('resize', debouncedResize)
 }
 
 // registerEventListener();
-render();
+render()
