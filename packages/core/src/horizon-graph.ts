@@ -4,9 +4,9 @@ import {
   IOnboardingMessage,
   IOnboardingStage,
   EDefaultOnboardingStages,
-  defaultOnboardingStages,
-} from "./interfaces";
-import { getAnchor } from "./utils";
+  defaultOnboardingStages
+} from './interfaces'
+import { getAnchor } from './utils'
 
 export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -17,124 +17,124 @@ export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   negativeColor?: ISpecProp;
 }
 
-function createColorRect(color = "white") {
-  return `<div class="colorRect" style="background: ${color}"></div>`;
+function createColorRect (color = 'white') {
+  return `<div class="colorRect" style="background: ${color}"></div>`
 }
 
-function generateMessages(
+function generateMessages (
   spec: IOnboardingHorizonGraphSpec,
   visElement: Element
 ): IOnboardingMessage[] {
   const reading = defaultOnboardingStages.get(
     EDefaultOnboardingStages.READING
-  ) as IOnboardingStage;
+  ) as IOnboardingStage
   const using = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
-  ) as IOnboardingStage;
+  ) as IOnboardingStage
 
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
-      requires: ["type"],
+      requires: ['type'],
       text: `The chart is made out of ${spec.type?.value} elements.`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-2",
+        id: 'unique-marker-id-2'
       },
-      id: "unique-message-id-2",
-      order: 2,
+      id: 'unique-message-id-2',
+      order: 2
     },
     {
       anchor: getAnchor(spec.xAxis, visElement),
-      requires: ["xAxis", "yAxis"],
+      requires: ['xAxis', 'yAxis'],
       text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-3",
+        id: 'unique-marker-id-3'
       },
-      id: "unique-message-id-3",
-      order: 3,
+      id: 'unique-message-id-3',
+      order: 3
     },
     {
       anchor: getAnchor(spec.positiveColor, visElement),
-      requires: ["yAxis", "positiveColor"],
+      requires: ['yAxis', 'positiveColor'],
       text: `Light ${createColorRect(
         spec.positiveColor?.value
       )} areas indicate a moderate positive ${spec.yAxis?.value} and dark
         ${createColorRect(spec.positiveColor?.value)} areas a high positive ${
         spec.yAxis?.value
       }.`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-4",
+        id: 'unique-marker-id-4'
       },
-      id: "unique-message-id-4",
-      order: 4,
+      id: 'unique-message-id-4',
+      order: 4
     },
     {
       anchor: getAnchor(spec.negativeColor, visElement),
-      requires: ["yAxis", "negativeColor"],
+      requires: ['yAxis', 'negativeColor'],
       text: `${createColorRect(
         spec.negativeColor?.value
       )} areas indicate a very low negative ${spec.yAxis?.value}.`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-5",
+        id: 'unique-marker-id-5'
       },
-      id: "unique-message-id-5",
-      order: 5,
+      id: 'unique-message-id-5',
+      order: 5
     },
     {
       anchor: spec.yMin?.anchor,
-      requires: ["yAxis", "yMin"],
+      requires: ['yAxis', 'yMin'],
       text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: using,
       marker: {
-        id: "unique-marker-id-6",
+        id: 'unique-marker-id-6'
       },
-      id: "unique-message-id-6",
-      order: 6,
+      id: 'unique-message-id-6',
+      order: 6
     },
     {
       anchor: spec.yMax?.anchor,
-      requires: ["yAxis", "yMax"],
+      requires: ['yAxis', 'yMax'],
       text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: using,
       marker: {
-        id: "unique-marker-id-7",
+        id: 'unique-marker-id-7'
       },
-      id: "unique-message-id-7",
-      order: 7,
-    },
-  ];
+      id: 'unique-message-id-7',
+      order: 7
+    }
+  ]
 
   if (spec.chartTitle?.value !== undefined) {
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ["chartTitle"],
+      requires: ['chartTitle'],
       text: `The chart shows the ${spec.chartTitle?.value}.`,
-      title: "Reading the chart",
+      title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-1",
+        id: 'unique-marker-id-1'
       },
-      id: "unique-message-id-1",
-      order: 1,
-    });
+      id: 'unique-message-id-1',
+      order: 1
+    })
   }
 
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) =>
     message.requires.every((tplVars) => spec[tplVars])
-  );
+  )
 }
 
 export const horizonGraph = {
-  generateMessages,
-};
+  generateMessages
+}

@@ -11,33 +11,33 @@ text-shadow: 0 0 20px #fefcc9,
 2px 2px 0 orange,
 3px 3px 0 red;
 font-size: 4vh;
-`;
+`
 
 export const css2 = `
 background-color: lemonchiffon;
 color: #003366;
-`;
+`
 
 export const getAllNodes = (vis) => {
-  return vis.select('.role-mark').selectAll('path').nodes();
-};
+  return vis.select('.role-mark').selectAll('path').nodes()
+}
 
 export const getOrientation = (scales) => {
-    const [s1, s2] = scales;
-    const {name: s1Name, type: s1Type} = s1;
-    const {name: s2Name, type: s2Type} = s2;
+  const [s1, s2] = scales
+  const { name: s1Name, type: s1Type } = s1
+  const { name: s2Name, type: s2Type } = s2
 
-    return {
-        x: s1Type === 'band' ? 'horizontal' : 'vertical',
-        y: s2Type === 'band' ? 'horizontal' : 'vertical',
-        b: s1Type === 'band' ? 'height' : 'width'
-    };
+  return {
+    x: s1Type === 'band' ? 'horizontal' : 'vertical',
+    y: s2Type === 'band' ? 'horizontal' : 'vertical',
+    b: s1Type === 'band' ? 'height' : 'width'
+  }
 }
 
 export const getMinMax = (data) => {
-  const values = getPropertyValues(data);
-  const keys = Object.keys(values);
-  const res = [];
+  const values = getPropertyValues(data)
+  const keys = Object.keys(values)
+  const res = []
 
   keys.forEach(k => {
     res.push({
@@ -45,37 +45,37 @@ export const getMinMax = (data) => {
       min: Math.min(...values[k]),
       max: Math.max(...values[k])
     })
-  });
+  })
 
-  return res;
-};
+  return res
+}
 
 const getPropertyValues = (arr) => {
-  const res = {};
-  const keys = Object.keys(arr[0]);
+  const res = {}
+  const keys = Object.keys(arr[0])
 
   keys.forEach(k => {
-    res[k] = arr.map(e => e[k]);
-  });
+    res[k] = arr.map(e => e[k])
+  })
 
-  return res;
+  return res
 }
 
 export const importCsv = async (url) => {
-  const data = [];
+  const data = []
   await fetch(url).then(response => response.text()).then(text => {
-    const lines = text.split("\n");
-    const headers = lines[0].split(",");
+    const lines = text.split('\n')
+    const headers = lines[0].split(',')
     lines.forEach((line, i) => {
       if (i != 0) {
-        let obj = {};
-        line.split(",").forEach((l, j) => {
-          obj[`${headers[j]}`] = l;
+        const obj = {}
+        line.split(',').forEach((l, j) => {
+          obj[`${headers[j]}`] = l
         })
         data.push(obj)
       }
-    });
-    return data;
-  }).catch(e => console.error(e));
-  return data;
+    })
+    return data
+  }).catch(e => console.error(e))
+  return data
 }
