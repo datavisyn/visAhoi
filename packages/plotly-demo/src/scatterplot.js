@@ -90,17 +90,6 @@ const getAhoiConfig = () => {
   // deleteStageId = 'reading-the-chart';
   // deleteOnboardingStage(deleteStageId);
 
-  // Set onboarding stage
-  // setOnboardingStage({
-  //   id: 'using-the-chart',
-  //   title: 'Interact',
-  //   iconClass: 'fas fa-microphone',
-  //   backgroundColor: 'red',
-  //   hoverBackgroundColor: 'orange',
-  //   activeBackgroundColor: 'orange',
-  //   order: 5,
-  // });
-
   const ahoiConfig = {
     // Check whether the deleteStageId is defined if filter the onboarding messages with the deleted onboarding stage.
 
