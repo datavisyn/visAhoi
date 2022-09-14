@@ -4,32 +4,36 @@
 
   let moving = false;
 
-  function onMouseDown() {
+  const onMouseDown = () => {
     moving = true;
-    console.log("test");
-  }
+  };
 
-  function onMouseMove(e) {
+  const onMouseMove = (e: MouseEvent) => {
     if (moving) {
       left += e.movementX;
       top += e.movementY;
     }
-  }
+  };
 
-  function onMouseUp() {
+  const onMouseUp = () => {
     moving = false;
-  }
+  };
 </script>
 
-<section
+<div
   on:mousedown={onMouseDown}
   style="left: {left}px; top: {top}px;"
   class="draggable"
 >
+  <!--The <slot> tag indicates the place where its children should be placed-->
   <slot />
-</section>
+</div>
 
-<svelte:window on:mouseup={onMouseUp} on:mousemove={onMouseMove} />
+<svelte:window
+  on:mouseup={onMouseUp}
+  on:mousemove={onMouseMove}
+  on:mousedown={onMouseDown}
+/>
 
 <style>
   .draggable {
