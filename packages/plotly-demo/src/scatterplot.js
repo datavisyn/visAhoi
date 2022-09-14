@@ -97,7 +97,8 @@ const getAhoiConfig = () => {
       ? defaultOnboardingMessages.filter(
         (m) => m.onboardingStage.id !== deleteStageId
       )
-      : defaultOnboardingMessages
+      : defaultOnboardingMessages,
+    alignment: 'horizontal'
     // showOnboardingNavigation: true,
   }
   return ahoiConfig

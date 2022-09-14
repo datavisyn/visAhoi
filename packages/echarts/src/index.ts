@@ -93,7 +93,7 @@ export async function ahoi (
   ahoiConfig: IAhoiConfig
 ) {
   const visElement = chart._dom
-  return injectOnboarding(ahoiConfig, visElement, 'column')
+  return injectOnboarding(ahoiConfig, visElement, 'vertical')
 }
 
 export { EVisualizationType }

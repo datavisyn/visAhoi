@@ -130,7 +130,7 @@
     align-items: center;
     padding: 8px;
   }
-  .visahoi-marker-navigation-item {
+  /* .visahoi-marker-navigation-item {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -143,7 +143,7 @@
     bottom: var(--bottom);
     opacity: 1;
     z-index: 15;
-  }
+  } */
 
   .visahoi-marker-navigation-item-circle {
     display: flex;

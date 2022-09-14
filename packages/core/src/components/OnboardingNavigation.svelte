@@ -21,6 +21,8 @@
 
   let index: number;
 
+  console.log("Test-3");
+
   $: enableDisableNavIcons = async () => {
     switch ($markerIndexId) {
       case 0: {
@@ -132,10 +134,21 @@
 
 <div
   class="visahoi-navigation-container"
-  style="--flexDirection:{$navigationAlignment}; height: '60px' "
+  style="--flexDirection:{$navigationAlignment === 'vertical'
+    ? 'column'
+    : 'row'}; bottom:{$navigationAlignment === 'horizontal'
+    ? '30px'
+    : '80px'}; right: {$navigationAlignment === 'horizontal'
+    ? '90px'
+    : ''}; height: '60px' "
 >
   {#key $markerInformation}
-    <div class="visahoi-navigation-marker-container">
+    <div
+      class="visahoi-navigation-marker-container"
+      style="--flexDirection:{$navigationAlignment === 'vertical'
+        ? 'column'
+        : 'row'}; "
+    >
       <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
         <NavigationMarker markerInformation={marker} order={index + 1} />
@@ -158,18 +171,35 @@
         <div
           id="navigation-next"
           style="--bottom-height: {nextHeight}"
-          class="visahoi-navigation-next"
+          class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
+            ? 'horizontal'
+            : 'vertical'}"
           on:click={navPrev}
         >
-          <span><i class="fas fa-chevron-up" /></span>
+          {#if $navigationAlignment === "vertical"}
+            <span><i class="fas fa-chevron-up" /></span>
+          {:else}
+            <span class="navigation-left"
+              ><i class="fas fa-chevron-left" /></span
+            >
+          {/if}
         </div>
         <div
           id="navigation-previous"
           style="--bottom-height: {prevHeight}"
-          class="visahoi-navigation-previous"
+          class="visahoi-navigation-previous {$navigationAlignment ===
+          'horizontal'
+            ? 'horizontal'
+            : 'vertical'}"
           on:click={navNext}
         >
-          <span><i class="fas fa-chevron-down" /></span>
+          {#if $navigationAlignment === "vertical"}
+            <span><i class="fas fa-chevron-down" /></span>
+          {:else}
+            <span class="navigation-right"
+              ><i class="fas fa-chevron-right" /></span
+            >
+          {/if}
         </div>
       {/if}
     </div>
@@ -185,14 +215,19 @@
   .visahoi-navigation-marker-container {
     position: absolute;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /*vertical*/
+    /* flex-direction: row; horizontal */
+    flex-direction: var(--flexDirection);
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
     width: 80px;
-    /* bottom: 20px; */
-    bottom: 80px;
+
+    /* bottom: 80px; */
+    /* bottom: 30px; */
+    bottom: var(--bottom);
+    right: 90px;
     opacity: 1;
     z-index: 15;
   }
@@ -220,5 +255,24 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
+  }
+
+  .navigation-left {
+    margin-right: 40px;
+  }
+
+  .navigation-right {
+    margin-right: 30px;
+  }
+
+  .horizontal {
+    right: var(--bottom-height);
+    transition: opacity 0.5s ease, right 0.5s ease;
+    bottom: 0;
+  }
+
+  .vertical {
+    bottom: var(--bottom-height);
+    transition: opacity 0.5s ease, bottom 0.5s ease;
   }
 </style>
