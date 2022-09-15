@@ -115,7 +115,7 @@ export async function ahoi (
     chart
   )
   const visElement = chart.view._el
-  return injectOnboarding(ahoiConfig, visElement, 'vertical')
+  return injectOnboarding(ahoiConfig, visElement, ahoiConfig.alignment ? ahoiConfig.alignment : 'vertical')
 }
 
 export { EVisualizationType }

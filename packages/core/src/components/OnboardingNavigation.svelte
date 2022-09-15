@@ -21,8 +21,6 @@
 
   let index: number;
 
-  console.log("Test-3");
-
   $: enableDisableNavIcons = async () => {
     switch ($markerIndexId) {
       case 0: {
@@ -147,7 +145,11 @@
       class="visahoi-navigation-marker-container"
       style="--flexDirection:{$navigationAlignment === 'vertical'
         ? 'column'
-        : 'row'}; "
+        : 'row'}; bottom:{$navigationAlignment === 'horizontal'
+        ? '30px'
+        : '80px'}; right: {$navigationAlignment === 'horizontal'
+        ? '90px'
+        : ''};"
     >
       <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
@@ -227,7 +229,7 @@
     /* bottom: 80px; */
     /* bottom: 30px; */
     bottom: var(--bottom);
-    right: 90px;
+    right: var(--right);
     opacity: 1;
     z-index: 15;
   }
