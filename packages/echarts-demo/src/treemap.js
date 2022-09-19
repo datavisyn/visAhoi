@@ -1,43 +1,41 @@
-import * as echarts from 'echarts';
-import debounce from 'lodash.debounce';
+import * as echarts from 'echarts'
+import debounce from 'lodash.debounce'
 import {
   generateBasicAnnotations,
   ahoi,
-  EVisualizationType,
-} from '@visahoi/echarts';
+  EVisualizationType
+} from '@visahoi/echarts'
 
-let chart = null;
-let showOnboarding = false;
-let onboardingUI = null;
+let chart = null
+let showOnboarding = false
+let onboardingUI = null
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
 const render = async () => {
-  fetch('../data/jobsplan.json')
-    .then((response) => response.json())
-    .then((data) => {
-      const value = processData(data);
-      chart = createPlot(value);
-      window.addEventListener('resize', debouncedResize);
-    });
-};
+  fetch('../data/jobsplan.json').then(response => response.json()).then(data => {
+    const value = processData(data)
+    chart = createPlot(value)
+    window.addEventListener('resize', debouncedResize)
+  })
+}
 
 const processData = (data) => {
-  const dataArr = [];
-  const obj = {};
+  const dataArr = []
+  const obj = {}
   if (data.children.length > 0) {
     data.children.map((child, i) => {
-      obj[i] = child;
+      obj[i] = child
       obj[i].itemStyle = {
-        color: child.color,
-      };
-      dataArr.push(obj[i]);
-    });
+        color: child.color
+      }
+      dataArr.push(obj[i])
+    })
   }
-  return dataArr;
-};
+  return dataArr
+}
 
 const getLevelOption = () => {
   return [
@@ -46,26 +44,27 @@ const getLevelOption = () => {
         borderColor: 'white',
         borderWidth: 0,
         gapWidth: 1,
-        color: 'black',
+        color: 'black'
       },
       upperLabel: {
-        show: false,
-      },
+        show: false
+      }
     },
     {
       itemStyle: {
         borderColor: 'white',
         borderWidth: 2,
-        gapWidth: 1,
+        gapWidth: 1
       },
       upperLabel: {
         show: true,
         fontWeight: 'bold',
-        fontSize: 15,
-      },
-    },
-  ];
-};
+        fontSize: 15
+      }
+    }
+
+  ]
+}
 
 const createPlot = (data) => {
   const options = {
@@ -74,60 +73,52 @@ const createPlot = (data) => {
         type: 'treemap',
         name: 'American Jobs Plan',
         data: data,
-        levels: getLevelOption(),
-      },
+        levels: getLevelOption()
+      }
     ],
-    tooltip: {},
+    tooltip: {}
     // textStyle: {
     //   color: 'black',
     //   // fontWeight: 'bold',
     // }
-  };
 
-  chart.setOption(options);
-  return chart;
-};
+  }
+
+  chart.setOption(options)
+  return chart
+}
 
 const getAhoiConfig = () => {
-  const defaultOnboardingMessages = generateBasicAnnotations(
-    EVisualizationType.TREEMAP,
-    chart,
-  );
+  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.TREEMAP, chart)
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
-    text: 'test123',
-  }));
+    text: 'test123'
+  }))
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-  };
-  return ahoiConfig;
-};
+    onboardingMessages: defaultOnboardingMessages
+  }
+  return ahoiConfig
+}
 
 const registerEventListener = () => {
-  const helpIcon = document.getElementById('show-onboarding');
-  if (!helpIcon) {
-    return;
-  }
+  const helpIcon = document.getElementById('show-onboarding')
+  if (!helpIcon) { return }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding;
+    showOnboarding = !showOnboarding
     if (showOnboarding) {
-      onboardingUI = await ahoi(
-        EVisualizationType.TREEMAP,
-        chart,
-        getAhoiConfig(),
-      );
+      onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, getAhoiConfig())
     } else {
-      onboardingUI?.removeOnboarding();
+      onboardingUI?.removeOnboarding()
     }
-  });
-};
+  })
+}
 
 const createChart = (renderer = 'svg') => {
-  const vis = document.getElementById('vis');
-  chart = echarts.init(vis, null, { renderer });
-  window.addEventListener('resize', () => chart.resize());
-  registerEventListener();
-  render();
-};
+  const vis = document.getElementById('vis')
+  chart = echarts.init(vis, null, { renderer })
+  window.addEventListener('resize', () => chart.resize())
+  registerEventListener()
+  render()
+}
 
-export default createChart;
+export default createChart

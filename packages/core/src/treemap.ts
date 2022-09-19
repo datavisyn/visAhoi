@@ -46,7 +46,7 @@ function generateMessages (
         id: 'unique-marker-id-2'
       },
       id: 'unique-message-id-2',
-      order: 1
+      order: 2
     },
     {
       anchor: getAnchor(spec.subDesc, visElement),
@@ -94,7 +94,8 @@ function generateMessages (
       marker: {
         id: 'unique-marker-id-6'
       },
-      id: 'unique-message-id-6'
+      id: 'unique-message-id-6',
+      order: 1
     },
 
     {
@@ -106,7 +107,8 @@ function generateMessages (
       marker: {
         id: 'unique-marker-id-7'
       },
-      id: 'unique-message-id-7'
+      id: 'unique-message-id-7',
+      order: 2
     },
 
     {
@@ -118,7 +120,8 @@ function generateMessages (
       marker: {
         id: 'unique-marker-id-8'
       },
-      id: 'unique-message-id-8'
+      id: 'unique-message-id-8',
+      order: 1
     }
   ]
 
@@ -133,7 +136,7 @@ function generateMessages (
         id: 'unique-marker-id-1'
       },
       id: 'unique-message-id-1',
-      order: 2
+      order: 1
     })
   }
 
