@@ -6,31 +6,47 @@ import {
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
-  const traceNodes = chart.querySelectorAll('g.points')
-  const areaNodes = traceNodes[0].querySelectorAll('path.point')
-  const areaNodesData = Array.from(areaNodes).map(
-    (point: any) => point.__data__
-  )
-  const t = areaNodesData[0].trace
+  console.log(chart, 'chart data')
+  // const traceNodes = chart.querySelectorAll('g.points')
+  // if (traceNodes === undefined || traceNodes === null) {
+  //   console.error(
+  //     'Error: The trace is null or undefined, therefore not all onboarding messages can be shown.'
+  //   )
+  //   return {
+  //     chartTitle: {
+  //       value: chart?.layout?.title?.text,
+  //       anchor: {
+  //         findDomNodeByValue: true,
+  //         offset: { left: -20, top: 10 }
+  //       }
+  //     }
+  //   }
+  // }
 
-  const grid = document
-    .getElementsByClassName('nsewdrag drag')[0]
-    .getBoundingClientRect()
+  // const areaNodes = traceNodes[0]?.querySelectorAll('path.point')
+  // const areaNodesData = Array.from(areaNodes).map(
+  //   (point: any) => point.__data__
+  // )
+  // const t = areaNodesData[0].trace
 
-  const points = (Array.from(areaNodes) as any[]).filter(
-    (point) =>
-      point.getBoundingClientRect().x &&
-      point.getBoundingClientRect().x <= grid.width + grid.x &&
-      point.getBoundingClientRect().y &&
-      point.getBoundingClientRect().y <= grid.height + grid.y
-  )
+  // const grid = document
+  //   .getElementsByClassName('nsewdrag drag')[0]
+  //   .getBoundingClientRect()
 
-  const xVals = points.map((point) => point.getBoundingClientRect().x)
-  const yVals = points.map((point) => point.getBoundingClientRect().y)
+  // const points = (Array.from(areaNodes) as any[]).filter(
+  //   (point) =>
+  //     point.getBoundingClientRect().x &&
+  //     point.getBoundingClientRect().x <= grid.width + grid.x &&
+  //     point.getBoundingClientRect().y &&
+  //     point.getBoundingClientRect().y <= grid.height + grid.y
+  // )
 
-  const maxX = Math.max(...xVals)
-  const maxXIndex = xVals.indexOf(maxX)
-  const maxY = yVals[maxXIndex]
+  // const xVals = points.map((point) => point.getBoundingClientRect().x)
+  // const yVals = points.map((point) => point.getBoundingClientRect().y)
+
+  // const maxX = Math.max(...xVals)
+  // const maxXIndex = xVals.indexOf(maxX)
+  // const maxY = yVals[maxXIndex]
 
   return {
     chartTitle: {
@@ -40,33 +56,35 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         offset: { left: -20, top: 10 }
       }
     },
-    type: {
-      value: t.type,
-      anchor: {
-        sel: '.points > .point:nth-child(4)'
-      }
-    },
+    // type: {
+    //   value: t.type,
+    //   anchor: {
+    //     sel: '.points > .point:nth-child(4)'
+    //   }
+    // },
     xAxisTitle: {
-      value: chart.layout.xaxis.title.text,
+      value: chart.layout.xaxis?.title.text,
       anchor: {
-        sel: '.infolayer .xtitle',
+        // sel: '.infolayer .xtitle',
+        findDomNodeByValue: true,
         offset: { left: -20 }
       }
     },
     yAxisTitle: {
-      value: chart.layout.yaxis.title.text,
+      value: chart.layout.yaxis?.title.text,
       anchor: {
-        sel: '.infolayer .ytitle',
+        // sel: '.infolayer .ytitle',
+        findDomNodeByValue: true,
         offset: { top: -25 }
       }
-    },
-    maxValue: {
-      value: maxX,
-      anchor: {
-        coords: { x: maxX, y: maxY },
-        offset: { left: 25 }
-      }
     }
+    // maxValue: {
+    //   value: maxX,
+    //   anchor: {
+    //     coords: { x: maxX, y: maxY },
+    //     offset: { left: 25 }
+    //   }
+    // }
   }
 }
 
