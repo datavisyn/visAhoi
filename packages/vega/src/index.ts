@@ -94,7 +94,6 @@ export const generateBasicAnnotations = async (
 
     case EVisualizationType.HEATMAP:
       onboardingMessages = heatmapFactory(vegaSpec, d3Data, visElement)
-      console.log(onboardingMessages, 'Onboarding messages')
       break
 
     default:

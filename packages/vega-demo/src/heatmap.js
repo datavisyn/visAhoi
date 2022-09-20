@@ -15,7 +15,7 @@ const opt = {
 //   $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   title: {
     text: 'Cars origin and their horsepower based on number of cylinders',
-    fontSize: 14
+    fontSize: 16
   },
   // actions: false,
   description: 'An example vega-lite heatmap.',

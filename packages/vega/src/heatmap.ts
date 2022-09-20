@@ -3,8 +3,6 @@ import { Spec } from 'vega-typings'
 import { IOnboardingHeatmapSpec } from '@visahoi/core/src/heatmap'
 
 function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingHeatmapSpec {
-  console.log(vegaSpec, 'Vega specification')
-
   return {
     chartTitle: {
     //   value: vegaSpec.title,
@@ -27,6 +25,5 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingHeatma
 
 export function heatmapFactory (vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems)
-  console.log(onbordingSpec, 'Onboardidning speex')
   return generateMessages(EVisualizationType.HEATMAP, onbordingSpec, visElement)
 }
