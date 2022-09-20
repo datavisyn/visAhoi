@@ -1,4 +1,3 @@
-import { Result } from 'vega-embed'
 import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
