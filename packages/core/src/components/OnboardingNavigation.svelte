@@ -217,7 +217,7 @@
   .visahoi-navigation-marker-container {
     position: absolute;
     display: flex;
-    flex-direction: column; /*vertical*/
+    /* flex-direction: column; vertical */
     /* flex-direction: row; horizontal */
     flex-direction: var(--flexDirection);
     align-items: center;
@@ -269,12 +269,12 @@
 
   .horizontal {
     right: var(--bottom-height);
-    transition: opacity 0.5s ease, right 0.5s ease;
+    /* transition: opacity 0.5s ease, right 0.5s ease; */
     bottom: 0;
   }
 
   .vertical {
     bottom: var(--bottom-height);
-    transition: opacity 0.5s ease, bottom 0.5s ease;
+    /* transition: opacity 0.5s ease, bottom 0.5s ease; */
   }
 </style>
