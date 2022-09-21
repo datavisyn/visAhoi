@@ -72,7 +72,8 @@ const getAhoiConfig = () => {
   }))
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages,
-    showHelpCloseText: false
+    showHelpCloseText: false,
+    alignment: 'horizontal'
   }
   return ahoiConfig
 }

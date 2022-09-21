@@ -98,7 +98,7 @@ const getAhoiConfig = () => {
         (m) => m.onboardingStage.id !== deleteStageId
       )
       : defaultOnboardingMessages,
-    alignment: 'horizontal'
+    alignment: 'vertical'
     // showOnboardingNavigation: true,
   }
   return ahoiConfig

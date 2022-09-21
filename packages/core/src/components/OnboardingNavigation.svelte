@@ -148,7 +148,7 @@
         : 'row'}; bottom:{$navigationAlignment === 'horizontal'
         ? '30px'
         : '80px'}; right: {$navigationAlignment === 'horizontal'
-        ? '90px'
+        ? '10px'
         : ''};"
     >
       <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
@@ -224,7 +224,7 @@
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
-    width: 80px;
+    /* width: 80px; */
 
     /* bottom: 80px; */
     /* bottom: 30px; */
