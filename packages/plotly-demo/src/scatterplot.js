@@ -146,7 +146,8 @@ const registerEventListener = () => {
       id: 'using-the-chart',
       title: 'Interact',
       iconClass: 'fas fa-microphone',
-      backgroundColor: 'red'
+      backgroundColor: 'red',
+      order: 4
     })
   })
 }

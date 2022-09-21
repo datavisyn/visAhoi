@@ -147,7 +147,7 @@
           if (a.message.onboardingStage.title === b.message.onboardingStage.title) {
             return a.message?.order < b.message?.order ? -1 : 1;
           } else {
-            return a.message.onboardingStage.title > b.message.onboardingStage.title ? -1 : 1;
+            return a.message.onboardingStage?.order > b.message.onboardingStage?.order ? -1 : 1;
           }
         }) as marker, index}
           <NavigationMarker markerInformation={marker} order={index + 1} />
