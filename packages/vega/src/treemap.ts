@@ -46,14 +46,15 @@ async function extractOnboardingSpec (
   //   const maxX = Math.max(...xVals);
   //   const maxXIndex = xVals.indexOf(maxX);
   //   const maxY = yVals[maxXIndex];
-  // debugger;
+  // eslint-disable-next-line no-debugger
+  debugger
   return {
     chartTitle: {
       value: vegaSpec?.title,
       anchor: {
-        findDomNodeByValue: true,
-        offset: { right: -30, top: -10 }
-        // offset: { right: -500, top: -30 },
+        findDomNodeByValue: true
+
+        // offset: { right: 60, top: -30 }
         // offset: { left: 80, top: 10 },
       }
     }
