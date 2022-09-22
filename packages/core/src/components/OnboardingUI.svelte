@@ -23,6 +23,8 @@
   export let ref;
   export let visElement: Element;
 
+  $: console.log(visElement, "Visualization element");
+
   const setVisElementPosition = () => {
     visXPosition.set(visElement.getBoundingClientRect().x);
     visYPosition.set(visElement.getBoundingClientRect().y);
