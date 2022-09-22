@@ -70,11 +70,11 @@
   style="width:{$visWidth + 'px'}; height:{$visHeight +
     'px'}; top:{$visYPosition + window.scrollY + 'px'}; left:{$visXPosition +
     window.scrollX +
-    'px'} position: absolute"
+    'px'}; position: 'absolute'"
 >
   <Markers />
   <Tooltips {visElement} />
-  <OnboardingNavigation height={$visHeight} top="" />
+  <OnboardingNavigation height={$visHeight} />
   {#if $activeOnboardingStage && $showBackdrop}
     <Backdrop />
   {/if}
