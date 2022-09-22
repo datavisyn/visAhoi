@@ -26,6 +26,7 @@
   $: console.log(visElement, "Visualization element");
 
   const setVisElementPosition = () => {
+    console.log(visElement.getBoundingClientRect().x, "X pos");
     visXPosition.set(visElement.getBoundingClientRect().x);
     visYPosition.set(visElement.getBoundingClientRect().y);
     visWidth.set(visElement.clientWidth);
@@ -73,7 +74,7 @@
 >
   <Markers />
   <Tooltips {visElement} />
-  <OnboardingNavigation height={$visHeight} />
+  <OnboardingNavigation height={$visHeight} top="" />
   {#if $activeOnboardingStage && $showBackdrop}
     <Backdrop />
   {/if}
