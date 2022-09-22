@@ -41,6 +41,8 @@ export const getAnchor = (
     // if prop is undefined -> return
 
   } else if (prop.anchor?.findDomNodeByValue) {
+    // eslint-disable-next-line no-debugger
+    debugger
     // the dom node should be found by it's content
     // TODO: can findDomNodeByValue be removed?
     const targetDomNode = getDomNodeByTextContent(
