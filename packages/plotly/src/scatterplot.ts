@@ -52,8 +52,8 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     chartTitle: {
       value: chart?.layout?.title?.text,
       anchor: {
-        findDomNodeByValue: true,
-        offset: { left: -20, top: 10 }
+        findDomNodeByValue: true
+        // offset: { left: -20, top: 10 }
       }
     },
     // type: {
@@ -66,16 +66,16 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: chart.layout.xaxis?.title.text,
       anchor: {
         // sel: '.infolayer .xtitle',
-        findDomNodeByValue: true,
-        offset: { left: -20 }
+        findDomNodeByValue: true
+        // offset: { left: -20 }
       }
     },
     yAxisTitle: {
       value: chart.layout.yaxis?.title.text,
       anchor: {
         // sel: '.infolayer .ytitle',
-        findDomNodeByValue: true,
-        offset: { top: -25 }
+        findDomNodeByValue: true
+        // offset: { top: -25 }
       }
     }
     // maxValue: {

@@ -61,9 +61,9 @@ function generateMessages (
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['xAxisTitle', 'yAxisTitle'],
-      text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
+      text: `The columns show the ${spec.xAxisTitle?.value}, while the rows show the ${spec.yAxisTitle?.value}.`,
       title: 'Reading the chart',
-      onboardingStage: analyzing,
+      onboardingStage: reading,
       marker: {
         id: 'unique-marker-id-4'
       },
@@ -75,7 +75,7 @@ function generateMessages (
       requires: ['yAxisTitle', 'xAxisTitle'],
       text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
       title: 'Interacting with the chart',
-      onboardingStage: interacting,
+      onboardingStage: reading,
       marker: {
         id: 'unique-marker-id-5'
       },
