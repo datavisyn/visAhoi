@@ -7,6 +7,12 @@ import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
   console.log(chart, 'chart data')
+  console.log(chart.layout)
+  const traceData = (<any>(
+    Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
+  )).__data__
+
+  console.log(traceData[0]?.trace?.name, 'legend name')
   // const traceNodes = chart.querySelectorAll('g.points')
   // if (traceNodes === undefined || traceNodes === null) {
   //   console.error(
@@ -76,6 +82,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         // sel: '.infolayer .ytitle',
         findDomNodeByValue: true
         // offset: { top: -25 }
+      }
+    },
+    legendTitle: {
+      value: traceData[0]?.trace?.name,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 20 }
+      }
       }
     }
     // maxValue: {

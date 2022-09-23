@@ -49,7 +49,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
-      text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
+      text: 'It shows different traces',
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

@@ -19,9 +19,9 @@ const getDomNodeByTextContent = (
       NodeFilter.SHOW_TEXT, // Look for text nodes only
       {
         acceptNode (node) {
-          console.log(NodeFilter, 'node filter')
-          console.log(node.textContent, 'Node text content ')
-          console.log(new RegExp(textContent), 'RegExp text content')
+          // console.log(NodeFilter, 'node filter')
+          // console.log(node.textContent, 'Node text content ')
+          // console.log(new RegExp(textContent), 'RegExp text content1')
 
           // The filter method of interface NodeFilter
           return new RegExp(textContent).test(node.textContent as string) // Check if text contains target string
@@ -45,8 +45,6 @@ export const getAnchor = (
     // if prop is undefined -> return
 
   } else if (prop.anchor?.findDomNodeByValue) {
-    // eslint-disable-next-line no-debugger
-    debugger
     // the dom node should be found by it's content
     // TODO: can findDomNodeByValue be removed?
     const targetDomNode = getDomNodeByTextContent(
