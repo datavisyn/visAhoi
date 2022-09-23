@@ -17,7 +17,7 @@ async function extractOnboardingSpec (
 
     'name'
   )
-  // debugger;
+
   // const dataUrl = vegaSpec?.data[0]?.url;
   // const response = await fetch(dataUrl);
   // const data = await response.json();
@@ -46,15 +46,14 @@ async function extractOnboardingSpec (
   //   const maxX = Math.max(...xVals);
   //   const maxXIndex = xVals.indexOf(maxX);
   //   const maxY = yVals[maxXIndex];
-  // eslint-disable-next-line no-debugger
-  debugger
+
   return {
     chartTitle: {
       value: vegaSpec?.title,
       anchor: {
-        findDomNodeByValue: true
+        findDomNodeByValue: true,
 
-        // offset: { right: 60, top: -30 }
+        offset: { right: -20, top: -20 }
         // offset: { left: 80, top: 10 },
       }
     }
