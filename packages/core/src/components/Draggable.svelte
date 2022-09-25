@@ -1,11 +1,14 @@
 <script lang="ts">
+  import { isEditModeActive } from "./stores";
+
   let left = 100;
   let top = 100;
 
+  $: cursor = $isEditModeActive ? "pointer" : "move";
   let moving = false;
 
   const onMouseDown = () => {
-    moving = true;
+    moving = $isEditModeActive ? false : true;
   };
 
   const onMouseMove = (e: MouseEvent) => {
@@ -22,7 +25,7 @@
 
 <div
   on:mousedown={onMouseDown}
-  style="left: {left}px; top: {top}px;"
+  style="left: {left}px; top: {top}px; cursor: {cursor}"
   class="draggable"
 >
   <!--The <slot> tag indicates the place where its children should be placed-->
@@ -38,7 +41,6 @@
 <style>
   .draggable {
     width: 200px;
-    cursor: move;
     position: absolute;
   }
 </style>
