@@ -56,7 +56,6 @@ export const getAnchor = (
       targetDomNode = document.getElementById('vis')
     }
 
-    console.log(targetDomNode, 'The target dom node')
     // if no node was found by the given text return undefined, otherwise return the dom node
     return targetDomNode
       ? Object.assign({ element: targetDomNode }, prop.anchor || {})
