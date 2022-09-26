@@ -1,5 +1,13 @@
-import {ISpecProp, IOnboardingSpec, IOnboardingMessage, EDefaultOnboardingStages, defaultOnboardingStages, IOnboardingStage, IAhoiConfig} from './interfaces';
-import {getAnchor} from './utils';
+import {
+  ISpecProp,
+  IOnboardingSpec,
+  IOnboardingMessage,
+  EDefaultOnboardingStages,
+  defaultOnboardingStages,
+  IOnboardingStage,
+  IAhoiConfig
+} from './interfaces'
+import { getAnchor } from './utils'
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -16,20 +24,19 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
 }
 
-function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ahoiConfig?: IAhoiConfig): IOnboardingMessage[] {
-  const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING) as IOnboardingStage;
-  const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING) as IOnboardingStage;
+function generateMessages (
+  spec: IOnboardingBarChartSpec,
+  visElement: Element,
+  ahoiConfig?: IAhoiConfig
+): IOnboardingMessage[] {
+  const reading = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.READING
+  ) as IOnboardingStage
+  const interacting = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.USING
+  ) as IOnboardingStage
+
   const messages: IOnboardingMessage[] = [
-    {
-      anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ['chartTitle'],
-      text: `The <span class="hT">chart shows the ${spec.chartTitle?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: "unique-marker-id-1"
-      }
-    },
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
@@ -37,8 +44,10 @@ function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ah
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-2"
-      }
+        id: 'unique-marker-id-2'
+      },
+      id: 'unique-message-id-2',
+      order: 2
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -47,8 +56,10 @@ function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ah
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-3"
-      }
+        id: 'unique-marker-id-3'
+      },
+      id: 'unique-message-id-3',
+      order: 3
     },
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
@@ -57,8 +68,10 @@ function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ah
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: "unique-marker-id-4"
-      }
+        id: 'unique-marker-id-4'
+      },
+      id: 'unique-message-id-4',
+      order: 4
     },
     {
       anchor: getAnchor(spec.yMin, visElement),
@@ -67,8 +80,10 @@ function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ah
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: "unique-marker-id-5"
-      }
+        id: 'unique-marker-id-5'
+      },
+      id: 'unique-message-id-5',
+      order: 1
     },
     {
       anchor: getAnchor(spec.yMax, visElement),
@@ -77,14 +92,33 @@ function generateMessages(spec: IOnboardingBarChartSpec, visElement: Element, ah
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: "unique-marker-id-6"
-      }
-    },
-  ];
+        id: 'unique-marker-id-6'
+      },
+      id: 'unique-message-id-6',
+      order: 2
+    }
+  ]
+
+  if (spec.chartTitle?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.chartTitle, visElement),
+      requires: ['chartTitle'],
+      text: `The <span class="hT">chart shows the ${spec.chartTitle?.value}.`,
+      title: 'Reading the chart',
+      onboardingStage: reading,
+      marker: {
+        id: 'unique-marker-id-1'
+      },
+      id: 'unique-message-id-1',
+      order: 1
+    })
+  }
 
   // Filter for messages where all template variables are available in the spec
-  return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
-};
+  return messages.filter((message) =>
+    message.requires.every((tplVars) => spec[tplVars])
+  )
+}
 
 export const barChart = {
   generateMessages

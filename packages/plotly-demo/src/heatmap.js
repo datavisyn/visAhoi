@@ -5,7 +5,6 @@ import {
   EVisualizationType
 } from '@visahoi/plotly'
 import debounce from 'lodash.debounce'
-import { importCsv } from './util'
 
 let chart = null
 let showOnboarding = false
@@ -15,66 +14,48 @@ const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
 
-async function render () {
-  const data = await importCsv('./data/oslo-2018.csv')
-  const { x, y } = processData(data)
-  chart = await makePlotly(x, y)
+const render = async () => {
+  chart = await makePlotly()
   window.addEventListener('resize', debouncedResize)
 }
 
-function processData (allRows) {
-  const x = []
-  const y = []
-  for (let i = 0; i < allRows.length; i++) {
-    const row = allRows[i]
-    x.push(`${row.year}-${row.month}`)
-    y.push(row.temp)
-  }
-  return { x, y }
-}
-
-function makePlotly (x, y) {
-  document.getElementById('plot')
-  const traces = [
+const makePlotly = () => {
+  const data = [
     {
-      type: 'bar',
-      x: x, // ['2018-01', '2018-01', ...]
-      y: y, // [1.9, 0.1, ...]
-      transforms: [
-        {
-          type: 'aggregate',
-          groups: x,
-          aggregations: [{ target: 'y', func: 'avg', enabled: true }]
-        }
+      z: [
+        [14, null, 19, 24, 16],
+        [17, 15, 28, 33, 20],
+        [19, 23, 29, 18, 18]
       ],
-      marker: {
-        color: 'lightgrey'
-      }
+      x: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      y: ['Morning', 'Afternoon', 'Evening'],
+      type: 'heatmap',
+      hoverongaps: false,
+      colorscale: [
+        [0, '#337ab7'],
+        [0.5, '#f5f5f5'],
+        [1, '#ec6836']
+      ]
     }
   ]
-
   const layout = {
-    title: 'Average temperature in Oslo, Norway in 2018',
+    title: 'Average temperature in a week',
     xaxis: {
-      title: 'Month',
-      tickformat: '%m',
-      nticks: 12
+      title: 'Weekday'
     },
     yaxis: {
-      title: 'Average temperature in °C'
+      title: 'Average temperature per day time'
     }
   }
-
   const config = {
     responsive: true
   }
-
-  return Plotly.newPlot('vis', traces, layout, config)
+  return Plotly.newPlot('vis', data, layout, config)
 }
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
-    EVisualizationType.BAR_CHART,
+    EVisualizationType.HEATMAP,
     chart
   )
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
@@ -88,6 +69,7 @@ const getAhoiConfig = () => {
 }
 
 const registerEventListener = () => {
+  showOnboarding = !showOnboarding
   const helpIcon = document.getElementById('show-onboarding')
   if (!helpIcon) {
     return
@@ -96,7 +78,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
-        EVisualizationType.BAR_CHART,
+        EVisualizationType.HEATMAP,
         chart,
         getAhoiConfig()
       )

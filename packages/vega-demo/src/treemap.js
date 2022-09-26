@@ -1,15 +1,15 @@
-import embed from 'vega-embed';
+import embed from 'vega-embed'
 import {
   generateBasicAnnotations,
   ahoi,
-  EVisualizationType,
-} from '@visahoi/vega';
-import debounce from 'lodash.debounce';
-import '../public/data/jobsplan.json';
+  EVisualizationType
+} from '@visahoi/vega'
+import debounce from 'lodash.debounce'
+import '../public/data/jobsplan.json'
 
-let chart = null;
-let onboardingUI = null;
-let showOnboarding = false;
+let chart = null
+let onboardingUI = null
+let showOnboarding = false
 
 const opt = {
   title: 'American jobs plan',
@@ -18,7 +18,7 @@ const opt = {
     export: false,
     source: false,
     compiled: false,
-    editor: false,
+    editor: false
   },
   // "width": 1200,
   // "height": 500,
@@ -31,7 +31,7 @@ const opt = {
   signals: [
     {
       name: 'layout',
-      value: 'squarify',
+      value: 'squarify'
       // "bind": {
       //   "input": "select",
       //   "options": [
@@ -43,19 +43,19 @@ const opt = {
     },
     {
       name: 'aspectRatio',
-      value: 1.6,
+      value: 1.6
       // "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
     },
     {
       name: 'width',
       init: 'containerSize()[0]',
-      on: [{ events: 'window:resize', update: 'containerSize()[0]' }],
+      on: [{ events: 'window:resize', update: 'containerSize()[0]' }]
     },
     {
       name: 'height',
       init: 'containerSize()[1]',
-      on: [{ events: 'window:resize', update: 'containerSize()[1]' }],
-    },
+      on: [{ events: 'window:resize', update: 'containerSize()[1]' }]
+    }
   ],
 
   data: [
@@ -66,7 +66,7 @@ const opt = {
         {
           type: 'stratify',
           key: 'id',
-          parentKey: 'parent',
+          parentKey: 'parent'
         },
         {
           type: 'treemap',
@@ -75,20 +75,20 @@ const opt = {
           round: true,
           method: { signal: 'layout' },
           ratio: { signal: 'aspectRatio' },
-          size: [{ signal: 'width' }, { signal: 'height' }],
-        },
-      ],
+          size: [{ signal: 'width' }, { signal: 'height' }]
+        }
+      ]
     },
     {
       name: 'nodes',
       source: 'tree',
-      transform: [{ type: 'filter', expr: 'datum.children' }],
+      transform: [{ type: 'filter', expr: 'datum.children' }]
     },
     {
       name: 'leaves',
       source: 'tree',
-      transform: [{ type: 'filter', expr: '!datum.children' }],
-    },
+      transform: [{ type: 'filter', expr: '!datum.children' }]
+    }
   ],
 
   scales: [
@@ -96,20 +96,20 @@ const opt = {
       name: 'color',
       type: 'ordinal',
       domain: { data: 'nodes', field: 'name' },
-      range: ['#80b1d3', '#80b1d3', '#fdb462', '#b3de69', '#fccde5'],
+      range: ['#80b1d3', '#80b1d3', '#fdb462', '#b3de69', '#fccde5']
     },
     {
       name: 'size',
       type: 'ordinal',
       domain: [0, 1, 2, 3],
-      range: [120, 25, 20, 14],
+      range: [120, 25, 20, 14]
     },
     {
       name: 'opacity',
       type: 'ordinal',
       domain: [0, 1, 2, 3],
-      range: [0.15, 0.5, 0.8, 1.0],
-    },
+      range: [0.15, 0.5, 0.8, 1.0]
+    }
   ],
 
   marks: [
@@ -119,15 +119,15 @@ const opt = {
       interactive: false,
       encode: {
         enter: {
-          fill: { scale: 'color', field: 'name' },
+          fill: { scale: 'color', field: 'name' }
         },
         update: {
           x: { field: 'x0' },
           y: { field: 'y0' },
           x2: { field: 'x1' },
-          y2: { field: 'y1' },
-        },
-      },
+          y2: { field: 'y1' }
+        }
+      }
     },
     {
       type: 'rect',
@@ -135,19 +135,19 @@ const opt = {
       encode: {
         enter: {
           stroke: { value: '#fff' },
-          tooltip: { signal: "{'title': datum.name, 'value': datum.size}" },
+          tooltip: { signal: "{'title': datum.name, 'value': datum.size}" }
         },
         update: {
           x: { field: 'x0' },
           y: { field: 'y0' },
           x2: { field: 'x1' },
           y2: { field: 'y1' },
-          fill: { value: 'transparent' },
+          fill: { value: 'transparent' }
         },
         hover: {
-          fill: { value: 'red' },
-        },
-      },
+          fill: { value: 'red' }
+        }
+      }
     },
     {
       type: 'text',
@@ -161,60 +161,60 @@ const opt = {
           fill: { value: '#000' },
           text: { field: 'name' },
           fontSize: { scale: 'size', field: 'depth' },
-          fillOpacity: { scale: 'opacity', field: 'depth' },
+          fillOpacity: { scale: 'opacity', field: 'depth' }
         },
         update: {
           x: { signal: '0.5 * (datum.x0 + datum.x1)' },
-          y: { signal: '0.5 * (datum.y0 + datum.y1)' },
-        },
-      },
-    },
-  ],
-};
+          y: { signal: '0.5 * (datum.y0 + datum.y1)' }
+        }
+      }
+    }
+  ]
+}
 
 const config = {
-  responsive: true,
-};
+  responsive: true
+}
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig());
-}, 250);
+  onboardingUI?.updateOnboarding(getAhoiConfig())
+}, 250)
 
-async function render() {
-  chart = await embed('#vis', opt, config);
-  window.addEventListener('resize', debouncedResize);
+async function render () {
+  chart = await embed('#vis', opt, config)
+  window.addEventListener('resize', debouncedResize)
 }
 
 const getAhoiConfig = async () => {
   const defaultOnboardingMessages = await generateBasicAnnotations(
     EVisualizationType.TREEMAP,
-    chart,
-  );
+    chart
+  )
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
-    text: 'test123',
-  }));
+    text: 'test123'
+  }))
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-  };
-  return ahoiConfig;
-};
+    onboardingMessages: defaultOnboardingMessages
+  }
+  return ahoiConfig
+}
 
 const registerEventListener = () => {
-  const helpIcon = document.getElementById('show-onboarding');
+  const helpIcon = document.getElementById('show-onboarding')
   if (!helpIcon) {
-    return;
+    return
   }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding;
+    showOnboarding = !showOnboarding
     if (showOnboarding) {
-      const config = await getAhoiConfig();
-      onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, config);
+      const config = await getAhoiConfig()
+      onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, config)
     } else {
-      onboardingUI?.removeOnboarding();
+      onboardingUI?.removeOnboarding()
     }
-  });
-};
+  })
+}
 
-registerEventListener();
-render();
+registerEventListener()
+render()

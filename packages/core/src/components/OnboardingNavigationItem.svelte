@@ -1,17 +1,19 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
-
   import {
     navigationAlignment,
     activeOnboardingStage,
     showOnboardingSteps,
+    onboardingStages,
   } from "./stores.js";
   export let stage: IOnboardingStage;
   export let index: number;
+
+  const bottom: string = (index + 1) * 75 + "px";
+
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
-  const bottom: string = (index + 1) * 75 + "px";
 </script>
 
 <div
@@ -24,13 +26,16 @@
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-  <div class="visahoi-navigation-item-circle">
-    <i
-      class={!$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id
-        ? stage.iconClass
-        : "fas fa-times"}
-    />
-  </div>
+  {#key $onboardingStages || $onboardingStages === null}
+    <div class="visahoi-navigation-item-circle">
+      <i
+        class={!$activeOnboardingStage ||
+        stage.id !== $activeOnboardingStage?.id
+          ? stage.iconClass
+          : "fas fa-times"}
+      />
+    </div>
+  {/key}
   <span class="visahoi-stage-title">{stage.title}</span>
 </div>
 
