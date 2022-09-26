@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { isEditModeActive } from "./stores";
+  import { editTooltip } from "./stores";
 
   let left = 100;
   let top = 100;
 
-  $: cursor = $isEditModeActive ? "pointer" : "move";
+  $: cursor = $editTooltip ? "pointer" : "move";
   let moving = false;
 
   const onMouseDown = () => {
-    moving = $isEditModeActive ? false : true;
+    moving = $editTooltip ? false : true;
   };
 
   const onMouseMove = (e: MouseEvent) => {
