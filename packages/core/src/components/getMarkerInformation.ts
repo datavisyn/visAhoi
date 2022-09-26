@@ -7,7 +7,6 @@ const h = 30
 const textOffset = 5
 
 export function getMarkerInformation (onboardingMessages: IOnboardingMessage[]): IMarkerInformation[] {
-  console.log(onboardingMessages, 'Onboarding messages')
   const markerInformation: IMarkerInformation[] = []
   onboardingMessages.forEach((message, index) => {
     if (!message.anchor) {
