@@ -20,7 +20,7 @@ const opt = {
   // actions: false,
   description: 'An example vega-lite heatmap.',
   width: 'container',
-  height: 600,
+  height: 'container',
   padding: {
     left: 80,
     top: 30

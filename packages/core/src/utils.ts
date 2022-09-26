@@ -9,6 +9,7 @@ import {
  * Returns the dom node which contains the passed text
  * @param textContent the text content of the dom node which should be found
  */
+
 const getDomNodeByTextContent = (
   textContent: string,
   visElement: Element
@@ -18,7 +19,11 @@ const getDomNodeByTextContent = (
       visElement, // The root node of the chart
       NodeFilter.SHOW_TEXT, // Look for text nodes only
       {
+
         acceptNode (node) {
+          console.log(node, 'node')
+          console.log(textContent, 'textContent')
+          console.log(node.textContent, 'Nodes text content')
           // The filter method of interface NodeFilter
           return new RegExp(textContent).test(node.textContent as string) // Check if text contains target string
             ? NodeFilter.FILTER_ACCEPT // Found: accept node
@@ -43,10 +48,14 @@ export const getAnchor = (
   } else if (prop.anchor?.findDomNodeByValue) {
     // the dom node should be found by it's content
     // TODO: can findDomNodeByValue be removed?
+
+    // eslint-disable-next-line no-debugger
+    debugger
     const targetDomNode = getDomNodeByTextContent(
       prop.domNodeValue ? prop.domNodeValue : prop.value,
       visElement
     )
+    console.log(targetDomNode, 'Target dom node')
     // if no node was found by the given text return undefined, otherwise return the dom node
     return targetDomNode
       ? Object.assign({ element: targetDomNode }, prop.anchor || {})
