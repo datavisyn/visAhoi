@@ -6,13 +6,12 @@ import {
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
-  console.log(chart, 'chart data')
-  console.log(chart.layout)
+  // console.log(chart, 'chart data')
+  // console.log(chart.layout)
   const traceData = (<any>(
     Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  )).__data__
+  ))?.__data__
 
-  console.log(traceData[0]?.trace?.name, 'legend name')
   // const traceNodes = chart.querySelectorAll('g.points')
   // if (traceNodes === undefined || traceNodes === null) {
   //   console.error(
@@ -53,13 +52,20 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   // const maxX = Math.max(...xVals)
   // const maxXIndex = xVals.indexOf(maxX)
   // const maxY = yVals[maxXIndex]
-
+  const title = chart?.layout?.title?.text
+  let newTitle = ''
+  // eslint-disable-next-line no-debugger
+  debugger
+  if (title.includes('(')) {
+    const id = title.indexOf('(')
+    newTitle = title.substring(0, id)
+  }
   return {
     chartTitle: {
-      value: chart?.layout?.title?.text,
+      value: (newTitle !== '') ? newTitle : title,
       anchor: {
-        findDomNodeByValue: true
-        // offset: { left: -20, top: 10 }
+        findDomNodeByValue: true,
+        offset: { left: -20, top: 10 }
       }
     },
     // type: {
@@ -83,23 +89,22 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         findDomNodeByValue: true
         // offset: { top: -25 }
       }
-    },
-    legendTitle: {
-      value: traceData[0]?.trace?.name,
-      anchor: {
-        findDomNodeByValue: true,
-        offset: { top: 20 }
-      }
-      }
     }
-    // maxValue: {
-    //   value: maxX,
+    // legendTitle: {
+    //   value: traceData[3]?.trace?.name,
     //   anchor: {
-    //     coords: { x: maxX, y: maxY },
-    //     offset: { left: 25 }
+    //     findDomNodeByValue: true,
+    //     offset: { top: 20 }
     //   }
     // }
   }
+  // maxValue: {
+  //   value: maxX,
+  //   anchor: {
+  //     coords: { x: maxX, y: maxY },
+  //     offset: { left: 25 }
+  //   }
+  // }
 }
 
 export function scatterplotFactory (
