@@ -54,8 +54,6 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   // const maxY = yVals[maxXIndex]
   const title = chart?.layout?.title?.text
   let newTitle = ''
-  // eslint-disable-next-line no-debugger
-  debugger
   if (title.includes('(')) {
     const id = title.indexOf('(')
     newTitle = title.substring(0, id)
