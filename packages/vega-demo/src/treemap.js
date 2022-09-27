@@ -173,7 +173,8 @@ const opt = {
 }
 
 const config = {
-  responsive: true
+  responsive: true,
+  renderer: 'svg'
 }
 
 const debouncedResize = debounce((event) => {
