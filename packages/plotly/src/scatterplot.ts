@@ -6,52 +6,10 @@ import {
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
-  // console.log(chart, 'chart data')
-  // console.log(chart.layout)
-  const traceData = (<any>(
-    Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  ))?.__data__
+  // const traceData = (<any>(
+  //   Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
+  // ))?.__data__
 
-  // const traceNodes = chart.querySelectorAll('g.points')
-  // if (traceNodes === undefined || traceNodes === null) {
-  //   console.error(
-  //     'Error: The trace is null or undefined, therefore not all onboarding messages can be shown.'
-  //   )
-  //   return {
-  //     chartTitle: {
-  //       value: chart?.layout?.title?.text,
-  //       anchor: {
-  //         findDomNodeByValue: true,
-  //         offset: { left: -20, top: 10 }
-  //       }
-  //     }
-  //   }
-  // }
-
-  // const areaNodes = traceNodes[0]?.querySelectorAll('path.point')
-  // const areaNodesData = Array.from(areaNodes).map(
-  //   (point: any) => point.__data__
-  // )
-  // const t = areaNodesData[0].trace
-
-  // const grid = document
-  //   .getElementsByClassName('nsewdrag drag')[0]
-  //   .getBoundingClientRect()
-
-  // const points = (Array.from(areaNodes) as any[]).filter(
-  //   (point) =>
-  //     point.getBoundingClientRect().x &&
-  //     point.getBoundingClientRect().x <= grid.width + grid.x &&
-  //     point.getBoundingClientRect().y &&
-  //     point.getBoundingClientRect().y <= grid.height + grid.y
-  // )
-
-  // const xVals = points.map((point) => point.getBoundingClientRect().x)
-  // const yVals = points.map((point) => point.getBoundingClientRect().y)
-
-  // const maxX = Math.max(...xVals)
-  // const maxXIndex = xVals.indexOf(maxX)
-  // const maxY = yVals[maxXIndex]
   const title = chart?.layout?.title?.text
   let newTitle = ''
   if (title.includes('(')) {
