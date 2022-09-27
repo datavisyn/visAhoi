@@ -1,22 +1,25 @@
 import {
-  createBasicOnboardingMessage,
-  createBasicOnboardingStage,
-  deleteOnboardingStage,
+  defaultOnboardingStages,
   EVisualizationType,
-  getOnboardingMessages,
-  getOnboardingStages,
   IAhoiConfig,
   injectOnboarding,
   IOnboardingMessage,
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  deleteOnboardingStage,
+  getOnboardingMessages,
+  getOnboardingStages,
   setEditMode,
   setOnboardingMessage,
   setOnboardingStage
 } from '@visahoi/core'
 import { barChartFactory } from './bar-chart'
 import { changeMatrixFactory } from './change-matrix'
+import { heatmapFactory } from './heatmap'
 import { horizonGraphFactory } from './horizon-graph'
 import { scatterplotFactory } from './scatterplot'
 import { treemapFactory } from './treemap'
+
 // just pass them through
 export {
   createBasicOnboardingMessage,
@@ -71,6 +74,10 @@ export const generateBasicAnnotations = (
 
     case EVisualizationType.TREEMAP:
       onboardingMessages = treemapFactory(chart, coords, visElement)
+      break
+
+    case EVisualizationType.HEATMAP:
+      onboardingMessages = heatmapFactory(chart, coords, visElement)
       break
 
     default:

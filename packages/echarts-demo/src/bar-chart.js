@@ -88,11 +88,11 @@ const getAhoiConfig = () => {
     text: 'test123'
   }))
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-    backdrop: {
-      // show: true,
-      // opacity: 1
-    }
+    onboardingMessages: defaultOnboardingMessages
+    // backdrop: {
+    // show: true,
+    // opacity: 1
+    // }
   }
   return ahoiConfig
 }

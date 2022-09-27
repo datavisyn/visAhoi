@@ -8,21 +8,19 @@
     isEditModeActive,
     onboardingStages,
     onboardingMessages,
+    editTooltip,
   } from "./stores";
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
-  import { onDestroy, onMount, tick } from "svelte";
-  import { getOnboardingMessages } from "../onboarding";
-  import { get } from "svelte/store";
+  import { tick } from "svelte";
 
   export let visElement;
 
   let tempTitle = "";
   let tempText = "";
-  let editTooltip: boolean = false;
 
   const sanitizerOptions = {
     allowedTags: ["span", "b", "em", "strong"],
@@ -71,7 +69,7 @@
       }
     });
     markerInformation.set(tempMarkerInformation);
-    editTooltip = false;
+    $editTooltip = false;
   };
 
   const deleteOnboardingMessage = () => {
@@ -177,7 +175,7 @@
 >
   <div class="visahoi-tooltip-header">
     <div class="visahoi-tooltip-title">
-      {#if editTooltip}
+      {#if $editTooltip}
         <input class="visahoi-edit-title" type="text" bind:value={tempTitle} />
       {:else}
         <b>{$activeMarker?.tooltip.title}</b>
@@ -187,11 +185,11 @@
     <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
 
     <div class="visahoi-header-icons">
-      {#if $isEditModeActive && !editTooltip}
+      {#if $isEditModeActive && !$editTooltip}
         <div
           class="visahoi-edit-tooltip"
           on:click={() => {
-            editTooltip = true;
+            $editTooltip = true;
             // set title of current tooltip
             tempTitle = $activeMarker?.tooltip.title || "";
           }}
@@ -207,7 +205,7 @@
         </div>
       {/if}
 
-      {#if editTooltip}
+      {#if $editTooltip}
         <div class="visahoi-save-changes" on:click={saveChanges}>
           <span style="font-size: 13px"
             ><i class="fas fa-check" title="Save" /></span
@@ -217,13 +215,13 @@
 
       <div
         class="visahoi-close-tooltip"
-        on:click={editTooltip
+        on:click={$editTooltip
           ? () => {
-              editTooltip = false;
+              $editTooltip = false;
             }
           : closeTooltip}
       >
-        {#if editTooltip}
+        {#if $editTooltip}
           <span style="font-size: 13px">
             <i class="fas fa-times" title="Cancel" /></span
           >
@@ -236,7 +234,7 @@
     </div>
   </div>
 
-  {#if editTooltip}
+  {#if $editTooltip}
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
     <div class="visahoi-tooltip-content">
