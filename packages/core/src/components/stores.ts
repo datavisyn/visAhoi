@@ -33,7 +33,8 @@ export const activeMarker = initializeStoreValue<IMarkerInformation | null>(
 export const selectedMarker = initializeStoreValue<IMarkerInformation | null>(
   null
 )
-export const showBackdrop = initializeStoreValue<boolean>(true)
+
+export const showBackdrop = initializeStoreValue<boolean>(false)
 export const backdropOpacity = initializeStoreValue<number>(0.15)
 export const showOnboardingNavigation = initializeStoreValue<boolean>(false)
 export const previousMarkerId = initializeStoreValue<string | undefined>('')
