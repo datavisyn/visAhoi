@@ -10,6 +10,7 @@ import { getAnchor } from './utils'
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
+  title?: ISpecProp;
   type?: ISpecProp;
   legendTitle?: ISpecProp;
   xAxis?: ISpecProp;
@@ -99,8 +100,8 @@ function generateMessages (
   if (spec.chartTitle?.value !== undefined) {
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      requires: ['chartTitle', 'title'],
+      text: `The chart shows the ${spec.title?.value}.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

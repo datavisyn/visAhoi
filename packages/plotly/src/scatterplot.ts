@@ -68,6 +68,9 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         offset: { left: -20, top: 10 }
       }
     },
+    title: {
+      value: title
+    },
     // type: {
     //   value: t.type,
     //   anchor: {
