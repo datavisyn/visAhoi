@@ -32,7 +32,6 @@ export const injectOnboarding = (
 
   if (ahoiConfig?.alignment) {
     navigationAlignment.set(ahoiConfig.alignment)
-    console.log(get(navigationAlignment), ' navigation alignment')
   }
 
   if (ahoiConfig?.showOnboardingNavigation) {
