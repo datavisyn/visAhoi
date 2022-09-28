@@ -42,7 +42,11 @@ const opt = {
   config: {
     axis: { grid: true, labels: true }
   }
+}
 
+const config = {
+  responsive: true,
+  renderer: 'svg'
 }
 
 const getAhoiConfig = async () => {
@@ -58,7 +62,7 @@ const getAhoiConfig = async () => {
 }
 
 async function render () {
-  chart = await embed('#vis', opt, { actions: false })
+  chart = await embed('#vis', opt, config, { actions: false })
   window.addEventListener('resize', debouncedResize)
 }
 

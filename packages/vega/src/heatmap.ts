@@ -6,20 +6,18 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingHeatma
   return {
     chartTitle: {
       value: vegaSpec?.title?.text,
-      // value: 'Cars origin and their horsepower based on number of cylinders',
       anchor: {
         findDomNodeByValue: true,
         offset: { left: -20, top: -10 }
       }
+    },
+    legendDescription: {
+      value: vegaSpec?.legends[0]?.title,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -20, top: 5 }
+      }
     }
-    // legendDescription: {
-    //   // value: 'Max of Horsepower',
-    //   value: vegaSpec?.legends[0]?.title,
-    //   anchor: {
-    //     findDomNodeByValue: true,
-    //     offset: { left: -20, top: 5 }
-    //   }
-    // }
 
   }
 }
