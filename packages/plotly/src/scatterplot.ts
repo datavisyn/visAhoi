@@ -21,7 +21,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: (newTitle !== '') ? newTitle : title,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -20, top: 10 }
+        offset: { left: -20, top: -10 }
       }
     },
     title: {
