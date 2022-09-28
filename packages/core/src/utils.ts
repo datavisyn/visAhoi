@@ -5,8 +5,6 @@ import {
   OnboardingAnchor
 } from './interfaces'
 
-console.log('new utils')
-
 /**
  * Returns the dom node which contains the passed text
  * @param textContent the text content of the dom node which should be found
