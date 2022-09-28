@@ -5,17 +5,17 @@ import {
   OnboardingAnchor
 } from './interfaces'
 
+console.log('new utils')
+
 /**
  * Returns the dom node which contains the passed text
  * @param textContent the text content of the dom node which should be found
  */
-let targetDomNode: HTMLElement | null
-
 const getDomNodeByTextContent = (
   textContent: string,
   visElement: Element
-): HTMLElement | null => {
-  return document
+): HTMLElement | null =>
+  document
     .createNodeIterator(
       visElement, // The root node of the chart
       NodeFilter.SHOW_TEXT, // Look for text nodes only
@@ -29,7 +29,6 @@ const getDomNodeByTextContent = (
       }
     )
     .nextNode()!?.parentElement
-}
 
 /**
  * Returns the anchor for the requested onboarding specification.
@@ -46,11 +45,10 @@ export const getAnchor = (
   } else if (prop.anchor?.findDomNodeByValue) {
     // the dom node should be found by it's content
     // TODO: can findDomNodeByValue be removed?
-    targetDomNode = getDomNodeByTextContent(
+    const targetDomNode = getDomNodeByTextContent(
       prop.domNodeValue ? prop.domNodeValue : prop.value,
       visElement
     )
-
     // if no node was found by the given text return undefined, otherwise return the dom node
     return targetDomNode
       ? Object.assign({ element: targetDomNode }, prop.anchor || {})
