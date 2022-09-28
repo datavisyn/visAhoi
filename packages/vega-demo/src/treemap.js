@@ -14,37 +14,16 @@ let showOnboarding = false
 const opt = {
   title: 'American jobs plan',
   description: 'An example of treemap layout for hierarchical data.',
-  actions: {
-    export: false,
-    source: false,
-    compiled: false,
-    editor: false
-  },
-  // "width": 1200,
-  // "height": 500,
   autosize: { type: 'fit', contains: 'padding' },
-
-  //
   padding: 5,
-  // "autosize": "none",
-
   signals: [
     {
       name: 'layout',
       value: 'squarify'
-      // "bind": {
-      //   "input": "select",
-      //   "options": [
-      //     "squarify",
-      //     "binary",
-      //     "slicedice"
-      //   ]
-      // }
     },
     {
       name: 'aspectRatio',
       value: 1.6
-      // "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
     },
     {
       name: 'width',
