@@ -15,7 +15,7 @@ async function extractOnboardingSpec (
       value: vegaSpec?.title,
       anchor: {
         findDomNodeByValue: true,
-        offset: { right: -20, top: -20 }
+        offset: { right: -20, top: -30 }
       }
     }
   }
