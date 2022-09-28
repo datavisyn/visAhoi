@@ -120,6 +120,7 @@ const registerEventListener = () => {
         chart,
         getAhoiConfig()
       )
+      console.log(getOnboardingMessages(), 'onboarding messages')
     } else {
       onboardingUI?.removeOnboarding()
       editButton.style.display = 'none'
@@ -149,6 +150,7 @@ const registerEventListener = () => {
       backgroundColor: 'red',
       order: 4
     })
+    console.log(getOnboardingMessages(), 'onboarding messages-1')
   })
 }
 
