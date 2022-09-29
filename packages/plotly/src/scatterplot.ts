@@ -9,6 +9,11 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   const traceData = (<any>(
     Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
   ))?.__data__
+
+  const ss = (<any>(
+    Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
+  ))
+  console.log(ss, 'trace')
   console.log(traceData, 'Trace - Data')
 
   const title = chart?.layout?.title?.text
