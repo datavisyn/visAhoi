@@ -17,6 +17,8 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   yAxis?: ISpecProp;
   hoverDescription?: ISpecProp;
   missingDataDescription?: ISpecProp;
+  maxValue?: ISpecProp;
+  minValue?: ISpecProp;
 }
 
 function generateMessages (
@@ -28,6 +30,9 @@ function generateMessages (
   ) as IOnboardingStage
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
+  ) as IOnboardingStage
+  const analyzing = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
   const messages = [
@@ -90,6 +95,28 @@ function generateMessages (
       },
       id: 'unique-message-id-5',
       order: 1
+    },
+    {
+      anchor: getAnchor(spec.maxValue, visElement),
+      requires: ['maxValue'],
+      text: `The deep red color rectangle holds the maximum value in the heatmap. In this heatmap ${spec.maxValue?.value} is the maximum value.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-6'
+      },
+      id: 'unique-message-id-6'
+    },
+    {
+      anchor: getAnchor(spec.minValue, visElement),
+      requires: ['minValue'],
+      text: `The deep blue color rectangle holds the minimum value in the heatmap. In this heatmap ${spec.minValue?.value} is the minimum value.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-7'
+      },
+      id: 'unique-message-id-7'
     }
   ]
 

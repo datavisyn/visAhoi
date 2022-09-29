@@ -1,6 +1,10 @@
 import * as echarts from 'echarts'
 import debounce from 'lodash.debounce'
-import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
+import {
+  generateBasicAnnotations,
+  ahoi,
+  EVisualizationType
+} from '@visahoi/echarts'
 
 let chart = null
 let showOnboarding = false

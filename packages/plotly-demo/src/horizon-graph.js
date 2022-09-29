@@ -176,10 +176,10 @@ const getAhoiConfig = () => {
   )
   // const newOnboardingMessage = createBasicOnboardingMessage();
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages,
-    backdrop: {
-      show: false
-    }
+    onboardingMessages: defaultOnboardingMessages
+    // backdrop: {
+    //   show: false,
+    // },
   }
   return ahoiConfig
 }

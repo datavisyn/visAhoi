@@ -1,12 +1,15 @@
 <script lang="ts">
+  import Draggable from "./Draggable.svelte";
+
   import Tooltip from "./Tooltip.svelte";
 
   export let visElement;
-
 </script>
 
 <div class="tooltips">
-      <Tooltip visElement={visElement} />
+  <Draggable>
+    <Tooltip {visElement} />
+  </Draggable>
 </div>
 
 <style>
