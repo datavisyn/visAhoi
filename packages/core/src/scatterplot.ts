@@ -97,7 +97,7 @@ function generateMessages (
     }
   ]
 
-  if (spec.legendTitle?.value !== undefined) {
+  if (spec.legendTitle?.value !== '') {
     messages.unshift({
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
