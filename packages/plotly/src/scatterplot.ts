@@ -11,10 +11,16 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   // ))?.__data__
 
   const title = chart?.layout?.title?.text
+  const legend = chart.data[0]?.marker?.colorbar?.title?.text
   let newTitle = ''
+  let newLegend = ''
   if (title.includes('(')) {
     const id = title.indexOf('(')
     newTitle = title.substring(0, id)
+  }
+  if (legend.includes('<')) {
+    const id = legend.indexOf('<')
+    newLegend = legend.substring(0, id)
   }
   return {
     chartTitle: {
@@ -50,7 +56,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       }
     },
     legendTitle: {
-      value: chart.data[0]?.marker?.colorbar?.title?.text,
+      value: newLegend,
       anchor: {
         findDomNodeByValue: true,
         offset: { top: 20 }
