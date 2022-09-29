@@ -94,22 +94,8 @@ function generateMessages (
       },
       id: 'unique-message-id-6',
       order: 4
+    }
   ]
-
-  if (spec.chartTitle?.value !== undefined) {
-    messages.unshift({
-      anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ['chartTitle', 'title'],
-      text: `The chart shows the ${spec.title?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: 'unique-marker-id-1'
-      },
-      id: 'unique-message-id-1',
-      order: 1
-    })
-  }
 
   if (spec.legendTitle?.value !== undefined) {
     messages.unshift({
@@ -123,6 +109,21 @@ function generateMessages (
       },
       id: 'unique-message-id-3',
       order: 5
+    })
+  }
+
+  if (spec.chartTitle?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.chartTitle, visElement),
+      requires: ['chartTitle', 'title'],
+      text: `The chart shows the ${spec.title?.value}.`,
+      title: 'Reading the chart',
+      onboardingStage: reading,
+      marker: {
+        id: 'unique-marker-id-1'
+      },
+      id: 'unique-message-id-1',
+      order: 1
     })
   }
 
