@@ -69,7 +69,7 @@ function generateMessages (
         id: 'unique-marker-id-4'
       },
       id: 'unique-message-id-4',
-      order: 2
+      order: 3
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -81,7 +81,7 @@ function generateMessages (
         id: 'unique-marker-id-5'
       },
       id: 'unique-message-id-5',
-      order: 3
+      order: 4
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
@@ -93,7 +93,7 @@ function generateMessages (
         id: 'unique-marker-id-6'
       },
       id: 'unique-message-id-6',
-      order: 4
+      order: 5
     }
   ]
 
@@ -108,7 +108,7 @@ function generateMessages (
         id: 'unique-marker-id-3'
       },
       id: 'unique-message-id-3',
-      order: 5
+      order: 2
     })
   }
 
