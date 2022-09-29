@@ -48,14 +48,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         findDomNodeByValue: true
         // offset: { top: -25 }
       }
+    },
+    legendTitle: {
+      value: chart.data?.marker?.colorbar?.title?.text,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 20 }
+      }
     }
-    // legendTitle: {
-    //   value: traceData[3]?.trace?.name,
-    //   anchor: {
-    //     findDomNodeByValue: true,
-    //     offset: { top: 20 }
-    //   }
-    // }
   }
   // maxValue: {
   //   value: maxX,
