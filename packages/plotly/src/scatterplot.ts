@@ -50,7 +50,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       }
     },
     legendTitle: {
-      value: chart.data?.marker?.colorbar?.title?.text,
+      value: chart.data[0]?.marker?.colorbar?.title?.text,
       anchor: {
         findDomNodeByValue: true,
         offset: { top: 20 }
