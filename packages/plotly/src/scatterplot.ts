@@ -6,9 +6,10 @@ import {
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
-  // const traceData = (<any>(
-  //   Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  // ))?.__data__
+  const traceData = (<any>(
+    Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
+  ))?.__data__
+  console.log(traceData, 'Trace - Data')
 
   const title = chart?.layout?.title?.text
   const legend = chart.data[0]?.marker?.colorbar?.title?.text
