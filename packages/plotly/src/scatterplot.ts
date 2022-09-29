@@ -72,7 +72,7 @@ export function scatterplotFactory (
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
-  console.log('onboardingSpec')
+  console.log(onbordingSpec, 'onboardingSpec')
   return generateMessages(
     EVisualizationType.SCATTERPLOT,
     onbordingSpec,
