@@ -81,7 +81,7 @@ function generateMessages (
         id: 'unique-marker-id-5'
       },
       id: 'unique-message-id-5',
-      order: 2
+      order: 3
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
@@ -93,8 +93,7 @@ function generateMessages (
         id: 'unique-marker-id-6'
       },
       id: 'unique-message-id-6',
-      order: 3
-    }
+      order: 4
   ]
 
   if (spec.chartTitle?.value !== undefined) {
@@ -123,7 +122,7 @@ function generateMessages (
         id: 'unique-marker-id-3'
       },
       id: 'unique-message-id-3',
-      order: 2
+      order: 5
     })
   }
 
