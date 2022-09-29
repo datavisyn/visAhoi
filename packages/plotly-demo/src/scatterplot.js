@@ -144,11 +144,11 @@ const registerEventListener = () => {
 
   newButton.addEventListener('click', async () => {
     setOnboardingStage({
-      id: 'using-the-chart',
-      title: 'Interact',
-      iconClass: 'fas fa-microphone',
-      backgroundColor: 'red',
-      order: 4
+      id: 'reading-the-chart',
+      title: 'Read',
+      iconClass: 'fas fa-microphone'
+      // backgroundColor: 'red',
+      // order: 4
     })
     console.log(getOnboardingMessages(), 'onboarding messages-1')
   })
