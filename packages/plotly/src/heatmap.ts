@@ -41,10 +41,10 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       }
     },
     xAxis: {
-      value: chart.layout?.xaxis?.title.text
+      value: chart.layout?.xaxis?.title?.text
     },
     yAxis: {
-      value: chart.layout?.yaxis?.title.text
+      value: chart.layout?.yaxis?.title?.text
     },
     hoverDescription: {
       value: t?.xaxis?.title?.text,
