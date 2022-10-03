@@ -4,7 +4,6 @@ import { IOnboardingHeatmapSpec } from '@visahoi/core/src/heatmap'
 import { vega } from 'vega-embed'
 
 function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingHeatmapSpec {
-  console.log(vegaSpec, 'Vega')
   return {
     chartTitle: {
       value: vegaSpec?.title?.text,
