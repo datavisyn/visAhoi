@@ -6,15 +6,13 @@ import {
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
-  const traceData = (<any>(
-    Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  ))?.__data__
+  // const traceData = (<any>(
+  //   Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
+  // ))?.__data__
 
-  const ss = (<any>(
-    Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  ))
-  console.log(ss, 'trace')
-  console.log(traceData, 'Trace - Data')
+  // const ss = (<any>(
+  //   Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
+  // ))
 
   const title = chart?.layout?.title?.text
   const legend = chart.data[0]?.marker?.colorbar?.title?.text
@@ -84,7 +82,6 @@ export function scatterplotFactory (
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
-  console.log(onbordingSpec, 'onboardingSpec')
   return generateMessages(
     EVisualizationType.SCATTERPLOT,
     onbordingSpec,
