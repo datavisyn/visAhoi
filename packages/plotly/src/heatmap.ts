@@ -16,14 +16,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: chart.layout.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -20, top: 10 }
+        offset: { left: -40, top: -10 }
       }
     },
     heatmapDescription: {
       value: t.type,
       anchor: {
         sel: '.heatmaplayer > .hm > image',
-        offset: { left: -50, top: -30 }
+        offset: { left: -50, top: -40 }
       }
     },
     legendDescription: {
@@ -50,7 +50,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: t?.xaxis?.title?.text,
       anchor: {
         sel: '.cartesianlayer',
-        offset: { top: -50, left: -120 }
+        offset: { left: -120, top: -90 }
       }
     }
   }
