@@ -36,6 +36,10 @@ const opt = {
       field: 'Horsepower',
       aggregate: 'max',
       type: 'quantitative'
+      // scale: {
+      //   range: ['#337ab7', '#f5f5f5', '#ec6836']
+      // }
+
       // legend: { title: 'legend' }
     }
   },
