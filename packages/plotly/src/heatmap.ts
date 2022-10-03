@@ -16,7 +16,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: chart.layout.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -40, top: -10 }
+        offset: { left: -40, top: -20 }
       }
     },
     heatmapDescription: {
