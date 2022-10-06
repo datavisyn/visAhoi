@@ -47,18 +47,6 @@ function generateMessages (
       id: 'unique-message-id-2',
       order: 1
     },
-    // {
-    //   anchor: getAnchor(spec.legendTitle, visElement),
-    //   requires: ['legendTitle'],
-    //   text: 'It shows different traces',
-    //   title: 'Reading the chart',
-    //   onboardingStage: reading,
-    //   marker: {
-    //     id: 'unique-marker-id-3'
-    //   },
-    //   id: 'unique-message-id-3',
-    //   order: 2
-    // },
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['xAxisTitle', 'yAxisTitle'],

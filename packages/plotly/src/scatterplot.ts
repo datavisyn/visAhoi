@@ -6,14 +6,6 @@ import {
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
-  // const traceData = (<any>(
-  //   Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  // ))?.__data__
-
-  // const ss = (<any>(
-  //   Array.from(<NodeList>chart.querySelectorAll('.traces'))[0]
-  // ))
-
   const title = chart?.layout?.title?.text
   const legend = chart.data[0]?.marker?.colorbar?.title?.text
   let newTitle = ''
@@ -37,26 +29,16 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     title: {
       value: title
     },
-    // type: {
-    //   value: t.type,
-    //   anchor: {
-    //     sel: '.points > .point:nth-child(4)'
-    //   }
-    // },
     xAxisTitle: {
       value: chart.layout.xaxis?.title.text,
       anchor: {
-        // sel: '.infolayer .xtitle',
         findDomNodeByValue: true
-        // offset: { left: -20 }
       }
     },
     yAxisTitle: {
       value: chart.layout.yaxis?.title.text,
       anchor: {
-        // sel: '.infolayer .ytitle',
         findDomNodeByValue: true
-        // offset: { top: -25 }
       }
     },
     legendTitle: {
@@ -67,13 +49,6 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       }
     }
   }
-  // maxValue: {
-  //   value: maxX,
-  //   anchor: {
-  //     coords: { x: maxX, y: maxY },
-  //     offset: { left: 25 }
-  //   }
-  // }
 }
 
 export function scatterplotFactory (
