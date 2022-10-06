@@ -78,15 +78,15 @@ const registerEventListener = () => {
     if (showOnboarding) {
       const config = await getAhoiConfig()
       onboardingUI = await ahoi(EVisualizationType.HEATMAP, chart, config)
+      setOnboardingMessage({
+        id: 'unique-message-id-3',
+        text: 'A deep blue color indicates maximum horse power whereas a light blue indicates medium horse power. Minimum horse power is indicated  with light bluish yellow'
+      })
     } else {
       onboardingUI?.removeOnboarding()
     }
   })
 }
-setOnboardingMessage({
-  id: 'unique-message-id-3',
-  text: 'A deep blue color indicates maximum horse power whereas a light blue indicates medium horse power. Minimum horse power is indicated  with light bluish yellow'
-})
 
 registerEventListener()
 render()
