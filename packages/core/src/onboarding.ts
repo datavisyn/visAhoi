@@ -148,7 +148,6 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
         tempStage.iconClass = stage.iconClass
           ? stage.iconClass
           : tempStage.iconClass
-        console.log(tempStage, 'Temp stage')
         break
       }
     }

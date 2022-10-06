@@ -120,7 +120,6 @@ const registerEventListener = () => {
         chart,
         getAhoiConfig()
       )
-      console.log(getOnboardingMessages(), 'onboarding messages')
     } else {
       onboardingUI?.removeOnboarding()
       editButton.style.display = 'none'
@@ -144,13 +143,12 @@ const registerEventListener = () => {
 
   newButton.addEventListener('click', async () => {
     setOnboardingStage({
-      id: 'reading-the-chart',
-      title: 'Read',
-      iconClass: 'fas fa-microphone'
-      // backgroundColor: 'red',
-      // order: 4
+      id: 'using-the-chart',
+      title: 'Interact',
+      iconClass: 'fas fa-microphone',
+      backgroundColor: 'red',
+      order: 4
     })
-    console.log(getOnboardingMessages(), 'onboarding messages-1')
   })
 }
 
