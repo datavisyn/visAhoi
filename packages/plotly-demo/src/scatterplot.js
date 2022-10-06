@@ -3,14 +3,9 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
-  deleteOnboardingStage,
   setOnboardingStage,
   setOnboardingMessage,
-  getOnboardingMessages,
-  setEditMode,
-  createBasicOnboardingStage,
-  createBasicOnboardingMessage,
-  getOnboardingStages
+  setEditMode
 } from '@visahoi/plotly'
 import debounce from 'lodash.debounce'
 

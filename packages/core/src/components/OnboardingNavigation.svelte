@@ -134,7 +134,7 @@
   class="visahoi-navigation-container"
   style="--flexDirection:{$navigationAlignment}; height: '60px' "
 >
-  {#key $markerInformation}
+  {#key $markerInformation || $onboardingStages}
     <div class="visahoi-navigation-marker-container">
       <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
