@@ -1,5 +1,5 @@
 import embed from 'vega-embed'
-import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/vega'
+import { generateBasicAnnotations, ahoi, EVisualizationType, setOnboardingMessage } from '@visahoi/vega'
 import debounce from 'lodash.debounce'
 import '../public/data/jobsplan.json'
 
@@ -83,6 +83,10 @@ const registerEventListener = () => {
     }
   })
 }
+setOnboardingMessage({
+  id: 'unique-message-id-3',
+  text: 'A deep blue color indicates maximum horse power whereas a light blue indicates medium horse power. Minimum horse power is indicated  with light bluish yellow'
+})
 
 registerEventListener()
 render()
