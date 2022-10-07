@@ -13,9 +13,11 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   let maxX, maxY
   if (traceNodes !== undefined) {
     areaNodes = traceNodes[0]?.querySelectorAll('path.point')
-    areaNodesData = Array.from(areaNodes).map(
-      (point: any) => point.__data__
-    )
+    areaNodesData = (areaNodes)
+      ? Array.from(areaNodes).map(
+        (point: any) => point.__data__
+      )
+      : null
     t = areaNodesData[0].trace
   }
 
