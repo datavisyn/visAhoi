@@ -18,7 +18,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         (point: any) => point.__data__
       )
       : null
-    t = areaNodesData[0]?.trace
+    t = (areaNodesData) ? areaNodesData[0].trace : null
   }
 
   if (areaNodes !== undefined) {
