@@ -3,14 +3,9 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
-  deleteOnboardingStage,
   setOnboardingStage,
   setOnboardingMessage,
-  getOnboardingMessages,
-  setEditMode,
-  createBasicOnboardingStage,
-  createBasicOnboardingMessage,
-  getOnboardingStages
+  setEditMode
 } from '@visahoi/plotly'
 import debounce from 'lodash.debounce'
 
@@ -146,7 +141,8 @@ const registerEventListener = () => {
       id: 'using-the-chart',
       title: 'Interact',
       iconClass: 'fas fa-microphone',
-      backgroundColor: 'red'
+      backgroundColor: 'red',
+      order: 4
     })
   })
 }
