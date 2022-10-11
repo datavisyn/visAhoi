@@ -237,11 +237,12 @@
   {#if $editTooltip}
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
+    <!-- <div id="tooltip-text" class="visahoi-tooltip-content">
+      {@html sanitizeHtml(textString, sanitizerOptions)}
+    </div> -->
+
     <div class="visahoi-tooltip-content">
-      {@html sanitizeHtml(
-        activeMarkerInformation?.tooltip.text,
-        sanitizerOptions
-      )}
+      {@html activeMarkerInformation?.tooltip.text}
     </div>
   {/if}
 

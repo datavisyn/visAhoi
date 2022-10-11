@@ -132,7 +132,7 @@ const registerEventListener = () => {
     setOnboardingMessage({
       id: 'unique-message-id-6',
       title: 'test-1',
-      text: 'testing....'
+      text: '<i class="fas fa-question-circle"></i> test'
     })
   })
 
