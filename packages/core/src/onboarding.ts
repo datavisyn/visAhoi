@@ -29,6 +29,7 @@ export const injectOnboarding = (
   alignment: NavigationAlignment
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages)
+  console.log(get(onboardingMessages), 'Onboarding messages')
 
   if (ahoiConfig?.showOnboardingNavigation) {
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation)
@@ -114,6 +115,8 @@ export const createBasicOnboardingMessage = (
   const marker: IMarker = {
     id: `visahoi-marker-${uuidv4()}`
   }
+  console.log(message, 'Message')
+
   const onboardingMessage: IOnboardingMessage = {
     marker,
     ...message
