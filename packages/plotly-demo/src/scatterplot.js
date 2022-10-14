@@ -5,8 +5,12 @@ import {
   EVisualizationType,
   setOnboardingStage,
   setOnboardingMessage,
-  setEditMode
+  setEditMode,
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage
+
 } from '@visahoi/plotly'
+
 import debounce from 'lodash.debounce'
 
 let chart = null
@@ -18,6 +22,8 @@ const deleteStageId = null
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
+
+console.log('test it')
 
 async function render () {
   const response = await fetch('../data/cars.json')
@@ -81,6 +87,27 @@ const getAhoiConfig = () => {
     })
   )
 
+  const newOnboardingStage = createBasicOnboardingStage({
+    title: 'stage-1',
+    iconClass: 'fas fa-flask',
+    backgroundColor: 'green'
+  })
+  // defaultOnboardingMessages[0].onboardingStage = newOnboardingStage
+  // defaultOnboardingMessages[0].title = 'New stage1'
+  defaultOnboardingMessages.push(
+    createBasicOnboardingMessage({
+      text: 'Check the default order',
+      title: 'New message',
+      onboardingStage: newOnboardingStage,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
+      }
+    })
+  )
+
   // To delete the onboarding stage
   // deleteStageId = 'reading-the-chart';
   // deleteOnboardingStage(deleteStageId);
@@ -95,6 +122,7 @@ const getAhoiConfig = () => {
       : defaultOnboardingMessages
     // showOnboardingNavigation: true,
   }
+
   return ahoiConfig
 }
 
