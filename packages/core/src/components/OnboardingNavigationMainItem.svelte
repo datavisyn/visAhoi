@@ -90,7 +90,7 @@
   </span>
 </div>
 
-<div class="toggle-button">
+<!-- <div class="toggle-button">
   {#if $showOnboardingNavigation}
     <span title="Disable navigation steps" on:click={toggleNavigation}>
       <i class="fas fa-solid fa-toggle-on" />
@@ -104,8 +104,7 @@
       />
     </span>
   {/if}
-</div>
-
+</div> -->
 <style>
   .toggle-button {
     position: absolute;

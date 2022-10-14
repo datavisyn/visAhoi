@@ -15,6 +15,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     : null
 
   const t = areaNodesData ? areaNodesData[0]?.trace : null
+  let maxX, maxY
 
   const grid = document
     .getElementsByClassName('nsewdrag drag')[0]
@@ -34,9 +35,9 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     const xVals = points.map((point) => point.getBoundingClientRect().x)
     const yVals = points.map((point) => point.getBoundingClientRect().y)
 
-    const maxX = Math.max(...xVals)
+    maxX = Math.max(...xVals)
     const maxXIndex = xVals.indexOf(maxX)
-    const maxY = yVals[maxXIndex]
+    maxY = yVals[maxXIndex]
   }
 
   const title = chart?.layout?.title?.text
@@ -85,6 +86,13 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       anchor: {
         findDomNodeByValue: true,
         offset: { top: 20 }
+      }
+    },
+    maxValue: {
+      value: maxX,
+      anchor: {
+        coords: { x: maxX, y: maxY },
+        offset: { left: 25 }
       }
     }
   }

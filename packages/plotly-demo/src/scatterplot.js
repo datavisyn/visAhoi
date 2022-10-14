@@ -3,14 +3,9 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
-  deleteOnboardingStage,
   setOnboardingStage,
   setOnboardingMessage,
-  getOnboardingMessages,
-  setEditMode,
-  createBasicOnboardingStage,
-  createBasicOnboardingMessage,
-  getOnboardingStages
+  setEditMode
 } from '@visahoi/plotly'
 import debounce from 'lodash.debounce'
 
@@ -138,7 +133,7 @@ const registerEventListener = () => {
     setOnboardingMessage({
       id: 'unique-message-id-6',
       title: 'test-1',
-      text: 'testing....'
+      text: '<i class="fas fa-question-circle"></i> test'
     })
   })
 

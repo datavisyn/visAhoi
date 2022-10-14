@@ -36,18 +36,6 @@ function generateMessages (
 
   const messages: IOnboardingMessage[] = [
     {
-      anchor: getAnchor(spec.type, visElement),
-      requires: ['type'],
-      text: `The chart Is based on colored ${spec.type?.value} elements.`,
-      title: 'Interacting with the chart',
-      onboardingStage: interacting,
-      marker: {
-        id: 'unique-marker-id-2'
-      },
-      id: 'unique-message-id-2',
-      order: 1
-    },
-    {
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['xAxisTitle', 'yAxisTitle'],
       text: `The columns show the ${spec.xAxisTitle?.value}, while the rows show the ${spec.yAxisTitle?.value}.`,
@@ -70,8 +58,25 @@ function generateMessages (
       },
       id: 'unique-message-id-5',
       order: 4
-    },
-    {
+    }
+  ]
+  if (spec.type?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.type, visElement),
+      requires: ['type'],
+      text: `The chart Is based on colored ${spec.type?.value} elements.`,
+      title: 'Interacting with the chart',
+      onboardingStage: interacting,
+      marker: {
+        id: 'unique-marker-id-2'
+      },
+      id: 'unique-message-id-2',
+      order: 1
+    })
+  }
+
+  if (spec.maxValue?.value !== undefined) {
+    messages.unshift({
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
       text: `The chart Is based on colored ${spec.type?.value} elements.`,
@@ -82,8 +87,8 @@ function generateMessages (
       },
       id: 'unique-message-id-6',
       order: 5
-    }
-  ]
+    })
+  }
 
   if (spec.legendTitle?.value !== '') {
     messages.unshift({

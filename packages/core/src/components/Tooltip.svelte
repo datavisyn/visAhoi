@@ -13,7 +13,6 @@
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
-  import sanitizeHtml from "sanitize-html";
   import { getMarkerDomId } from "../utils";
   import { tick } from "svelte";
 
@@ -21,13 +20,6 @@
 
   let tempTitle = "";
   let tempText = "";
-
-  const sanitizerOptions = {
-    allowedTags: ["span", "b", "em", "strong"],
-    allowedClasses: {
-      span: ["visahoi-tooltip-hover-text"],
-    },
-  };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
 
@@ -238,10 +230,7 @@
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
     <div class="visahoi-tooltip-content">
-      {@html sanitizeHtml(
-        activeMarkerInformation?.tooltip.text,
-        sanitizerOptions
-      )}
+      {@html activeMarkerInformation?.tooltip.text}
     </div>
   {/if}
 
