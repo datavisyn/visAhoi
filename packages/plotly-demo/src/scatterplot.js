@@ -130,6 +130,7 @@ const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding')
   const editButton = document.getElementById('editModeButton')
   const newButton = document.getElementById('btn-test')
+
   if (!helpIcon) {
     return
   }
@@ -170,7 +171,12 @@ const registerEventListener = () => {
       title: 'Interact',
       iconClass: 'fas fa-microphone',
       backgroundColor: 'red',
-      order: 4
+      order: 2
+    })
+    createBasicOnboardingStage({
+      title: 'New stage',
+      iconClass: 'fas fa-flask',
+      backgroundColor: 'tomato'
     })
   })
 }
