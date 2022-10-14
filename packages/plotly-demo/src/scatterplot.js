@@ -136,9 +136,9 @@ const registerEventListener = () => {
     setEditMode(editMode)
 
     setOnboardingMessage({
-      id: 'unique-message-id-6',
+      id: 'unique-message-id-4',
       title: 'test-1',
-      text: 'testing....'
+      text: '<i class="fas fa-question-circle"></i> <b>Panning:</b> You can move the view left and right while dragging the mouse.</br> <i class="fas fa-question-circle"></i> <b>Panning:</b> You can move the view left and right while dragging the mouse.</br>'
     })
   })
 
