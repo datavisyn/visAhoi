@@ -46,19 +46,19 @@ function generateMessages (
       },
       id: 'unique-message-id-4',
       order: 3
-    },
-    {
-      anchor: getAnchor(spec.yAxisTitle, visElement),
-      requires: ['yAxisTitle', 'xAxisTitle'],
-      text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-      title: 'Interacting with the chart',
-      onboardingStage: reading,
-      marker: {
-        id: 'unique-marker-id-5'
-      },
-      id: 'unique-message-id-5',
-      order: 4
     }
+    // {
+    //   anchor: getAnchor(spec.yAxisTitle, visElement),
+    //   requires: ['yAxisTitle', 'xAxisTitle'],
+    //   text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
+    //   title: 'Interacting with the chart',
+    //   onboardingStage: reading,
+    //   marker: {
+    //     id: 'unique-marker-id-5'
+    //   },
+    //   id: 'unique-message-id-5',
+    //   order: 4
+    // }
   ]
   if (spec.type?.value !== undefined) {
     messages.unshift({
