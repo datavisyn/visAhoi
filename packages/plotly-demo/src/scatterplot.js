@@ -3,14 +3,10 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
-  deleteOnboardingStage,
   setOnboardingStage,
   setOnboardingMessage,
-  getOnboardingMessages,
   setEditMode,
-  createBasicOnboardingStage,
-  createBasicOnboardingMessage,
-  getOnboardingStages
+  createBasicOnboardingStage
 } from '@visahoi/plotly'
 import debounce from 'lodash.debounce'
 
@@ -108,6 +104,7 @@ const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding')
   const editButton = document.getElementById('editModeButton')
   const newButton = document.getElementById('btn-test')
+
   if (!helpIcon) {
     return
   }
@@ -134,12 +131,6 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode'
     }
     setEditMode(editMode)
-
-    setOnboardingMessage({
-      id: 'unique-message-id-4',
-      title: 'test-1',
-      text: '<i class="fas fa-question-circle"></i> <b>Panning:</b> You can move the view left and right while dragging the mouse.</br> <i class="fas fa-question-circle"></i> <b>Panning:</b> You can move the view left and right while dragging the mouse.</br>'
-    })
   })
 
   newButton.addEventListener('click', async () => {
@@ -147,7 +138,13 @@ const registerEventListener = () => {
       id: 'using-the-chart',
       title: 'Interact',
       iconClass: 'fas fa-microphone',
-      backgroundColor: 'red'
+      backgroundColor: 'red',
+      order: 2
+    })
+    createBasicOnboardingStage({
+      title: 'New stage',
+      iconClass: 'fas fa-flask',
+      backgroundColor: 'tomato'
     })
   })
 }
