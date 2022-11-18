@@ -128,12 +128,6 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode'
     }
     setEditMode(editMode)
-
-    setOnboardingMessage({
-      id: 'unique-message-id-6',
-      title: 'test-1',
-      text: '<i class="fas fa-question-circle"></i> test'
-    })
   })
 
   newButton.addEventListener('click', async () => {
