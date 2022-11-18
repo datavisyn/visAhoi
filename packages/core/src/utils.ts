@@ -19,6 +19,7 @@ const getDomNodeByTextContent = (
       NodeFilter.SHOW_TEXT, // Look for text nodes only
       {
         acceptNode (node) {
+          // The filter method of interface NodeFilter
           return new RegExp(textContent).test(node.textContent as string) // Check if text contains target string
             ? NodeFilter.FILTER_ACCEPT // Found: accept node
             : NodeFilter.FILTER_REJECT // Not found: reject and continue
