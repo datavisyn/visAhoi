@@ -243,9 +243,6 @@
         sanitizerOptions
       )}
     </div>
-    <div class="visahoi-tooltip-content">
-      {@html activeMarkerInformation?.tooltip.text}
-    </div>
   {/if}
 
   <div id={arrowId} class="visahoi-popperjs-arrow" data-popper-arrow />
