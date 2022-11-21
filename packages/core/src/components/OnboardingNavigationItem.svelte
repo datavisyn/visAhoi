@@ -26,7 +26,7 @@
     {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
   on:click={handleClick}
 >
-  {#key $onboardingStages || $onboardingStages === null}
+  {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
     <div class="visahoi-navigation-item-circle">
       <i
         class={!$activeOnboardingStage ||
