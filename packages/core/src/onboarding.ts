@@ -20,6 +20,7 @@ import {
 } from './interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
+import { getMarkerInformation } from './components/getMarkerInformation'
 
 let onboardingUI: OnboardingUI
 
@@ -29,7 +30,7 @@ export const injectOnboarding = (
   alignment: NavigationAlignment
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages)
-  console.log(get(onboardingMessages), 'Onboarding messages')
+  // console.log(get(onboardingMessages), 'Onboarding messages')
 
   if (ahoiConfig?.showOnboardingNavigation) {
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation)
@@ -109,18 +110,33 @@ export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
 export const createBasicOnboardingMessage = (
   message: Pick<
     IOnboardingMessage,
-    'title' | 'text' | 'onboardingStage' | 'anchor' |'id'
+    'title' | 'text' | 'onboardingStage' | 'anchor' |'id' | 'order'
   >
 ) => {
   const marker: IMarker = {
     id: `visahoi-marker-${uuidv4()}`
   }
-  console.log(message, 'Message')
+
+  console.log(get(onboardingMessages).length, 'lenght')
+  if (!message.order) {
+    const newOrder = get(onboardingMessages).length
+    message.order = newOrder + 1
+  }
+  console.log(message, 'Message...')
+  console.log(get(onboardingMessages), 'Onboarding messages')
+
+  console.log(marker, 'Marker')
 
   const onboardingMessage: IOnboardingMessage = {
     marker,
     ...message
   }
+  onboardingMessages.set([...get(onboardingMessages), onboardingMessage])
+  console.log(get(markerInformation), 'Marker information')
+  console.log(getMarkerInformation(get(onboardingMessages)), 'Marker information-11')
+  const newMarkerInfo = getMarkerInformation(get(onboardingMessages))
+  markerInformation.set(newMarkerInfo)
+
   return onboardingMessage
 }
 
