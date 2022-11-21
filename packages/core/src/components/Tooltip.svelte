@@ -21,6 +21,13 @@
   let tempTitle = "";
   let tempText = "";
 
+  const sanitizerOptions = {
+    allowedTags: false, // allow all tags
+    allowedClasses: {
+      "*": ["*"], // allow all classes for all tags
+    },
+  };
+
   let activeMarkerInformation: IMarkerInformation | null = null;
 
   const tooltipId = uuidv4();
@@ -229,8 +236,11 @@
   {#if $editTooltip}
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
-    <div class="visahoi-tooltip-content">
-      {@html activeMarkerInformation?.tooltip.text}
+    <div id="tooltip-text" class="visahoi-tooltip-content">
+      {@html sanitizeHtml(
+        activeMarkerInformation?.tooltip.text,
+        sanitizerOptions
+      )}
     </div>
   {/if}
 

@@ -1,16 +1,19 @@
 <script lang="ts">
   import Draggable from "./Draggable.svelte";
+  import { onboardingStages } from "./stores";
 
   import Tooltip from "./Tooltip.svelte";
 
   export let visElement;
 </script>
 
-<div class="tooltips">
-  <Draggable>
-    <Tooltip {visElement} />
-  </Draggable>
-</div>
+{#key $onboardingStages}
+  <div class="tooltips">
+    <Draggable>
+      <Tooltip {visElement} />
+    </Draggable>
+  </div>
+{/key}
 
 <style>
   .tooltips {

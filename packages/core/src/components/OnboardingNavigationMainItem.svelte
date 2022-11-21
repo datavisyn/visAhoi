@@ -60,51 +60,54 @@
   };
 </script>
 
-<div class="visahoi-navigation-main-item" on:click={handleClick}>
-  <div
-    class="visahoi-navigation-item-circle"
-    style="background-color: {$activeOnboardingStage?.backgroundColor ||
-      navigationMainItemDefaultColor}"
-  >
-    {#if $showOnboardingSteps}
-      <span><i class="fas fa-times" /></span>
-    {:else}
-      <span><i class="fas fa-question" /></span>
-    {/if}
+{#key $onboardingStages || $activeOnboardingStage}
+  <div class="visahoi-navigation-main-item" on:click={handleClick}>
+    <div
+      class="visahoi-navigation-item-circle"
+      style="background-color: {$activeOnboardingStage?.backgroundColor ||
+        navigationMainItemDefaultColor}"
+    >
+      {#if $showOnboardingSteps}
+        <span><i class="fas fa-times" /></span>
+      {:else}
+        <span><i class="fas fa-question" /></span>
+      {/if}
 
-    {#if $activeOnboardingStage && $isEditModeActive}
-      <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
-        <i class="fas fa-trash" />
-      </div>
-    {/if}
+      {#if $activeOnboardingStage && $isEditModeActive}
+        <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
+          <i class="fas fa-trash" />
+        </div>
+      {/if}
+    </div>
+
+    <span class="visahoi-stage-title"
+      >{$activeOnboardingStage
+        ? $activeOnboardingStage?.title
+        : $showOnboardingSteps && $showHideCloseText
+        ? "Close"
+        : $showHideCloseText
+        ? "Help"
+        : ""}
+    </span>
   </div>
 
-  <span class="visahoi-stage-title"
-    >{$activeOnboardingStage
-      ? $activeOnboardingStage?.title
-      : $showOnboardingSteps && $showHideCloseText
-      ? "Close"
-      : $showHideCloseText
-      ? "Help"
-      : ""}
-  </span>
-</div>
+  <div class="toggle-button">
+    {#if $showOnboardingNavigation}
+      <span title="Disable navigation steps" on:click={toggleNavigation}>
+        <i class="fas fa-solid fa-toggle-on" />
+      </span>
+    {:else}
+      <span title="Enable navigation steps" on:click={toggleNavigation}>
+        <i
+          class="fas fa-solid fa-toggle-off"
+          style="width: 20px, height:20px"
+          on:click={toggleNavigation}
+        />
+      </span>
+    {/if}
+  </div>
+{/key}
 
-<!-- <div class="toggle-button">
-  {#if $showOnboardingNavigation}
-    <span title="Disable navigation steps" on:click={toggleNavigation}>
-      <i class="fas fa-solid fa-toggle-on" />
-    </span>
-  {:else}
-    <span title="Enable navigation steps" on:click={toggleNavigation}>
-      <i
-        class="fas fa-solid fa-toggle-off"
-        style="width: 20px, height:20px"
-        on:click={toggleNavigation}
-      />
-    </span>
-  {/if}
-</div> -->
 <style>
   .toggle-button {
     position: absolute;
