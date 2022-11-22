@@ -100,7 +100,12 @@ export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
   if (!stage.id) {
     stage.id = `visahoi-stage-${uuidv4()}`
   }
+  if (!stage.order) {
+    const newOrder = get(onboardingStages).length
+    stage.order = newOrder + 1
+  }
   onboardingStages.set([...get(onboardingStages), stage])
+
   return stage
 }
 

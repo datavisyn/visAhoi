@@ -12,6 +12,8 @@
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 40 + index * 45 + "px";
 
+  console.log("new change");
+
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
@@ -49,7 +51,7 @@
       : ''}"
     on:click={handleClick}
   >
-    {#key $onboardingStages || $onboardingStages === null}
+    {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
       <div class="visahoi-navigation-item-circle">
         <i
           class={!$activeOnboardingStage ||

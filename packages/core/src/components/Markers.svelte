@@ -6,6 +6,7 @@
     visXPosition,
     visYPosition,
     markerInformation,
+    onboardingStages,
   } from "./stores";
   import Marker from "./Marker.svelte";
   import Backdrop from "./Backdrop.svelte";
@@ -20,11 +21,13 @@
   });
 </script>
 
-<svg {viewBox} class="visahoi-markers">
-  {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
-    <Marker markerInformation={marker} order={index + 1} />
-  {/each}
-</svg>
+{#key $onboardingStages}
+  <svg {viewBox} class="visahoi-markers">
+    {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
+      <Marker markerInformation={marker} order={index + 1} />
+    {/each}
+  </svg>
+{/key}
 
 <style>
   svg {
