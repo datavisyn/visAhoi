@@ -30,7 +30,6 @@ export const injectOnboarding = (
   alignment: NavigationAlignment
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages)
-  // console.log(get(onboardingMessages), 'Onboarding messages')
 
   if (ahoiConfig?.showOnboardingNavigation) {
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation)
@@ -117,23 +116,21 @@ export const createBasicOnboardingMessage = (
     id: `visahoi-marker-${uuidv4()}`
   }
 
-  console.log(get(onboardingMessages).length, 'lenght')
   if (!message.order) {
-    const newOrder = get(onboardingMessages).length
-    message.order = newOrder + 1
-  }
-  console.log(message, 'Message...')
-  console.log(get(onboardingMessages), 'Onboarding messages')
+    const newMessageStage = get(onboardingStages).filter((s) => s.id === message.onboardingStage.id)
 
-  console.log(marker, 'Marker')
+    const NoOfMessages = get(onboardingMessages).filter((m) => m.onboardingStage.id === newMessageStage?.id)
+
+    const newOrder = NoOfMessages.length > 0 ? NoOfMessages.length + 1 : 1
+    message.order = newOrder
+  }
 
   const onboardingMessage: IOnboardingMessage = {
     marker,
     ...message
   }
   onboardingMessages.set([...get(onboardingMessages), onboardingMessage])
-  console.log(get(markerInformation), 'Marker information')
-  console.log(getMarkerInformation(get(onboardingMessages)), 'Marker information-11')
+
   const newMarkerInfo = getMarkerInformation(get(onboardingMessages))
   markerInformation.set(newMarkerInfo)
 

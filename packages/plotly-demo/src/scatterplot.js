@@ -28,8 +28,6 @@ const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
 
-console.log('test it')
-
 async function render () {
   const response = await fetch('../data/cars.json')
   const data = await response.json()
@@ -187,25 +185,12 @@ const registerEventListener = () => {
   })
 
   newMessageBtn.addEventListener('click', async () => {
-    // createBasicOnboardingMessage({
-    //   text: 'Check the default order',
-    //   title: 'New message',
-    //   onboardingStage: reading,
-    //   anchor: {
-    //     coords: {
-    //       x: 250,
-    //       y: 250
-    //     }
-    //   }
-    // })
     const newOnboardingStage = createBasicOnboardingStage({
       title: 'stage-1',
       iconClass: 'fas fa-flask',
       backgroundColor: 'green'
     })
-    // defaultOnboardingMessages[0].onboardingStage = newOnboardingStage
-    // defaultOnboardingMessages[0].title = 'New stage1'
-    console.log(getOnboardingMessages(), 'Onboarding messages-1')
+
     const messages = getOnboardingMessages()
     messages.push(createBasicOnboardingMessage({
       text: 'Check the default order',
@@ -218,18 +203,6 @@ const registerEventListener = () => {
         }
       },
       id: 'unique-message-id-6'
-    }))
-    messages.push(createBasicOnboardingMessage({
-      text: 'Check the default order-1',
-      title: 'New message-1',
-      onboardingStage: newOnboardingStage,
-      anchor: {
-        coords: {
-          x: 350,
-          y: 450
-        }
-      },
-      id: 'unique-message-id-7'
     }))
   })
 }
