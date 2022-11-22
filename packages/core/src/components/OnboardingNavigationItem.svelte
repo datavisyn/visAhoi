@@ -12,8 +12,6 @@
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 40 + index * 45 + "px";
 
-  console.log("new change");
-
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
@@ -76,11 +74,8 @@
     transition: opacity 0.5s ease, right 0.5s ease;
     margin: 5px;
     width: 80px;
-    /* bottom: var(--bottom); */
     bottom: 0;
     right: var(--right);
-    /* right: -2; */
-
     opacity: 1;
     z-index: 15;
   }

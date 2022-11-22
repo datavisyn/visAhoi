@@ -15,7 +15,6 @@ export interface IBackdrop {
   color?: string;
 }
 
-// export type NavigationAlignment = 'row' | 'column';
 export type NavigationAlignment = 'horizontal' | 'vertical';
 
 interface IPoint {
