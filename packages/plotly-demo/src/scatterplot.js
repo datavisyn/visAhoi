@@ -76,7 +76,7 @@ const getAhoiConfig = () => {
   )
   defaultOnboardingMessages.push(
     createBasicOnboardingMessage({
-      text: "This is the newly added onboarding message for the horizon chart. It's absolutely positioned.",
+      text: "This is the newly added onboarding message for the scatter chart. It's absolutely positioned.",
       title: 'Absolutely positioned message',
       onboardingStage: reading,
       anchor: {
