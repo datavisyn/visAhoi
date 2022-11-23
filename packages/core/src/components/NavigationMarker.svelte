@@ -7,7 +7,6 @@
     previousMarkerId,
     markerIndexId,
     markerInformation as markInfo,
-    onboardingStages,
   } from "./stores";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
   import { tick } from "svelte";

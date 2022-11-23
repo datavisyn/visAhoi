@@ -7,7 +7,6 @@
     visYPosition,
     markerInformation,
     onboardingStages,
-    onboardingMessages,
   } from "./stores";
   import Marker from "./Marker.svelte";
   import Backdrop from "./Backdrop.svelte";
