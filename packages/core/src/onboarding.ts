@@ -20,6 +20,7 @@ import {
 } from './interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
+import { getMarkerInformation } from './components/getMarkerInformation'
 
 let onboardingUI: OnboardingUI
 
@@ -156,6 +157,29 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
         break
       }
     }
+    const tempMessage = get(onboardingMessages)
+    const updateMsg = tempMessage.map((m) => {
+      if (m.onboardingStage.id === stage.id) {
+        return {
+          ...m,
+          onboardingStage: {
+            order: stage.order ? stage.order : m.onboardingStage.order,
+            title: stage.title ? stage.title : m.onboardingStage.title,
+            activeBackgroundColor: stage.activeBackgroundColor ? stage.activeBackgroundColor : m.onboardingStage.activeBackgroundColor,
+            backgroundColor: stage.backgroundColor ? stage.backgroundColor : m.onboardingStage.backgroundColor,
+            hoverBackgroundColor: stage.hoverBackgroundColor ? stage.hoverBackgroundColor : m.onboardingStage.hoverBackgroundColor,
+            iconClass: stage.iconClass ? stage.iconClass : m.onboardingStage.iconClass,
+            id: stage.id ? stage.id : m.onboardingStage.id
+          }
+
+        }
+      } else { return m }
+    })
+
+    onboardingMessages.set(updateMsg)
+    const newMarkerInfo = getMarkerInformation(get(onboardingMessages))
+    markerInformation.set(newMarkerInfo)
+
     return onboardingStages.set(tempOnboardingStages)
   }
 }
