@@ -9,8 +9,6 @@
   export let stage: IOnboardingStage;
   export let index: number;
 
-  console.log("ldjfksj");
-
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 40 + index * 45 + "px";
 
