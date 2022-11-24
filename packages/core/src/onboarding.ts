@@ -20,6 +20,7 @@ import {
 } from './interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
+import { getMarkerInformation } from './components/getMarkerInformation'
 
 let onboardingUI: OnboardingUI
 
@@ -97,8 +98,8 @@ export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
     stage.id = `visahoi-stage-${uuidv4()}`
   }
   if (!stage.order) {
-    const newOrder = get(onboardingStages).length
-    stage.order = newOrder + 1
+    const stages = get(onboardingStages)
+    stage.order = stages.length > 0 ? Math.max(...stages.map(s => s.order)) + 1 : 1
   }
   onboardingStages.set([...get(onboardingStages), stage])
 
@@ -108,16 +109,30 @@ export const createBasicOnboardingStage = (stage: IOnboardingStage) => {
 export const createBasicOnboardingMessage = (
   message: Pick<
     IOnboardingMessage,
-    'title' | 'text' | 'onboardingStage' | 'anchor' |'id'
+    'title' | 'text' | 'onboardingStage' | 'anchor' |'id' | 'order'
   >
 ) => {
   const marker: IMarker = {
     id: `visahoi-marker-${uuidv4()}`
   }
+
+  if (!message.order) {
+    const newMessageStage = get(onboardingStages).filter((s) => s.id === message.onboardingStage.id)
+
+    const noOfMessages = get(onboardingMessages).filter((m) => m.onboardingStage.id === newMessageStage?.id)
+
+    message.order = noOfMessages.length > 0 ? Math.max(...noOfMessages.map(m => m.order)) + 1 : 1
+  }
+
   const onboardingMessage: IOnboardingMessage = {
     marker,
     ...message
   }
+  onboardingMessages.set([...get(onboardingMessages), onboardingMessage])
+
+  const newMarkerInfo = getMarkerInformation(get(onboardingMessages))
+  markerInformation.set(newMarkerInfo)
+
   return onboardingMessage
 }
 
@@ -169,9 +184,6 @@ export const setOnboardingMessage = (message: Pick<IOnboardingMessage, 'title' |
     const tempMarkerInfo = get(markerInformation)
     for (const tempMessage of tempOnboardingMessages) {
       if (tempMessage.id === message.id) {
-        // tempMessage.anchor = message.anchor
-        //   ? message.anchor
-        //   : tempMessage.anchor;
         tempMessage.text = message.text ? message.text : tempMessage.text
 
         tempMessage.title = message.title ? message.title : tempMessage.title
