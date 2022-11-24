@@ -9,6 +9,8 @@
   export let stage: IOnboardingStage;
   export let index: number;
 
+  console.log("ldjfksj");
+
   const bottom: string = (index + 1) * 75 + "px";
   const right: string = (index + 1) * 40 + index * 45 + "px";
 
@@ -45,7 +47,7 @@
       stage.backgroundColor}; --right:{right}"
     class="visahoi-horizontal-navigation-item {!$showOnboardingSteps ||
     $activeOnboardingStage
-      ? 'removed'
+      ? 'removed-horizontal'
       : ''}"
     on:click={handleClick}
   >
@@ -71,11 +73,11 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    right: var(--right);
     transition: opacity 0.5s ease, right 0.5s ease;
     margin: 5px;
     width: 80px;
     bottom: 0;
-    right: var(--right);
     opacity: 1;
     z-index: 15;
   }
@@ -119,19 +121,10 @@
     z-index: 1;
   }
 
-  .active {
-    bottom: 0;
-    z-index: 10;
-  }
-
-  .horizontal {
-    transition: opacity 0.5s ease, right 0.5s ease;
-    /* right: var(--right); */
-  }
-
-  .vertical {
-    /* bottom: var(--bottom); */
-    transition: opacity 0.5s ease, bottom 0.5s ease;
+  .removed-horizontal {
+    right: 0;
+    opacity: 0;
+    z-index: 1;
   }
 
   .visahoi-stage-title {
