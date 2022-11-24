@@ -155,8 +155,8 @@ const registerEventListener = () => {
       title: 'reading',
       iconClass: 'fas fa-microphone',
       backgroundColor: 'red',
-      activeBackgroundColor: 'red',
-      hoverBackgroundColor: 'red'
+      activeBackgroundColor: 'purple',
+      hoverBackgroundColor: 'green'
     })
   })
 }

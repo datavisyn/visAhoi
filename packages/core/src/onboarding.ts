@@ -133,6 +133,7 @@ export const deleteOnboardingStage = (id: string) => {
 }
 
 export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
+  let newStage: IOnboardingStage
   if (stage.id === undefined) {
     console.error('Provide the id of stage to be updated')
     return null
@@ -154,26 +155,16 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
         tempStage.iconClass = stage.iconClass
           ? stage.iconClass
           : tempStage.iconClass
+        newStage = tempStage
         break
       }
     }
-    const tempMessage = get(onboardingMessages)
+    const tempMessage = get(onboardingMessages).filter(m => m.onboardingStage.id === stage.id)
     const updateMsg = tempMessage.map((m) => {
-      if (m.onboardingStage.id === stage.id) {
-        return {
-          ...m,
-          onboardingStage: {
-            order: stage.order ? stage.order : m.onboardingStage.order,
-            title: stage.title ? stage.title : m.onboardingStage.title,
-            activeBackgroundColor: stage.activeBackgroundColor ? stage.activeBackgroundColor : m.onboardingStage.activeBackgroundColor,
-            backgroundColor: stage.backgroundColor ? stage.backgroundColor : m.onboardingStage.backgroundColor,
-            hoverBackgroundColor: stage.hoverBackgroundColor ? stage.hoverBackgroundColor : m.onboardingStage.hoverBackgroundColor,
-            iconClass: stage.iconClass ? stage.iconClass : m.onboardingStage.iconClass,
-            id: stage.id ? stage.id : m.onboardingStage.id
-          }
-
-        }
-      } else { return m }
+      return {
+        ...m,
+        onboardingStage: newStage
+      }
     })
 
     onboardingMessages.set(updateMsg)
@@ -193,9 +184,6 @@ export const setOnboardingMessage = (message: Pick<IOnboardingMessage, 'title' |
     const tempMarkerInfo = get(markerInformation)
     for (const tempMessage of tempOnboardingMessages) {
       if (tempMessage.id === message.id) {
-        // tempMessage.anchor = message.anchor
-        //   ? message.anchor
-        //   : tempMessage.anchor;
         tempMessage.text = message.text ? message.text : tempMessage.text
 
         tempMessage.title = message.title ? message.title : tempMessage.title
