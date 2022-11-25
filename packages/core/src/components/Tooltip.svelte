@@ -36,16 +36,14 @@
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
-    // The selectedMarker is set to the initial marker in the activeOnboarding stage.
+    // The selectedMarker is set to the active marker which is to be closed.
+    const oldActiveMarker = $activeMarker;
     const elementId = document.getElementById(
       `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
     );
     elementId?.style.opacity = 0.5;
 
-    const activeOnboardingStageMarkers = $markerInformation.filter(
-      (m) => m.message.onboardingStage === $activeOnboardingStage
-    );
-    selectedMarker.set(activeOnboardingStageMarkers[0]);
+    selectedMarker.set(oldActiveMarker);
     $markerInformation.map((marker, i) => {
       if (marker.marker.id === $selectedMarker?.marker.id) {
         markerIndexId.set(i);
