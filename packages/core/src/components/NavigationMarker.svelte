@@ -14,11 +14,13 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  // $: bottom = order * 35 + 15 + "px";
-
-  const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
-    markerInformation.message.onboardingStage;
-  const { marker } = markerInformation;
+  $: activeBackgroundColor =
+    markerInformation.message.onboardingStage.activeBackgroundColor;
+  $: backgroundColor =
+    markerInformation.message.onboardingStage.backgroundColor;
+  $: hoverBackgroundColor =
+    markerInformation.message.onboardingStage.hoverBackgroundColor;
+  $: marker = markerInformation.marker;
 
   let arrValue: IMarkerInformation[] = [];
 
