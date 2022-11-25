@@ -217,17 +217,11 @@
   .visahoi-navigation-marker-container {
     position: absolute;
     display: flex;
-    /* flex-direction: column; vertical */
-    /* flex-direction: row; horizontal */
     flex-direction: var(--flexDirection);
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.5s ease, bottom 0.5s ease;
-    /* width: 80px; */
-
-    /* bottom: 80px; */
-    /* bottom: 30px; */
     bottom: var(--bottom);
     right: var(--right);
     opacity: 1;
@@ -237,16 +231,12 @@
     position: absolute;
     bottom: var(--bottom-height);
     margin-bottom: 15px;
-    /* opacity: var(--opacity);
-    pointer-events: var(--pointerEvents); */
   }
 
   .visahoi-navigation-previous {
     position: absolute;
     bottom: var(--bottom-height);
     margin-bottom: 15px;
-    /* opacity: var(--opacity);
-    pointer-events: var(--pointerEvents); */
   }
 
   .visahoi-navigation-container {
@@ -269,12 +259,10 @@
 
   .horizontal {
     right: var(--bottom-height);
-    /* transition: opacity 0.5s ease, right 0.5s ease; */
     bottom: 0;
   }
 
   .vertical {
     bottom: var(--bottom-height);
-    /* transition: opacity 0.5s ease, bottom 0.5s ease; */
   }
 </style>

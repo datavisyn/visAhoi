@@ -14,29 +14,17 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  // $: bottom = order * 35 + 15 + "px";
-
   const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
     markerInformation.message.onboardingStage;
   const { marker } = markerInformation;
 
   let arrValue: IMarkerInformation[] = [];
 
-  /**First navigation marker which belongs to the activeOnboarding stage is selected */
-  // $markInfo.map(async (message) => {
-  //   if (
-  //     message.message.onboardingStage.title === $activeOnboardingStage?.title
-  //   ) {
-  //     arrValue.push(message);
-  //   }
-  // });
-
   $markInfo.map(async (message) => {
     if (
       message.message.onboardingStage.title === $activeOnboardingStage?.title
     ) {
       arrValue.push(message);
-      // selectedMarker.set(arrValue[arrValue.length - 1]);
       selectedMarker.set(arrValue[0]);
 
       activeOnboardingStage.update(
@@ -98,7 +86,6 @@
         (m) => m.message.onboardingStage === $activeOnboardingStage
       );
 
-      // selectedMarker.set(activeOnboardingStageMarkers[0]);
       selectedMarker.set(activeOnboardingStageMarkers[0]);
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
@@ -130,20 +117,6 @@
     align-items: center;
     padding: 8px;
   }
-  /* .visahoi-marker-navigation-item {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
-    margin: 5px;
-    width: 30px;
-    bottom: var(--bottom);
-    opacity: 1;
-    z-index: 15;
-  } */
 
   .visahoi-marker-navigation-item-circle {
     display: flex;

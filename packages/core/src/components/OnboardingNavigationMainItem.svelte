@@ -11,8 +11,6 @@
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
-  $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
-
   const handleClick = () => {
     if ($activeOnboardingStage) {
       activeOnboardingStage.update((v) => null);
@@ -116,7 +114,6 @@
     justify-content: center;
     cursor: pointer;
     width: 80px;
-    /* height: 80px; */
     opacity: 1;
     z-index: 15;
   }
