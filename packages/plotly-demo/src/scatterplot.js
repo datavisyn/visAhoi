@@ -5,9 +5,13 @@ import {
   EVisualizationType,
   setOnboardingStage,
   setEditMode,
-  createBasicOnboardingMessage
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  getOnboardingMessages
+
 } from '@visahoi/plotly'
 import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
+
 import debounce from 'lodash.debounce'
 
 let chart = null
@@ -15,6 +19,9 @@ let showOnboarding = false
 let editMode = false
 let onboardingUI = null
 const deleteStageId = null
+// const reading = defaultOnboardingStages.get(
+//   EDefaultOnboardingStages.READING
+// )
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
@@ -113,6 +120,7 @@ const getAhoiConfig = () => {
       : defaultOnboardingMessages
     // showOnboardingNavigation: true,
   }
+
   return ahoiConfig
 }
 
@@ -120,6 +128,7 @@ const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding')
   const editButton = document.getElementById('editModeButton')
   const newButton = document.getElementById('btn-test')
+  const newMessageBtn = document.getElementById('btn-message')
 
   if (!helpIcon) {
     return
@@ -158,6 +167,28 @@ const registerEventListener = () => {
       activeBackgroundColor: 'purple',
       hoverBackgroundColor: 'green'
     })
+  })
+
+  newMessageBtn.addEventListener('click', async () => {
+    const newOnboardingStage = createBasicOnboardingStage({
+      title: 'stage-1',
+      iconClass: 'fas fa-flask',
+      backgroundColor: 'green'
+    })
+
+    const messages = getOnboardingMessages()
+    messages.push(createBasicOnboardingMessage({
+      text: 'Check the default order',
+      title: 'New message',
+      onboardingStage: newOnboardingStage,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
+      },
+      id: 'unique-message-id-6'
+    }))
   })
 }
 
