@@ -15,11 +15,11 @@ export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   yAxis?: ISpecProp;
   positiveColor?: ISpecProp;
   negativeColor?: ISpecProp;
+  interactDesc?: ISpecProp;
 }
 
 function createColorRect (color: string) {
-  console.log(color, 'Color-3')
-  return '<div class="colorRect" style="background-color: red"></div>'
+  return `<div class="colorRect" style="background-color: ${color}"></div>`
 }
 
 function generateMessages (
@@ -104,7 +104,7 @@ function generateMessages (
         id: 'unique-marker-id-6'
       },
       id: 'unique-message-id-6',
-      order: 6
+      order: 1
     },
     {
       anchor: spec.yMax?.anchor,
@@ -116,7 +116,19 @@ function generateMessages (
         id: 'unique-marker-id-7'
       },
       id: 'unique-message-id-7',
-      order: 7
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.interactDesc, visElement),
+      requires: ['yAxis', 'xAxis', 'interactDesc'],
+      text: `Hover over the chart to get the ${spec.yAxis?.value} for each ${spec.xAxis?.value}`,
+      title: 'Interaction with the chart',
+      onboardingStage: using,
+      marker: {
+        id: 'unique-marker-id-8'
+      },
+      id: 'unique-message-id-8',
+      order: 1
     }
   ]
 
