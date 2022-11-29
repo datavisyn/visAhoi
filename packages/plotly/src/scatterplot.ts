@@ -28,9 +28,13 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   const xVals = points.map((point) => point.getBoundingClientRect().x)
   const yVals = points.map((point) => point.getBoundingClientRect().y)
 
+  console.log('TEsT')
   const maxX = Math.max(...xVals)
+  const valueMaxX = maxX?.toFixed(2)
+  console.log(valueMaxX, 'Value maxX')
+
   const maxXIndex = xVals.indexOf(maxX)
-  const maxY = yVals[maxXIndex]
+  const maxY: number = yVals[maxXIndex]
 
   return {
     chartTitle: {
@@ -44,6 +48,12 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: t.type,
       anchor: {
         sel: '.points > .point:nth-child(4)'
+      }
+    },
+    interactDesc: {
+      value: t.type,
+      anchor: {
+        sel: '.points > .point:nth-child(2)'
       }
     },
     xAxisTitle: {
@@ -66,6 +76,9 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         coords: { x: maxX, y: maxY },
         offset: { left: 25 }
       }
+    },
+    valueMaxX: {
+      value: maxX?.toFixed(2)
     }
   }
 }

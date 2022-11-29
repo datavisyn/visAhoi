@@ -17,8 +17,9 @@ export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   negativeColor?: ISpecProp;
 }
 
-function createColorRect (color = 'white') {
-  return `<div class="colorRect" style="background: ${color}"></div>`
+function createColorRect (color: string) {
+  console.log(color, 'Color-3')
+  return '<div class="colorRect" style="background-color: red"></div>'
 }
 
 function generateMessages (
@@ -31,6 +32,11 @@ function generateMessages (
   const using = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage
+  const analyzing = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.ANALYZING
+  ) as IOnboardingStage
+
+  console.log(spec.positiveColor, 'pos color')
 
   const messages: IOnboardingMessage[] = [
     {
@@ -46,7 +52,7 @@ function generateMessages (
       order: 2
     },
     {
-      anchor: getAnchor(spec.xAxis, visElement),
+      anchor: getAnchor(spec.yAxis, visElement),
       requires: ['xAxis', 'yAxis'],
       text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
       title: 'Reading the chart',
@@ -77,7 +83,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.negativeColor, visElement),
       requires: ['yAxis', 'negativeColor'],
-      text: `${createColorRect(
+      text: ` The ${createColorRect(
         spec.negativeColor?.value
       )} areas indicate a very low negative ${spec.yAxis?.value}.`,
       title: 'Reading the chart',
@@ -92,8 +98,8 @@ function generateMessages (
       anchor: spec.yMin?.anchor,
       requires: ['yAxis', 'yMin'],
       text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: using,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-6'
       },
@@ -104,8 +110,8 @@ function generateMessages (
       anchor: spec.yMax?.anchor,
       requires: ['yAxis', 'yMax'],
       text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: using,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-7'
       },

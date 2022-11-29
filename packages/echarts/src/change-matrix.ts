@@ -10,7 +10,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
   const legendPosition =
     chart._componentsMap['_ec_\u0000series\u00000\u00000_visualMap.continuous']
       .group.position
-  const legendTitle = { x: legendPosition[0], y: legendPosition[1] + 20 }
+  const legendTitle = { x: legendPosition[0], y: legendPosition[1] + 150 }
   const options = chart._model.option
   return {
     chartTitle: {

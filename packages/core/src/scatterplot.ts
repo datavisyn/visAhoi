@@ -17,6 +17,9 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
   xAxisTitle?: ISpecProp;
   maxValue?: ISpecProp;
+  interactDesc?: ISpecProp;
+  maxYValue?: ISpecProp;
+  valueMaxX?: ISpecProp;
 }
 
 function generateMessages (
@@ -38,14 +41,15 @@ function generateMessages (
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
       text: `The chart Is based on colored ${spec.type?.value} elements.`,
-      title: 'Interacting with the chart',
-      onboardingStage: interacting,
+      title: 'Reading the chart',
+      onboardingStage: reading,
       marker: {
         id: 'unique-marker-id-2'
       },
       id: 'unique-message-id-2',
-      order: 1
+      order: 2
     },
+
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
@@ -56,44 +60,45 @@ function generateMessages (
         id: 'unique-marker-id-3'
       },
       id: 'unique-message-id-3',
-      order: 1
-    },
-    {
-      anchor: getAnchor(spec.xAxisTitle, visElement),
-      requires: ['xAxisTitle', 'yAxisTitle'],
-      text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: analyzing,
-      marker: {
-        id: 'unique-marker-id-4'
-      },
-      id: 'unique-message-id-4',
-      order: 2
+      order: 4
     },
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
       text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-      title: 'Interacting with the chart',
-      onboardingStage: interacting,
+      title: 'Reading the chart',
+      onboardingStage: reading,
       marker: {
         id: 'unique-marker-id-5'
       },
       id: 'unique-message-id-5',
-      order: 2
+      order: 3
     },
     {
-      anchor: getAnchor(spec.maxValue, visElement),
-      requires: ['maxValue'],
-      text: `The chart Is based on colored ${spec.type?.value} elements.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
+      anchor: getAnchor(spec.interactDesc, visElement),
+      requires: ['interactDesc'],
+      text: 'Hover over the chart to get the dedicated value for each data point.',
+      title: 'Interaction with the chart',
+      onboardingStage: interacting,
       marker: {
         id: 'unique-marker-id-6'
       },
       id: 'unique-message-id-6',
-      order: 3
+      order: 1
+    },
+    {
+      anchor: getAnchor(spec.maxValue, visElement),
+      requires: ['maxYValue', 'maxValue'],
+      text: `This is the dot-1 (${spec.maxValue?.value}, ${spec.maxYValue?.value}) to the origin.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-7'
+      },
+      id: 'unique-message-id-7',
+      order: 1
     }
+
   ]
 
   if (spec.chartTitle?.value !== undefined) {

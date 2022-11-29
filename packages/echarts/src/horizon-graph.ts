@@ -5,20 +5,31 @@ import {
   generateMessages
 } from '@visahoi/core'
 
-const getMinMax = (values) => {
-  const unified: number[] = new Array(values[0].data.length).fill(0)
-  values.forEach((v, i) => {
-    v.data.forEach((val, index) => {
-      if (i === 2) {
-        unified[index] -= val
-      } else {
-        unified[index] += val
-      }
-    })
-  })
-  const min = Math.min(...unified)
-  const max = Math.max(...unified)
-  return [min, max]
+// const getMinMax = (values) => {
+//   console.log(values, 'values')
+//   const unified: number[] = new Array(values[0].data?.length).fill(0)
+//   values?.forEach((v, i) => {
+//     v.data.forEach((val, index) => {
+//       if (i === 2) {
+//         unified[index] -= val
+//       } else {
+//         unified[index] += val
+//       }
+//     })
+//   })
+//   const min = Math.min(...unified)
+//   const max = Math.max(...unified)
+//   return [min, max]
+// }
+
+const getMax = (values) => {
+  const filterValues = values.filter((f) => !isNaN(f))
+  return Math.max(...filterValues)
+}
+
+const getMin = (values) => {
+  const filterValues = values.filter((f) => !isNaN(f))
+  return Math.min(...filterValues)
 }
 
 function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
@@ -35,7 +46,13 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
     chart._chartsViews[2]._points[1]
   ]
   const options = chart._model.option
-  const [min, max] = getMinMax(chart._model.option.series)
+  console.log(options.series, 'series')
+  const min = getMin(options.series[2].data)
+  const max = getMax(options.series[0].data)
+
+  console.log(max, 'Max')
+  console.log(min, 'min')
+
   return {
     chartTitle: {
       value: options?.title[0]?.text,
@@ -84,7 +101,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
       value: chart._chartsViews[2].__model.option.color,
       anchor: {
         coords: { x: negativeColor[0], y: negativeColor[1] },
-        offset: { left: 20 }
+        offset: { left: -30 }
       }
     },
     type: {
