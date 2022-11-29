@@ -151,6 +151,7 @@ export const deleteOnboardingStage = (id: string) => {
 }
 
 export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
+  let newStage: IOnboardingStage
   if (stage.id === undefined) {
     console.error('Provide the id of stage to be updated')
     return null
@@ -172,9 +173,24 @@ export const setOnboardingStage = (stage: Partial<IOnboardingStage>) => {
         tempStage.iconClass = stage.iconClass
           ? stage.iconClass
           : tempStage.iconClass
+        newStage = tempStage
         break
       }
     }
+    const tempMessage = get(onboardingMessages).filter(m => m.onboardingStage.id === stage.id)
+    const messages = get(onboardingMessages).filter(m => m.onboardingStage.id !== stage.id)
+    const updateMsg = tempMessage.map((m) => {
+      return {
+        ...m,
+        onboardingStage: newStage
+      }
+    })
+
+    onboardingMessages.set([...messages, ...updateMsg])
+
+    const newMarkerInfo = getMarkerInformation(get(onboardingMessages))
+    markerInformation.set(newMarkerInfo)
+
     return onboardingStages.set(tempOnboardingStages)
   }
 }

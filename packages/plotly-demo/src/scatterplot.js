@@ -10,7 +10,7 @@ import {
   getOnboardingMessages
 
 } from '@visahoi/plotly'
-// import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
+import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
 
 import debounce from 'lodash.debounce'
 
@@ -26,6 +26,10 @@ const deleteStageId = null
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
+
+const reading = defaultOnboardingStages.get(
+  EDefaultOnboardingStages.READING
+)
 
 async function render () {
   const response = await fetch('../data/cars.json')
@@ -76,6 +80,19 @@ const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.SCATTERPLOT,
     chart
+  )
+  defaultOnboardingMessages.push(
+    createBasicOnboardingMessage({
+      text: "This is the newly added onboarding message for the scatter chart. It's absolutely positioned.",
+      title: 'Absolutely positioned message',
+      onboardingStage: reading,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
+      }
+    })
   )
 
   const extendedOnboardingMessages = defaultOnboardingMessages.map(
@@ -144,16 +161,12 @@ const registerEventListener = () => {
 
   newButton.addEventListener('click', async () => {
     setOnboardingStage({
-      id: 'using-the-chart',
-      title: 'Interact',
+      id: 'reading-the-chart',
+      title: 'reading',
       iconClass: 'fas fa-microphone',
       backgroundColor: 'red',
-      order: 2
-    })
-    createBasicOnboardingStage({
-      title: 'New stage',
-      iconClass: 'fas fa-flask',
-      backgroundColor: 'tomato'
+      activeBackgroundColor: 'purple',
+      hoverBackgroundColor: 'green'
     })
   })
 
