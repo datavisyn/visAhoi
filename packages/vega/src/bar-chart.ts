@@ -112,6 +112,13 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
         offset: { top: -30 }
       }
+    },
+    interactionDesc: {
+      value: (<any>v.axes![2]).title,
+      anchor: {
+        sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
+        offset: { top: 30, left: -180 }
+      }
     }
   }
 }

@@ -64,6 +64,7 @@
         "x": {
             "field": "date",
             "type": "ordinal",
+            "title": "Month",
             "axis": {
                 "title": "Month",
                 "labelAngle": 0

@@ -72,6 +72,13 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
         },
         offset: { top: 10 }
       }
+    },
+    interactDesc: {
+      value: (<any>v.axes![2]).title,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -180, top: 30 }
+      }
     }
   }
 }

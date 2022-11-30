@@ -51,14 +51,14 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
       }
     },
     xAxisTitle: {
-      value: (<any>v.axes![1]).title,
+      value: (<any>v.axes![2]).title,
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
         offset: { left: -30, top: 10 }
       }
     },
     yAxisTitle: {
-      value: (<any>v.axes![2]).title,
+      value: (<any>v.axes![3]).title,
       anchor: {
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
         offset: { top: -30 }

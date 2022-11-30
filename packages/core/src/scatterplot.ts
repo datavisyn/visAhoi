@@ -65,7 +65,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
-      text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
+      text: `The ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

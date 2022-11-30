@@ -7,14 +7,16 @@ import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
   const dataCoords = chart._chartsViews[0]._symbolDraw._data._itemLayouts
-  const data = chart._chartsViews[0]._symbolDraw._data
   const options = chart._model.option
-
-  const points = dataCoords.filter((point) => point[0] && point[1])
+  const data = options.series[0].data
+  const points = data.filter((point) => point[0] && point[1])
   const xVals = [...points.map((point) => point[0])]
   const yVals = [...points.map((point) => point[1])]
+
   let maxX = Math.max(...xVals)
+
   const maxXIndex = xVals.indexOf(maxX)
+
   const maxY = yVals[maxXIndex] + chart._dom.offsetTop
   maxX += +chart._dom.offsetLeft
 
@@ -51,6 +53,13 @@ function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
       anchor: {
         coords: { x: maxX, y: maxY },
         offset: { left: 25 }
+      }
+    },
+    interactDesc: {
+      value: options.yAxis[0].name,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 20, left: -180 }
       }
     }
   }
