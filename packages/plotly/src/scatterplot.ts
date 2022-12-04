@@ -28,13 +28,26 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   const xVals = points.map((point) => point.getBoundingClientRect().x)
   const yVals = points.map((point) => point.getBoundingClientRect().y)
 
-  console.log('TEsT')
+  const xData = points.map((point) => point.__data__.x)
+  const yData = points.map((point) => point.__data__.y)
+
   const maxX = Math.max(...xVals)
-  const valueMaxX = maxX?.toFixed(2)
-  console.log(valueMaxX, 'Value maxX')
+  const minX = Math.min(...xVals)
 
   const maxXIndex = xVals.indexOf(maxX)
+  const minXIndex = xVals.indexOf(minX)
+
   const maxY: number = yVals[maxXIndex]
+  const minY: number = yVals[minXIndex]
+
+  const minXValue = Math.min(...xData)
+  const maxXValue = Math.max(...xData)
+
+  const minXValueIndex = xData.indexOf(minXValue)
+  const maxXValueIndex = xData.indexOf(maxXValue)
+
+  const minYValue = yData[minXValueIndex]
+  const maxYValue = yData[maxXValueIndex]
 
   return {
     chartTitle: {
@@ -77,8 +90,24 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         offset: { left: 25 }
       }
     },
-    valueMaxX: {
-      value: maxX?.toFixed(2)
+    minValue: {
+      value: minX,
+      anchor: {
+        coords: { x: minX, y: minY }
+        // offset: { left: 25 }
+      }
+    },
+    maxX: {
+      value: maxXValue
+    },
+    maxY: {
+      value: maxYValue
+    },
+    minX: {
+      value: minXValue
+    },
+    minY: {
+      value: minYValue
     }
   }
 }

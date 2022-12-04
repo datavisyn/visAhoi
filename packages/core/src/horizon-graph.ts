@@ -36,8 +36,6 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
-  console.log(spec.positiveColor, 'pos color')
-
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),

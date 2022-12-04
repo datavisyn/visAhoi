@@ -4,7 +4,6 @@ import {
   ahoi,
   EVisualizationType,
   setOnboardingStage,
-  setOnboardingMessage,
   setEditMode,
   createBasicOnboardingStage
 } from '@visahoi/plotly'

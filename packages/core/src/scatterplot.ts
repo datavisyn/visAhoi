@@ -17,9 +17,12 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
   xAxisTitle?: ISpecProp;
   maxValue?: ISpecProp;
+  minValue?: ISpecProp;
   interactDesc?: ISpecProp;
-  maxYValue?: ISpecProp;
-  valueMaxX?: ISpecProp;
+  maxX?: ISpecProp;
+  maxY?: ISpecProp;
+  minX?: ISpecProp;
+  minY?: ISpecProp;
 }
 
 function generateMessages (
@@ -88,8 +91,8 @@ function generateMessages (
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
-      requires: ['maxYValue', 'maxValue'],
-      text: `This is the dot-1 (${spec.maxValue?.value}, ${spec.maxYValue?.value}) to the origin.`,
+      requires: ['maxValue', 'maxX', 'maxY'],
+      text: `The dot (${spec.maxX?.value}, ${spec.maxY?.value}) is far away from the origin.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -97,6 +100,18 @@ function generateMessages (
       },
       id: 'unique-message-id-7',
       order: 1
+    },
+    {
+      anchor: getAnchor(spec.minValue, visElement),
+      requires: ['minValue', 'minX', 'minY'],
+      text: `The dot (${spec.minX?.value}, ${spec.minY?.value}) is close to the origin.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-8'
+      },
+      id: 'unique-message-id-8',
+      order: 2
     }
 
   ]

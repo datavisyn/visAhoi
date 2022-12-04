@@ -81,6 +81,13 @@ function extractOnboardingSpec (chart, coords): IOnboardingBarChartSpec {
         findDomNodeByValue: true,
         offset: { top: -20 }
       }
+    },
+    interactionDesc: {
+      value: options.yAxis[0].name,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 30, left: -150 }
+      }
     }
   }
 }

@@ -70,10 +70,15 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
         sel: '.infolayer .ytitle',
         offset: { top: -25, right: 10 }
       }
+    },
+    interactionDesc: {
+      value: chart.layout.yaxis.title.text,
+      anchor: {
+        sel: '.infolayer .ytitle',
+        offset: { top: 30, left: -150 }
+      }
     }
-    // xAxisLabel (e.g. 01, 02, …)
-    // yAxisLabel (e.g. -5, 0, 5, ...)
-    // Title (Average Temperature in Oslo)
+
   }
 }
 
