@@ -97,18 +97,6 @@ function extractOnboardingSpec (
         }
       }
     },
-    // yMin: {
-    //   value: t._extremes.y.min[0].val,
-    // },
-    // yMax: {
-    //   value: t._extremes.y.max[0].val,
-    // },
-    // xMin: {
-    //   value: t._extremes.x.min[0].val // 0 = first trace
-    // },
-    // xMax: {
-    //   value: t._extremes.x.max[0].val
-    // },
     xAxis: {
       value: chart.layout.xaxis.title.text,
       anchor: {
