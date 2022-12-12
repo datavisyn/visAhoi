@@ -87,10 +87,6 @@ function extractOnboardingSpec (
         offset: { top: 80, left: -30 }
       }
     }
-
-    // xAxisLabel (e.g. 01, 02, …)
-    // yAxisLabel (e.g. -5, 0, 5, ...)
-    // Title (Average Temperature in Oslo)
   }
 }
 
