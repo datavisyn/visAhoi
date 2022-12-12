@@ -27,11 +27,18 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingChange
     xAxis: {
       value: (<any>v.axes![2]).title.toLowerCase(),
       anchor: {
-        coords: elems[0]
+        coords: elems[0],
+        offset: { top: -120 }
       }
     },
     yAxis: {
       value: (<any>v.axes![3]).title.toLowerCase()
+    },
+    interactionDesc: {
+      value: (<any>v.marks![0]).style,
+      anchor: {
+        coords: elems[elems.length - 1]
+      }
     }
   }
 }

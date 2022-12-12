@@ -52,7 +52,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yAxis, visElement),
       requires: ['xAxis', 'yAxis'],
-      text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
+      text: `The areas illustrate the <i>${spec.yAxis?.value} (y-axis) </i> over <i>${spec.xAxis?.value} (x-axis)</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -66,10 +66,10 @@ function generateMessages (
       requires: ['yAxis', 'positiveColor'],
       text: `Light ${createColorRect(
         spec.positiveColor?.value
-      )} areas indicate a moderate positive ${spec.yAxis?.value} and dark
-        ${createColorRect(spec.positiveColor?.value)} areas a high positive ${
+      )} areas indicate a moderate positive <i>${spec.yAxis?.value} </i> and dark
+        ${createColorRect(spec.positiveColor?.value)} areas a high positive <i>${
         spec.yAxis?.value
-      }.`,
+      }</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -83,7 +83,7 @@ function generateMessages (
       requires: ['yAxis', 'negativeColor'],
       text: ` The ${createColorRect(
         spec.negativeColor?.value
-      )} areas indicate a very low negative ${spec.yAxis?.value}.`,
+      )} areas indicate a very low negative <i>${spec.yAxis?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -95,7 +95,7 @@ function generateMessages (
     {
       anchor: spec.yMin?.anchor,
       requires: ['yAxis', 'yMin'],
-      text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
+      text: `The <span class="hT">minimum</span> <i>${spec.yAxis?.value} </i> is ${spec.yMin?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -107,7 +107,7 @@ function generateMessages (
     {
       anchor: spec.yMax?.anchor,
       requires: ['yAxis', 'yMax'],
-      text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
+      text: `The <span class="hT">maximum</span> <i>${spec.yAxis?.value} </i> is ${spec.yMax?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -119,7 +119,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.interactDesc, visElement),
       requires: ['yAxis', 'xAxis', 'interactDesc'],
-      text: `Hover over the chart to get the ${spec.yAxis?.value} for each ${spec.xAxis?.value}`,
+      text: `Hover over the chart to get the <i>${spec.yAxis?.value} </i> for each <i>${spec.xAxis?.value} </i>.`,
       title: 'Interaction with the chart',
       onboardingStage: using,
       marker: {
@@ -134,7 +134,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The chart shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

@@ -56,7 +56,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
-      text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
+      text: `The legend shows the <i>${spec.legendTitle?.value} </i> for the chart. The colors range from blue to white and brown.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -68,7 +68,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
-      text: `The ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
+      text: `The <i>${spec.yAxisTitle?.value} (y-axis)</i> for a certain <i>${spec.xAxisTitle?.value} </i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -92,7 +92,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue', 'maxX', 'maxY'],
-      text: `The dot (${spec.maxX?.value}, ${spec.maxY?.value}) is far away from the origin.`,
+      text: `The data point (${spec.maxX?.value}, ${spec.maxY?.value}) is the farest point from the origin.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -104,7 +104,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue', 'minX', 'minY'],
-      text: `The dot (${spec.minX?.value}, ${spec.minY?.value}) is close to the origin.`,
+      text: `The data point (${spec.minX?.value}, ${spec.minY?.value}) is the closest point to the origin.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -120,7 +120,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The chart shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

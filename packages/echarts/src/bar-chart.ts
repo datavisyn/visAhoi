@@ -46,7 +46,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingBarChartSpec {
       anchor: {
         coords: {
           x: dataCoords[6].x + dataCoords[6].width / 2,
-          y: dataCoords[6].y + dataCoords[6].height
+          y: dataCoords[6].y + dataCoords[6].height / 2
         }
       }
     },

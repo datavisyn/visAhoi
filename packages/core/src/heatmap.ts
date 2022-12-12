@@ -39,7 +39,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The chart shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -75,7 +75,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.axisDescription, visElement),
       requires: ['xAxis', 'yAxis'],
-      text: `${spec.yAxis?.value} is plotted in rows and the ${spec.xAxis?.value} in columns.`,
+      text: `<i>${spec.yAxis?.value}</i> is plotted in rows and the <i>${spec.xAxis?.value}</i> in columns.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -99,7 +99,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      text: `The deep red color rectangle holds the maximum value in the heatmap. In this heatmap ${spec.maxValue?.value} is the maximum value.`,
+      text: `The deep red color rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value} .`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -110,7 +110,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue'],
-      text: `The deep blue color rectangle holds the minimum value in the heatmap. In this heatmap ${spec.minValue?.value} is the minimum value.`,
+      text: `The deep blue color rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {

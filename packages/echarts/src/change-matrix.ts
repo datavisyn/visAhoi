@@ -12,6 +12,11 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
       .group.position
   const legendTitle = { x: legendPosition[0], y: legendPosition[1] + 150 }
   const options = chart._model.option
+
+  const dataArr = options.series[0].data.map((d) => d[2])
+  const min = Math.min(...dataArr)
+  const max = Math.max(...dataArr)
+
   return {
     chartTitle: {
       value: options?.title[0]?.text,
@@ -50,7 +55,30 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
       domNodeValue: options.yAxis[0].data[2],
       anchor: {
         findDomNodeByValue: true,
-        offset: { top: -10, left: 60 }
+        offset: { top: -10, left: -60 }
+      }
+    },
+    interactionDesc: {
+      value: options.yAxis[0].name,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 80, left: -30 }
+      }
+    },
+    min: {
+      value: min,
+      domNodeValue: options.xAxis[0].name,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 60, left: -60 }
+      }
+    },
+    max: {
+      value: max,
+      domNodeValue: options.yAxis[0].data[2],
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: -60, left: -60 }
       }
     }
   }

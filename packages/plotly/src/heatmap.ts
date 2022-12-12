@@ -11,6 +11,12 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   )).__data__
   const t = heatmapData[0].trace
 
+  const minArray = t.z.map((d) => Math.min(...d))
+  const maxArray = t.z.map((d) => Math.max(...d))
+
+  const min = minArray ? Math.min(...minArray) : null
+  const max = maxArray ? Math.max(...maxArray) : null
+
   return {
     chartTitle: {
       value: chart.layout.title.text,
@@ -51,6 +57,20 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       anchor: {
         sel: '.cartesianlayer',
         offset: { top: -50, left: -120 }
+      }
+    },
+    maxValue: {
+      value: max,
+      anchor: {
+        sel: '.heatmaplayer > .hm > image',
+        offset: { left: -50, top: -30 }
+      }
+    },
+    minValue: {
+      value: min,
+      anchor: {
+        sel: '.infolayer > .g-ytitle',
+        offset: { bottom: -50, left: -120 }
       }
     }
   }
