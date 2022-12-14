@@ -13,13 +13,21 @@ function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
   const xVals = [...points.map((point) => point[0])]
   const yVals = [...points.map((point) => point[1])]
 
-  let maxX = Math.max(...xVals)
+  const maxX = Math.max(...xVals)
+  const minX = Math.min(...xVals)
 
   const maxXIndex = xVals.indexOf(maxX)
+  const minXIndex = xVals.indexOf(minX)
 
-  const maxY = yVals[maxXIndex] + chart._dom.offsetTop
-  maxX += +chart._dom.offsetLeft
+  const maxY = yVals[maxXIndex]
+  const minY = yVals[minXIndex]
 
+  // TODO: Get the value to child nodes only for the rect.
+  const maxPositionX = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 40]?.getBoundingClientRect().x
+  const maxPositionY = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 40]?.getBoundingClientRect().y
+
+  const minPositionX = document.getElementsByTagName('g')[0].childNodes[minXIndex + 40]?.getBoundingClientRect().x
+  const minPositionY = document.getElementsByTagName('g')[0].childNodes[minXIndex + 40]?.getBoundingClientRect().y
   return {
     chartTitle: {
       value: options?.title[0]?.text,
@@ -51,10 +59,30 @@ function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
     maxValue: {
       value: maxX,
       anchor: {
-        coords: { x: maxX, y: maxY },
+        coords: { x: maxPositionX, y: maxPositionY },
         offset: { left: 25 }
       }
     },
+    minValue: {
+      value: minX,
+      anchor: {
+        coords: { x: minPositionX, y: minPositionY },
+        offset: { left: 25 }
+      }
+    },
+    maxX: {
+      value: maxX
+    },
+    maxY: {
+      value: maxY
+    },
+    minX: {
+      value: minX
+    },
+    minY: {
+      value: minY
+    },
+
     interactDesc: {
       value: options.yAxis[0].name,
       anchor: {

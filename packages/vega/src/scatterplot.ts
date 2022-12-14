@@ -24,9 +24,26 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
   const xVals = points.map((point) => point.getBoundingClientRect().x)
   const yVals = points.map((point) => point.getBoundingClientRect().y)
 
-  const maxX = Math.max(...xVals)
-  const maxXIndex = xVals.indexOf(maxX)
-  const maxY = yVals[maxXIndex]
+  const data = points.map((point) => point)
+
+  const ttt = data.map((tt) => tt?.__data__.datum)
+
+  const horsepowerArray = ttt.map(t => t.Horsepower)
+  const milePerGallonArray = ttt.map(t => t.Miles_per_Gallon)
+
+  const maxX = Math.max(...horsepowerArray)
+  const minX = Math.min(...horsepowerArray)
+
+  const maxIndex = horsepowerArray.indexOf(maxX)
+  const minIndex = horsepowerArray.indexOf(minX)
+
+  const maxY = milePerGallonArray[maxIndex]
+  const minY = milePerGallonArray[minIndex]
+
+  const maxPositionX = xVals[maxIndex]
+  const maxPositionY = yVals[maxIndex]
+  const minPositionX = xVals[minIndex]
+  const minPositionY = yVals[minIndex]
 
   return {
     chartTitle: {
@@ -65,10 +82,36 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
       }
     },
     maxValue: {
-      value: maxX,
+      value: maxPositionX,
       anchor: {
-        coords: { x: maxX, y: maxY },
+        coords: { x: maxPositionX, y: maxPositionY },
         offset: { left: 25 }
+      }
+    },
+    maxX: {
+      value: maxX
+    },
+    maxY: {
+      value: maxY
+    },
+    minValue: {
+      value: minPositionX,
+      anchor: {
+        coords: { x: minPositionX, y: minPositionY },
+        offset: { left: 25 }
+      }
+    },
+    minX: {
+      value: minX
+    },
+    minY: {
+      value: minY
+    },
+    interactDesc: {
+      value: (<any>v.marks![0]).style,
+      anchor: {
+        sel: 'svg',
+        coords: elems[4]
       }
     }
   }

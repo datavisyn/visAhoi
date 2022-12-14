@@ -17,6 +17,16 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
   const min = Math.min(...dataArr)
   const max = Math.max(...dataArr)
 
+  const maxXIndex = dataArr.indexOf(max)
+  const minXIndex = dataArr.indexOf(min)
+
+  // TODO: Get the value to child nodes only for the rect.
+  const maxPositionX = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getBoundingClientRect().x
+  const maxPositionY = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getBoundingClientRect().y
+
+  const minPositionX = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getBoundingClientRect().x
+  const minPositionY = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getBoundingClientRect().y
+
   return {
     chartTitle: {
       value: options?.title[0]?.text,
@@ -67,18 +77,17 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
     },
     min: {
       value: min,
-      domNodeValue: options.xAxis[0].name,
       anchor: {
-        findDomNodeByValue: true,
-        offset: { top: 60, left: -60 }
+        coords: { x: minPositionX, y: minPositionY },
+        offset: { left: -10, top: -30 }
+
       }
     },
     max: {
       value: max,
-      domNodeValue: options.yAxis[0].data[2],
       anchor: {
-        findDomNodeByValue: true,
-        offset: { top: -60, left: -60 }
+        coords: { x: maxPositionX, y: maxPositionY },
+        offset: { left: -10, top: -30 }
       }
     }
   }
