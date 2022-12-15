@@ -11,11 +11,37 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   )).__data__
   const t = heatmapData[0].trace
 
-  const minArray = t.z.map((d) => Math.min(...d))
+  const minArray = t.z.map((d) => Math.min(...d.filter(n => n !== null)))
   const maxArray = t.z.map((d) => Math.max(...d))
 
   const min = minArray ? Math.min(...minArray) : null
   const max = maxArray ? Math.max(...maxArray) : null
+
+  /** To get the position for placing the max, min and empty value markers */
+
+  const xGrids = document.getElementsByClassName('xgrid crisp')
+  const yGrids = document.getElementsByClassName('ygrid crisp')
+
+  const emptyValue = t.z.map((tt) => tt.filter(n => n === null))[0]
+
+  const getXYPosition = (value) => {
+    const ZArray = t.z.map((tt) => tt.indexOf(value))
+    const XGridIndex = ZArray.filter(t => t > -1)[0]
+    const YGridIndex = ZArray.indexOf(XGridIndex)
+
+    const x = xGrids[XGridIndex].getBoundingClientRect().x
+    const y = yGrids[YGridIndex].getBoundingClientRect().y
+    return [x, y]
+  }
+
+  const [minX, minY] = getXYPosition(min)
+  const [maxX, maxY] = getXYPosition(max)
+
+  let nullX, nullY
+
+  if (emptyValue) {
+    [nullX, nullY] = getXYPosition(null)
+  }
 
   return {
     chartTitle: {
@@ -62,15 +88,19 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     maxValue: {
       value: max,
       anchor: {
-        sel: '.heatmaplayer > .hm > image',
-        offset: { left: -50, top: -30 }
+        coords: { x: maxX, y: maxY }
       }
     },
     minValue: {
       value: min,
       anchor: {
-        sel: '.infolayer > .g-ytitle',
-        offset: { bottom: -50, left: -120 }
+        coords: { x: minX, y: minY }
+      }
+    },
+    emptyValue: {
+      value: 0,
+      anchor: {
+        coords: { x: nullX, y: nullY }
       }
     }
   }

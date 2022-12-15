@@ -19,6 +19,7 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   missingDataDescription?: ISpecProp;
   maxValue?: ISpecProp;
   minValue?: ISpecProp;
+  emptyValue?: ISpecProp;
 }
 
 function generateMessages (
@@ -105,7 +106,8 @@ function generateMessages (
       marker: {
         id: 'unique-marker-id-6'
       },
-      id: 'unique-message-id-6'
+      id: 'unique-message-id-6',
+      order: 1
     },
     {
       anchor: getAnchor(spec.minValue, visElement),
@@ -116,7 +118,20 @@ function generateMessages (
       marker: {
         id: 'unique-marker-id-7'
       },
-      id: 'unique-message-id-7'
+      id: 'unique-message-id-7',
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.emptyValue, visElement),
+      requires: ['emptyValue'],
+      text: 'The white color rectangle holds the null value in the heatmap.',
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-8'
+      },
+      id: 'unique-message-id-8',
+      order: 3
     }
   ]
 
