@@ -114,7 +114,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The <span class="visahoi-tooltip-hover-text">chart</span> shows the <i>${spec.chartTitle?.value}</i>.`,
+      text: `The change matrix shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       tooltipPosition: 'top' as TooltipPosition, // this causes the "jumping" of the tooltip when resizing

@@ -1,3 +1,4 @@
+import { visXPosition } from './../../core/src/components/stores'
 import {
   EVisualizationType,
   IOnboardingMessage,
@@ -10,8 +11,17 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
   const traceNodes = chart.querySelectorAll('g.points')
   const barNodes = traceNodes[0].querySelectorAll('g.point')
   const barNodesData = Array.from(barNodes).map((point: any) => point.__data__)
+  console.log(barNodesData, 'bar nodes data')
 
   const t = barNodesData[0].trace
+  const min = t._extremes.y.min[0].val
+  const max = t._extremes.y.max[0].val
+  const minIndex = chart._fullData[0].y.indexOf(min)
+  const maxIndex = chart._fullData[0].y.indexOf(max)
+  const minX = barNodes[minIndex].getBoundingClientRect().x
+  const minY = barNodes[minIndex].getBoundingClientRect().y
+  const maxX = barNodes[maxIndex].getBoundingClientRect().x
+  const maxY = barNodes[maxIndex].getBoundingClientRect().y
 
   return {
     chartTitle: {
@@ -40,15 +50,15 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
       value: t.orientation === 'v' ? 'height' : 'width'
     },
     yMin: {
-      value: t._extremes.y.min[0].val.toFixed(1), // 0 = first trace
+      value: min.toFixed(1), // 0 = first trace
       anchor: {
-        sel: '.bars > .points > .point:nth-child(2)'
+        coords: { x: minX, y: minY }
       }
     },
     yMax: {
-      value: t._extremes.y.max[0].val.toFixed(1),
+      value: max.toFixed(1),
       anchor: {
-        sel: '.bars > .points > .point:nth-child(7)'
+        coords: { x: maxX, y: maxY }
       }
     },
     xMin: {
@@ -74,8 +84,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
     interactionDesc: {
       value: chart.layout.yaxis.title.text,
       anchor: {
-        sel: '.infolayer .ytitle',
-        offset: { top: 30, left: -150 }
+        sel: '.bars > .points > .point:nth-child(1)'
       }
     }
 

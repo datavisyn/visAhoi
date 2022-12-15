@@ -18,7 +18,7 @@ export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   interactDesc?: ISpecProp;
 }
 
-function createColorRect (color: string) {
+function createColorRect (color = 'white') {
   return `<div class="colorRect" style="background-color: ${color}"></div>`
 }
 
@@ -134,7 +134,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the <i>${spec.chartTitle?.value}</i>.`,
+      text: `The horizon graph shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

@@ -6,8 +6,8 @@ import {
 } from '@visahoi/core'
 
 const getMinMax = (values) => {
-  const unified: number[] = new Array(values[0].data?.length).fill(0)
-  values?.forEach((v, i) => {
+  const unified: number[] = new Array(values[0].data.length).fill(0)
+  values.forEach((v, i) => {
     v.data.forEach((val, index) => {
       if (i === 2) {
         unified[index] -= val

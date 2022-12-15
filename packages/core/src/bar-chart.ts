@@ -56,7 +56,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
-      text: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the <i> ${spec.yAxisTitle?.value} (y-axis) </i> for a certain <i>${spec.xAxisTitle?.value}</i>.`,
+      text: `The ${spec.barLength?.value} of each ${spec.type?.value} shows the <i> ${spec.yAxisTitle?.value} (y-axis) </i> for a certain <i>${spec.xAxisTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -119,7 +119,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The <span class="hT">chart shows the <i> ${spec.chartTitle?.value} </i>.`,
+      text: `The bar chart shows the <i> ${spec.chartTitle?.value} </i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

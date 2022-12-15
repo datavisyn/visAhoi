@@ -40,7 +40,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the <i>${spec.chartTitle?.value}</i>.`,
+      text: `The heatmap shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
