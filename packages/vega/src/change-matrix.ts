@@ -16,6 +16,9 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingChange
   const maxPositionX = pathArray[maxIndex].__data__.bounds.x2
   const maxPositionY = pathArray[maxIndex].__data__.bounds.y2
 
+  const minColor = pathArray[minIndex].getAttribute('fill')
+  const maxColor = pathArray[maxIndex].getAttribute('fill')
+
   return {
     chartTitle: {
       value: (typeof (v.title) === 'string') ? v.title : v.title?.text,
@@ -66,6 +69,12 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingChange
         coords: { x: maxPositionX, y: maxPositionY },
         offset: { top: -100 }
       }
+    },
+    minColor: {
+      value: minColor
+    },
+    maxColor: {
+      value: maxColor
     }
   }
 }
