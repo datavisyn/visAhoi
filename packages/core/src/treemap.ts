@@ -101,7 +101,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValueDesc, visElement),
       requires: ['maxValueDesc', 'maxValue'],
-      text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
+      text: `The largest rectangle holds the maximum value in the sub-category. The sub-category ${spec.maxValueDesc?.value} holds the maximum value ${spec.maxValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -114,7 +114,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValueDesc, visElement),
       requires: ['minValueDesc', 'minValue'],
-      text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
+      text: ` The smallest rectangle holds the minimum value in the sub-category. The sub-category ${spec.minValueDesc?.value} holds the minimum value ${spec.minValue?.value}`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -129,7 +129,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The treemap shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

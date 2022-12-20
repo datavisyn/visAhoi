@@ -18,6 +18,18 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   yAxisTitle?: ISpecProp;
   xAxisTitle?: ISpecProp;
   maxValue?: ISpecProp;
+  minValue?: ISpecProp;
+  interactDesc?: ISpecProp;
+  maxX?: ISpecProp;
+  maxY?: ISpecProp;
+  minX?: ISpecProp;
+  minY?: ISpecProp;
+  minColor?: ISpecProp;
+  maxColor?: ISpecProp;
+}
+
+function createColorRect (color = 'white') {
+  return `<div class="colorRect" style="background-color: ${color}"></div>`
 }
 
 function generateMessages (
@@ -46,6 +58,30 @@ function generateMessages (
       },
       id: 'unique-message-id-4',
       order: 3
+    },
+    {
+      anchor: getAnchor(spec.yAxisTitle, visElement),
+      requires: ['yAxisTitle', 'xAxisTitle'],
+      text: `The <i>${spec.yAxisTitle?.value} (y-axis)</i> for a certain <i>${spec.xAxisTitle?.value} </i>.`,
+      title: 'Reading the chart',
+      onboardingStage: reading,
+      marker: {
+        id: 'unique-marker-id-5'
+      },
+      id: 'unique-message-id-5',
+      order: 3
+    },
+    {
+      anchor: getAnchor(spec.interactDesc, visElement),
+      requires: ['interactDesc'],
+      text: 'Hover over the chart to get the dedicated value for each data point.',
+      title: 'Interaction with the chart',
+      onboardingStage: interacting,
+      marker: {
+        id: 'unique-marker-id-6'
+      },
+      id: 'unique-message-id-6',
+      order: 1
     }
     // {
     //   anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -60,33 +96,19 @@ function generateMessages (
     //   order: 4
     // }
   ]
+
   if (spec.type?.value !== undefined) {
     messages.unshift({
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
-      text: `The chart Is based on colored ${spec.type?.value} elements.`,
-      title: 'Interacting with the chart',
-      onboardingStage: interacting,
+      text: `The chart is based on colored ${spec.type?.value} elements.`,
+      title: 'Reading the chart',
+      onboardingStage: reading,
       marker: {
         id: 'unique-marker-id-2'
       },
       id: 'unique-message-id-2',
-      order: 1
-    })
-  }
-
-  if (spec.maxValue?.value !== undefined) {
-    messages.unshift({
-      anchor: getAnchor(spec.maxValue, visElement),
-      requires: ['maxValue'],
-      text: `The chart Is based on colored ${spec.type?.value} elements.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: 'unique-marker-id-6'
-      },
-      id: 'unique-message-id-6',
-      order: 5
+      order: 2
     })
   }
 
@@ -94,13 +116,42 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
-      text: 'It shows different traces',
+      text: `The color of the scatterplot elements represents the amount of <i>${spec.legendTitle?.value}  </i>, where ${createColorRect(spec.minColor?.value)} represents the lowest and ${createColorRect(spec.maxColor?.value)} represents the highest. `,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
         id: 'unique-marker-id-3'
       },
       id: 'unique-message-id-3',
+      order: 4
+    })
+  }
+
+  if (spec.maxValue?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.maxValue, visElement),
+      requires: ['maxValue', 'maxX', 'maxY'],
+      text: `The maximum <i>${spec.xAxisTitle?.value} of ${spec.maxX?.value} relates to ${spec.maxY?.value} ${spec.yAxisTitle?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-7'
+      },
+      id: 'unique-message-id-7',
+      order: 1
+    })
+  }
+  if (spec.maxValue?.value !== undefined) {
+    messages.unshift({
+      anchor: getAnchor(spec.minValue, visElement),
+      requires: ['minValue', 'minX', 'minY'],
+      text: `The minimum <i>${spec.xAxisTitle?.value} of ${spec.minX?.value} relates to ${spec.minY?.value} ${spec.yAxisTitle?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-8'
+      },
+      id: 'unique-message-id-8',
       order: 2
     })
   }
@@ -109,7 +160,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle', 'title'],
-      text: `The chart shows the ${spec.title?.value}.`,
+      text: `The scatterplot shows the <i>${spec.title?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

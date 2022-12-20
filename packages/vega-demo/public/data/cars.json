@@ -9,7 +9,7 @@
       ],
       "usermeta": { "embedOptions": { "renderer": "svg" } },
       "title": "Some title with cars or something",
-      "mark": "circle",
+      "mark": {"type": "circle", "tooltip": true},
       "width": "container",
       "height": "container",
       "encoding": {

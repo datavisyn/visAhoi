@@ -27,6 +27,9 @@
     allowedClasses: {
       "*": ["*"], // allow all classes for all tags
     },
+    allowedAttributes: {
+      "*": ["style"], // allow style attribute for all tags
+    },
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;

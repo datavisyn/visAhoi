@@ -15,10 +15,11 @@ export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   yAxis?: ISpecProp;
   positiveColor?: ISpecProp;
   negativeColor?: ISpecProp;
+  interactDesc?: ISpecProp;
 }
 
 function createColorRect (color = 'white') {
-  return `<div class="colorRect" style="background: ${color}"></div>`
+  return `<div class="colorRect" style="background-color: ${color}"></div>`
 }
 
 function generateMessages (
@@ -30,6 +31,9 @@ function generateMessages (
   ) as IOnboardingStage
   const using = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
+  ) as IOnboardingStage
+  const analyzing = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
   const messages: IOnboardingMessage[] = [
@@ -46,9 +50,9 @@ function generateMessages (
       order: 2
     },
     {
-      anchor: getAnchor(spec.xAxis, visElement),
+      anchor: getAnchor(spec.yAxis, visElement),
       requires: ['xAxis', 'yAxis'],
-      text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
+      text: `The areas illustrate the <i>${spec.yAxis?.value} (y-axis) </i> over <i>${spec.xAxis?.value} (x-axis)</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -62,10 +66,10 @@ function generateMessages (
       requires: ['yAxis', 'positiveColor'],
       text: `Light ${createColorRect(
         spec.positiveColor?.value
-      )} areas indicate a moderate positive ${spec.yAxis?.value} and dark
-        ${createColorRect(spec.positiveColor?.value)} areas a high positive ${
+      )} areas indicate a moderate positive <i>${spec.yAxis?.value} </i> and dark
+        ${createColorRect(spec.positiveColor?.value)} areas a high positive <i>${
         spec.yAxis?.value
-      }.`,
+      }</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -77,9 +81,9 @@ function generateMessages (
     {
       anchor: getAnchor(spec.negativeColor, visElement),
       requires: ['yAxis', 'negativeColor'],
-      text: `${createColorRect(
+      text: ` The ${createColorRect(
         spec.negativeColor?.value
-      )} areas indicate a very low negative ${spec.yAxis?.value}.`,
+      )} areas indicate a very low negative <i>${spec.yAxis?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -91,26 +95,38 @@ function generateMessages (
     {
       anchor: spec.yMin?.anchor,
       requires: ['yAxis', 'yMin'],
-      text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: using,
+      text: `The <span class="hT">minimum</span> <i>${spec.yAxis?.value} </i> is ${spec.yMin?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-6'
       },
       id: 'unique-message-id-6',
-      order: 6
+      order: 1
     },
     {
       anchor: spec.yMax?.anchor,
       requires: ['yAxis', 'yMax'],
-      text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: using,
+      text: `The <span class="hT">maximum</span> <i>${spec.yAxis?.value} </i> is ${spec.yMax?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-7'
       },
       id: 'unique-message-id-7',
-      order: 7
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.interactDesc, visElement),
+      requires: ['yAxis', 'xAxis', 'interactDesc'],
+      text: `Hover over the chart to get the <i>${spec.yAxis?.value} </i> for each <i>${spec.xAxis?.value} </i>.`,
+      title: 'Interaction with the chart',
+      onboardingStage: using,
+      marker: {
+        id: 'unique-marker-id-8'
+      },
+      id: 'unique-message-id-8',
+      order: 1
     }
   ]
 
@@ -118,7 +134,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The horizon graph shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

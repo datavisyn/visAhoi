@@ -16,19 +16,10 @@ const opt = {
     {
       name: 'layout',
       value: 'squarify'
-      // "bind": {
-      //   "input": "select",
-      //   "options": [
-      //     "squarify",
-      //     "binary",
-      //     "slicedice"
-      //   ]
-      // }
     },
     {
       name: 'aspectRatio',
       value: 1.6
-      // "bind": {"input": "range", "min": 1, "max": 5, "step": 0.1}
     }
   ],
 

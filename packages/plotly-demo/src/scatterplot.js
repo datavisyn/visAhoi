@@ -48,8 +48,9 @@ function makePlotly (x, y) {
   ]
 
   const layout = {
-    title: 'Scatterplot visualizing Horsepower vs Miles per Gallon',
-    showlegend: true,
+    title: 'A scatterplot showing horsepower and miles per gallon for various cars',
+    // showlegend: true,
+
     xaxis: {
       title: 'Horsepower'
     },

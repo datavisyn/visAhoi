@@ -35,10 +35,26 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     const xVals = points.map((point) => point.getBoundingClientRect().x)
     const yVals = points.map((point) => point.getBoundingClientRect().y)
 
-    maxX = Math.max(...xVals)
-    const maxXIndex = xVals.indexOf(maxX)
-    maxY = yVals[maxXIndex]
-  }
+  const xData = points.map((point) => point.__data__.x)
+  const yData = points.map((point) => point.__data__.y)
+
+  const maxX = Math.max(...xVals)
+  const minX = Math.min(...xVals)
+
+  const maxXIndex = xVals.indexOf(maxX)
+  const minXIndex = xVals.indexOf(minX)
+
+  const maxY: number = yVals[maxXIndex]
+  const minY: number = yVals[minXIndex]
+
+  const minXValue = Math.min(...xData)
+  const maxXValue = Math.max(...xData)
+
+  const minXValueIndex = xData.indexOf(minXValue)
+  const maxXValueIndex = xData.indexOf(maxXValue)
+
+  const minYValue = yData[minXValueIndex]
+  const maxYValue = yData[maxXValueIndex]
 
   const title = chart?.layout?.title?.text
   const legend = chart.data[0]?.marker?.colorbar?.title?.text
@@ -69,6 +85,12 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         sel: '.points > .point:nth-child(4)'
       }
     },
+    interactDesc: {
+      value: t.type,
+      anchor: {
+        sel: '.points > .point:nth-child(2)'
+      }
+    },
     xAxisTitle: {
       value: chart.layout.xaxis?.title.text,
       anchor: {
@@ -94,6 +116,25 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         coords: { x: maxX, y: maxY },
         offset: { left: 25 }
       }
+    },
+    minValue: {
+      value: minX,
+      anchor: {
+        coords: { x: minX, y: minY }
+        // offset: { left: 25 }
+      }
+    },
+    maxX: {
+      value: maxXValue
+    },
+    maxY: {
+      value: maxYValue
+    },
+    minX: {
+      value: minXValue
+    },
+    minY: {
+      value: minYValue
     }
   }
 }

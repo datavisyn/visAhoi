@@ -15,6 +15,11 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
   legendTitle?: ISpecProp;
   xAxis?: ISpecProp;
   yAxis?: ISpecProp;
+  min?: ISpecProp;
+  max?: ISpecProp;
+  interactionDesc?: ISpecProp;
+  minColor?: ISpecProp;
+  maxColor?: ISpecProp;
 }
 
 function generateMessages (
@@ -24,6 +29,16 @@ function generateMessages (
   const reading = defaultOnboardingStages.get(
     EDefaultOnboardingStages.READING
   ) as IOnboardingStage
+  const interacting = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.USING
+  ) as IOnboardingStage
+  const analyzing = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.ANALYZING
+  ) as IOnboardingStage
+
+  function createColorRect (color = 'white') {
+    return `<div class="colorRect" style="background-color: ${color}"></div>`
+  }
 
   const messages: IOnboardingMessage[] = [
     {
@@ -41,8 +56,8 @@ function generateMessages (
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
-      requires: ['legendTitle'],
-      text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
+      requires: ['legendTitle', 'minColor', 'maxColor'],
+      text: `The legend shows the <i>${spec.chartTitle?.value}</i> where the ${createColorRect(spec.minColor?.value)} means low and ${createColorRect(spec.maxColor?.value)} means high.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -54,7 +69,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.xAxis, visElement),
       requires: ['xAxis', 'yAxis'],
-      text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
+      text: `The columns show the <i>${spec.xAxis?.value}</i>, while the rows show the <i>${spec.yAxis?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -62,6 +77,42 @@ function generateMessages (
       },
       id: 'unique-message-id-4',
       order: 4
+    },
+    {
+      anchor: getAnchor(spec.min, visElement),
+      requires: ['min', 'chartTitle'],
+      text: `The minimum <i>${spec.chartTitle?.value}</i> is ${spec.min?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-5'
+      },
+      id: 'unique-message-id-5',
+      order: 1
+    },
+    {
+      anchor: getAnchor(spec.max, visElement),
+      requires: ['max', 'chartTitle'],
+      text: `The maximum <i>${spec.chartTitle?.value}</i> is ${spec.max?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-6'
+      },
+      id: 'unique-message-id-6',
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.interactionDesc, visElement),
+      requires: ['chartTitle', 'xAxis', 'yAxis'],
+      text: `Hover over the chart to get the <i> ${spec.chartTitle?.value} </i> for each <i>${spec.xAxis?.value}</i> in different <i> ${spec.yAxis?.value}</i>.`,
+      title: 'Interaction with the chart',
+      onboardingStage: interacting,
+      marker: {
+        id: 'unique-marker-id-7'
+      },
+      id: 'unique-message-id-7',
+      order: 1
     }
   ]
 
@@ -69,7 +120,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The <span class="visahoi-tooltip-hover-text">chart</span> shows the ${spec.chartTitle?.value}.`,
+      text: `The change matrix shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       tooltipPosition: 'top' as TooltipPosition, // this causes the "jumping" of the tooltip when resizing
