@@ -35,8 +35,8 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
         coords: {
           x: elems[2].mark.items[1].x,
           y: minYPosition
-        },
-        offset: { left: 40, top: 10 }
+        }
+
       }
     },
     yMax: {
@@ -45,8 +45,8 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
         coords: {
           x: elems[1].mark.items[6].x,
           y: maxYPosition
-        },
-        offset: { left: 20, top: 10 }
+        }
+
       }
     },
     yAxis: {
@@ -65,26 +65,29 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
       value: (<any>o).layer[0].mark.color,
       anchor: {
         coords: {
-          x: elems[0].mark.items[elems[0].mark.items.length - 1].x,
-          y: elems[0].mark.items[elems[0].mark.items.length - 1].y
-        }
+          x: elems[1].mark.items[6].x,
+          y: maxYPosition
+        },
+        offset: { top: 20 }
       }
     },
     negativeColor: {
       value: (<any>o).layer[2].mark.color,
       anchor: {
         coords: {
-          x: elems[1].mark.items[1].x,
-          y: elems[1].mark.items[1].y
+          x: elems[2].mark.items[1].x,
+          y: minYPosition
         },
-        offset: { top: 10 }
+        offset: { top: -40 }
       }
     },
     interactDesc: {
       value: (<any>v.axes![2]).title,
       anchor: {
-        findDomNodeByValue: true,
-        offset: { left: -180, top: 30 }
+        coords: {
+          x: elems[1].mark.items[6].x - 20,
+          y: maxYPosition
+        }
       }
     }
   }
