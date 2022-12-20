@@ -7,6 +7,13 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
   const v = vegaSpec
   const o = visualizationSpec
   const axesMinMax = getMinMax(aggregatedValues)
+  const maxLayer = document.getElementsByClassName('mark-area role-mark layer_1_marks')
+  const minLayer = document.getElementsByClassName('mark-area role-mark layer_2_marks')
+  const maxYPosition = maxLayer[0].getBoundingClientRect().y
+  const minYPosition = minLayer[0].getBoundingClientRect().y
+
+  // TODO: Get the minXPosition and maxXPosition
+
   return {
     chartTitle: {
       value: (typeof (v.title) === 'string') ? v.title : v.title?.text,
@@ -27,7 +34,7 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
       anchor: {
         coords: {
           x: elems[2].mark.items[1].x,
-          y: elems[2].mark.items[1].y
+          y: minYPosition
         },
         offset: { left: 40, top: 10 }
       }
@@ -37,7 +44,7 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
       anchor: {
         coords: {
           x: elems[1].mark.items[6].x,
-          y: elems[1].mark.items[6].y
+          y: maxYPosition
         },
         offset: { left: 20, top: 10 }
       }
