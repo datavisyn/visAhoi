@@ -19,7 +19,7 @@ const getMinMax = (values) => {
   const removedUnifiedNaN = unified.filter((f) => !isNaN(f))
   const min = Math.min(...removedUnifiedNaN)
   const max = Math.max(...removedUnifiedNaN)
-  return [min, max]
+  return [min, max, removedUnifiedNaN]
 }
 
 function extractOnboardingSpec (
@@ -34,7 +34,9 @@ function extractOnboardingSpec (
   const d3 = traceNodes[2].__data__[0]
 
   const data = [{ ...d1 }, { ...d2 }, { ...d3 }]
-  const [min1, max1] = getMinMax(data)
+  const [min, max, dataArray] = getMinMax(data)
+  const minIndex = dataArray.indexOf(min)
+  const maxIndex = dataArray.indexOf(max)
 
   const posAreaNodes = traceNodes[0].querySelectorAll('path.js-fill')
   const negAreaNodes = traceNodes[2].querySelectorAll('path.js-fill')
@@ -46,6 +48,8 @@ function extractOnboardingSpec (
 
   const positiveColor = posAreaNodes[0]?.style.fill
   const negativeColor = negAreaNodes[0]?.style.fill
+
+  const xGrids = document.getElementsByClassName('x')
 
   if (t === undefined || t === null) {
     console.error(
@@ -80,20 +84,21 @@ function extractOnboardingSpec (
       }
     },
     yMax: {
-      value: max1.toFixed(2),
+      value: max.toFixed(2),
       anchor: {
         coords: {
-          x: t._polygons[0]?.xmax / 2,
-          y: t._polygons[0]?.ymax
+          x: xGrids[1].childNodes[maxIndex - 1]?.getBoundingClientRect().x,
+          y: traceNodes[1].childNodes[0].getBoundingClientRect().y
         }
       }
     },
     yMin: {
-      value: min1.toFixed(2),
+      value: min.toFixed(2),
       anchor: {
         coords: {
-          x: t._polygons[0]?.xmax / 2 - 180,
-          y: t._polygons[0]?.ymax + 60
+          x: xGrids[minIndex]?.getBoundingClientRect().x,
+          y: traceNodes[2].childNodes[0].getBoundingClientRect().y
+
         }
       }
     },

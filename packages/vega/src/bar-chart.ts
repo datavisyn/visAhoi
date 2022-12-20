@@ -28,6 +28,7 @@ export function getMinMax (data) {
       key: k,
       min: Math.min(...values[k]),
       max: Math.max(...values[k])
+
     })
   })
 
@@ -52,6 +53,12 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
   const { x, y, b } = getOrientation(v.scales)
   const axesMinMax = getMinMax(a)
 
+  const dataArray = getPropertyValues(a)
+  const minIndex = dataArray?.temp?.indexOf(axesMinMax[0].min)
+  const maxIndex = dataArray?.temp?.indexOf(axesMinMax[0].max)
+
+  const rectBars = document.getElementsByClassName('mark-rect role-mark marks')
+
   return {
     chartTitle: {
       value: typeof v.title === 'string' ? v.title : v.title?.text,
@@ -64,7 +71,10 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: (<any>v.marks![0]).style,
       anchor: {
         sel: 'svg',
-        coords: elems[4]
+        coords: {
+          x: rectBars[0].childNodes[3]?.getBoundingClientRect()?.x,
+          y: rectBars[0].childNodes[3]?.getBoundingClientRect()?.y
+        }
       }
     },
     orientation: {
@@ -89,14 +99,25 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: axesMinMax[0].min.toFixed(1),
       anchor: {
         sel: 'svg',
-        coords: elems[2]
+        // coords: elems[2]
+        coords: minIndex
+          ? {
+              x: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.x,
+              y: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.y
+            }
+          : elems[2]
       }
     },
     yMax: {
       value: axesMinMax[0].max.toFixed(1),
       anchor: {
         sel: 'svg',
-        coords: elems[7]
+        coords: maxIndex
+          ? {
+              x: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.x,
+              y: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.y
+            }
+          : elems[7]
       }
     },
     xAxisTitle: {
@@ -116,8 +137,10 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
     interactionDesc: {
       value: (<any>v.axes![2]).title,
       anchor: {
-        sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
-        offset: { top: 30, left: -180 }
+        coords: {
+          x: rectBars[0].childNodes[2]?.getBoundingClientRect()?.x,
+          y: rectBars[0].childNodes[2]?.getBoundingClientRect()?.y
+        }
       }
     }
   }

@@ -124,7 +124,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.emptyValue, visElement),
       requires: ['emptyValue'],
-      text: 'The white color rectangle holds the null value in the heatmap.',
+      text: 'Transparent rectangles represent missing (null) values.',
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {

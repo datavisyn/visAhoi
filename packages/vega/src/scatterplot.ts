@@ -23,27 +23,33 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
 
   const xVals = points.map((point) => point.getBoundingClientRect().x)
   const yVals = points.map((point) => point.getBoundingClientRect().y)
+  const xAxisLabel = <any>v.axes![2].title
+  const yAxisLabel = <any>v.axes![3].title
 
   const data = points.map((point) => point)
 
-  const ttt = data.map((tt) => tt?.__data__.datum)
+  const dataArray = data.map((d) => d?.__data__.datum)
 
-  const horsepowerArray = ttt.map(t => t.Horsepower)
-  const milePerGallonArray = ttt.map(t => t.Miles_per_Gallon)
+  const xArray = dataArray.map(t => t[xAxisLabel])
+  const yArray = dataArray.map(t => t[yAxisLabel])
 
-  const maxX = Math.max(...horsepowerArray)
-  const minX = Math.min(...horsepowerArray)
+  const maxX = Math.max(...xArray)
+  const minX = Math.min(...xArray)
 
-  const maxIndex = horsepowerArray.indexOf(maxX)
-  const minIndex = horsepowerArray.indexOf(minX)
+  const maxIndex = xArray.indexOf(maxX)
+  const minIndex = xArray.indexOf(minX)
 
-  const maxY = milePerGallonArray[maxIndex]
-  const minY = milePerGallonArray[minIndex]
+  const maxY = yArray[maxIndex]
+  const minY = yArray[minIndex]
 
   const maxPositionX = xVals[maxIndex]
   const maxPositionY = yVals[maxIndex]
   const minPositionX = xVals[minIndex]
   const minPositionY = yVals[minIndex]
+  const legendMarkers = document.getElementsByClassName('mark-symbol role-legend-symbol')
+
+  const minColor = legendMarkers[0].childNodes[0]?.getAttribute('fill')
+  const maxColor = legendMarkers[legendMarkers.length - 1].childNodes[0]?.getAttribute('fill')
 
   return {
     chartTitle: {
@@ -54,7 +60,7 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
       }
     },
     type: {
-      value: (<any>v.marks![0]).style,
+      value: (<any>v.marks![1]).style[0],
       anchor: {
         sel: 'svg',
         coords: elems[4]
@@ -113,6 +119,12 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
         sel: 'svg',
         coords: elems[4]
       }
+    },
+    minColor: {
+      value: minColor
+    },
+    maxColor: {
+      value: maxColor
     }
   }
 }

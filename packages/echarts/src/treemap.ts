@@ -66,10 +66,10 @@ function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
     },
 
     interactingDesc: {
-      value: options?.data[0]?.children[0]?.name,
+      value: options?.data[0]?.children[1]?.name,
       anchor: {
-        findDomNodeByValue: true,
-        offset: { left: -20, top: -30 }
+        findDomNodeByValue: true
+        // offset: { left: -20, top: -30 }
       }
     },
 

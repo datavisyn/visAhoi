@@ -18,6 +18,8 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
   min?: ISpecProp;
   max?: ISpecProp;
   interactionDesc?: ISpecProp;
+  minColor?: ISpecProp;
+  maxColor?: ISpecProp;
 }
 
 function generateMessages (
@@ -33,6 +35,10 @@ function generateMessages (
   const analyzing = defaultOnboardingStages.get(
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
+
+  function createColorRect (color = 'white') {
+    return `<div class="colorRect" style="background-color: ${color}"></div>`
+  }
 
   const messages: IOnboardingMessage[] = [
     {
@@ -50,8 +56,8 @@ function generateMessages (
     },
     {
       anchor: getAnchor(spec.legendTitle, visElement),
-      requires: ['legendTitle'],
-      text: `The legend shows the <i>${spec.legendTitle?.value}</i> for the chart. The colors range from blue to white and brown.`,
+      requires: ['legendTitle', 'minColor', 'maxColor'],
+      text: `The legend shows the <i>${spec.chartTitle?.value}</i> where the ${createColorRect(spec.minColor?.value)} means low and ${createColorRect(spec.maxColor?.value)} means high.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

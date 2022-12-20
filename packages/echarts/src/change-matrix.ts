@@ -20,12 +20,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
   const maxXIndex = dataArr.indexOf(max)
   const minXIndex = dataArr.indexOf(min)
 
-  // TODO: Get the value to child nodes only for the rect.
+  // TODO: Get the value to child nodes from the index directly.
   const maxPositionX = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getBoundingClientRect().x
   const maxPositionY = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getBoundingClientRect().y
 
   const minPositionX = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getBoundingClientRect().x
   const minPositionY = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getBoundingClientRect().y
+
+  const maxColor = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getAttribute('fill')
+  const minColor = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getAttribute('fill')
 
   return {
     chartTitle: {
@@ -89,6 +92,12 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
         coords: { x: maxPositionX, y: maxPositionY },
         offset: { left: -10, top: -30 }
       }
+    },
+    minColor: {
+      value: minColor
+    },
+    maxColor: {
+      value: maxColor
     }
   }
 }

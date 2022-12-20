@@ -11,7 +11,6 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
   const traceNodes = chart.querySelectorAll('g.points')
   const barNodes = traceNodes[0].querySelectorAll('g.point')
   const barNodesData = Array.from(barNodes).map((point: any) => point.__data__)
-  console.log(barNodesData, 'bar nodes data')
 
   const t = barNodesData[0].trace
   const min = t._extremes.y.min[0].val

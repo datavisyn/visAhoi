@@ -1,3 +1,4 @@
+
 import {
   EVisualizationType,
   IOnboardingMessage,
@@ -19,10 +20,12 @@ const getMinMax = (values) => {
   const removedUnifiedNaN = unified.filter((f) => !isNaN(f))
   const min = Math.min(...removedUnifiedNaN)
   const max = Math.max(...removedUnifiedNaN)
+
   return [min, max]
 }
 
 function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
+  // TODO: It is now hardcoded to get the colors and position. It have to be changed.
   const xAxis = [
     chart._chartsViews[0]._points[6],
     chart._chartsViews[0]._points[7]
@@ -38,6 +41,11 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
   const options = chart._model.option
 
   const [min, max] = getMinMax(options.series)
+
+  const tags = document.getElementsByTagName('g')
+
+  const minYPosition = tags[tags.length - 1].childNodes[0].getBoundingClientRect().y
+  const maxYPosition = tags[tags.length - 2].childNodes[0].getBoundingClientRect().y
 
   return {
     chartTitle: {
@@ -71,7 +79,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
       anchor: {
         coords: {
           x: chart._chartsViews[2]._points[2],
-          y: chart._chartsViews[2]._points[3]
+          y: minYPosition
         }
       }
     },
@@ -80,7 +88,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
       anchor: {
         coords: {
           x: chart._chartsViews[1]._points[12],
-          y: chart._chartsViews[1]._points[13]
+          y: maxYPosition
         }
       }
     },
