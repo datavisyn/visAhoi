@@ -19,6 +19,8 @@ function extractOnboardingSpec (
 
   const min = Math.min(...minArr)
   const max = Math.max(...maxArr)
+  const minColor = heatmapData[0].trace.colorscale[0]
+  const maxColor = heatmapData[0].trace.colorscale[2]
 
   return {
     chartTitle: {
@@ -86,6 +88,12 @@ function extractOnboardingSpec (
         sel: '.infolayer .ytitle',
         offset: { top: 80, left: -30 }
       }
+    },
+    minColor: {
+      value: minColor[1]
+    },
+    maxColor: {
+      value: maxColor[1]
     }
   }
 }

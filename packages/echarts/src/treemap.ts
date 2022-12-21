@@ -69,7 +69,6 @@ function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
       value: options?.data[0]?.children[1]?.name,
       anchor: {
         findDomNodeByValue: true
-        // offset: { left: -20, top: -30 }
       }
     },
 

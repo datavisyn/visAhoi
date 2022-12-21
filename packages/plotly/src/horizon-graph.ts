@@ -120,16 +120,18 @@ function extractOnboardingSpec (
     interactDesc: {
       value: chart.layout.yaxis.title.text,
       anchor: {
-        sel: '.infolayer .ytitle',
-        offset: { top: 30, left: -150 }
+        coords: {
+          x: traceNodes[0].childNodes[0].getBoundingClientRect().width / 2,
+          y: traceNodes[1].childNodes[0].getBoundingClientRect().y
+        }
       }
     },
     positiveColor: {
       value: positiveColor,
       anchor: {
         coords: {
-          x: t._polygons[0]?.xmax / 2,
-          y: t._polygons[0]?.ymax
+          x: traceNodes[0].childNodes[0].getBoundingClientRect().width / 2,
+          y: traceNodes[1].childNodes[0].getBoundingClientRect().y
         }
       }
     },
@@ -137,8 +139,8 @@ function extractOnboardingSpec (
       value: negativeColor,
       anchor: {
         coords: {
-          x: t._polygons[0]?.xmax / 3 - 30,
-          y: t._polygons[0]?.ymax + 60
+          x: xGrids[minIndex]?.getBoundingClientRect().x,
+          y: traceNodes[2].childNodes[0].getBoundingClientRect().y + 30
         }
       }
     }

@@ -99,7 +99,6 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: axesMinMax[0].min.toFixed(1),
       anchor: {
         sel: 'svg',
-        // coords: elems[2]
         coords: minIndex
           ? {
               x: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.x,
