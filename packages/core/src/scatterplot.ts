@@ -58,43 +58,8 @@ function generateMessages (
       },
       id: 'unique-message-id-4',
       order: 3
-    },
-    {
-      anchor: getAnchor(spec.yAxisTitle, visElement),
-      requires: ['yAxisTitle', 'xAxisTitle'],
-      text: `The <i>${spec.yAxisTitle?.value} (y-axis)</i> for a certain <i>${spec.xAxisTitle?.value} </i>.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: 'unique-marker-id-5'
-      },
-      id: 'unique-message-id-5',
-      order: 3
-    },
-    {
-      anchor: getAnchor(spec.interactDesc, visElement),
-      requires: ['interactDesc'],
-      text: 'Hover over the chart to get the dedicated value for each data point.',
-      title: 'Interaction with the chart',
-      onboardingStage: interacting,
-      marker: {
-        id: 'unique-marker-id-6'
-      },
-      id: 'unique-message-id-6',
-      order: 1
     }
-    // {
-    //   anchor: getAnchor(spec.yAxisTitle, visElement),
-    //   requires: ['yAxisTitle', 'xAxisTitle'],
-    //   text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-    //   title: 'Interacting with the chart',
-    //   onboardingStage: reading,
-    //   marker: {
-    //     id: 'unique-marker-id-5'
-    //   },
-    //   id: 'unique-message-id-5',
-    //   order: 4
-    // }
+
   ]
 
   if (spec.type?.value !== undefined) {
@@ -109,6 +74,18 @@ function generateMessages (
       },
       id: 'unique-message-id-2',
       order: 2
+    },
+    {
+      anchor: getAnchor(spec.interactDesc, visElement),
+      requires: ['interactDesc', 'type'],
+      text: 'Hover over the chart to get the dedicated value for each data point.',
+      title: 'Interaction with the chart',
+      onboardingStage: interacting,
+      marker: {
+        id: 'unique-marker-id-6'
+      },
+      id: 'unique-message-id-6',
+      order: 1
     })
   }
 

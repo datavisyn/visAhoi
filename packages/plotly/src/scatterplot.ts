@@ -15,7 +15,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     : null
 
   const t = areaNodesData ? areaNodesData[0]?.trace : null
-  let maxX, maxY
+  let maxX, maxY, minX, minY, minYValue, maxYValue, minXValue, maxXValue
 
   const grid = document
     .getElementsByClassName('nsewdrag drag')[0]
@@ -38,104 +38,104 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     const xData = points.map((point) => point.__data__.x)
     const yData = points.map((point) => point.__data__.y)
 
-    const maxX = Math.max(...xVals)
-    const minX = Math.min(...xVals)
+    maxX = Math.max(...xVals)
+    minX = Math.min(...xVals)
 
     const maxXIndex = xVals.indexOf(maxX)
     const minXIndex = xVals.indexOf(minX)
 
-    const maxY: number = yVals[maxXIndex]
-    const minY: number = yVals[minXIndex]
+    maxY = yVals[maxXIndex]
+    minY = yVals[minXIndex]
 
-    const minXValue = Math.min(...xData)
-    const maxXValue = Math.max(...xData)
+    minXValue = Math.min(...xData)
+    maxXValue = Math.max(...xData)
 
     const minXValueIndex = xData.indexOf(minXValue)
     const maxXValueIndex = xData.indexOf(maxXValue)
 
-    const minYValue = yData[minXValueIndex]
-    const maxYValue = yData[maxXValueIndex]
+    minYValue = yData[minXValueIndex]
+    maxYValue = yData[maxXValueIndex]
+  }
 
-    const title = chart?.layout?.title?.text
-    const legend = chart.data[0]?.marker?.colorbar?.title?.text
-    let newTitle = ''
-    let newLegend = ''
-    if (title?.includes('(')) {
-      const id = title.indexOf('(')
-      newTitle = title.substring(0, id)
-    }
-    if (legend?.includes('<')) {
-      const id = legend.indexOf('<')
-      newLegend = legend.substring(0, id)
-    }
-    return {
-      chartTitle: {
-        value: (newTitle !== '') ? newTitle : title,
-        anchor: {
-          findDomNodeByValue: true,
-          offset: { left: -20, top: -10 }
-        }
-      },
-      title: {
-        value: title
-      },
-      type: {
-        value: t?.type,
-        anchor: {
-          sel: '.points > .point:nth-child(4)'
-        }
-      },
-      interactDesc: {
-        value: t.type,
-        anchor: {
-          sel: '.points > .point:nth-child(2)'
-        }
-      },
-      xAxisTitle: {
-        value: chart.layout.xaxis?.title.text,
-        anchor: {
-          findDomNodeByValue: true
-        }
-      },
-      yAxisTitle: {
-        value: chart.layout.yaxis?.title.text,
-        anchor: {
-          findDomNodeByValue: true
-        }
-      },
-      legendTitle: {
-        value: newLegend,
-        anchor: {
-          findDomNodeByValue: true,
-          offset: { top: 20 }
-        }
-      },
-      maxValue: {
-        value: maxX,
-        anchor: {
-          coords: { x: maxX, y: maxY },
-          offset: { left: 25 }
-        }
-      },
-      minValue: {
-        value: minX,
-        anchor: {
-          coords: { x: minX, y: minY }
-        // offset: { left: 25 }
-        }
-      },
-      maxX: {
-        value: maxXValue
-      },
-      maxY: {
-        value: maxYValue
-      },
-      minX: {
-        value: minXValue
-      },
-      minY: {
-        value: minYValue
+  const title = chart?.layout?.title?.text
+  const legend = chart.data[0]?.marker?.colorbar?.title?.text
+  let newTitle = ''
+  let newLegend = ''
+  if (title?.includes('(')) {
+    const id = title.indexOf('(')
+    newTitle = title.substring(0, id)
+  }
+  if (legend?.includes('<')) {
+    const id = legend.indexOf('<')
+    newLegend = legend.substring(0, id)
+  }
+  return {
+    chartTitle: {
+      value: (newTitle !== '') ? newTitle : title,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -20, top: -10 }
       }
+    },
+    title: {
+      value: title
+    },
+    type: {
+      value: t?.type,
+      anchor: {
+        sel: '.points > .point:nth-child(4)'
+      }
+    },
+    interactDesc: {
+      value: t?.type,
+      anchor: {
+        sel: '.points > .point:nth-child(2)'
+      }
+    },
+    xAxisTitle: {
+      value: chart?.layout.xaxis?.title.text,
+      anchor: {
+        findDomNodeByValue: true
+      }
+    },
+    yAxisTitle: {
+      value: chart.layout.yaxis?.title.text,
+      anchor: {
+        findDomNodeByValue: true
+      }
+    },
+    legendTitle: {
+      value: newLegend,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { top: 20 }
+      }
+    },
+    maxValue: {
+      value: maxX,
+      anchor: {
+        coords: { x: maxX, y: maxY },
+        offset: { left: 25 }
+      }
+    },
+    minValue: {
+      value: minX,
+      anchor: {
+        coords: { x: minX, y: minY }
+        // offset: { left: 25 }
+      }
+    },
+    maxX: {
+      value: maxXValue
+    },
+    maxY: {
+      value: maxYValue
+    },
+    minX: {
+      value: minXValue
+    },
+    minY: {
+      value: minYValue
     }
   }
 }
