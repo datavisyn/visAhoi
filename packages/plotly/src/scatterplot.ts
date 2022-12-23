@@ -58,7 +58,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   }
 
   const title = chart?.layout?.title?.text
-  const legend = chart.data[0]?.marker?.colorbar?.title?.text
+  const legend = chart?.data[0]?.marker?.colorbar?.title?.text
   let newTitle = ''
   let newLegend = ''
   if (title?.includes('(')) {

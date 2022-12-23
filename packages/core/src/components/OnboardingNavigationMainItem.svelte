@@ -11,12 +11,11 @@
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
-  $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
-
-  const handleClick = () => {
+  
+  const handleClick = () => { 
     if ($activeOnboardingStage) {
       activeOnboardingStage.update((v) => null);
-    } else {
+    } else { 
       showOnboardingSteps.update((v) => !v);
     }
   };

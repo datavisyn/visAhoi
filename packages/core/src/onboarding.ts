@@ -8,7 +8,9 @@ import {
   showHideCloseText,
   showOnboardingNavigation,
   isEditModeActive,
-  markerInformation
+  markerInformation,
+  showOnboardingSteps,
+  showOnboarding
 } from './components/stores.js'
 import debounce from 'lodash.debounce'
 import {
@@ -80,6 +82,8 @@ export const injectOnboarding = (
     updateOnboarding: debounce(updateOnboarding),
     removeOnboarding: () => {
       onboardingUI.$destroy()
+      showOnboardingSteps.set(false)
+      showOnboarding.set(false)
     }
   }
 }
