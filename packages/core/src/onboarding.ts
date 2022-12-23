@@ -82,8 +82,9 @@ export const injectOnboarding = (
     updateOnboarding: debounce(updateOnboarding),
     removeOnboarding: () => {
       onboardingUI.$destroy()
-      showOnboardingSteps.set(false)
-      showOnboarding.set(false)
+      // TODO: This have to be added to avoid duplicate tooltip. But somehow it is not working in hidden have to fix and then comment it out
+      // showOnboardingSteps.set(false)
+      // showOnboarding.set(false)
     }
   }
 }
