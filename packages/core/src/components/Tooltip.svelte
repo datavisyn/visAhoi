@@ -25,8 +25,11 @@
   const sanitizerOptions = {
     allowedTags: false, // allow all tags
     allowedClasses: {
-      '*': ['*'] // allow all classes for all tags
-    }
+      "*": ["*"], // allow all classes for all tags
+    },
+    allowedAttributes: {
+      "*": ["style"], // allow style attribute for all tags
+    },
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
@@ -236,7 +239,10 @@
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
     <div id="tooltip-text" class="visahoi-tooltip-content">
-      {@html sanitizeHtml(activeMarkerInformation?.tooltip.text, sanitizerOptions)}
+      {@html sanitizeHtml(
+        activeMarkerInformation?.tooltip.text,
+        sanitizerOptions
+      )}
     </div>
   {/if}
 
