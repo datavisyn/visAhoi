@@ -62,7 +62,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
-      text: `The color of the scatterplot elements represents the amount of <i>${spec.legendTitle?.value}  </i>, where ${createColorRect(spec.minColor?.value)} represents the lowest and ${createColorRect(spec.maxColor?.value)} represents the highest. `,
+      text: `The color of the scatterplot elements represents the amount of <i>${spec.legendTitle?.value}  </i>, where ${createColorRect(spec.minColor?.value)} represents the lowest and ${createColorRect(spec.maxColor?.value)} represents the highest value. `,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -74,7 +74,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['yAxisTitle', 'xAxisTitle'],
-      text: `The <i>${spec.yAxisTitle?.value} (y-axis)</i> for a certain <i>${spec.xAxisTitle?.value} </i>.`,
+      text: `The axis represent <i>${spec.yAxisTitle?.value} (y-axis)</i> and <i>${spec.xAxisTitle?.value} (x-axis) </i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -98,7 +98,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue', 'maxX', 'maxY'],
-      text: `The maximum <i>${spec.xAxisTitle?.value} of ${spec.maxX?.value} relates to ${spec.maxY?.value} ${spec.yAxisTitle?.value}.`,
+      text: `The maximum <i>${spec.xAxisTitle?.value}</i> of ${spec.maxX?.value} relates to ${spec.maxY?.value} <i>${spec.yAxisTitle?.value}</i>.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -110,7 +110,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue', 'minX', 'minY'],
-      text: `The minimum <i>${spec.xAxisTitle?.value} of ${spec.minX?.value} relates to ${spec.minY?.value} ${spec.yAxisTitle?.value}.`,
+      text: `The minimum <i>${spec.xAxisTitle?.value}</i> of ${spec.minX?.value} relates to ${spec.minY?.value} <i>${spec.yAxisTitle?.value}</i>.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {

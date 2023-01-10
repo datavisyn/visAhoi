@@ -8,7 +8,7 @@
         }
       ],
       "usermeta": { "embedOptions": { "renderer": "svg" } },
-      "title": "Some title with cars or something",
+      "title": "Horsepower and miles per gallon for various cars",
       "mark": {"type": "circle", "tooltip": true},
       "width": "container",
       "height": "container",

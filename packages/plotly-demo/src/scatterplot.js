@@ -48,7 +48,7 @@ function makePlotly (x, y) {
   ]
 
   const layout = {
-    title: 'A scatterplot showing horsepower and miles per gallon for various cars',
+    title: 'Horsepower and miles per gallon for various cars',
     xaxis: {
       title: 'Horsepower'
     },

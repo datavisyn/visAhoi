@@ -100,7 +100,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      text: `The deep red color rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value} .`,
+      text: `The deep red colored rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value} .`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -112,7 +112,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue'],
-      text: `The deep blue color rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
+      text: `The deep blue colored rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
