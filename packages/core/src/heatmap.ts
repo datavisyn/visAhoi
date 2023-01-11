@@ -19,6 +19,7 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   missingDataDescription?: ISpecProp;
   maxValue?: ISpecProp;
   minValue?: ISpecProp;
+  emptyValue?: ISpecProp;
 }
 
 function generateMessages (
@@ -39,7 +40,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The heatmap shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -75,7 +76,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.axisDescription, visElement),
       requires: ['xAxis', 'yAxis'],
-      text: `${spec.yAxis?.value} is plotted in rows and the ${spec.xAxis?.value} in columns.`,
+      text: `<i>${spec.yAxis?.value}</i> is plotted in rows and the <i>${spec.xAxis?.value}</i> in columns.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -99,24 +100,38 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      text: `The deep red color rectangle holds the maximum value in the heatmap. In this heatmap ${spec.maxValue?.value} is the maximum value.`,
+      text: `The deep red colored rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value} .`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-6'
       },
-      id: 'unique-message-id-6'
+      id: 'unique-message-id-6',
+      order: 1
     },
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue'],
-      text: `The deep blue color rectangle holds the minimum value in the heatmap. In this heatmap ${spec.minValue?.value} is the minimum value.`,
+      text: `The deep blue colored rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-7'
       },
-      id: 'unique-message-id-7'
+      id: 'unique-message-id-7',
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.emptyValue, visElement),
+      requires: ['emptyValue'],
+      text: 'Transparent rectangles represent missing (null) values.',
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: 'unique-marker-id-8'
+      },
+      id: 'unique-message-id-8',
+      order: 3
     }
   ]
 

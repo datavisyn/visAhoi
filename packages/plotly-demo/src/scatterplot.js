@@ -60,7 +60,7 @@ function makePlotly (x, y) {
   ]
 
   const layout = {
-    title: 'Some title of cars or something',
+    title: 'Horsepower and miles per gallon for various cars',
     xaxis: {
       title: 'Horsepower'
     },

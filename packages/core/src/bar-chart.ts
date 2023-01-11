@@ -22,6 +22,7 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   yMax?: ISpecProp;
   xAxisTitle?: ISpecProp;
   yAxisTitle?: ISpecProp;
+  interactionDesc?: ISpecProp;
 }
 
 function generateMessages (
@@ -34,6 +35,9 @@ function generateMessages (
   ) as IOnboardingStage
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
+  ) as IOnboardingStage
+  const analyzing = defaultOnboardingStages.get(
+    EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
   const messages: IOnboardingMessage[] = [
@@ -52,7 +56,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yAxisTitle, visElement),
       requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
-      text: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
+      text: `The ${spec.barLength?.value} of each ${spec.type?.value} shows the <i> ${spec.yAxisTitle?.value} (y-axis) </i> for a certain <i>${spec.xAxisTitle?.value} (x-axis)</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -64,7 +68,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.xAxisTitle, visElement),
       requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
-      text: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the ${spec.xAxisTitle?.value} (x-axis).`,
+      text: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the <i> ${spec.xAxisTitle?.value} (x-axis) </i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -76,9 +80,9 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yMin, visElement),
       requires: ['yAxisTitle', 'yMin'],
-      text: `The minimum ${spec.yAxisTitle?.value} is ${spec.yMin?.value}.`,
-      title: 'Interacting with the chart',
-      onboardingStage: interacting,
+      text: `The minimum <i> ${spec.yAxisTitle?.value} </i> is ${spec.yMin?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-5'
       },
@@ -88,14 +92,26 @@ function generateMessages (
     {
       anchor: getAnchor(spec.yMax, visElement),
       requires: ['yAxisTitle', 'yMax'],
-      text: `The <span class="hT">maximum</span> ${spec.yAxisTitle?.value} is ${spec.yMax?.value}.`,
-      title: 'Interacting with the chart',
-      onboardingStage: interacting,
+      text: `The <span class="hT">maximum</span> <i>${spec.yAxisTitle?.value} </i> is ${spec.yMax?.value}.`,
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
       marker: {
         id: 'unique-marker-id-6'
       },
       id: 'unique-message-id-6',
       order: 2
+    },
+    {
+      anchor: getAnchor(spec.interactionDesc, visElement),
+      requires: ['interactionDesc', 'xAxisTitle', 'yAxisTitle'],
+      text: `Hover over the bar to get the <i> ${spec.yAxisTitle?.value} </i> for each <i>${spec.xAxisTitle?.value} </i>.`,
+      title: 'Interacting with the chart',
+      onboardingStage: interacting,
+      marker: {
+        id: 'unique-marker-id-7'
+      },
+      id: 'unique-message-id-7',
+      order: 1
     }
   ]
 
@@ -103,7 +119,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The <span class="hT">chart shows the ${spec.chartTitle?.value}.`,
+      text: `The bar chart shows the <i> ${spec.chartTitle?.value} </i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
