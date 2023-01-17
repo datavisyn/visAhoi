@@ -1,6 +1,7 @@
 import OnboardingUI from './components/OnboardingUI.svelte'
 import {
   onboardingMessages,
+  visahoiIcons,
   navigationAlignment,
   onboardingStages,
   showBackdrop,
@@ -13,6 +14,7 @@ import {
 import debounce from 'lodash.debounce'
 import {
   IAhoiConfig,
+  IAhoiIcons,
   IMarker,
   IOnboardingMessage,
   IOnboardingStage,
@@ -27,9 +29,13 @@ let onboardingUI: OnboardingUI
 export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
-  alignment: NavigationAlignment
+  alignment: NavigationAlignment,
+  icons?: IAhoiIcons
 ) => {
   onboardingMessages.set(ahoiConfig.onboardingMessages)
+  if (icons) {
+    visahoiIcons.set(icons)
+  }
 
   if (ahoiConfig?.showOnboardingNavigation) {
     showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation)

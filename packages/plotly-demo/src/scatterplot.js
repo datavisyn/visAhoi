@@ -76,6 +76,15 @@ function makePlotly (x, y) {
   return Plotly.newPlot('vis', traces, layout, config)
 }
 
+// Customize icons
+// const getIcons = () => {
+//   const trashIcon = document.createElement('i')
+//   trashIcon.innerHTML = '&#128465;'
+//   return {
+//     // trash: trashIcon.outerHTML.toString()
+//   }
+// }
+
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.SCATTERPLOT,
@@ -142,6 +151,7 @@ const registerEventListener = () => {
         EVisualizationType.SCATTERPLOT,
         chart,
         getAhoiConfig()
+        // getIcons()
       )
     } else {
       onboardingUI?.removeOnboarding()
