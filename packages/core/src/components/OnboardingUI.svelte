@@ -12,16 +12,29 @@
     onboardingMessages,
     markerInformation,
     activeMarker,
+    stores
   } from "./stores.js";
   import { fade } from "svelte/transition";
   import Markers from "./Markers.svelte";
   import Tooltips from "./Tooltips.svelte";
-  import { onDestroy, onMount } from "svelte";
+  import { getContext, onDestroy, onMount, setContext } from "svelte";
   import Backdrop from "./Backdrop.svelte";
   import { getMarkerInformation } from "./getMarkerInformation";
+  import { newState } from "./state";
 
   export let ref;
   export let visElement: Element;
+  export let contextKey: string;
+
+  // console.log(1)
+  // console.log("stores: ", $stores)
+  const store = $stores.get(contextKey)
+  console.log("contextKey: ---> ", contextKey, store)
+  // console.log("store: ---> ", store)
+  // 1
+  const {count} = store;
+  // console.log(contextKey)
+  // console.log($count)
 
   const setVisElementPosition = () => {
     visXPosition.set(visElement.getBoundingClientRect().x);
@@ -47,18 +60,18 @@
     setMarkerInformation();
   };
 
-  let show = true;
-  showOnboarding.subscribe((value) => {
-    show = value;
-  });
+  // let show = true;
+  // showOnboarding.subscribe((value) => {
+  //   show = value;
+  // });
 
   onMount(() => {
     setVisElementPosition();
     setMarkerInformation();
   });
-  onDestroy(() => {
-    resetStore();
-  });
+  // onDestroy(() => {
+  //   resetStore();
+  // });
 </script>
 
 <div
@@ -71,7 +84,7 @@
 >
   <Markers />
   <Tooltips {visElement} />
-  <OnboardingNavigation height={$visHeight} />
+  <OnboardingNavigation contextKey={contextKey} />
   {#if $activeOnboardingStage && $showBackdrop}
     <Backdrop />
   {/if}

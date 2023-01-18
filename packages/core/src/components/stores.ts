@@ -6,6 +6,9 @@ import {
   IOnboardingStage,
   NavigationAlignment
 } from '../interfaces'
+import { ClassStore } from './state'
+
+export const stores = writable<Map<string, ClassStore>>(new Map())
 
 export const initializeStoreValue = <T>(defaultValue: any) => {
   const { subscribe, set, update } = writable<T>(defaultValue)

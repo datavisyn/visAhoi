@@ -10,8 +10,9 @@ import {
   showOnboardingNavigation,
   isEditModeActive,
   markerInformation,
+  showOnboarding,
   showOnboardingSteps,
-  showOnboarding
+  stores
 } from './components/stores.js'
 import debounce from 'lodash.debounce'
 import {
@@ -25,6 +26,7 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
 import { getMarkerInformation } from './components/getMarkerInformation'
+import { ClassStore } from './components/state'
 
 let onboardingUI: OnboardingUI
 
@@ -32,8 +34,18 @@ export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
   visElement: Element,
   alignment: NavigationAlignment,
+  contextKey: string,
   icons?: IAhoiIcons
 ) => {
+  const s = get(stores)
+  console.log('-----')
+  console.log('-----')
+  console.log("initializing store")
+  console.log('-----')
+  console.log('-----')
+  s.set(contextKey, new ClassStore())
+  stores.set(s)
+  console.log('s: ', s)
   onboardingMessages.set(ahoiConfig.onboardingMessages)
   if (icons) {
     visahoiIcons.set(icons)
@@ -82,13 +94,29 @@ export const injectOnboarding = (
     target: document.body as Element,
     props: {
       ref,
-      visElement
+      visElement,
+      contextKey
     }
   })
   return {
+    contextKey,
     updateOnboarding: debounce(updateOnboarding),
+    showOnboarding: (contextKey) => {
+      console.log('showing', contextKey);
+      onboardingUI = new OnboardingUI({
+        target: document.body as Element,
+        props: {
+          ref,
+          visElement,
+          contextKey
+        }
+      })
+    },
     removeOnboarding: () => {
-      onboardingUI.$destroy()
+      console.log("removing onboarding")
+      // onboardingUI.$destroy()
+      showOnboarding.set(false)
+      showOnboardingSteps.set(false)
       // TODO: This have to be added to avoid duplicate tooltip. But somehow it is not working in hidden have to fix and then comment it out
       // showOnboardingSteps.set(false)
       // showOnboarding.set(false)
@@ -149,7 +177,7 @@ export const createBasicOnboardingMessage = (
 
 export const deleteOnboardingStage = (id: string) => {
   const stages: IOnboardingStage[] = get(onboardingStages)
-  stages.map((m, i) => {
+  stages.forEach((m, i) => {
     if (m.id === id) {
       stages.splice(i, 1)
     }

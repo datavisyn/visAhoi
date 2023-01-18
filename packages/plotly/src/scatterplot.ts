@@ -1,3 +1,4 @@
+// is this there?
 import {
   EVisualizationType,
   IOnboardingMessage,
@@ -7,7 +8,7 @@ import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
   const traceNodes = chart?.querySelectorAll('g.points')
-  const areaNodes = traceNodes ? traceNodes[0]?.querySelectorAll('path.point') : null
+  const areaNodes = traceNodes ? traceNodes?.[0]?.querySelectorAll('path.point') : null
   const areaNodesData = areaNodes
     ? Array.from(areaNodes).map(
       (point: any) => point.__data__

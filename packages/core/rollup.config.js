@@ -16,7 +16,7 @@ export default [{
   input: './src/index.ts',
   output: [{
     sourcemap: true,
-    format: 'esm',
+    format: 'es',
     dir: './dist',
     name: 'core'
   }, {
@@ -28,7 +28,7 @@ export default [{
   plugins: [
     svelte({
       emitCss: true,
-      preprocess: autoPreprocess(),
+      preprocess: autoPreprocess()
     }),
     // process css in .svelte files
     postcss({

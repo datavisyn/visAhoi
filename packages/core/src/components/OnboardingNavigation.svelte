@@ -10,12 +10,26 @@
     markerIndexId,
     showOnboardingNavigation,
     visahoiIcons,
+    stores,
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
   import NavigationMarker from "./NavigationMarker.svelte";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils.js";
-  import { tick } from "svelte";
+  import { getContext, tick } from "svelte";
+
+  export let contextKey: string;
+  
+  // console.log(1)
+  // console.log("stores: ", $stores)
+  const store = $stores.get(contextKey)
+  // console.log("contextKey: ---> ", contextKey)
+  // console.log("store: ---> ", store)
+  // 1
+  const {count} = store;
+  // console.log(contextKey)
+  // console.log($count)
+  
 
   import visahoiChevronUpIcon from "../assets/chevron-up-solid.svg";  
   import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg";  
@@ -182,7 +196,7 @@
   {/key}
 
   {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
-    <OnboardingNavigationItem {stage} {index} />
+    <OnboardingNavigationItem {stage} {index} {contextKey} />
   {/each}
   <OnboardingNavigationMainItem />
 </div>

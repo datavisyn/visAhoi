@@ -77,10 +77,10 @@ const getAhoiConfig = () => {
     EVisualizationType.BAR_CHART,
     chart
   )
-  const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
-    ...d,
-    text: 'test123'
-  }))
+  // const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
+  //   ...d,
+  //   text: 'test123'
+  // }))
   const ahoiConfig = {
     onboardingMessages: defaultOnboardingMessages
   }
