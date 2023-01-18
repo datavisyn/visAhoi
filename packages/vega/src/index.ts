@@ -1,4 +1,3 @@
-import { Result } from 'vega-embed'
 import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
@@ -7,6 +6,7 @@ import {
   getOnboardingMessages,
   getOnboardingStages,
   IAhoiConfig,
+  IAhoiIcons,
   injectOnboarding,
   IOnboardingMessage,
   setEditMode,
@@ -108,14 +108,15 @@ export const generateBasicAnnotations = async (
 export async function ahoi (
   visType: EVisualizationType,
   chart: any,
-  ahoiConfig: IAhoiConfig
+  ahoiConfig: IAhoiConfig,
+  icons: IAhoiIcons
 ) {
   ahoiConfig.onboardingMessages = await generateBasicAnnotations(
     visType,
     chart
   )
   const visElement = chart.view._el
-  return injectOnboarding(ahoiConfig, visElement, 'column')
+  return injectOnboarding(ahoiConfig, visElement, 'column', icons)
 }
 
 export { EVisualizationType }

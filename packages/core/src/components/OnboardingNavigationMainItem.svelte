@@ -8,10 +8,22 @@
     onboardingStages,
     markerInformation,
     onboardingMessages,
+    visahoiIcons,
   } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
 
   $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
+
+  import visahoiToggleOnIcon from "../assets/toggle-on-solid.svg";
+  import visahoiToggleOffIcon from "../assets/toggle-off-solid.svg";
+  import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  import visahoiQuestionmarkIcon from "../assets/question-solid.svg";
+  import visahoiTrashIcon from "../assets/trash-solid-gray.svg";
+  const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
+  const questionmarkIcon: string = $visahoiIcons?.questionmark || visahoiQuestionmarkIcon;
+  const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
+  const toggleOffIcon: string = $visahoiIcons?.toggleOff || visahoiToggleOffIcon;
+  const toggleOnIcon: string = $visahoiIcons?.toggleOn || visahoiToggleOnIcon;
 
   const handleClick = () => {
     if ($activeOnboardingStage) {
@@ -68,14 +80,14 @@
         navigationMainItemDefaultColor}"
     >
       {#if $showOnboardingSteps}
-        <span><i class="fas fa-times" /></span>
+        <span style="display: flex">{@html closeIcon}</span>
       {:else}
-        <span><i class="fas fa-question" /></span>
+        <span style="display: flex">{@html questionmarkIcon}</span>
       {/if}
 
       {#if $activeOnboardingStage && $isEditModeActive}
         <div class="visahoi-delete-stage" on:click={deleteOnboardingStage}>
-          <i class="fas fa-trash" />
+          <span title="Delete onboarding stage">{@html trashIcon}</span>
         </div>
       {/if}
     </div>
@@ -93,16 +105,12 @@
 
   <div class="toggle-button">
     {#if $showOnboardingNavigation}
-      <span title="Disable navigation steps" on:click={toggleNavigation}>
-        <i class="fas fa-solid fa-toggle-on" />
+      <span style="display: flex" title="Disable navigation steps" on:click={toggleNavigation}>
+        {@html toggleOnIcon}
       </span>
     {:else}
-      <span title="Enable navigation steps" on:click={toggleNavigation}>
-        <i
-          class="fas fa-solid fa-toggle-off"
-          style="width: 20px, height:20px"
-          on:click={toggleNavigation}
-        />
+      <span style="display: flex" title="Enable navigation steps" on:click={toggleNavigation}>
+        {@html toggleOffIcon}
       </span>
     {/if}
   </div>
@@ -158,9 +166,5 @@
   .visahoi-delete-stage {
     position: absolute;
     margin-left: 80px;
-  }
-
-  .fa-trash {
-    color: black;
   }
 </style>

@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store'
 import {
+  IAhoiIcons,
   IMarkerInformation,
   IOnboardingMessage,
   IOnboardingStage,
@@ -16,6 +17,7 @@ export const initializeStoreValue = <T>(defaultValue: any) => {
   }
 }
 
+export const visahoiIcons = initializeStoreValue<IAhoiIcons>(null)
 export const showOnboarding = initializeStoreValue<boolean>(false)
 export const showOnboardingSteps = initializeStoreValue<boolean>(false)
 export const activeStep = initializeStoreValue(null)

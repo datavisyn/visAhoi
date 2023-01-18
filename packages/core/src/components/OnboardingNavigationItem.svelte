@@ -5,11 +5,17 @@
     activeOnboardingStage,
     showOnboardingSteps,
     onboardingStages,
+    visahoiIcons,
   } from "./stores.js";
+  import visahoiCloseIcon from '../assets/xmark-solid.svg';
+  
   export let stage: IOnboardingStage;
   export let index: number;
 
   const bottom: string = (index + 1) * 75 + "px";
+
+  const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
+
 
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
@@ -28,12 +34,11 @@
 >
   {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
     <div class="visahoi-navigation-item-circle">
-      <i
-        class={!$activeOnboardingStage ||
-        stage.id !== $activeOnboardingStage?.id
-          ? stage.iconClass
-          : "fas fa-times"}
-      />
+      {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
+        {@html stage.icon}
+      {:else}
+        {@html closeIcon}
+      {/if}
     </div>
   {/key}
   <span class="visahoi-stage-title">{stage.title}</span>
