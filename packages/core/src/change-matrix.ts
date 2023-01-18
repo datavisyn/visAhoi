@@ -44,7 +44,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
-      text: `The chart Is based on colored ${spec.type?.value} elements.`,
+      text: `The chart is based on colored ${spec.type?.value} elements.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       tooltipPosition: 'left' as TooltipPosition,
@@ -105,7 +105,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.interactionDesc, visElement),
       requires: ['chartTitle', 'xAxis', 'yAxis'],
-      text: `Hover over the chart to get the <i> ${spec.chartTitle?.value} </i> for each <i>${spec.xAxis?.value}</i> in different <i> ${spec.yAxis?.value}</i>.`,
+      text: `Hover over the chart to get the <i> ${spec.chartTitle?.value} </i> for each <i>${spec.xAxis?.value}</i> in a different <i> ${spec.yAxis?.value}</i>.`,
       title: 'Interaction with the chart',
       onboardingStage: interacting,
       marker: {

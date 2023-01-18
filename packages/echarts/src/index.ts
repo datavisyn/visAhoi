@@ -1,5 +1,4 @@
 import {
-  defaultOnboardingStages,
   EVisualizationType,
   IAhoiConfig,
   injectOnboarding,
@@ -11,7 +10,8 @@ import {
   getOnboardingStages,
   setEditMode,
   setOnboardingMessage,
-  setOnboardingStage
+  setOnboardingStage,
+  IAhoiIcons
 } from '@visahoi/core'
 import { barChartFactory } from './bar-chart'
 import { changeMatrixFactory } from './change-matrix'
@@ -97,10 +97,11 @@ export const generateBasicAnnotations = (
 export async function ahoi (
   visType: EVisualizationType,
   chart: any,
-  ahoiConfig: IAhoiConfig
+  ahoiConfig: IAhoiConfig,
+  icons: IAhoiIcons
 ) {
   const visElement = chart._dom
-  return injectOnboarding(ahoiConfig, visElement, 'column')
+  return injectOnboarding(ahoiConfig, visElement, 'column', icons)
 }
 
 export { EVisualizationType }

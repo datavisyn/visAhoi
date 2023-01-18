@@ -5,8 +5,13 @@ import {
   EVisualizationType,
   setOnboardingStage,
   setEditMode,
-  createBasicOnboardingStage
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  getOnboardingMessages
+
 } from '@visahoi/plotly'
+import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
+
 import debounce from 'lodash.debounce'
 
 let chart = null
@@ -14,10 +19,17 @@ let showOnboarding = false
 let editMode = false
 let onboardingUI = null
 const deleteStageId = null
+// const reading = defaultOnboardingStages.get(
+//   EDefaultOnboardingStages.READING
+// )
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
+
+const reading = defaultOnboardingStages.get(
+  EDefaultOnboardingStages.READING
+)
 
 async function render () {
   const response = await fetch('../data/cars.json')
@@ -48,9 +60,7 @@ function makePlotly (x, y) {
   ]
 
   const layout = {
-    title: 'A scatterplot showing horsepower and miles per gallon for various cars',
-    // showlegend: true,
-
+    title: 'Horsepower and miles per gallon for various cars',
     xaxis: {
       title: 'Horsepower'
     },
@@ -66,10 +76,32 @@ function makePlotly (x, y) {
   return Plotly.newPlot('vis', traces, layout, config)
 }
 
+// Customize icons
+// const getIcons = () => {
+//   const trashIcon = document.createElement('i')
+//   trashIcon.innerHTML = '&#128465;'
+//   return {
+//     // trash: trashIcon.outerHTML.toString()
+//   }
+// }
+
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.SCATTERPLOT,
     chart
+  )
+  defaultOnboardingMessages.push(
+    createBasicOnboardingMessage({
+      text: "This is the newly added onboarding message for the scatter chart. It's absolutely positioned.",
+      title: 'Absolutely positioned message',
+      onboardingStage: reading,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
+      }
+    })
   )
 
   const extendedOnboardingMessages = defaultOnboardingMessages.map(
@@ -97,6 +129,7 @@ const getAhoiConfig = () => {
       : defaultOnboardingMessages
     // showOnboardingNavigation: true,
   }
+
   return ahoiConfig
 }
 
@@ -104,6 +137,7 @@ const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding')
   const editButton = document.getElementById('editModeButton')
   const newButton = document.getElementById('btn-test')
+  const newMessageBtn = document.getElementById('btn-message')
 
   if (!helpIcon) {
     return
@@ -117,6 +151,7 @@ const registerEventListener = () => {
         EVisualizationType.SCATTERPLOT,
         chart,
         getAhoiConfig()
+        // getIcons()
       )
     } else {
       onboardingUI?.removeOnboarding()
@@ -135,17 +170,35 @@ const registerEventListener = () => {
 
   newButton.addEventListener('click', async () => {
     setOnboardingStage({
-      id: 'using-the-chart',
-      title: 'Interact',
+      id: 'reading-the-chart',
+      title: 'reading',
       iconClass: 'fas fa-microphone',
       backgroundColor: 'red',
-      order: 2
+      activeBackgroundColor: 'purple',
+      hoverBackgroundColor: 'green'
     })
-    createBasicOnboardingStage({
-      title: 'New stage',
+  })
+
+  newMessageBtn.addEventListener('click', async () => {
+    const newOnboardingStage = createBasicOnboardingStage({
+      title: 'stage-1',
       iconClass: 'fas fa-flask',
-      backgroundColor: 'tomato'
+      backgroundColor: 'green'
     })
+
+    const messages = getOnboardingMessages()
+    messages.push(createBasicOnboardingMessage({
+      text: 'Check the default order',
+      title: 'New message',
+      onboardingStage: newOnboardingStage,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
+      },
+      id: 'unique-message-id-6'
+    }))
   })
 }
 

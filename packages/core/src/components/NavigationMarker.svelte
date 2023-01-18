@@ -14,11 +14,13 @@
   export let markerInformation: IMarkerInformation;
   export let order: number;
 
-  // $: bottom = order * 35 + 15 + "px";
-
-  const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } =
-    markerInformation.message.onboardingStage;
-  const { marker } = markerInformation;
+  $: activeBackgroundColor =
+    markerInformation.message.onboardingStage.activeBackgroundColor;
+  $: backgroundColor =
+    markerInformation.message.onboardingStage.backgroundColor;
+  $: hoverBackgroundColor =
+    markerInformation.message.onboardingStage.hoverBackgroundColor;
+  $: marker = markerInformation.marker;
 
   let arrValue: IMarkerInformation[] = [];
 
@@ -87,19 +89,16 @@
 
     if ($activeMarker?.marker.id === marker.id) {
       // The active marker is closed and navigation marker is not highlighted.
-      // The selectedMarker is set to the initial marker in the activeOnboarding stage.
+      // The selectedMarker is set to the active marker which is to be closed.
+      const oldActiveMarker = $activeMarker;
       activeMarker.set(null);
       const elementId = document.getElementById(
         `visahoi-marker-navigation-visahoi-marker-${marker.id}`
       );
       elementId?.style.opacity = 0.5;
 
-      const activeOnboardingStageMarkers = $markInfo.filter(
-        (m) => m.message.onboardingStage === $activeOnboardingStage
-      );
-
       // selectedMarker.set(activeOnboardingStageMarkers[0]);
-      selectedMarker.set(activeOnboardingStageMarkers[0]);
+      selectedMarker.set(oldActiveMarker);
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           markerIndexId.set(i);

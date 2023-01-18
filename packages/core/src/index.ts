@@ -10,8 +10,6 @@ import { IOnboardingScatterplotSpec, scatterplot } from './scatterplot'
 import { onboardingStages } from './components/stores'
 import { IOnboardingTreemapSpec, treemap } from './treemap'
 import { IOnboardingHeatmapSpec, heatmap } from './heatmap'
-import '@fortawesome/fontawesome-free/js/fontawesome.js'
-import '@fortawesome/fontawesome-free/js/solid.js'
 
 export * from './onboarding'
 export * from './interfaces'

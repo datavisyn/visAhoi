@@ -19,6 +19,8 @@ import { horizonGraphFactory } from './horizon-graph'
 import { scatterplotFactory } from './scatterplot'
 import { treemapFactory } from './treemap'
 import { heatmapFactory } from './heatmap'
+import { IAhoiIcons } from '@visahoi/core/src/interfaces'
+
 // just pass them through
 export {
   createBasicOnboardingMessage,
@@ -99,10 +101,11 @@ export const generateBasicAnnotations = (
 export async function ahoi (
   visType: EVisualizationType,
   chart: any,
-  ahoiConfig: IAhoiConfig
+  ahoiConfig: IAhoiConfig,
+  icons: IAhoiIcons
 ) {
   const visElement = chart
-  return injectOnboarding(ahoiConfig, visElement, 'column')
+  return injectOnboarding(ahoiConfig, visElement, 'column', icons)
 }
 
 export { EVisualizationType }

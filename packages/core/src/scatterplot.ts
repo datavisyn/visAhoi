@@ -47,18 +47,18 @@ function generateMessages (
   ) as IOnboardingStage
 
   const messages: IOnboardingMessage[] = [
-    {
-      anchor: getAnchor(spec.xAxisTitle, visElement),
-      requires: ['xAxisTitle', 'yAxisTitle'],
-      text: `The columns show the ${spec.xAxisTitle?.value}, while the rows show the ${spec.yAxisTitle?.value}.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: 'unique-marker-id-4'
-      },
-      id: 'unique-message-id-4',
-      order: 3
-    }
+    // {
+    //   anchor: getAnchor(spec.xAxisTitle, visElement),
+    //   requires: ['xAxisTitle', 'yAxisTitle'],
+    //   text: `The columns show the ${spec.xAxisTitle?.value}, while the rows show the ${spec.yAxisTitle?.value}.`,
+    //   title: 'Reading the chart',
+    //   onboardingStage: reading,
+    //   marker: {
+    //     id: 'unique-marker-id-4'
+    //   },
+    //   id: 'unique-message-id-4',
+    //   order: 3
+    // }
 
   ]
 
@@ -75,6 +75,7 @@ function generateMessages (
       id: 'unique-message-id-2',
       order: 2
     },
+
     {
       anchor: getAnchor(spec.interactDesc, visElement),
       requires: ['interactDesc', 'type'],
@@ -93,7 +94,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
-      text: `The color of the scatterplot elements represents the amount of <i>${spec.legendTitle?.value}  </i>, where ${createColorRect(spec.minColor?.value)} represents the lowest and ${createColorRect(spec.maxColor?.value)} represents the highest. `,
+      text: `The color of the scatterplot elements represents the amount of <i>${spec.legendTitle?.value}  </i>, where ${createColorRect(spec.minColor?.value)} represents the lowest and ${createColorRect(spec.maxColor?.value)} represents the highest value. `,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -136,8 +137,8 @@ function generateMessages (
   if (spec.chartTitle?.value !== undefined) {
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
-      requires: ['chartTitle', 'title'],
-      text: `The scatterplot shows the <i>${spec.title?.value}</i>.`,
+      requires: ['chartTitle'],
+      text: `The scatterplot shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

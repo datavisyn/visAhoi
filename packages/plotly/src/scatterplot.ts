@@ -92,6 +92,12 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         sel: '.points > .point:nth-child(2)'
       }
     },
+    // xAxisTitle: {
+    //   value: chart.layout.xaxis.title.text,
+    //   anchor: {
+    //     sel: '.points > .point:nth-child(2)'
+    //   }
+    // },
     xAxisTitle: {
       value: chart?.layout.xaxis?.title.text,
       anchor: {

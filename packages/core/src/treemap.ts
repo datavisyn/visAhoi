@@ -63,7 +63,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.otherDesc, visElement),
       requires: ['otherDesc'],
-      text: 'Items on the bottom level that belong to the same sub-category are visually represented by using the same color.',
+      text: 'Items on the bottom level that belong to the same sub-category are visually represented by the same color.',
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -88,7 +88,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.interactingDesc, visElement),
       requires: ['interactingDesc'],
-      text: 'Hover over the rectangles to get the dedicated value of the sub-category and further information.',
+      text: 'Hover over the rectangles to get the dedicated value of the sub-category.',
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
@@ -101,7 +101,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValueDesc, visElement),
       requires: ['maxValueDesc', 'maxValue'],
-      text: `The largest rectangle holds the maximum value in the sub-category. The sub-category ${spec.maxValueDesc?.value} holds the maximum value ${spec.maxValue?.value}.`,
+      text: `The largest rectangle holds the maximum value in the sub-category. The sub-category <i>${spec.maxValueDesc?.value}</i> holds the maximum value, which is <i>${spec.maxValue?.value}</i>.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -114,7 +114,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValueDesc, visElement),
       requires: ['minValueDesc', 'minValue'],
-      text: ` The smallest rectangle holds the minimum value in the sub-category. The sub-category ${spec.minValueDesc?.value} holds the minimum value ${spec.minValue?.value}`,
+      text: ` The smallest rectangle holds the minimum value in the sub-category. The sub-category <i>${spec.minValueDesc?.value}</i> holds the minimum value <i>${spec.minValue?.value}</i>`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -129,7 +129,7 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The treemap shows the <i>${spec.chartTitle?.value}</i>.`,
+      text: `This treemap shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {

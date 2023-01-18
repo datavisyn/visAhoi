@@ -9,12 +9,18 @@
     previousMarkerId,
     markerIndexId,
     showOnboardingNavigation,
+    visahoiIcons,
   } from "./stores.js";
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
   import NavigationMarker from "./NavigationMarker.svelte";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils.js";
   import { tick } from "svelte";
+
+  import visahoiChevronUpIcon from "../assets/chevron-up-solid.svg";  
+  import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg";  
+  const chevronUpIcon: string = $visahoiIcons?.chevronUp || visahoiChevronUpIcon;
+  const chevronDownIcon: string = $visahoiIcons?.chevronDown || visahoiChevronDownIcon;
 
   $: nextHeight = $markerInformation.length * 35 + 75 + "px";
   $: prevHeight = $markerInformation.length * 35 + 50 + "px";
@@ -161,7 +167,7 @@
           class="visahoi-navigation-next"
           on:click={navPrev}
         >
-          <span><i class="fas fa-chevron-up" /></span>
+          <span style="display: flex">{@html chevronUpIcon}</span>
         </div>
         <div
           id="navigation-previous"
@@ -169,7 +175,7 @@
           class="visahoi-navigation-previous"
           on:click={navNext}
         >
-          <span><i class="fas fa-chevron-down" /></span>
+          <span style="display: flex">{@html chevronDownIcon}</span>
         </div>
       {/if}
     </div>
