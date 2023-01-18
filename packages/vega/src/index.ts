@@ -106,6 +106,7 @@ export const generateBasicAnnotations = async (
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
 export async function ahoi (
+  contextKey: string,
   visType: EVisualizationType,
   chart: any,
   ahoiConfig: IAhoiConfig,
@@ -116,7 +117,7 @@ export async function ahoi (
     chart
   )
   const visElement = chart.view._el
-  return injectOnboarding(ahoiConfig, visElement, 'column', icons)
+  return injectOnboarding(contextKey || chart.id, ahoiConfig, visElement, 'column', icons)
 }
 
 export { EVisualizationType }

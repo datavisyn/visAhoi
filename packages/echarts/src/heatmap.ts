@@ -75,12 +75,14 @@ function extractOnboardingSpec (chart, coords): IOnboardingHeatmapSpec {
 }
 
 export function heatmapFactory (
+  contextKey, 
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.HEATMAP,
     onbordingSpec,
     visElementId

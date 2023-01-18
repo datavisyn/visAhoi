@@ -1,5 +1,26 @@
 <script lang="ts">
-  import {
+  import { v4 as uuidv4 } from "uuid";
+  import { IMarkerInformation, TooltipPosition } from "../interfaces";
+  import { createPopper } from "@popperjs/core/dist/esm/";
+  import { getMarkerDomId } from "../utils";
+  import { tick } from "svelte";
+  import sanitizeHtml from "sanitize-html";
+  // @ts-ignore
+  import visahoiCheckIcon from "../assets/check-solid.svg";
+  // @ts-ignore
+  import visahoiEditIcon from "../assets/pen-solid.svg";
+  // @ts-ignore
+  import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  // @ts-ignore
+  import visahoiTrashIcon from "../assets/trash-solid-white.svg";
+  // @ts-ignore
+  import { VisahoiState } from "./state";
+
+
+  export let visElement;
+  export let visState: VisahoiState;
+
+  const {
     activeMarker,
     activeOnboardingStage,
     selectedMarker,
@@ -10,24 +31,12 @@
     onboardingMessages,
     editTooltip,
     visahoiIcons,
-  } from "./stores";
-  import { v4 as uuidv4 } from "uuid";
-  import { IMarkerInformation, TooltipPosition } from "../interfaces";
-  import { createPopper } from "@popperjs/core/dist/esm/";
-  import { getMarkerDomId } from "../utils";
-  import { tick } from "svelte";
-  import sanitizeHtml from "sanitize-html";
-  import visahoiCheckIcon from "../assets/check-solid.svg";
-  import visahoiEditIcon from "../assets/pen-solid.svg";
-  import visahoiCloseIcon from "../assets/xmark-solid.svg";
-  import visahoiTrashIcon from "../assets/trash-solid-white.svg";
+  } = visState;
+
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
   const editIcon: string = $visahoiIcons?.edit || visahoiEditIcon;
   const checkIcon: string = $visahoiIcons?.check || visahoiCheckIcon;
-
-
-  export let visElement;
 
   let tempTitle = "";
   let tempText = "";
@@ -54,7 +63,11 @@
     const elementId = document.getElementById(
       `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
     );
-    elementId?.style.opacity = 0.5;
+    if(!elementId) {
+      console.error("Cannot find element ", `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`)
+      return null
+    }
+    elementId.style.opacity = "0.5";
 
     selectedMarker.set(oldActiveMarker);
     $markerInformation.map((marker, i) => {

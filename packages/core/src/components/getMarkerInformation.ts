@@ -6,7 +6,7 @@ const w = 30
 const h = 30
 const textOffset = 5
 
-export function getMarkerInformation (onboardingMessages: IOnboardingMessage[]): IMarkerInformation[] {
+export function getMarkerInformation (visElement: Element, onboardingMessages: IOnboardingMessage[]): IMarkerInformation[] {
   const markerInformation: IMarkerInformation[] = []
   onboardingMessages.forEach((message, index) => {
     if (!message.anchor) {
@@ -44,7 +44,7 @@ export function getMarkerInformation (onboardingMessages: IOnboardingMessage[]):
       if (isOnboardingElementAnchor(anchor)) {
         node = anchor.element
       } else {
-        const elToAppendTo = document.querySelector(anchor.sel)
+        const elToAppendTo = visElement.querySelector(anchor.sel)
         if (!elToAppendTo) {
           console.error('No element found for selector', anchor.sel)
           return

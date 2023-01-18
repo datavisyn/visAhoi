@@ -118,6 +118,7 @@ function makePlotly2 (x, y) {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.BAR_CHART,
     chart
   )
@@ -129,6 +130,7 @@ const getAhoiConfig = () => {
 
 const getAhoiConfig2 = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart2.id,
     EVisualizationType.BAR_CHART,
     chart2
   )
@@ -157,6 +159,7 @@ const registerEventListener = () => {
         onboardingUI.showOnboarding(chart.id)
       } else {
         onboardingUI = await ahoi(
+          chart.id,
           EVisualizationType.BAR_CHART,
           chart,
           getAhoiConfig()
@@ -175,6 +178,7 @@ const registerEventListener = () => {
         onboardingUI2.showOnboarding(chart2.id)
       } else {
         onboardingUI2 = await ahoi(
+          chart2.id,
           EVisualizationType.BAR_CHART,
           chart2,
           getAhoiConfig2()

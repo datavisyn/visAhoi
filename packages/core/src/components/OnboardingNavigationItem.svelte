@@ -1,39 +1,23 @@
 <script lang="ts">
   import { getContext, getAllContexts } from "svelte";
   import { IOnboardingStage } from "../interfaces.js";
-  import {
-    navigationAlignment,
-    activeOnboardingStage,
-    showOnboardingSteps,
-    onboardingStages,
-    visahoiIcons,
-    stores
-  } from "./stores.js";
+  // @ts-ignore
   import visahoiCloseIcon from '../assets/xmark-solid.svg';
+  import { VisahoiState } from "./state.js";
   
   export let stage: IOnboardingStage;
   export let index: number;
-  export let contextKey: string;
+  export let visState: VisahoiState;
 
-  // console.log(1)
-  // console.log("stores: ", $stores)
-  const store = $stores.get(contextKey)
-  // console.log("contextKey: ---> ", contextKey)
-  // console.log("store: ---> ", store)
-  // 1
-  const {count} = store;
-  // console.log(contextKey)
-  // console.log($count)
+  const {count, visahoiIcons, activeOnboardingStage, showOnboardingSteps, navigationAlignment, onboardingStages} = visState;
+
 
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
 
 
   const handleClick = () => {
-    // console.log("count");
     count.update((v) => v+1);
     console.log("count: ", $count);
-    // console.log("contextKey: ", contextKey);
-    // console.log("all contexts: ", all)
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
 

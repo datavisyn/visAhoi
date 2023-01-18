@@ -94,12 +94,14 @@ function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
 }
 
 export function scatterplotFactory (
+  contextKey, 
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.SCATTERPLOT,
     onbordingSpec,
     visElementId

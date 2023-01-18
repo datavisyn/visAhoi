@@ -5,7 +5,7 @@ import {
   generateMessages
 } from '@visahoi/core'
 
-const getMinMax = (values) => {
+const getMinMax = (values): [number, number, number[]] => {
   const unified: number[] = new Array(values[0].trace.y.length).fill(0)
   values?.forEach((v, i) => {
     v.trace.y.forEach((val, index) => {
@@ -87,6 +87,7 @@ function extractOnboardingSpec (
       value: max.toFixed(2),
       anchor: {
         coords: {
+          // https://stackoverflow.com/questions/1461059/is-there-an-equivalent-to-getboundingclientrect-for-text-nodes
           x: xGrids[1].childNodes[maxIndex - 1]?.getBoundingClientRect().x,
           y: traceNodes[1].childNodes[0].getBoundingClientRect().y
         }
@@ -149,12 +150,14 @@ function extractOnboardingSpec (
 }
 
 export function horizonGraphFactory (
+  contextKey, 
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey,
     EVisualizationType.HORIZON_GRAPH,
     onbordingSpec,
     visElementId

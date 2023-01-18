@@ -79,7 +79,7 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingChange
   }
 }
 
-export function changeMatrixFactory (vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
+export function changeMatrixFactory (contextKey: string, vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems)
-  return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElement)
+  return generateMessages(contextKey, EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElement)
 }

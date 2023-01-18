@@ -93,7 +93,7 @@ function extractOnboardingSpec (vegaSpec: Spec, visualizationSpec: Visualization
   }
 }
 
-export function horizonGraphFactory (vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[], visElement: Element): IOnboardingMessage[] {
+export function horizonGraphFactory (contextKey: string, vegaSpec: Spec, visualizationSpec: VisualizationSpec, elems: any[], aggregatedValues: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, visualizationSpec, elems, aggregatedValues)
-  return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElement)
+  return generateMessages(contextKey, EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElement)
 }

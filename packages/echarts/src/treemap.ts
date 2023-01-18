@@ -99,7 +99,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
   }
 }
 
-export function treemapFactory (chart, coords, visElementId: Element): IOnboardingMessage[] {
+export function treemapFactory (contextKey, chart, coords, visElementId: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
-  return generateMessages(EVisualizationType.TREEMAP, onbordingSpec, visElementId)
+  return generateMessages(contextKey, EVisualizationType.TREEMAP, onbordingSpec, visElementId)
 }

@@ -102,12 +102,14 @@ function extractOnboardingSpec (chart, coords): IOnboardingBarChartSpec {
 }
 
 export function barChartFactory (
+  contextKey, 
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.BAR_CHART,
     onbordingSpec,
     visElementId

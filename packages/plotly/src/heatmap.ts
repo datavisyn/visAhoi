@@ -102,35 +102,19 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       anchor: {
         coords: { x: nullX, y: nullY }
       }
-    },
-    maxValue: {
-      value: max,
-      anchor: {
-        coords: { x: maxX, y: maxY }
-      }
-    },
-    minValue: {
-      value: min,
-      anchor: {
-        coords: { x: minX, y: minY }
-      }
-    },
-    emptyValue: {
-      value: 0,
-      anchor: {
-        coords: { x: nullX, y: nullY }
-      }
     }
   }
 }
 
 export function heatmapFactory (
+  contextKey: string, 
   chart: Element,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.HEATMAP,
     onbordingSpec,
     visElementId

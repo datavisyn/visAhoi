@@ -1,21 +1,20 @@
 <script lang="ts">
-  import {
-    showOnboardingSteps,
-    activeOnboardingStage,
-    showHideCloseText,
-    showOnboardingNavigation,
-    isEditModeActive,
-    onboardingStages,
-    markerInformation,
-    onboardingMessages,
-    visahoiIcons,
-  } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
+  // @ts-ignore
   import visahoiToggleOnIcon from "../assets/toggle-on-solid.svg";
+  // @ts-ignore
   import visahoiToggleOffIcon from "../assets/toggle-off-solid.svg";
+  // @ts-ignore
   import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  // @ts-ignore
   import visahoiQuestionmarkIcon from "../assets/question-solid.svg";
+  // @ts-ignore
   import visahoiTrashIcon from "../assets/trash-solid-gray.svg";
+  import { VisahoiState } from "./state.js";
+
+  export let visState: VisahoiState;
+
+  const {showHideCloseText, visahoiIcons, activeOnboardingStage, showOnboardingSteps, onboardingStages, isEditModeActive, markerInformation, showOnboardingNavigation, onboardingMessages} = visState;
 
 
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;

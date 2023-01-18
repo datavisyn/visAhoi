@@ -39,6 +39,7 @@ export {
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
 export const generateBasicAnnotations = (
+  contextKey: string,
   visType: EVisualizationType,
   chart: any
 ): IOnboardingMessage[] => {
@@ -57,27 +58,27 @@ export const generateBasicAnnotations = (
 
   switch (visType) {
     case EVisualizationType.BAR_CHART:
-      onboardingMessages = barChartFactory(chart, coords, visElement)
+      onboardingMessages = barChartFactory(contextKey, chart, coords, visElement)
       break
 
     case EVisualizationType.CHANGE_MATRIX:
-      onboardingMessages = changeMatrixFactory(chart, coords, visElement)
+      onboardingMessages = changeMatrixFactory(contextKey, chart, coords, visElement)
       break
 
     case EVisualizationType.HORIZON_GRAPH:
-      onboardingMessages = horizonGraphFactory(chart, coords, visElement)
+      onboardingMessages = horizonGraphFactory(contextKey, chart, coords, visElement)
       break
 
     case EVisualizationType.SCATTERPLOT:
-      onboardingMessages = scatterplotFactory(chart, coords, visElement)
+      onboardingMessages = scatterplotFactory(contextKey, chart, coords, visElement)
       break
 
     case EVisualizationType.TREEMAP:
-      onboardingMessages = treemapFactory(chart, coords, visElement)
+      onboardingMessages = treemapFactory(contextKey, chart, coords, visElement)
       break
 
     case EVisualizationType.HEATMAP:
-      onboardingMessages = heatmapFactory(chart, coords, visElement)
+      onboardingMessages = heatmapFactory(contextKey, chart, coords, visElement)
       break
 
     default:
@@ -95,13 +96,14 @@ export const generateBasicAnnotations = (
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
 export async function ahoi (
+  contextKey: string,
   visType: EVisualizationType,
   chart: any,
   ahoiConfig: IAhoiConfig,
   icons: IAhoiIcons
 ) {
   const visElement = chart._dom
-  return injectOnboarding(ahoiConfig, visElement, 'column', icons)
+  return injectOnboarding(contextKey || chart.id, ahoiConfig, visElement, 'column', icons)
 }
 
 export { EVisualizationType }

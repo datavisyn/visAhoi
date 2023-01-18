@@ -1,18 +1,21 @@
 <script lang="ts">
   import { IMarkerInformation } from "../interfaces";
-  import {
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
+  import { tick } from "svelte";
+  import { VisahoiState } from "./state";
+
+  export let markerInformation: IMarkerInformation;
+  export let order: number;
+  export let visState: VisahoiState;
+
+  const {
     activeMarker,
     activeOnboardingStage,
     selectedMarker,
     previousMarkerId,
     markerIndexId,
-    markerInformation as markInfo,
-  } from "./stores";
-  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
-  import { tick } from "svelte";
-
-  export let markerInformation: IMarkerInformation;
-  export let order: number;
+    markerInformation: markInfo,
+  } = visState;
 
   $: activeBackgroundColor =
     markerInformation.message.onboardingStage.activeBackgroundColor;

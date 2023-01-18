@@ -148,12 +148,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
 }
 
 export function scatterplotFactory (
+  contextKey: string, 
   chart: Element,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.SCATTERPLOT,
     onbordingSpec,
     visElementId

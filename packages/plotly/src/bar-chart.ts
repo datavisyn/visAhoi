@@ -1,4 +1,3 @@
-import { visXPosition } from './../../core/src/components/stores'
 import {
   EVisualizationType,
   IOnboardingMessage,
@@ -91,12 +90,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
 }
 
 export function barChartFactory (
+  contextKey: string, 
   chart: Element,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.BAR_CHART,
     onbordingSpec,
     visElementId

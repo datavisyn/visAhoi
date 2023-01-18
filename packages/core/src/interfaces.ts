@@ -1,5 +1,8 @@
+// @ts-ignore
 import readingIcon from './assets/glasses-solid.svg';
+// @ts-ignore
 import analyzingIcon from './assets/lightbulb-solid.svg';
+// @ts-ignore
 import interactingIcon from './assets/hand-point-up-regular.svg';
 
 /**
@@ -91,7 +94,7 @@ export interface IOnboardingStage {
   backgroundColor: string;
   hoverBackgroundColor?: string;
   activeBackgroundColor?: string;
-  order?: number;
+  order: number;
 }
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';

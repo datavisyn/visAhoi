@@ -1,17 +1,20 @@
 <script lang="ts">
   import { IMarkerInformation } from "../interfaces";
-  import {
-    activeMarker,
-    previousMarkerId,
-    markerIndexId,
-    markerInformation as markInfo,
-    selectedMarker,
-    activeOnboardingStage,
-  } from "./stores";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
+  import { VisahoiState } from "./state";
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
+  export let visState: VisahoiState;
+
+  const {
+    activeMarker,
+    previousMarkerId,
+    markerIndexId,
+    markerInformation: markInfo,
+    selectedMarker,
+    activeOnboardingStage,
+  } = visState;
 
   $: activeBackgroundColor =
     markerInformation.message.onboardingStage.activeBackgroundColor;
@@ -30,7 +33,9 @@
       const elementId = document.getElementById(
         `visahoi-marker-navigation-visahoi-marker-${marker.id}`
       );
-      elementId?.style.opacity = 0.5;
+      if(elementId) {
+        elementId.style.opacity = "0.5";
+      }
 
       selectedMarker.set(oldActiveMarker);
       $markInfo.map((marker, i) => {
