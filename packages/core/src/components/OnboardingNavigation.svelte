@@ -119,18 +119,18 @@
     }
   };
 
-  const navPrev = () => {
+  const onPreviousArrowClick = () => {
     if ($previousMarkerId) {
-      const elementId = getNavigationMarkerDomId($previousMarkerId);
-      const element = document.getElementById(elementId)
-      if(element) {
-        element.style.opacity = "0.5";
+      const previousMarkerElementId = getNavigationMarkerDomId($previousMarkerId);
+      const previousMarkerElement = document.getElementById(previousMarkerElementId)
+      if(previousMarkerElement) {
+        previousMarkerElement.style.opacity = "0.5";
       }
     }
-    const element = document.getElementById("navigation-previous");
-    if(element) {
-      element.style.pointerEvents = "all";
-      element.style.opacity = "1";
+    const previousNavigationArrowElement = document.getElementById("navigation-previous");
+    if(previousNavigationArrowElement) {
+      previousNavigationArrowElement.style.pointerEvents = "all";
+      previousNavigationArrowElement.style.opacity = "1";
     }
 
     if ($selectedMarker) {
@@ -139,10 +139,10 @@
           index = i - 1;
 
           if (index === 0) {
-            const element = document.getElementById("navigation-next");
-            if(element) {
-              element.style.pointerEvents = "none";
-              element.style.opacity = "0.5";
+            const nextNavigationArrowElement = document.getElementById("navigation-next");
+            if(nextNavigationArrowElement) {
+              nextNavigationArrowElement.style.pointerEvents = "none";
+              nextNavigationArrowElement.style.opacity = "0.5";
             }
           }
         }
@@ -158,13 +158,12 @@
       activeMarker.set($selectedMarker);
       previousMarkerId.set($selectedMarker?.marker.id);
       const markerId = getMarkerDomId($selectedMarker?.marker.id);
-      if (markerId) {
-        const elementId = `visahoi-marker-navigation-${markerId}`;
-        const element = document.getElementById(elementId)
-        if(element) {
-          element.style.opacity = "1";
-        } 
-      }
+      console.log(markerId)
+      const navigationMarkerId = `visahoi-marker-navigation-${markerId}`
+      const navigationMarkerElement = document.getElementById(navigationMarkerId)
+      if(navigationMarkerElement) {
+        navigationMarkerElement.style.opacity = "1";
+      } 
     }
   };
 </script>
@@ -199,7 +198,7 @@
           id="navigation-next"
           style="--bottom-height: {nextHeight}"
           class="visahoi-navigation-next"
-          on:click={navPrev}
+          on:click={onPreviousArrowClick}
         >
           <span style="display: flex">{@html chevronUpIcon}</span>
         </div>

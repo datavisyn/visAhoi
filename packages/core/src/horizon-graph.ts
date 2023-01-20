@@ -7,6 +7,7 @@ import {
   defaultOnboardingStages
 } from './interfaces'
 import { getAnchor } from './utils'
+import { v4 as uuidv4 } from "uuid";
 
 export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -44,9 +45,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-2'
+        id: uuidv4()
       },
-      id: 'unique-message-id-2',
+      id: uuidv4(),
       order: 2
     },
     {
@@ -56,9 +57,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-3'
+        id: uuidv4()
       },
-      id: 'unique-message-id-3',
+      id: uuidv4(),
       order: 3
     },
     {
@@ -73,9 +74,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-4'
+        id: uuidv4()
       },
-      id: 'unique-message-id-4',
+      id: uuidv4(),
       order: 4
     },
     {
@@ -87,9 +88,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-5'
+        id: uuidv4()
       },
-      id: 'unique-message-id-5',
+      id: uuidv4(),
       order: 5
     },
     {
@@ -99,9 +100,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-6'
+        id: uuidv4()
       },
-      id: 'unique-message-id-6',
+      id: uuidv4(),
       order: 1
     },
     {
@@ -111,9 +112,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-7'
+        id: uuidv4()
       },
-      id: 'unique-message-id-7',
+      id: uuidv4(),
       order: 2
     },
     {
@@ -123,9 +124,9 @@ function generateMessages (
       title: 'Interaction with the chart',
       onboardingStage: using,
       marker: {
-        id: 'unique-marker-id-8'
+        id: uuidv4()
       },
-      id: 'unique-message-id-8',
+      id: uuidv4(),
       order: 1
     }
   ]
@@ -138,9 +139,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-1'
+        id: uuidv4()
       },
-      id: 'unique-message-id-1',
+      id: uuidv4(),
       order: 1
     })
   }

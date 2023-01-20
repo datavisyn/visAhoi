@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
 import { getMarkerInformation } from './components/getMarkerInformation'
 import { VisahoiState } from './components/state'
+import { getMarkerDomId } from './utils'
 
 let onboardingUI: OnboardingUI
 
@@ -106,16 +107,7 @@ export const injectOnboarding = (
     return {
       contextKey,
       updateOnboarding: debounce(updateOnboarding),
-      showOnboarding: (contextKey) => {
-        onboardingUI = new OnboardingUI({
-          target: document.body as Element,
-          props: {
-            // state for one specific visahoi Instance (usually a vis)
-            visState,
-            ref,
-            visElement,
-          }
-        })
+      showOnboarding: () => {
         showOnboarding.set(true)
       },
       removeOnboarding: () => {
@@ -174,19 +166,19 @@ export const createBasicOnboardingStage = (contextKey: string, stage: IOnboardin
 }
 
 export const createBasicOnboardingMessage = (
+  contextKey: string,
   message: Pick<
     IOnboardingMessage,
     'title' | 'text' | 'onboardingStage' | 'anchor' | 'id' | 'order'
-  >,
-  contextKey: string
-) => {
+  >
+): IOnboardingMessage => {
   const s = get(stores)
   const visState = s.get(contextKey)
   if (visState) {
     const { onboardingStages, onboardingMessages, markerInformation, visElement } = visState
 
     const marker: IMarker = {
-      id: `visahoi-marker-${uuidv4()}`
+      id: getMarkerDomId(uuidv4())
     }
 
     if (!message.order) {

@@ -75,7 +75,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: (newTitle !== '') ? newTitle : title,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -20, top: -10 }
+        offset: { left: 15, top: -10 }
       }
     },
     title: {
@@ -143,6 +143,28 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     },
     minY: {
       value: minYValue
+    },
+    plotlyModebarPreMarker: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover',
+        offset: {
+          left: -50,
+          top: -chart.offsetHeight / 2
+        }
+      }
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
+    plotlyLegendInteractions: {
+      value: "",
+      anchor: {
+        sel: '.legend'
+      }
     }
   }
 }

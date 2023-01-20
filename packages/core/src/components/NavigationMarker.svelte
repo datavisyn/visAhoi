@@ -96,9 +96,11 @@
       const oldActiveMarker = $activeMarker;
       activeMarker.set(null);
       const elementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${marker.id}`
+        getNavigationMarkerDomId(marker.id)
       );
-      elementId?.style.opacity = 0.5;
+      if(elementId) {
+        elementId.style.opacity = "0.5";
+      }
 
       // selectedMarker.set(activeOnboardingStageMarkers[0]);
       selectedMarker.set(oldActiveMarker);
@@ -120,7 +122,7 @@
       hoverBackgroundColor}; --background-color:{activeBackgroundColor ||
       backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
       backgroundColor};"
-    id="visahoi-marker-navigation-{getMarkerDomId(marker.id)}"
+    id={getNavigationMarkerDomId(marker.id)}
     class="visahoi-marker-navigation-item-circle {$activeOnboardingStage}"
   />
 </div>

@@ -156,7 +156,7 @@ const registerEventListener = () => {
       console.log("onboarding ui: ", onboardingUI)
       if (onboardingUI) {
         console.log("showing existing onboarding")
-        onboardingUI.showOnboarding(chart.id)
+        onboardingUI.showOnboarding()
       } else {
         onboardingUI = await ahoi(
           chart.id,
@@ -175,7 +175,7 @@ const registerEventListener = () => {
     if (showOnboarding2) {
       if (onboardingUI2) {
         console.log("showing existing onboarding")
-        onboardingUI2.showOnboarding(chart2.id)
+        onboardingUI2.showOnboarding()
       } else {
         onboardingUI2 = await ahoi(
           chart2.id,

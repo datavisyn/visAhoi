@@ -110,7 +110,7 @@ export async function ahoi (
   visType: EVisualizationType,
   chart: any,
   ahoiConfig: IAhoiConfig,
-  icons: IAhoiIcons
+  icons?: IAhoiIcons
 ) {
   ahoiConfig.onboardingMessages = await generateBasicAnnotations(
     visType,

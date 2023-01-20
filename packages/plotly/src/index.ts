@@ -103,7 +103,7 @@ export async function ahoi (
   visType: EVisualizationType,
   chart: any,
   ahoiConfig: IAhoiConfig,
-  icons: IAhoiIcons
+  icons?: IAhoiIcons
 ) {
   const visElement = chart
   return injectOnboarding(contextKey, ahoiConfig, visElement, 'column', icons)

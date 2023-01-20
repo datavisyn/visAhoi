@@ -2,7 +2,7 @@
   import { v4 as uuidv4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
-  import { getMarkerDomId } from "../utils";
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
   import { tick } from "svelte";
   import sanitizeHtml from "sanitize-html";
   // @ts-ignore
@@ -48,6 +48,8 @@
     },
     allowedAttributes: {
       "*": ["style"], // allow style attribute for all tags
+      "svg": ["*"],
+      "path": ["*"]
     },
   };
 
@@ -60,14 +62,12 @@
     // The active marker is closed and navigation marker is not highlighted.
     // The selectedMarker is set to the active marker which is to be closed.
     const oldActiveMarker = $activeMarker;
-    const elementId = document.getElementById(
-      `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
+    const navigationMarkerId = document.getElementById(
+      getNavigationMarkerDomId($activeMarker?.marker.id)
     );
-    if(!elementId) {
-      console.error("Cannot find element ", `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`)
-      return null
+    if(navigationMarkerId) {
+      navigationMarkerId.style.opacity = "0.5";
     }
-    elementId.style.opacity = "0.5";
 
     selectedMarker.set(oldActiveMarker);
     $markerInformation.map((marker, i) => {
@@ -336,7 +336,7 @@
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 3px;
     font-size: 13px;
   }

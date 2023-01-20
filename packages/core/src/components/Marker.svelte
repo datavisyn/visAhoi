@@ -31,7 +31,7 @@
       const oldActiveMarker = $activeMarker;
       activeMarker.set(null);
       const elementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${marker.id}`
+        getNavigationMarkerDomId(marker.id)
       );
       if(elementId) {
         elementId.style.opacity = "0.5";

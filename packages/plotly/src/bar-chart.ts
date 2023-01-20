@@ -26,7 +26,7 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
       value: chart?.layout?.title?.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -20, top: 10 }
+        offset: { left: 10, top: 10 }
       }
     },
     type: {
@@ -83,6 +83,28 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
       value: chart.layout.yaxis.title.text,
       anchor: {
         sel: '.bars > .points > .point:nth-child(1)'
+      }
+    },
+    plotlyModebarPreMarker: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover',
+        offset: {
+          left: -20,
+          top: -chart.offsetHeight / 2
+        }
+      }
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
+    plotlyLegendInteractions: {
+      value: "",
+      anchor: {
+        sel: '.legend'
       }
     }
 
