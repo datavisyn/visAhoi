@@ -158,7 +158,6 @@
       activeMarker.set($selectedMarker);
       previousMarkerId.set($selectedMarker?.marker.id);
       const markerId = getMarkerDomId($selectedMarker?.marker.id);
-      console.log(markerId)
       const navigationMarkerId = `visahoi-marker-navigation-${markerId}`
       const navigationMarkerElement = document.getElementById(navigationMarkerId)
       if(navigationMarkerElement) {

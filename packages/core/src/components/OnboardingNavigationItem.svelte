@@ -17,7 +17,6 @@
 
   const handleClick = () => {
     count.update((v) => v+1);
-    console.log("count: ", $count);
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
 

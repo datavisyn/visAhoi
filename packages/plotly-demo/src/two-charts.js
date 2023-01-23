@@ -147,15 +147,10 @@ const registerEventListener = () => {
     return
   }
   helpIcon.addEventListener('click', async () => {
-    console.log("click");
-    console.log(chart.id)
     showOnboarding = !showOnboarding
-    console.log("---> show onboarding: ", showOnboarding)
     if (showOnboarding) {
       // key
-      console.log("onboarding ui: ", onboardingUI)
       if (onboardingUI) {
-        console.log("showing existing onboarding")
         onboardingUI.showOnboarding()
       } else {
         onboardingUI = await ahoi(
@@ -174,7 +169,6 @@ const registerEventListener = () => {
     showOnboarding2 = !showOnboarding2
     if (showOnboarding2) {
       if (onboardingUI2) {
-        console.log("showing existing onboarding")
         onboardingUI2.showOnboarding()
       } else {
         onboardingUI2 = await ahoi(
