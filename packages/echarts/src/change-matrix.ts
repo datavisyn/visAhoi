@@ -103,12 +103,14 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
 }
 
 export function changeMatrixFactory (
+  contextKey,
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey,
     EVisualizationType.CHANGE_MATRIX,
     onbordingSpec,
     visElementId

@@ -148,6 +148,7 @@ const registerEventListener = () => {
     if (showOnboarding) {
       editButton.style.display = 'block'
       onboardingUI = await ahoi(
+        contextKey,
         EVisualizationType.SCATTERPLOT,
         chart,
         getAhoiConfig()

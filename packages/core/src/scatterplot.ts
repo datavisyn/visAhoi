@@ -7,9 +7,11 @@ import {
   IOnboardingStage
 } from './interfaces'
 import { getAnchor } from './utils'
+import { v4 as uuidv4 } from "uuid";
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
+  title?: ISpecProp;
   type?: ISpecProp;
   legendTitle?: ISpecProp;
   xAxis?: ISpecProp;
@@ -47,80 +49,129 @@ function generateMessages (
 
   const messages: IOnboardingMessage[] = [
     {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebarPreMarker, visElement),
+      requires: ['plotlyModebarPreMarker', 'plotlyModebar'],
+      text: "When hovering over the visualization, a modebar appears on the top.",
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 1
+    },
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: "",
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.plotlyLegendInteractions, visElement),
+      requires: ['plotlyLegendInteractions'],
+      text: "It is possible to hide or show points of the same category by clicking on them in the legend.",
+      title: "Legend interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 3
+    },
+    // {
+    //   anchor: getAnchor(spec.xAxisTitle, visElement),
+    //   requires: ['xAxisTitle', 'yAxisTitle'],
+    //   text: `The columns show the ${spec.xAxisTitle?.value}, while the rows show the ${spec.yAxisTitle?.value}.`,
+    //   title: 'Reading the chart',
+    //   onboardingStage: reading,
+    //   marker: {
+    //     id: uuidv4()
+    //   },
+    //   id: uuidv4(),
+    //   order: 3
+    // }
+
+  ]
+
+  if (spec.type?.value !== undefined) {
+    messages.unshift({
       anchor: getAnchor(spec.type, visElement),
       requires: ['type'],
       text: `The chart is based on colored ${spec.type?.value} elements.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-2'
+        id: uuidv4()
       },
-      id: 'unique-message-id-2',
+      id: uuidv4(),
       order: 2
     },
 
     {
+      anchor: getAnchor(spec.interactDesc, visElement),
+      requires: ['interactDesc', 'type'],
+      text: 'Hover over the chart to get the dedicated value for each data point.',
+      title: 'Interaction with the chart',
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 3
+    })
+  }
+
+  if (spec.legendTitle?.value !== '') {
+    messages.unshift({
       anchor: getAnchor(spec.legendTitle, visElement),
       requires: ['legendTitle'],
       text: `The color of the scatterplot elements represents the amount of <i>${spec.legendTitle?.value}  </i>, where ${createColorRect(spec.minColor?.value)} represents the lowest and ${createColorRect(spec.maxColor?.value)} represents the highest value. `,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-3'
+        id: uuidv4()
       },
-      id: 'unique-message-id-3',
+      id: uuidv4(),
       order: 4
-    },
-    {
-      anchor: getAnchor(spec.yAxisTitle, visElement),
-      requires: ['yAxisTitle', 'xAxisTitle'],
-      text: `The axis represent <i>${spec.yAxisTitle?.value} (y-axis)</i> and <i>${spec.xAxisTitle?.value} (x-axis) </i>.`,
-      title: 'Reading the chart',
-      onboardingStage: reading,
-      marker: {
-        id: 'unique-marker-id-5'
-      },
-      id: 'unique-message-id-5',
-      order: 3
-    },
-    {
-      anchor: getAnchor(spec.interactDesc, visElement),
-      requires: ['interactDesc'],
-      text: 'Hover over the chart to get the dedicated value for each data point.',
-      title: 'Interaction with the chart',
-      onboardingStage: interacting,
-      marker: {
-        id: 'unique-marker-id-6'
-      },
-      id: 'unique-message-id-6',
-      order: 1
-    },
-    {
+    })
+  }
+
+  if (spec.maxValue?.value !== undefined) {
+    messages.unshift({
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue', 'maxX', 'maxY'],
-      text: `The maximum <i>${spec.xAxisTitle?.value}</i> of ${spec.maxX?.value} relates to ${spec.maxY?.value} <i>${spec.yAxisTitle?.value}</i>.`,
+      text: `The maximum <i>${spec.xAxisTitle?.value} of ${spec.maxX?.value} relates to ${spec.maxY?.value} ${spec.yAxisTitle?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-7'
+        id: uuidv4()
       },
-      id: 'unique-message-id-7',
+      id: uuidv4(),
       order: 1
-    },
-    {
+    })
+  }
+  if (spec.maxValue?.value !== undefined) {
+    messages.unshift({
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue', 'minX', 'minY'],
-      text: `The minimum <i>${spec.xAxisTitle?.value}</i> of ${spec.minX?.value} relates to ${spec.minY?.value} <i>${spec.yAxisTitle?.value}</i>.`,
+      text: `The minimum <i>${spec.xAxisTitle?.value} of ${spec.minX?.value} relates to ${spec.minY?.value} ${spec.yAxisTitle?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-8'
+        id: uuidv4()
       },
-      id: 'unique-message-id-8',
+      id: uuidv4(),
       order: 2
-    }
-
-  ]
+    })
+  }
 
   if (spec.chartTitle?.value !== undefined) {
     messages.unshift({
@@ -130,9 +181,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-1'
+        id: uuidv4()
       },
-      id: 'unique-message-id-1',
+      id: uuidv4(),
       order: 1
     })
   }

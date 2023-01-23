@@ -145,7 +145,7 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
   }
 }
 
-export function barChartFactory (vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElement: Element): IOnboardingMessage[] {
+export function barChartFactory (contextKey: string, vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, aggregatedValues, elems)
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElement)
+  return generateMessages(contextKey, EVisualizationType.BAR_CHART, onbordingSpec, visElement)
 }

@@ -1,18 +1,21 @@
 <script lang="ts">
   import { IMarkerInformation } from "../interfaces";
-  import {
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
+  import { tick } from "svelte";
+  import { VisahoiState } from "./state";
+
+  export let markerInformation: IMarkerInformation;
+  export let order: number;
+  export let visState: VisahoiState;
+
+  const {
     activeMarker,
     activeOnboardingStage,
     selectedMarker,
     previousMarkerId,
     markerIndexId,
-    markerInformation as markInfo,
-  } from "./stores";
-  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
-  import { tick } from "svelte";
-
-  export let markerInformation: IMarkerInformation;
-  export let order: number;
+    markerInformation: markInfo,
+  } = visState;
 
   $: activeBackgroundColor =
     markerInformation.message.onboardingStage.activeBackgroundColor;
@@ -93,9 +96,11 @@
       const oldActiveMarker = $activeMarker;
       activeMarker.set(null);
       const elementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${marker.id}`
+        getNavigationMarkerDomId(marker.id)
       );
-      elementId?.style.opacity = 0.5;
+      if(elementId) {
+        elementId.style.opacity = "0.5";
+      }
 
       // selectedMarker.set(activeOnboardingStageMarkers[0]);
       selectedMarker.set(oldActiveMarker);
@@ -117,7 +122,7 @@
       hoverBackgroundColor}; --background-color:{activeBackgroundColor ||
       backgroundColor}; --hover-background-color:{hoverBackgroundColor ||
       backgroundColor};"
-    id="visahoi-marker-navigation-{getMarkerDomId(marker.id)}"
+    id={getNavigationMarkerDomId(marker.id)}
     class="visahoi-marker-navigation-item-circle {$activeOnboardingStage}"
   />
 </div>

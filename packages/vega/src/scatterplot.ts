@@ -129,7 +129,7 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
   }
 }
 
-export function scatterplotFactory (vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
+export function scatterplotFactory (contextKey: string, vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems)
-  return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElement)
+  return generateMessages(contextKey, EVisualizationType.SCATTERPLOT, onbordingSpec, visElement)
 }

@@ -1,34 +1,32 @@
 <script lang="ts">
-  import {
-    showOnboardingSteps,
-    activeOnboardingStage,
-    showHideCloseText,
-    showOnboardingNavigation,
-    isEditModeActive,
-    onboardingStages,
-    markerInformation,
-    onboardingMessages,
-    visahoiIcons,
-  } from "./stores.js";
   import { navigationMainItemDefaultColor } from "../constants";
-
-  $: buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode";
-
+  // @ts-ignore
   import visahoiToggleOnIcon from "../assets/toggle-on-solid.svg";
+  // @ts-ignore
   import visahoiToggleOffIcon from "../assets/toggle-off-solid.svg";
+  // @ts-ignore
   import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  // @ts-ignore
   import visahoiQuestionmarkIcon from "../assets/question-solid.svg";
+  // @ts-ignore
   import visahoiTrashIcon from "../assets/trash-solid-gray.svg";
+  import { VisahoiState } from "./state.js";
+
+  export let visState: VisahoiState;
+
+  const {showHideCloseText, visahoiIcons, activeOnboardingStage, showOnboardingSteps, onboardingStages, isEditModeActive, markerInformation, showOnboardingNavigation, onboardingMessages} = visState;
+
+
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
   const questionmarkIcon: string = $visahoiIcons?.questionmark || visahoiQuestionmarkIcon;
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
   const toggleOffIcon: string = $visahoiIcons?.toggleOff || visahoiToggleOffIcon;
   const toggleOnIcon: string = $visahoiIcons?.toggleOn || visahoiToggleOnIcon;
 
-  const handleClick = () => {
+    const handleClick = () => {
     if ($activeOnboardingStage) {
       activeOnboardingStage.update((v) => null);
-    } else {
+    } else { 
       showOnboardingSteps.update((v) => !v);
     }
   };

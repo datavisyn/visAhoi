@@ -8,6 +8,7 @@ import {
   IAhoiConfig
 } from './interfaces'
 import { getAnchor } from './utils'
+import { v4 as uuidv4 } from "uuid";
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -48,9 +49,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-2'
+        id: uuidv4()
       },
-      id: 'unique-message-id-2',
+      id: uuidv4(),
       order: 2
     },
     {
@@ -60,9 +61,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-3'
+        id: uuidv4()
       },
-      id: 'unique-message-id-3',
+      id: uuidv4(),
       order: 3
     },
     {
@@ -72,9 +73,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-4'
+        id: uuidv4()
       },
-      id: 'unique-message-id-4',
+      id: uuidv4(),
       order: 4
     },
     {
@@ -84,9 +85,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-5'
+        id: uuidv4()
       },
-      id: 'unique-message-id-5',
+      id: uuidv4(),
       order: 1
     },
     {
@@ -96,9 +97,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-6'
+        id: uuidv4()
       },
-      id: 'unique-message-id-6',
+      id: uuidv4(),
       order: 2
     },
     {
@@ -108,10 +109,47 @@ function generateMessages (
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: 'unique-marker-id-7'
+        id: uuidv4()
       },
-      id: 'unique-message-id-7',
+      id: uuidv4(),
+      order: 3
+    },
+    {
+      anchor: getAnchor(spec.plotlyLegendInteractions, visElement),
+      requires: ['plotlyLegendInteractions'],
+      text: "It is possible to hide or show points of the same category by clicking on them in the legend.",
+      title: "Legend interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 3
+    },
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebarPreMarker, visElement),
+      requires: ['plotlyModebarPreMarker', 'plotlyModebar'],
+      text: "When hovering over the visualization, a modebar appears on the top.",
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
       order: 1
+    },
+    {
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: "The modebar offers some general interaction possibilities for the visualization like selection, panning and zooming or taking screenshots.",
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 2
     }
   ]
 
@@ -123,9 +161,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-1'
+        id: uuidv4()
       },
-      id: 'unique-message-id-1',
+      id: uuidv4(),
       order: 1
     })
   }

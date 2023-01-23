@@ -118,12 +118,14 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
 }
 
 export function horizonGraphFactory (
+  contextKey, 
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.HORIZON_GRAPH,
     onbordingSpec,
     visElementId

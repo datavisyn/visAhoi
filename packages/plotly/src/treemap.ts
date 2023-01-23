@@ -150,12 +150,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingTreemapSpec {
 }
 
 export function treemapFactory (
+  contextKey: string, 
   chart: Element,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.TREEMAP,
     onbordingSpec,
     visElementId

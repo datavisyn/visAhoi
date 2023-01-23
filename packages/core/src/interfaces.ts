@@ -1,5 +1,8 @@
+// @ts-ignore
 import readingIcon from './assets/glasses-solid.svg';
+// @ts-ignore
 import analyzingIcon from './assets/lightbulb-solid.svg';
+// @ts-ignore
 import interactingIcon from './assets/hand-point-up-regular.svg';
 
 /**
@@ -82,11 +85,16 @@ export interface IAhoiIcons {
   chevronDown: string;
 }
 
-export interface IAhoiConfig {
-  onboardingMessages: IOnboardingMessage[];
-  backdrop: IBackdropConfig;
-  showHelpCloseText?: boolean;
-  showOnboardingNavigation: boolean;
+export type OnboardingStage = string;
+
+export interface IOnboardingStage {
+  id: string;
+  title: string;
+  icon: string;
+  backgroundColor: string;
+  hoverBackgroundColor?: string;
+  activeBackgroundColor?: string;
+  order: number;
 }
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
@@ -97,6 +105,7 @@ export interface IMarker {
   content?: string;
   id: string;
 }
+
 export interface IOnboardingMessage {
   id: string;
   anchor: OnboardingAnchor | undefined;
@@ -107,6 +116,13 @@ export interface IOnboardingMessage {
   tooltipPosition?: TooltipPosition;
   marker: IMarker;
   order?: number;
+}
+
+export interface IAhoiConfig {
+  onboardingMessages: IOnboardingMessage[];
+  backdrop?: IBackdropConfig;
+  showHelpCloseText?: boolean;
+  showOnboardingNavigation?: boolean;
 }
 
 export enum EDefaultOnboardingStages {
@@ -123,18 +139,6 @@ export enum EDefaultOnboardingStageNavigation {
 export interface IOnboardingStageNavigation {
   id: string;
   backgroundColor: string;
-}
-
-export type OnboardingStage = string;
-
-export interface IOnboardingStage {
-  id: string;
-  title: string;
-  icon: string;
-  backgroundColor: string;
-  hoverBackgroundColor?: string;
-  activeBackgroundColor?: string;
-  order?: number;
 }
 
 // TODO: move to right place

@@ -48,14 +48,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       value: chart.layout.title.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -20, top: 10 }
+        offset: { left: -40, top: -20 }
       }
     },
     heatmapDescription: {
       value: t.type,
       anchor: {
         sel: '.heatmaplayer > .hm > image',
-        offset: { left: -50, top: -30 }
+        offset: { left: -50, top: -40 }
       }
     },
     legendDescription: {
@@ -73,16 +73,16 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       }
     },
     xAxis: {
-      value: chart.layout.xaxis.title.text
+      value: chart.layout?.xaxis?.title?.text
     },
     yAxis: {
-      value: chart.layout.yaxis.title.text
+      value: chart.layout?.yaxis?.title?.text
     },
     hoverDescription: {
       value: t?.xaxis?.title?.text,
       anchor: {
         sel: '.cartesianlayer',
-        offset: { top: -50, left: -120 }
+        offset: { left: -120, top: -90 }
       }
     },
     maxValue: {
@@ -107,12 +107,14 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
 }
 
 export function heatmapFactory (
+  contextKey: string, 
   chart: Element,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.HEATMAP,
     onbordingSpec,
     visElementId
