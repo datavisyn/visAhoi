@@ -3,7 +3,7 @@
   import { fade } from "svelte/transition";
   import Markers from "./Markers.svelte";
   import Tooltips from "./Tooltips.svelte";
-  import { getContext, onDestroy, onMount, setContext } from "svelte";
+  import { onMount } from "svelte";
   import Backdrop from "./Backdrop.svelte";
   import { getMarkerInformation } from "./getMarkerInformation";
   import { VisahoiState } from "./state";

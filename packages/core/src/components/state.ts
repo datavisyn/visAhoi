@@ -13,7 +13,6 @@ const initializeStoreValue = <T>(defaultValue: any) => {
 
 
 export class VisahoiState {
-  count: Writable<number>;
   visahoiIcons: Writable<IAhoiIcons>;
   showOnboarding: Writable<boolean>;
   showOnboardingSteps: Writable<boolean>;
@@ -38,7 +37,6 @@ export class VisahoiState {
   markerInformation: Writable<IMarkerInformation[]>;
   visElement: Writable<Element>;
   constructor () {
-    this.count = initializeStoreValue<number>(0)
     this.visahoiIcons = initializeStoreValue<IAhoiIcons>(null)
     this.showOnboarding = initializeStoreValue<boolean>(false)
     this.showOnboardingSteps = initializeStoreValue<boolean>(false)

@@ -9,14 +9,13 @@
   export let index: number;
   export let visState: VisahoiState;
 
-  const {count, visahoiIcons, activeOnboardingStage, showOnboardingSteps, navigationAlignment, onboardingStages} = visState;
+  const {visahoiIcons, activeOnboardingStage, showOnboardingSteps, navigationAlignment, onboardingStages} = visState;
 
 
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
 
 
   const handleClick = () => {
-    count.update((v) => v+1);
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
 

@@ -14,19 +14,30 @@
 
   export let visState: VisahoiState;
 
-  const {showHideCloseText, visahoiIcons, activeOnboardingStage, showOnboardingSteps, onboardingStages, isEditModeActive, markerInformation, showOnboardingNavigation, onboardingMessages} = visState;
-
+  const {
+    showHideCloseText,
+    visahoiIcons,
+    activeOnboardingStage,
+    showOnboardingSteps,
+    onboardingStages,
+    isEditModeActive,
+    markerInformation,
+    showOnboardingNavigation,
+    onboardingMessages,
+  } = visState;
 
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
-  const questionmarkIcon: string = $visahoiIcons?.questionmark || visahoiQuestionmarkIcon;
+  const questionmarkIcon: string =
+    $visahoiIcons?.questionmark || visahoiQuestionmarkIcon;
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
-  const toggleOffIcon: string = $visahoiIcons?.toggleOff || visahoiToggleOffIcon;
+  const toggleOffIcon: string =
+    $visahoiIcons?.toggleOff || visahoiToggleOffIcon;
   const toggleOnIcon: string = $visahoiIcons?.toggleOn || visahoiToggleOnIcon;
 
-    const handleClick = () => {
+  const handleClick = () => {
     if ($activeOnboardingStage) {
       activeOnboardingStage.update((v) => null);
-    } else { 
+    } else {
       showOnboardingSteps.update((v) => !v);
     }
   };
@@ -103,11 +114,19 @@
 
   <div class="toggle-button">
     {#if $showOnboardingNavigation}
-      <span style="display: flex" title="Disable navigation steps" on:click={toggleNavigation}>
+      <span
+        style="display: flex"
+        title="Disable navigation steps"
+        on:click={toggleNavigation}
+      >
         {@html toggleOnIcon}
       </span>
     {:else}
-      <span style="display: flex" title="Enable navigation steps" on:click={toggleNavigation}>
+      <span
+        style="display: flex"
+        title="Enable navigation steps"
+        on:click={toggleNavigation}
+      >
         {@html toggleOffIcon}
       </span>
     {/if}
