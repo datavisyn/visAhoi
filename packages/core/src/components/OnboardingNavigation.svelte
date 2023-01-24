@@ -7,7 +7,8 @@
   // @ts-ignore
   import visahoiChevronUpIcon from "../assets/chevron-up-solid.svg";  
   // @ts-ignore
-  import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg";  
+  import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg"; 
+     
   import { VisahoiState } from "./state.js";
   
   export let visState: VisahoiState;
@@ -15,7 +16,7 @@
 
   const chevronUpIcon: string = $visahoiIcons?.chevronUp || visahoiChevronUpIcon;
   const chevronDownIcon: string = $visahoiIcons?.chevronDown || visahoiChevronDownIcon;
-
+  
   $: nextHeight = $markerInformation.length * 35 + 75 + "px";
   $: prevHeight = $markerInformation.length * 35 + 50 + "px";
 
@@ -169,10 +170,25 @@
 
 <div
   class="visahoi-navigation-container"
-  style="--flexDirection:{$navigationAlignment}; height: '60px' "
+  style="--flexDirection:{$navigationAlignment === 'vertical'
+    ? 'column'
+    : 'row'}; bottom:{$navigationAlignment === 'horizontal'
+    ? '30px'
+    : '80px'}; right: {$navigationAlignment === 'horizontal'
+    ? '90px'
+    : ''}; height: '60px' "
 >
   {#key $markerInformation || $onboardingStages}
-    <div class="visahoi-navigation-marker-container">
+  <div
+  class="visahoi-navigation-marker-container"
+  style="--flexDirection:{$navigationAlignment === 'vertical'
+    ? 'column'
+    : 'row'}; bottom:{$navigationAlignment === 'horizontal'
+    ? '30px'
+    : '80px'}; right: {$navigationAlignment === 'horizontal'
+    ? '10px'
+    : ''};"
+>
       <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
       {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
         <NavigationMarker markerInformation={marker} order={index + 1} />
@@ -196,18 +212,31 @@
         <div
           id="navigation-next"
           style="--bottom-height: {nextHeight}"
-          class="visahoi-navigation-next"
+          class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
+            ? 'horizontal'
+            : 'vertical'}"
           on:click={onPreviousArrowClick}
-        >
+        >          
+          {#if $navigationAlignment === "vertical"}
           <span style="display: flex">{@html chevronUpIcon}</span>
+          {:else}            
+            <span style="display: flex; transform: rotate(270deg)" >{@html chevronUpIcon}</span>
+          {/if}
         </div>
         <div
           id="navigation-previous"
           style="--bottom-height: {prevHeight}"
-          class="visahoi-navigation-previous"
+          class="visahoi-navigation-previous {$navigationAlignment ===
+            'horizontal'
+              ? 'horizontal'
+              : 'vertical'}"
           on:click={navNext}
-        >
+        >          
+          {#if $navigationAlignment === "vertical"}
           <span style="display: flex">{@html chevronDownIcon}</span>
+          {:else}            
+              <span style="display: flex; transform: rotate(270deg)">{@html chevronDownIcon}</span> 
+          {/if}
         </div>
       {/if}
     </div>
@@ -222,15 +251,14 @@
 <style>
   .visahoi-navigation-marker-container {
     position: absolute;
-    display: flex;
-    flex-direction: column;
+    display: flex;    
+    flex-direction: var(--flexDirection);
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
-    width: 80px;
-    /* bottom: 20px; */
-    bottom: 80px;
+    transition: opacity 0.5s ease, bottom 0.5s ease;   
+    bottom: var(--bottom);
+    right: var(--right);
     opacity: 1;
     z-index: 15;
   }
@@ -238,16 +266,12 @@
     position: absolute;
     bottom: var(--bottom-height);
     margin-bottom: 15px;
-    /* opacity: var(--opacity);
-    pointer-events: var(--pointerEvents); */
   }
 
   .visahoi-navigation-previous {
     position: absolute;
     bottom: var(--bottom-height);
-    margin-bottom: 15px;
-    /* opacity: var(--opacity);
-    pointer-events: var(--pointerEvents); */
+    margin-bottom: 15px;    
   }
 
   .visahoi-navigation-container {
@@ -258,5 +282,14 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
+  } 
+  
+  .horizontal {
+    right: var(--bottom-height);
+    bottom: 0;
+  }
+
+  .vertical {
+    bottom: var(--bottom-height);
   }
 </style>
