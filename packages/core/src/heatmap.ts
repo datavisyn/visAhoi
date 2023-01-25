@@ -40,7 +40,7 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
-  function createColorRect (color = 'white') {  
+  function createColorRect (color = 'white') { 
     return `<div class="colorRect" style="background-color: ${color}"></div>`
   }
 
