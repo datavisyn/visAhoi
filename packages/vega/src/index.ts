@@ -36,6 +36,7 @@ export {
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
 export const generateBasicAnnotations = async (
+  contextKey: string,
   visType: EVisualizationType,
   chart: any
 ): Promise<IOnboardingMessage[]> => {
@@ -62,6 +63,7 @@ export const generateBasicAnnotations = async (
       const values = data_0.values.value
 
       onboardingMessages = barChartFactory(
+        contextKey,
         vegaSpec,
         values,
         d3Data,
@@ -70,7 +72,7 @@ export const generateBasicAnnotations = async (
       break
 
     case EVisualizationType.CHANGE_MATRIX:
-      onboardingMessages = changeMatrixFactory(vegaSpec, d3Data, visElement)
+      onboardingMessages = changeMatrixFactory(contextKey, vegaSpec, d3Data, visElement)
       break
 
     case EVisualizationType.HORIZON_GRAPH:
@@ -79,6 +81,7 @@ export const generateBasicAnnotations = async (
       // Use the aggregated data values
       const aggregatedValues = data_1.values.value
       onboardingMessages = horizonGraphFactory(
+        contextKey,
         vegaSpec,
         origSpec,
         d3Data,
@@ -88,7 +91,7 @@ export const generateBasicAnnotations = async (
       break
 
     case EVisualizationType.SCATTERPLOT:
-      onboardingMessages = scatterplotFactory(vegaSpec, d3Data, visElement)
+      onboardingMessages = scatterplotFactory(contextKey, vegaSpec, d3Data, visElement)
       break
 
     default:
@@ -113,6 +116,7 @@ export async function ahoi (
   icons?: IAhoiIcons
 ) {
   ahoiConfig.onboardingMessages = await generateBasicAnnotations(
+    contextKey,
     visType,
     chart
   )
