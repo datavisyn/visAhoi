@@ -21,11 +21,6 @@ let editMode = false
 let onboardingUI = null
 const deleteStageId = null
 
-// const {visahoiIcons} = visState
-// const reading = defaultOnboardingStages.get(
-//   EDefaultOnboardingStages.READING
-// )
-
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
@@ -177,18 +172,18 @@ const registerEventListener = () => {
     setOnboardingStage(chart.id, {      
       id: 'reading-the-chart',
       title: 'reading',
-      iconClass: 'fas fa-microphone',
+      icon: `<img src=${editIcon} />`,
       backgroundColor: 'red',
       activeBackgroundColor: 'purple',
       hoverBackgroundColor: 'green'
     })
   })
 
-  newMessageBtn.addEventListener('click', async () => {    
+  newMessageBtn.addEventListener('click', async () => { 
+    console.log(editIcon, 'icon')   
     const newOnboardingStage = createBasicOnboardingStage(chart.id, {      
-      title: 'stage-1',
-      // iconClass: 'fas fa-flask',
-      icons: editIcon,
+      title: 'stage-1',      
+      icon: `<img src=${editIcon} />`,
       backgroundColor: 'green'
     })
 

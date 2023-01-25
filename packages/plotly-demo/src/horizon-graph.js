@@ -9,6 +9,8 @@ import {
 } from '@visahoi/plotly'
 import debounce from 'lodash.debounce'
 import { importCsv } from './util'
+// @ts-ignore
+import editIcon from '@visahoi/core/src/assets/pen-solid.svg';
 
 let chart = null
 let showOnboarding = false
@@ -133,7 +135,7 @@ const getAhoiConfig = () => {
   )
   const newOnboardingStage = createBasicOnboardingStage(chart.id, {
     title: 'New stage',
-    iconClass: 'fas fa-flask',
+    icon: `<img src=${editIcon} />`,
     backgroundColor: 'tomato'
   })
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
