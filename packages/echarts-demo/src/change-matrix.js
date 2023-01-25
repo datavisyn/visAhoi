@@ -140,7 +140,7 @@ function processData (allRows) {
 }
 
 const getAhoiConfig = () => {
-  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.CHANGE_MATRIX, chart)
+  const defaultOnboardingMessages = generateBasicAnnotations(chart.id, EVisualizationType.CHANGE_MATRIX, chart)
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
     text: 'test123'
@@ -157,7 +157,7 @@ const registerEventListener = () => {
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
-      onboardingUI = await ahoi(EVisualizationType.CHANGE_MATRIX, chart, getAhoiConfig())
+      onboardingUI = await ahoi(chart.id, EVisualizationType.CHANGE_MATRIX, chart, getAhoiConfig())
     } else {
       onboardingUI?.removeOnboarding()
     }

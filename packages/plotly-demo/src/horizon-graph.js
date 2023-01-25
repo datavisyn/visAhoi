@@ -127,10 +127,11 @@ function makePlotly (x, y) {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.HORIZON_GRAPH,
     chart
   )
-  const newOnboardingStage = createBasicOnboardingStage({
+  const newOnboardingStage = createBasicOnboardingStage(chart.id, {
     title: 'New stage',
     iconClass: 'fas fa-flask',
     backgroundColor: 'tomato'
@@ -142,7 +143,7 @@ const getAhoiConfig = () => {
   defaultOnboardingMessages[0].onboardingStage = newOnboardingStage
   defaultOnboardingMessages[0].title = 'New stage'
   defaultOnboardingMessages.push(
-    createBasicOnboardingMessage({
+    createBasicOnboardingMessage(chart.id, {
       text: "This is the newly added onboarding message for the horizon chart. It's absolutely positioned.",
       title: 'Absolutely positioned message',
       onboardingStage: newOnboardingStage,
@@ -155,7 +156,7 @@ const getAhoiConfig = () => {
     })
   )
   defaultOnboardingMessages.push(
-    createBasicOnboardingMessage({
+    createBasicOnboardingMessage(chart.id, {
       text: "This is the newly added onboarding message for the horizon chart. It's attached to a selector.",
       title: 'Selector attached message',
       onboardingStage: newOnboardingStage,
@@ -165,7 +166,7 @@ const getAhoiConfig = () => {
     })
   )
   defaultOnboardingMessages.push(
-    createBasicOnboardingMessage({
+    createBasicOnboardingMessage(chart.id, {
       text: "This is the newly added onboarding message for the horizon chart. It's attached to a selector.",
       title: 'Element attached message',
       onboardingStage: newOnboardingStage,
@@ -194,6 +195,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
+        chart.id,
         EVisualizationType.HORIZON_GRAPH,
         chart,
         getAhoiConfig()
