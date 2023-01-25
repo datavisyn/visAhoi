@@ -179,8 +179,7 @@ const registerEventListener = () => {
     })
   })
 
-  newMessageBtn.addEventListener('click', async () => { 
-    console.log(editIcon, 'icon')   
+  newMessageBtn.addEventListener('click', async () => {  
     const newOnboardingStage = createBasicOnboardingStage(chart.id, {      
       title: 'stage-1',      
       icon: `<img src=${editIcon} />`,
