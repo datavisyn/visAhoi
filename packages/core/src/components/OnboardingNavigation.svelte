@@ -17,87 +17,45 @@
   const chevronUpIcon: string = $visahoiIcons?.chevronUp || visahoiChevronUpIcon;
   const chevronDownIcon: string = $visahoiIcons?.chevronDown || visahoiChevronDownIcon;
   
+  
   $: nextHeight = $markerInformation.length * 35 + 75 + "px";
   $: prevHeight = $markerInformation.length * 35 + 50 + "px";
+  debugger
+  $: console.log($markerIndexId, 'indexid')
+  $: console.log($markerInformation.length, 'len')
 
-  let index: number;
+  $: isDisabledNextNavIcon = $markerIndexId === 0 ? true : $markerIndexId === $markerInformation.length - 1 ? false : false;
+  $: isDisabledPreviousNavIcon = $markerIndexId === 0 ? false : $markerIndexId === $markerInformation.length - 1 ? true : false;
+  $: console.log(isDisabledPreviousNavIcon, 'iconstatus')
 
-  $: enableDisableNavIcons = async () => {
-    switch ($markerIndexId) {
-      case 0: {
-        await tick();
-        const preElementId = document.getElementById("navigation-next");
-        if(preElementId) {
-          preElementId.style.pointerEvents = "none";
-          preElementId.style.opacity = "0.5";
-        }
+  let index: number;  
 
-        const nextElementId = document.getElementById("navigation-previous");
-        if(nextElementId) {
-          nextElementId.style.pointerEvents = "all";
-          nextElementId.style.opacity = "1";
-        }
-        break;
-      }
-      case $markerInformation.length - 1: {
-        await tick();
-        const nextElementId = document.getElementById("navigation-previous");
-        if(nextElementId) {
-          nextElementId.style.pointerEvents = "none";
-          nextElementId.style.opacity = "0.5";
-        }
-
-        const preElementId = document.getElementById("navigation-next");
-        if(preElementId) {
-          preElementId.style.pointerEvents = "all";
-          preElementId.style.opacity = "1";
-        }
-
-        break;
-      }
-      default: {
-        await tick();
-        const preElementId = document.getElementById("navigation-previous");
-        if(preElementId) {
-          preElementId.style.pointerEvents = "all";
-          preElementId.style.opacity = "1";
-        }
-
-        const nextElementId = document.getElementById("navigation-next");
-        if(nextElementId) {
-          nextElementId.style.pointerEvents = "all";
-          nextElementId.style.opacity = "1";
-        }
-      }
-    }
-  };
-
-  $: enableDisableNavIcons();
-
-  const navNext = () => {
+  const onNavigatePrevious = () => {    
     if ($previousMarkerId) {
       const elementId = getNavigationMarkerDomId($previousMarkerId);
       const prevMarkerElement = document.getElementById(elementId);
       if(prevMarkerElement) {
         prevMarkerElement.style.opacity = "0.5";
       }
-    }
-    const nextElement = document.getElementById("navigation-next");
-    if(nextElement) {
-      nextElement.style.pointerEvents = "all";
-      nextElement.style.opacity = "1";
-    }
+    }    
+    // const nextElement = document.getElementById("navigation-next");
+    // if(nextElement) {
+    //   nextElement.style.pointerEvents = "all";
+    //   nextElement.style.opacity = "1";
+    // }
+    isDisabledNextNavIcon = false
 
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           index = i + 1;
           if (index + 1 === $markerInformation.length) {
-            const element = document.getElementById("navigation-previous");
-            if(element) {
-              element.style.pointerEvents = "none";
-              element.style.opacity = "0.5";
-            }
+            // const element = document.getElementById("navigation-previous");
+            // if(element) {
+            //   element.style.pointerEvents = "none";
+            //   element.style.opacity = "0.5";
+            // }
+            isDisabledPreviousNavIcon = true
           }
         }
       });
@@ -120,7 +78,7 @@
     }
   };
 
-  const onPreviousArrowClick = () => {
+  const onNavigateNext = () => {
     if ($previousMarkerId) {
       const previousMarkerElementId = getNavigationMarkerDomId($previousMarkerId);
       const previousMarkerElement = document.getElementById(previousMarkerElementId)
@@ -128,11 +86,12 @@
         previousMarkerElement.style.opacity = "0.5";
       }
     }
-    const previousNavigationArrowElement = document.getElementById("navigation-previous");
-    if(previousNavigationArrowElement) {
-      previousNavigationArrowElement.style.pointerEvents = "all";
-      previousNavigationArrowElement.style.opacity = "1";
-    }
+    // const previousNavigationArrowElement = document.getElementById("navigation-previous");
+    // if(previousNavigationArrowElement) {
+    //   previousNavigationArrowElement.style.pointerEvents = "all";
+    //   previousNavigationArrowElement.style.opacity = "1";
+    // }
+    isDisabledPreviousNavIcon = false;
 
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
@@ -140,11 +99,12 @@
           index = i - 1;
 
           if (index === 0) {
-            const nextNavigationArrowElement = document.getElementById("navigation-next");
-            if(nextNavigationArrowElement) {
-              nextNavigationArrowElement.style.pointerEvents = "none";
-              nextNavigationArrowElement.style.opacity = "0.5";
-            }
+            // const nextNavigationArrowElement = document.getElementById("navigation-next");
+            // if(nextNavigationArrowElement) {
+            //   nextNavigationArrowElement.style.pointerEvents = "none";
+            //   nextNavigationArrowElement.style.opacity = "0.5";
+            // }
+            isDisabledNextNavIcon = true
           }
         }
       });
@@ -211,11 +171,12 @@
       {#if $activeOnboardingStage && $showOnboardingNavigation}
         <div
           id="navigation-next"
-          style="--bottom-height: {nextHeight}"
+          style="--bottom-height: {nextHeight}; --opacity: {isDisabledNextNavIcon ? 0.5 : 1}; --events: {isDisabledNextNavIcon ? 'none' : 'all'}" 
           class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
             ? 'horizontal'
             : 'vertical'}"
-          on:click={onPreviousArrowClick}
+            
+          on:click={onNavigateNext}
         >          
           {#if $navigationAlignment === "vertical"}
           <span style="display: flex">{@html chevronUpIcon}</span>
@@ -225,12 +186,12 @@
         </div>
         <div
           id="navigation-previous"
-          style="--bottom-height: {prevHeight}"
+          style="--bottom-height: {prevHeight}; --opacity: {isDisabledPreviousNavIcon ? 0.5 : 1}; --events: {isDisabledPreviousNavIcon ? 'none' : 'all'}"
           class="visahoi-navigation-previous {$navigationAlignment ===
             'horizontal'
               ? 'horizontal'
               : 'vertical'}"
-          on:click={navNext}
+          on:click={onNavigatePrevious}
         >          
           {#if $navigationAlignment === "vertical"}
           <span style="display: flex">{@html chevronDownIcon}</span>
@@ -265,12 +226,16 @@
   .visahoi-navigation-next {
     position: absolute;
     bottom: var(--bottom-height);
+    opacity: var(--opacity);
+    pointer-events: var(--events);
     margin-bottom: 15px;
   }
 
   .visahoi-navigation-previous {
     position: absolute;
     bottom: var(--bottom-height);
+    opacity: var(--opacity);
+    pointer-events: var(--events);
     margin-bottom: 15px;    
   }
 
