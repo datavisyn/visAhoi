@@ -20,13 +20,8 @@
   
   $: nextHeight = $markerInformation.length * 35 + 75 + "px";
   $: prevHeight = $markerInformation.length * 35 + 50 + "px";
-  debugger
-  $: console.log($markerIndexId, 'indexid')
-  $: console.log($markerInformation.length, 'len')
-
   $: isDisabledNextNavIcon = $markerIndexId === 0 ? true : $markerIndexId === $markerInformation.length - 1 ? false : false;
-  $: isDisabledPreviousNavIcon = $markerIndexId === 0 ? false : $markerIndexId === $markerInformation.length - 1 ? true : false;
-  $: console.log(isDisabledPreviousNavIcon, 'iconstatus')
+  $: isDisabledPreviousNavIcon = $markerIndexId === 0 ? false : $markerIndexId === $markerInformation.length - 1 ? true : false;  
 
   let index: number;  
 
@@ -38,23 +33,13 @@
         prevMarkerElement.style.opacity = "0.5";
       }
     }    
-    // const nextElement = document.getElementById("navigation-next");
-    // if(nextElement) {
-    //   nextElement.style.pointerEvents = "all";
-    //   nextElement.style.opacity = "1";
-    // }
     isDisabledNextNavIcon = false
 
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           index = i + 1;
-          if (index + 1 === $markerInformation.length) {
-            // const element = document.getElementById("navigation-previous");
-            // if(element) {
-            //   element.style.pointerEvents = "none";
-            //   element.style.opacity = "0.5";
-            // }
+          if (index + 1 === $markerInformation.length) {            
             isDisabledPreviousNavIcon = true
           }
         }
@@ -85,12 +70,7 @@
       if(previousMarkerElement) {
         previousMarkerElement.style.opacity = "0.5";
       }
-    }
-    // const previousNavigationArrowElement = document.getElementById("navigation-previous");
-    // if(previousNavigationArrowElement) {
-    //   previousNavigationArrowElement.style.pointerEvents = "all";
-    //   previousNavigationArrowElement.style.opacity = "1";
-    // }
+    }    
     isDisabledPreviousNavIcon = false;
 
     if ($selectedMarker) {
@@ -98,12 +78,7 @@
         if (marker.marker.id === $selectedMarker?.marker.id) {
           index = i - 1;
 
-          if (index === 0) {
-            // const nextNavigationArrowElement = document.getElementById("navigation-next");
-            // if(nextNavigationArrowElement) {
-            //   nextNavigationArrowElement.style.pointerEvents = "none";
-            //   nextNavigationArrowElement.style.opacity = "0.5";
-            // }
+          if (index === 0) {            
             isDisabledNextNavIcon = true
           }
         }
