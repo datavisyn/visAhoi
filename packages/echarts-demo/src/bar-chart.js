@@ -82,7 +82,7 @@ function createPlot (x, y) {
 }
 
 const getAhoiConfig = () => {
-  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.BAR_CHART, chart)
+  const defaultOnboardingMessages = generateBasicAnnotations(chart.id, EVisualizationType.BAR_CHART, chart)
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
     text: 'test123'
@@ -103,7 +103,7 @@ const registerEventListener = () => {
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
-      onboardingUI = await ahoi(EVisualizationType.BAR_CHART, chart, getAhoiConfig())
+      onboardingUI = await ahoi(chart.id, EVisualizationType.BAR_CHART, chart, getAhoiConfig())
     } else {
       onboardingUI?.removeOnboarding()
     }

@@ -85,6 +85,7 @@ function makePlotly (x, y, z) {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.CHANGE_MATRIX,
     chart
   )
@@ -108,6 +109,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
+        chart.id,
         EVisualizationType.CHANGE_MATRIX,
         chart,
         getAhoiConfig()
