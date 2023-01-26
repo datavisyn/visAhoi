@@ -89,7 +89,7 @@ const createPlot = (data) => {
 }
 
 const getAhoiConfig = () => {
-  const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.TREEMAP, chart)
+  const defaultOnboardingMessages = generateBasicAnnotations(chart.id, EVisualizationType.TREEMAP, chart)
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
     text: 'test123'
@@ -106,7 +106,7 @@ const registerEventListener = () => {
   helpIcon.addEventListener('click', async () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
-      onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, getAhoiConfig())
+      onboardingUI = await ahoi(chart.id, EVisualizationType.TREEMAP, chart, getAhoiConfig())
     } else {
       onboardingUI?.removeOnboarding()
     }

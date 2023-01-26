@@ -8,9 +8,10 @@ import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
   getOnboardingMessages
-
 } from '@visahoi/plotly'
 import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
+// @ts-ignore
+import editIcon from '@visahoi/core/src/assets/pen-solid.svg';
 
 import debounce from 'lodash.debounce'
 
@@ -19,9 +20,6 @@ let showOnboarding = false
 let editMode = false
 let onboardingUI = null
 const deleteStageId = null
-// const reading = defaultOnboardingStages.get(
-//   EDefaultOnboardingStages.READING
-// )
 
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
@@ -87,11 +85,12 @@ function makePlotly (x, y) {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.SCATTERPLOT,
     chart
   )
   defaultOnboardingMessages.push(
-    createBasicOnboardingMessage({
+    createBasicOnboardingMessage(chart.id, {
       text: "This is the newly added onboarding message for the scatter chart. It's absolutely positioned.",
       title: 'Absolutely positioned message',
       onboardingStage: reading,
@@ -104,16 +103,16 @@ const getAhoiConfig = () => {
     })
   )
 
-  const extendedOnboardingMessages = defaultOnboardingMessages.map(
-    (message) => ({
-      ...message,
-      marker: {
-        ...message.marker,
-        fontSize: '12px',
-        radius: 10
-      }
-    })
-  )
+  // const extendedOnboardingMessages = defaultOnboardingMessages.map(
+  //   (message) => ({
+  //     ...message,
+  //     marker: {
+  //       ...message.marker,
+  //       fontSize: '12px',
+  //       radius: 10
+  //     }
+  //   })
+  // )
 
   // To delete the onboarding stage
   // deleteStageId = 'reading-the-chart';
@@ -148,7 +147,7 @@ const registerEventListener = () => {
     if (showOnboarding) {
       editButton.style.display = 'block'
       onboardingUI = await ahoi(
-        contextKey,
+        chart.id,
         EVisualizationType.SCATTERPLOT,
         chart,
         getAhoiConfig()
@@ -170,25 +169,27 @@ const registerEventListener = () => {
   })
 
   newButton.addEventListener('click', async () => {
-    setOnboardingStage({
+    setOnboardingStage(chart.id, {      
       id: 'reading-the-chart',
       title: 'reading',
-      iconClass: 'fas fa-microphone',
+      icon: `<img src=${editIcon} />`,
       backgroundColor: 'red',
       activeBackgroundColor: 'purple',
       hoverBackgroundColor: 'green'
     })
   })
 
-  newMessageBtn.addEventListener('click', async () => {
-    const newOnboardingStage = createBasicOnboardingStage({
-      title: 'stage-1',
-      iconClass: 'fas fa-flask',
+  newMessageBtn.addEventListener('click', async () => { 
+    console.log(editIcon, 'icon')   
+    const newOnboardingStage = createBasicOnboardingStage(chart.id, {      
+      title: 'stage-1',      
+      icon: `<img src=${editIcon} />`,
       backgroundColor: 'green'
     })
 
-    const messages = getOnboardingMessages()
-    messages.push(createBasicOnboardingMessage({
+    const messages = getOnboardingMessages(chart.id)  
+    
+    messages.push(createBasicOnboardingMessage(chart.id,{    
       text: 'Check the default order',
       title: 'New message',
       onboardingStage: newOnboardingStage,

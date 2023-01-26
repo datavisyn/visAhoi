@@ -27,7 +27,7 @@ async function render () {
 };
 
 const getAhoiConfig = async () => {
-  const defaultOnboardingMessages = await generateBasicAnnotations(EVisualizationType.CHANGE_MATRIX, chart)
+  const defaultOnboardingMessages = await generateBasicAnnotations(chart.id, EVisualizationType.CHANGE_MATRIX, chart)
   const extendedOnboardingMessages = defaultOnboardingMessages.map((d) => ({
     ...d,
     text: 'test123'
@@ -45,7 +45,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
       const config = await getAhoiConfig()
-      onboardingUI = await ahoi(EVisualizationType.CHANGE_MATRIX, chart, config)
+      onboardingUI = await ahoi(chart.id, EVisualizationType.CHANGE_MATRIX, chart, config)
     } else {
       onboardingUI?.removeOnboarding()
     }
