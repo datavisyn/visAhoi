@@ -59,7 +59,7 @@ function generateMessages (
       marker: {
         id: `visahoi-marker-${contextKey}-1`
       },
-      id: `visahoi-marker-${contextKey}-1`,
+      id: `visahoi-message-${contextKey}-1`,
       order: 1
     },
     {
