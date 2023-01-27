@@ -9,6 +9,7 @@ import {
 } from './interfaces'
 import { getAnchor } from './utils'
 import { v4 as uuidv4 } from "uuid";
+import { autoScaleIcon, boxSelectIcon, cameraIcon, lassoSelectIcon, panIcon, resetIcon, zoomIcon, zoomInIcon, zoomOutIcon } from './scatterplot';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -89,6 +90,19 @@ function generateMessages (
       },
       id: uuidv4(),
       order: 1
+    },
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: `${cameraIcon} <b>Screenshot</b>: You can download a .png of the bar chart.<br/>${zoomIcon} <b>Zooming</b>: With the left click you can zoom in the bar chart to get a more detailed view on the data.</br>${panIcon} <b>Panning</b>: You can move the view left and right while dragging the mouse.</br>${boxSelectIcon} <b>Selection</b>: Drag the mouse over the bar chart to select a certain data.</br>${lassoSelectIcon} <b>Lasso select</b>: Select the desired data by drawing a lasso loop the chart.</br>${zoomInIcon} <b>Zoom in</b>: With this you can zoom in the bars of the chart.</br>${zoomOutIcon} <b>Zoom out:</b> With this you can zoom out the bars in the chart.<br/>${autoScaleIcon} <b>Autoscale</b>: Looks at all the data points in the plot and changes the layout to show all of them.<br/>${resetIcon} <b>Reset</b>: It takes the chart to the inital layout settings.</br>`,      
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 2
     },
     {
       anchor: getAnchor(spec.yMax, visElement),
