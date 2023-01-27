@@ -7,6 +7,7 @@ import {
   IOnboardingStage
 } from './interfaces'
 import { getAnchor } from './utils'
+import { v4 as uuidv4 } from "uuid";
 
 export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -19,6 +20,10 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   missingDataDescription?: ISpecProp;
   maxValue?: ISpecProp;
   minValue?: ISpecProp;
+  emptyValue?: ISpecProp;
+  minColor?: ISpecProp;
+  maxColor?: ISpecProp;
+  midColor?: ISpecProp;
 }
 
 function generateMessages (
@@ -35,17 +40,21 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
+  function createColorRect (color = 'white') { 
+    return `<div class="colorRect" style="background-color: ${color}"></div>`
+  }
+
   const messages = [
     {
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `The heatmap shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-1'
+        id: uuidv4()
       },
-      id: 'unique-message-id-2',
+      id: uuidv4(),
       order: 1
     },
     {
@@ -55,33 +64,33 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-2'
+        id: uuidv4()
       },
-      id: 'unique-message-id-2',
+      id: uuidv4(),
       order: 2
     },
     {
       anchor: getAnchor(spec.legendDescription, visElement),
-      requires: ['legendDescription'],
-      text: 'A deep red color indicates a high temperature whereas a deep blue color indicates a low temperature. Medium values are visualized by a neutral light gray.',
+      requires: ['legendDescription', 'minColor', 'maxColor', 'yAxis'],
+      text: `Hightest ${spec.yAxis?.value} is visualized by ${createColorRect(spec.maxColor?.value)} whereas lowest is indicated with ${createColorRect(spec.minColor?.value)}. The medium values are vizualized with ${createColorRect(spec.midColor?.value)}.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-3'
+        id: uuidv4()
       },
-      id: 'unique-message-id-3',
+      id: uuidv4(),
       order: 3
     },
     {
       anchor: getAnchor(spec.axisDescription, visElement),
       requires: ['xAxis', 'yAxis'],
-      text: `${spec.yAxis?.value} is plotted in rows and the ${spec.xAxis?.value} in columns.`,
+      text: `<i>${spec.yAxis?.value}</i> is plotted in rows and the <i>${spec.xAxis?.value}</i> in columns.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-4'
+        id: uuidv4()
       },
-      id: 'unique-message-id-4',
+      id: uuidv4(),
       order: 4
     },
     {
@@ -91,32 +100,46 @@ function generateMessages (
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: 'unique-marker-id-5'
+        id: uuidv4()
       },
-      id: 'unique-message-id-5',
+      id: uuidv4(),
       order: 1
     },
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      text: `The deep red color rectangle holds the maximum value in the heatmap. In this heatmap ${spec.maxValue?.value} is the maximum value.`,
+      text: `The ${createColorRect(spec.maxColor?.value)} rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-6'
+        id: uuidv4()
       },
-      id: 'unique-message-id-6'
+      id: uuidv4(),
+      order: 1
     },
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue'],
-      text: `The deep blue color rectangle holds the minimum value in the heatmap. In this heatmap ${spec.minValue?.value} is the minimum value.`,
+      text: `The ${createColorRect(spec.minColor?.value)} rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-7'
+        id: uuidv4()
       },
-      id: 'unique-message-id-7'
+      id: uuidv4(),
+      order: 2
+    },
+    {
+      anchor: getAnchor(spec.emptyValue, visElement),
+      requires: ['emptyValue'],
+      text: 'Transparent rectangles represent missing (null) values.',
+      title: 'Analyzing the chart',
+      onboardingStage: analyzing,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 3
     }
   ]
 

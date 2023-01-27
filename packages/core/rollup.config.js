@@ -1,32 +1,34 @@
-import svelte from 'rollup-plugin-svelte';
-import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
-import json from '@rollup/plugin-json';
-import livereload from 'rollup-plugin-livereload';
-import postcssImport from "postcss-import";
-import postcss from 'rollup-plugin-postcss';
-import autoPreprocess from 'svelte-preprocess';
+import svelte from 'rollup-plugin-svelte'
+import commonjs from '@rollup/plugin-commonjs'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
+import json from '@rollup/plugin-json'
+import livereload from 'rollup-plugin-livereload'
+import postcssImport from 'postcss-import'
+import postcss from 'rollup-plugin-postcss'
+import autoPreprocess from 'svelte-preprocess'
+import InlineSvg from 'rollup-plugin-inline-svg'
+import copy from 'rollup-plugin-copy-assets'
 
-const production = !process.env.ROLLUP_WATCH;
+const production = !process.env.ROLLUP_WATCH
 
 export default [{
   input: './src/index.ts',
   output: [{
     sourcemap: true,
-    format: 'esm',
+    format: 'es',
     dir: './dist',
-    name: "core"
+    name: 'core'
   }, {
     sourcemap: true,
     format: 'esm',
     file: './build/bundle.js',
-    name: "core"
+    name: 'core'
   }],
   plugins: [
     svelte({
       emitCss: true,
-      preprocess: autoPreprocess(),
+      preprocess: autoPreprocess()
     }),
     // process css in .svelte files
     postcss({
@@ -43,7 +45,16 @@ export default [{
       inlineSources: !production
     }),
     !production && livereload('dist'),
-    json()
+    json(),
+    InlineSvg({
+      include: ['src/assets/*.svg']
+    }),
+    copy({
+      assets: [
+        // You can include directories
+        'src/assets'
+      ]
+    })
   ],
 },
 {
@@ -60,7 +71,7 @@ export default [{
     postcss({
       plugins: [postcssImport({ extensions: ['.css'] })],
       extract: true,
-      to: "./build/css/main.css",
+      to: './build/css/main.css',
       minimize: Boolean(!production)
     }),
     nodeResolve({
@@ -69,4 +80,4 @@ export default [{
       extensions: ['.css']
     })
   ]
-}];
+}]

@@ -1,6 +1,8 @@
 <script lang="ts">
-import { visHeight, visWidth, visXPosition, visYPosition, backdropOpacity } from "./stores.js";
-
+  import { VisahoiState } from "./state.js";
+  
+  export let visState: VisahoiState;
+  const { visHeight, visWidth, visXPosition, visYPosition, backdropOpacity } = visState;
 
   const fullAppWidth = "100vw";
   const fullAppHeight = "100vh";

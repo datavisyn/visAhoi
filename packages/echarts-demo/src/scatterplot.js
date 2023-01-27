@@ -34,7 +34,7 @@ function processData (allRows) {
 function createPlot (values) {
   const options = {
     title: {
-      text: 'Some title of cars or something',
+      text: 'Horsepower and miles per gallon for various cars',
       left: 'center'
     },
     tooltip: {},
@@ -65,6 +65,7 @@ function createPlot (values) {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.SCATTERPLOT,
     chart
   )
@@ -87,6 +88,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
+        chart.id,
         EVisualizationType.SCATTERPLOT,
         chart,
         getAhoiConfig()

@@ -14,6 +14,14 @@ function extractOnboardingSpec (
   )).__data__
   const t = heatmapData[0].trace
 
+  const minArr = t.z.map((d) => Math.min(...d))
+  const maxArr = t.z.map((d) => Math.max(...d))
+
+  const min = Math.min(...minArr)
+  const max = Math.max(...maxArr)
+  const minColor = heatmapData[0].trace.colorscale[0]
+  const maxColor = heatmapData[0].trace.colorscale[2]
+
   return {
     chartTitle: {
       value: chart?.layout?.title?.text,
@@ -59,20 +67,46 @@ function extractOnboardingSpec (
       anchor: {
         sel: '.infolayer .ytitle'
       }
+    },
+    min: {
+      value: min,
+      anchor: {
+        sel: '.heatmaplayer > .hm > image',
+        offset: { top: -60, left: -60 }
+      }
+    },
+    max: {
+      value: max,
+      anchor: {
+        sel: '.infolayer .xtitle',
+        offset: { top: 80, left: -30 }
+      }
+    },
+    interactionDesc: {
+      value: chart.layout.yaxis.title.text,
+      anchor: {
+        sel: '.infolayer .ytitle',
+        offset: { top: 80, left: -30 }
+      }
+    },
+    minColor: {
+      value: minColor[1]
+    },
+    maxColor: {
+      value: maxColor[1]
     }
-    // xAxisLabel (e.g. 01, 02, …)
-    // yAxisLabel (e.g. -5, 0, 5, ...)
-    // Title (Average Temperature in Oslo)
   }
 }
 
 export function changeMatrixFactory (
+  contextKey: string, 
   chart,
   coords,
   visElementId: Element
 ): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
   return generateMessages(
+    contextKey, 
     EVisualizationType.CHANGE_MATRIX,
     onbordingSpec,
     visElementId

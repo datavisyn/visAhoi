@@ -1,37 +1,28 @@
 <script lang="ts">
   import OnboardingNavigation from "./OnboardingNavigation.svelte";
-  import {
-    showOnboarding,
-    showBackdrop,
-    activeOnboardingStage,
-    resetStore,
-    visHeight,
-    visWidth,
-    visXPosition,
-    visYPosition,
-    onboardingMessages,
-    markerInformation,
-    activeMarker,
-  } from "./stores.js";
   import { fade } from "svelte/transition";
   import Markers from "./Markers.svelte";
   import Tooltips from "./Tooltips.svelte";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import Backdrop from "./Backdrop.svelte";
   import { getMarkerInformation } from "./getMarkerInformation";
+  import { VisahoiState } from "./state";
 
   export let ref;
-  export let visElement: Element;
+  // state for one specific visahoi Instance (usually a vis)
+  export let visState: VisahoiState;
+  const {showOnboarding, visElement, visXPosition, visYPosition, visHeight, visWidth, onboardingMessages, markerInformation, activeMarker, activeOnboardingStage, showBackdrop} = visState
+
 
   const setVisElementPosition = () => {
-    visXPosition.set(visElement.getBoundingClientRect().x);
-    visYPosition.set(visElement.getBoundingClientRect().y);
-    visWidth.set(visElement.clientWidth);
-    visHeight.set(visElement.clientHeight);
+    visXPosition.set($visElement.getBoundingClientRect().x);
+    visYPosition.set($visElement.getBoundingClientRect().y);
+    visWidth.set($visElement.clientWidth);
+    visHeight.set($visElement.clientHeight);
   };
 
   const setMarkerInformation = () => {
-    const updatedMarkerInformation = getMarkerInformation($onboardingMessages);
+    const updatedMarkerInformation = getMarkerInformation($visElement, $onboardingMessages);
 
     markerInformation.set(updatedMarkerInformation);
     // update data of active marker
@@ -47,35 +38,29 @@
     setMarkerInformation();
   };
 
-  let show = true;
-  showOnboarding.subscribe((value) => {
-    show = value;
-  });
-
   onMount(() => {
     setVisElementPosition();
     setMarkerInformation();
   });
-  onDestroy(() => {
-    resetStore();
-  });
-</script>
 
+</script>
+{#if $showOnboarding}
 <div
-  transition:fade
+  transition:fade="{{duration: 150}}"
   class="visahoi-onboarding-ui"
   style="width:{$visWidth + 'px'}; height:{$visHeight +
     'px'}; top:{$visYPosition + window.scrollY + 'px'}; left:{$visXPosition +
     window.scrollX +
-    'px'} position: absolute"
+    'px'}; position: 'absolute'"
 >
-  <Markers />
-  <Tooltips {visElement} />
-  <OnboardingNavigation height={$visHeight} />
+  <Markers {visState} />
+  <Tooltips {visElement} {visState} />
+  <OnboardingNavigation visState={visState} />
   {#if $activeOnboardingStage && $showBackdrop}
-    <Backdrop />
+    <Backdrop {visState} />
   {/if}
 </div>
+{/if}
 
 <style>
   .visahoi-onboarding-ui {

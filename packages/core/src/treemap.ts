@@ -7,6 +7,7 @@ import {
   IOnboardingStage
 } from './interfaces'
 import { getAnchor } from './utils'
+import { v4 as uuidv4 } from "uuid";
 
 export interface IOnboardingTreemapSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -43,9 +44,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-2'
+        id: uuidv4()
       },
-      id: 'unique-message-id-2',
+      id: uuidv4(),
       order: 2
     },
     {
@@ -55,21 +56,21 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-3'
+        id: uuidv4()
       },
-      id: 'unique-message-id-3',
+      id: uuidv4(),
       order: 3
     },
     {
       anchor: getAnchor(spec.otherDesc, visElement),
       requires: ['otherDesc'],
-      text: 'Items on the bottom level that belong to the same sub-category are visually represented by using the same color.',
+      text: 'Items on the bottom level that belong to the same sub-category are visually represented by the same color.',
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-4'
+        id: uuidv4()
       },
-      id: 'unique-message-id-4',
+      id: uuidv4(),
       order: 4
     },
     {
@@ -79,48 +80,48 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-5'
+        id: uuidv4()
       },
-      id: 'unique-message-id-5',
+      id: uuidv4(),
       order: 5
     },
 
     {
       anchor: getAnchor(spec.interactingDesc, visElement),
       requires: ['interactingDesc'],
-      text: 'Hover over the rectangles to get the dedicated value of the sub-category and further information.',
+      text: 'Hover over the rectangles to get the dedicated value of the sub-category.',
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: 'unique-marker-id-6'
+        id: uuidv4()
       },
-      id: 'unique-message-id-6',
+      id: uuidv4(),
       order: 1
     },
 
     {
       anchor: getAnchor(spec.maxValueDesc, visElement),
       requires: ['maxValueDesc', 'maxValue'],
-      text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
+      text: `The largest rectangle holds the maximum value in the sub-category. The sub-category <i>${spec.maxValueDesc?.value}</i> holds the maximum value, which is <i>${spec.maxValue?.value}</i>.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-7'
+        id: uuidv4()
       },
-      id: 'unique-message-id-7',
+      id: uuidv4(),
       order: 2
     },
 
     {
       anchor: getAnchor(spec.minValueDesc, visElement),
       requires: ['minValueDesc', 'minValue'],
-      text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
+      text: ` The smallest rectangle holds the minimum value in the sub-category. The sub-category <i>${spec.minValueDesc?.value}</i> holds the minimum value <i>${spec.minValue?.value}</i>`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: 'unique-marker-id-8'
+        id: uuidv4()
       },
-      id: 'unique-message-id-8',
+      id: uuidv4(),
       order: 1
     }
   ]
@@ -129,13 +130,13 @@ function generateMessages (
     messages.unshift({
       anchor: getAnchor(spec.chartTitle, visElement),
       requires: ['chartTitle'],
-      text: `The chart shows the ${spec.chartTitle?.value}.`,
+      text: `This treemap shows the <i>${spec.chartTitle?.value}</i>.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: 'unique-marker-id-1'
+        id: uuidv4()
       },
-      id: 'unique-message-id-1',
+      id: uuidv4(),
       order: 1
     })
   }

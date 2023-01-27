@@ -39,7 +39,7 @@ export const getAnchor = (
 ): OnboardingAnchor | undefined => {
   if (!prop) {
     // if prop is undefined -> return
-
+    return
   } else if (prop.anchor?.findDomNodeByValue) {
     // the dom node should be found by it's content
     // TODO: can findDomNodeByValue be removed?

@@ -1,5 +1,26 @@
 <script lang="ts">
-  import {
+  import { v4 as uuidv4 } from "uuid";
+  import { IMarkerInformation, TooltipPosition } from "../interfaces";
+  import { createPopper } from "@popperjs/core/dist/esm/";
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
+  import { tick } from "svelte";
+  import sanitizeHtml from "sanitize-html";
+  // @ts-ignore
+  import visahoiCheckIcon from "../assets/check-solid.svg";
+  // @ts-ignore
+  import visahoiEditIcon from "../assets/pen-solid.svg";
+  // @ts-ignore
+  import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  // @ts-ignore
+  import visahoiTrashIcon from "../assets/trash-solid-white.svg";
+  // @ts-ignore
+  import { VisahoiState } from "./state";
+
+
+  export let visElement;
+  export let visState: VisahoiState;
+
+  const {
     activeMarker,
     activeOnboardingStage,
     selectedMarker,
@@ -9,23 +30,26 @@
     onboardingStages,
     onboardingMessages,
     editTooltip,
-  } from "./stores";
-  import { v4 as uuidv4 } from "uuid";
-  import { IMarkerInformation, TooltipPosition } from "../interfaces";
-  import { createPopper } from "@popperjs/core/dist/esm/";
-  import sanitizeHtml from "sanitize-html";
-  import { getMarkerDomId } from "../utils";
-  import { tick } from "svelte";
+    visahoiIcons,
+  } = visState;
 
-  export let visElement;
+  const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
+  const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
+  const editIcon: string = $visahoiIcons?.edit || visahoiEditIcon;
+  const checkIcon: string = $visahoiIcons?.check || visahoiCheckIcon;
 
   let tempTitle = "";
   let tempText = "";
 
   const sanitizerOptions = {
-    allowedTags: ["span", "b", "em", "strong"],
+    allowedTags: false, // allow all tags
     allowedClasses: {
-      span: ["visahoi-tooltip-hover-text"],
+      "*": ["*"], // allow all classes for all tags
+    },
+    allowedAttributes: {
+      "*": ["style"], // allow style attribute for all tags
+      "svg": ["*"],
+      "path": ["*"]
     },
   };
 
@@ -36,16 +60,16 @@
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
-    // The selectedMarker is set to the initial marker in the activeOnboarding stage.
-    const elementId = document.getElementById(
-      `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
+    // The selectedMarker is set to the active marker which is to be closed.
+    const oldActiveMarker = $activeMarker;
+    const navigationMarkerId = document.getElementById(
+      getNavigationMarkerDomId($activeMarker?.marker.id)
     );
-    elementId?.style.opacity = 0.5;
+    if(navigationMarkerId) {
+      navigationMarkerId.style.opacity = "0.5";
+    }
 
-    const activeOnboardingStageMarkers = $markerInformation.filter(
-      (m) => m.message.onboardingStage === $activeOnboardingStage
-    );
-    selectedMarker.set(activeOnboardingStageMarkers[0]);
+    selectedMarker.set(oldActiveMarker);
     $markerInformation.map((marker, i) => {
       if (marker.marker.id === $selectedMarker?.marker.id) {
         markerIndexId.set(i);
@@ -194,22 +218,20 @@
             tempTitle = $activeMarker?.tooltip.title || "";
           }}
         >
-          <span style="font-size: 13px"
-            ><i class="fas fa-pen" title="Edit" /></span
+          <span style="display: flex; font-size: 13px" title="Edit">
+            {@html editIcon}
+          </span
           >
         </div>
         <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
-          <span style="font-size: 13px"
-            ><i class="fas fa-trash" title="Delete" /></span
+          <span style="display: flex; font-size: 13px" title="Delete" >{@html trashIcon}</span
           >
         </div>
       {/if}
 
       {#if $editTooltip}
         <div class="visahoi-save-changes" on:click={saveChanges}>
-          <span style="font-size: 13px"
-            ><i class="fas fa-check" title="Save" /></span
-          >
+          <span style="display: flex; font-size: 13px" title="Save">{@html checkIcon}</span>
         </div>
       {/if}
 
@@ -222,12 +244,10 @@
           : closeTooltip}
       >
         {#if $editTooltip}
-          <span style="font-size: 13px">
-            <i class="fas fa-times" title="Cancel" /></span
+          <span style="font-size: 13px" title="Cancel">{@html closeIcon}</span
           >
         {:else}
-          <span style="font-size: 13px">
-            <i class="fas fa-times" title="Close" /></span
+          <span style="font-size: 13px" title="Close">{@html closeIcon}</span
           >
         {/if}
       </div>
@@ -237,7 +257,7 @@
   {#if $editTooltip}
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
-    <div class="visahoi-tooltip-content">
+    <div id="tooltip-text" class="visahoi-tooltip-content">
       {@html sanitizeHtml(
         activeMarkerInformation?.tooltip.text,
         sanitizerOptions
@@ -258,7 +278,7 @@
   .visahoi-header-icons {
     background-color: var(--stage-color);
     display: flex;
-    justify-content: end;
+    align-items: center;
     color: white;
   }
   .visahoi-edit-tooltip {
@@ -316,7 +336,7 @@
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 3px;
     font-size: 13px;
   }

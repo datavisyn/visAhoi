@@ -1,17 +1,20 @@
 <script lang="ts">
   import { IMarkerInformation } from "../interfaces";
-  import {
-    activeMarker,
-    previousMarkerId,
-    markerIndexId,
-    markerInformation as markInfo,
-    selectedMarker,
-    activeOnboardingStage,
-  } from "./stores";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
+  import { VisahoiState } from "./state";
 
   export let markerInformation: IMarkerInformation;
   export let order: number;
+  export let visState: VisahoiState;
+
+  const {
+    activeMarker,
+    previousMarkerId,
+    markerIndexId,
+    markerInformation: markInfo,
+    selectedMarker,
+    activeOnboardingStage,
+  } = visState;
 
   $: activeBackgroundColor =
     markerInformation.message.onboardingStage.activeBackgroundColor;
@@ -24,17 +27,17 @@
   const handleClick = () => {
     if ($activeMarker?.marker.id === marker.id) {
       // The active marker is closed and navigation marker is not highlighted.
-      // The selectedMarker is set to the initial marker in the activeOnboarding stage.
+      // The selectedMarker is set to the active marker which is to be closed.
+      const oldActiveMarker = $activeMarker;
       activeMarker.set(null);
       const elementId = document.getElementById(
-        `visahoi-marker-navigation-visahoi-marker-${marker.id}`
+        getNavigationMarkerDomId(marker.id)
       );
-      elementId?.style.opacity = 0.5;
+      if(elementId) {
+        elementId.style.opacity = "0.5";
+      }
 
-      const activeOnboardingStageMarkers = $markInfo.filter(
-        (m) => m.message.onboardingStage === $activeOnboardingStage
-      );
-      selectedMarker.set(activeOnboardingStageMarkers[0]);
+      selectedMarker.set(oldActiveMarker);
       $markInfo.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           markerIndexId.set(i);

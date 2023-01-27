@@ -1,5 +1,9 @@
 const demos = [
   {
+    title: 'Two Charts',
+    link: './two-charts.html'
+  },
+  {
     title: 'Bar Chart',
     link: './bar-chart.html'
   },

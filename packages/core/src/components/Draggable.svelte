@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { editTooltip } from "./stores";
+  import { VisahoiState } from "./state";
+
+  export let visState: VisahoiState;
+  const { editTooltip } = visState;
 
   let left = 100;
   let top = 100;

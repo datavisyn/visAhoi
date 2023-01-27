@@ -3,15 +3,16 @@ import {
   generateBasicAnnotations,
   ahoi,
   EVisualizationType,
-  deleteOnboardingStage,
   setOnboardingStage,
-  setOnboardingMessage,
-  getOnboardingMessages,
   setEditMode,
-  createBasicOnboardingStage,
   createBasicOnboardingMessage,
-  getOnboardingStages
+  createBasicOnboardingStage,
+  getOnboardingMessages
 } from '@visahoi/plotly'
+import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
+// @ts-ignore
+import editIcon from '@visahoi/core/src/assets/pen-solid.svg';
+
 import debounce from 'lodash.debounce'
 
 let chart = null
@@ -23,6 +24,10 @@ const deleteStageId = null
 const debouncedResize = debounce((event) => {
   onboardingUI?.updateOnboarding(getAhoiConfig())
 }, 250)
+
+const reading = defaultOnboardingStages.get(
+  EDefaultOnboardingStages.READING
+)
 
 async function render () {
   const response = await fetch('../data/cars.json')
@@ -53,7 +58,7 @@ function makePlotly (x, y) {
   ]
 
   const layout = {
-    title: 'Some title of cars or something',
+    title: 'Horsepower and miles per gallon for various cars',
     xaxis: {
       title: 'Horsepower'
     },
@@ -69,22 +74,45 @@ function makePlotly (x, y) {
   return Plotly.newPlot('vis', traces, layout, config)
 }
 
+// Customize icons
+// const getIcons = () => {
+//   const trashIcon = document.createElement('i')
+//   trashIcon.innerHTML = '&#128465;'
+//   return {
+//     // trash: trashIcon.outerHTML.toString()
+//   }
+// }
+
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.SCATTERPLOT,
     chart
   )
-
-  const extendedOnboardingMessages = defaultOnboardingMessages.map(
-    (message) => ({
-      ...message,
-      marker: {
-        ...message.marker,
-        fontSize: '12px',
-        radius: 10
+  defaultOnboardingMessages.push(
+    createBasicOnboardingMessage(chart.id, {
+      text: "This is the newly added onboarding message for the scatter chart. It's absolutely positioned.",
+      title: 'Absolutely positioned message',
+      onboardingStage: reading,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
       }
     })
   )
+
+  // const extendedOnboardingMessages = defaultOnboardingMessages.map(
+  //   (message) => ({
+  //     ...message,
+  //     marker: {
+  //       ...message.marker,
+  //       fontSize: '12px',
+  //       radius: 10
+  //     }
+  //   })
+  // )
 
   // To delete the onboarding stage
   // deleteStageId = 'reading-the-chart';
@@ -100,6 +128,7 @@ const getAhoiConfig = () => {
       : defaultOnboardingMessages
     // showOnboardingNavigation: true,
   }
+
   return ahoiConfig
 }
 
@@ -107,6 +136,8 @@ const registerEventListener = () => {
   const helpIcon = document.getElementById('show-onboarding')
   const editButton = document.getElementById('editModeButton')
   const newButton = document.getElementById('btn-test')
+  const newMessageBtn = document.getElementById('btn-message')
+
   if (!helpIcon) {
     return
   }
@@ -116,9 +147,11 @@ const registerEventListener = () => {
     if (showOnboarding) {
       editButton.style.display = 'block'
       onboardingUI = await ahoi(
+        chart.id,
         EVisualizationType.SCATTERPLOT,
         chart,
         getAhoiConfig()
+        // getIcons()
       )
     } else {
       onboardingUI?.removeOnboarding()
@@ -133,21 +166,41 @@ const registerEventListener = () => {
       editButton.innerText = 'Enter edit mode'
     }
     setEditMode(editMode)
-
-    setOnboardingMessage({
-      id: 'unique-message-id-6',
-      title: 'test-1',
-      text: 'testing....'
-    })
   })
 
   newButton.addEventListener('click', async () => {
-    setOnboardingStage({
-      id: 'using-the-chart',
-      title: 'Interact',
-      iconClass: 'fas fa-microphone',
-      backgroundColor: 'red'
+    setOnboardingStage(chart.id, {      
+      id: 'reading-the-chart',
+      title: 'reading',
+      icon: `<img src=${editIcon} />`,
+      backgroundColor: 'red',
+      activeBackgroundColor: 'purple',
+      hoverBackgroundColor: 'green'
     })
+  })
+
+  newMessageBtn.addEventListener('click', async () => { 
+    console.log(editIcon, 'icon')   
+    const newOnboardingStage = createBasicOnboardingStage(chart.id, {      
+      title: 'stage-1',      
+      icon: `<img src=${editIcon} />`,
+      backgroundColor: 'green'
+    })
+
+    const messages = getOnboardingMessages(chart.id)  
+    
+    messages.push(createBasicOnboardingMessage(chart.id,{    
+      text: 'Check the default order',
+      title: 'New message',
+      onboardingStage: newOnboardingStage,
+      anchor: {
+        coords: {
+          x: 250,
+          y: 250
+        }
+      },
+      id: 'unique-message-id-6'
+    }))
   })
 }
 

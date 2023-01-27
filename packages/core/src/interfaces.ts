@@ -1,3 +1,10 @@
+// @ts-ignore
+import readingIcon from './assets/glasses-solid.svg';
+// @ts-ignore
+import analyzingIcon from './assets/lightbulb-solid.svg';
+// @ts-ignore
+import interactingIcon from './assets/hand-point-up-regular.svg';
+
 /**
  * Supported chart types
  */
@@ -66,11 +73,28 @@ export interface IBackdropConfig {
   opacity?: number;
 }
 
-export interface IAhoiConfig {
-  onboardingMessages: IOnboardingMessage[];
-  backdrop: IBackdropConfig;
-  showHelpCloseText?: boolean;
-  showOnboardingNavigation: boolean;
+export interface IAhoiIcons {
+  trash: string;
+  close: string;
+  questionmark: string;
+  toggleOn: string;
+  toggleOff: string;
+  edit: string;
+  check: string;
+  chevronUp: string;
+  chevronDown: string;
+}
+
+export type OnboardingStage = string;
+
+export interface IOnboardingStage {
+  id: string;
+  title: string;
+  icon: string;
+  backgroundColor: string;
+  hoverBackgroundColor?: string;
+  activeBackgroundColor?: string;
+  order: number;
 }
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
@@ -81,6 +105,7 @@ export interface IMarker {
   content?: string;
   id: string;
 }
+
 export interface IOnboardingMessage {
   id: string;
   anchor: OnboardingAnchor | undefined;
@@ -91,6 +116,13 @@ export interface IOnboardingMessage {
   tooltipPosition?: TooltipPosition;
   marker: IMarker;
   order?: number;
+}
+
+export interface IAhoiConfig {
+  onboardingMessages: IOnboardingMessage[];
+  backdrop?: IBackdropConfig;
+  showHelpCloseText?: boolean;
+  showOnboardingNavigation?: boolean;
 }
 
 export enum EDefaultOnboardingStages {
@@ -109,18 +141,6 @@ export interface IOnboardingStageNavigation {
   backgroundColor: string;
 }
 
-export type OnboardingStage = string;
-
-export interface IOnboardingStage {
-  id: string;
-  title: string;
-  iconClass: string;
-  backgroundColor: string;
-  hoverBackgroundColor?: string;
-  activeBackgroundColor?: string;
-  order?: number;
-}
-
 // TODO: move to right place
 export const defaultOnboardingStages: Map<
   EDefaultOnboardingStages,
@@ -131,7 +151,7 @@ export const defaultOnboardingStages: Map<
     {
       id: EDefaultOnboardingStages.READING,
       title: 'Reading',
-      iconClass: 'fas fa-glasses',
+      icon: readingIcon,
       hoverBackgroundColor: 'rgb(92, 59, 112)',
       backgroundColor: 'rgb(123, 80, 150)',
       activeBackgroundColor: 'rgb(76, 46, 94)',
@@ -143,7 +163,7 @@ export const defaultOnboardingStages: Map<
     {
       id: EDefaultOnboardingStages.USING,
       title: 'Interacting',
-      iconClass: 'fas fa-hand-point-up',
+      icon: interactingIcon,
       backgroundColor: 'rgb(0, 61, 92)',
       order: 2
     }
@@ -153,7 +173,7 @@ export const defaultOnboardingStages: Map<
     {
       id: EDefaultOnboardingStages.ANALYZING,
       title: 'Analyzing',
-      iconClass: 'fas fa-lightbulb',
+      icon: analyzingIcon,
       backgroundColor: 'rgb(254, 128, 41)',
       order: 1
     }

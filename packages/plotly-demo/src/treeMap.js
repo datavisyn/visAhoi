@@ -63,6 +63,7 @@ const makePlotly = (label, parent, value, color) => {
 
 const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
+    chart.id,
     EVisualizationType.TREEMAP,
     chart
   )
@@ -86,6 +87,7 @@ const registerEventListener = () => {
     showOnboarding = !showOnboarding
     if (showOnboarding) {
       onboardingUI = await ahoi(
+        chart.id,
         EVisualizationType.TREEMAP,
         chart,
         getAhoiConfig()

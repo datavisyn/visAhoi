@@ -23,10 +23,33 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
 
   const xVals = points.map((point) => point.getBoundingClientRect().x)
   const yVals = points.map((point) => point.getBoundingClientRect().y)
+  const xAxisLabel = <any>v.axes![2].title
+  const yAxisLabel = <any>v.axes![3].title
 
-  const maxX = Math.max(...xVals)
-  const maxXIndex = xVals.indexOf(maxX)
-  const maxY = yVals[maxXIndex]
+  const data = points.map((point) => point)
+
+  const dataArray = data.map((d) => d?.__data__.datum)
+
+  const xArray = dataArray.map(t => t[xAxisLabel])
+  const yArray = dataArray.map(t => t[yAxisLabel])
+
+  const maxX = Math.max(...xArray)
+  const minX = Math.min(...xArray)
+
+  const maxIndex = xArray.indexOf(maxX)
+  const minIndex = xArray.indexOf(minX)
+
+  const maxY = yArray[maxIndex]
+  const minY = yArray[minIndex]
+
+  const maxPositionX = xVals[maxIndex]
+  const maxPositionY = yVals[maxIndex]
+  const minPositionX = xVals[minIndex]
+  const minPositionY = yVals[minIndex]
+  const legendMarkers = document.getElementsByClassName('mark-symbol role-legend-symbol')
+
+  const minColor = legendMarkers[0].childNodes[0]?.getAttribute('fill')
+  const maxColor = legendMarkers[legendMarkers.length - 1].childNodes[0]?.getAttribute('fill')
 
   return {
     chartTitle: {
@@ -37,7 +60,7 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
       }
     },
     type: {
-      value: (<any>v.marks![0]).style,
+      value: (<any>v.marks![1]).style[0],
       anchor: {
         sel: 'svg',
         coords: elems[4]
@@ -51,30 +74,62 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
       }
     },
     xAxisTitle: {
-      value: (<any>v.axes![1]).title,
+      value: (<any>v.axes![2]).title,
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
         offset: { left: -30, top: 10 }
       }
     },
     yAxisTitle: {
-      value: (<any>v.axes![2]).title,
+      value: (<any>v.axes![3]).title,
       anchor: {
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
         offset: { top: -30 }
       }
     },
     maxValue: {
-      value: maxX,
+      value: maxPositionX,
       anchor: {
-        coords: { x: maxX, y: maxY },
+        coords: { x: maxPositionX, y: maxPositionY },
         offset: { left: 25 }
       }
+    },
+    maxX: {
+      value: maxX
+    },
+    maxY: {
+      value: maxY
+    },
+    minValue: {
+      value: minPositionX,
+      anchor: {
+        coords: { x: minPositionX, y: minPositionY },
+        offset: { left: 25 }
+      }
+    },
+    minX: {
+      value: minX
+    },
+    minY: {
+      value: minY
+    },
+    interactDesc: {
+      value: (<any>v.marks![0]).style,
+      anchor: {
+        sel: 'svg',
+        coords: elems[4]
+      }
+    },
+    minColor: {
+      value: minColor
+    },
+    maxColor: {
+      value: maxColor
     }
   }
 }
 
-export function scatterplotFactory (vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
+export function scatterplotFactory (contextKey: string, vegaSpec: Spec, elems: any[], visElement: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(vegaSpec, elems)
-  return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElement)
+  return generateMessages(contextKey, EVisualizationType.SCATTERPLOT, onbordingSpec, visElement)
 }

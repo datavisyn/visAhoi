@@ -66,10 +66,9 @@ function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
     },
 
     interactingDesc: {
-      value: options?.data[0]?.children[0]?.name,
+      value: options?.data[0]?.children[1]?.name,
       anchor: {
-        findDomNodeByValue: true,
-        offset: { left: -20, top: -30 }
+        findDomNodeByValue: true
       }
     },
 
@@ -100,7 +99,7 @@ function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
   }
 }
 
-export function treemapFactory (chart, coords, visElementId: Element): IOnboardingMessage[] {
+export function treemapFactory (contextKey, chart, coords, visElementId: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)
-  return generateMessages(EVisualizationType.TREEMAP, onbordingSpec, visElementId)
+  return generateMessages(contextKey, EVisualizationType.TREEMAP, onbordingSpec, visElementId)
 }
