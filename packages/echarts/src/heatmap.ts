@@ -21,6 +21,10 @@ function extractOnboardingSpec (chart, coords): IOnboardingHeatmapSpec {
   const maxValue: number = Math.max(...dataArr)
   const minValue: number = Math.min(...dataArr)
 
+  const minColor = chart._model.option.visualMap[0].inRange.color[0]
+  const maxColor = chart._model.option.visualMap[0].inRange.color[2]
+  const midColor = chart._model.option.visualMap[0].inRange.color[1]
+ 
   return {
     chartTitle: {
       value: data.title[0].text,
@@ -70,6 +74,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingHeatmapSpec {
         findDomNodeByValue: true,
         offset: { left: 20, top: -20 }
       }
+    },
+    maxColor: {
+      value: maxColor
+    },
+    minColor: {
+      value: minColor
+    },
+    midColor: {
+      value: midColor
     }
   }
 }

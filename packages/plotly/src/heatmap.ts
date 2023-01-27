@@ -11,6 +11,10 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
   )).__data__
   const t = heatmapData[0].trace
 
+  const minColor = chart?._fullData[0]?.colorscale[0][1]
+  const maxColor = chart?._fullData[0]?.colorscale[2][1]
+  const midColor = chart?._fullData[0]?.colorscale[1][1]
+
   const minArray = t.z.map((d) => Math.min(...d.filter(n => n !== null)))
   const maxArray = t.z.map((d) => Math.max(...d))
 
@@ -102,6 +106,15 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       anchor: {
         coords: { x: nullX, y: nullY }
       }
+    },
+    minColor: {
+      value: minColor 
+    },
+    maxColor: {
+      value: maxColor
+    },
+    midColor: {
+      value: midColor
     }
   }
 }
