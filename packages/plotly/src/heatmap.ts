@@ -102,7 +102,13 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
       anchor: {
         coords: { x: nullX, y: nullY }
       }
-    }
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
   }
 }
 

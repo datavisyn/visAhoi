@@ -4,7 +4,8 @@ import {
   IOnboardingMessage,
   defaultOnboardingStages,
   EDefaultOnboardingStages,
-  IOnboardingStage
+  IOnboardingStage,
+  SvgIcons
 } from './interfaces'
 import { getAnchor } from './utils'
 import { v4 as uuidv4 } from "uuid";
@@ -20,6 +21,7 @@ export interface IOnboardingTreemapSpec extends IOnboardingSpec {
   minValueDesc?: ISpecProp;
   minValue?: ISpecProp;
   maxValue?: ISpecProp;
+  plotlyModebar?: ISpecProp;
 }
 
 function generateMessages (
@@ -34,8 +36,8 @@ function generateMessages (
   ) as IOnboardingStage
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
-  ) as IOnboardingStage
-
+  ) as IOnboardingStage  
+  
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.desc, visElement),
@@ -97,6 +99,20 @@ function generateMessages (
       },
       id: uuidv4(),
       order: 1
+    },
+
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the treemap.`,      
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: uuidv4()
+      },
+      id: uuidv4(),
+      order: 2
     },
 
     {
