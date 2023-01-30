@@ -6,15 +6,26 @@
 
   export let visElement;
   export let visState: VisahoiState;
+  let dragId;
+  export let test: string;
+  
 
-  const { onboardingStages } = visState;
+  const { onboardingStages, contextId } = visState;
+  
+  // console.log($contextId, 'id-1..')
+  console.log(dragId, 'tooltipId-3')
+
+  const setDragId = (id) => { 
+    test = id   
+    console.log(id, 'id--2')
+  }
 
 </script>
 
 {#key $onboardingStages}
   <div class="tooltips">
-    <Draggable {visState}>
-      <Tooltip {visElement} {visState}/>
+    <Draggable {visState} {test}>
+      <Tooltip {visElement} {visState} setDragId={setDragId}/>
     </Draggable>
   </div>
 {/key}

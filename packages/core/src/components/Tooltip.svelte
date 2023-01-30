@@ -19,6 +19,8 @@
 
   export let visElement;
   export let visState: VisahoiState;
+  export let setDragId;
+  
 
   const {
     activeMarker,
@@ -31,6 +33,8 @@
     onboardingMessages,
     editTooltip,
     visahoiIcons,
+    contextId,
+    dragTooltipId
   } = visState;
 
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
@@ -57,6 +61,22 @@
 
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
+  $: dragId = `${tooltipId}-${$contextId}`;
+  console.log(dragId, 'drag from the tooltip')
+
+  const onTooltipClicked = () => {
+    console.log('inside on tooltip clicked')
+    console.log($contextId, 'contextidid')
+    console.log(dragId, 'id..')
+    dragTooltipId.set(dragId)
+    console.log($dragTooltipId, 'jg')
+    setDragId(dragId)
+  }
+
+  const onMouseUp = () => {
+    setDragId('');
+    console.log('on mouse up')
+  }
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
@@ -196,6 +216,10 @@
     : 'hidden'}"
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
+
+  on:mousedown={onTooltipClicked}
+  on:mouseup={onMouseUp}
+    
 >
   <div class="visahoi-tooltip-header">
     <div class="visahoi-tooltip-title">

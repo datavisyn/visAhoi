@@ -42,12 +42,12 @@ export const injectOnboarding = (
       showBackdrop,
       backdropOpacity,
       showHideCloseText,
-      showOnboardingNavigation,
-      // isEditModeActive,
-      // markerInformation,
-      showOnboarding,
-      showOnboardingSteps
+      showOnboardingNavigation,      
+      showOnboarding,      
+      contextId
     } = visState
+
+    contextId.set(contextKey);
 
     onboardingMessages.set(ahoiConfig.onboardingMessages)
     if (icons) {
