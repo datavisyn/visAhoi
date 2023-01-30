@@ -30,19 +30,17 @@
 <div 
   on:mousedown={onMouseDown}
   style="left: {left}px; top: {top}px; cursor: {cursor}"
-  class="${dragId === 'vis'} ? draggable : '' "
+  class="draggable"
 >
   <!--The <slot> tag indicates the place where its children should be placed-->
   <slot />
 </div>
 
  <svelte:window
-on:mouseup={onMouseUp}
-on:mousemove={onMouseMove}
-on:mousedown={onMouseDown}
+  on:mouseup={onMouseUp}
+  on:mousemove={onMouseMove}
+  on:mousedown={onMouseDown}
 />
-
-
 
 <style>
   .draggable {

@@ -58,7 +58,7 @@
 
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
-  $: dragId = `${tooltipId}`;
+  $: dragId = tooltipId;
   
 // To set the dragTooltipId in the store 
 // Pass the dragId to the parent component tooltips.svelte
