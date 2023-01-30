@@ -2,32 +2,22 @@
   import { VisahoiState } from "./state";
 
   export let visState: VisahoiState;
-  export let test: string;
+  export let dragId: string;
 
-  const { editTooltip, contextId, dragTooltipId } = visState;
-
-  $: console.log($dragTooltipId, 'dd')
-  $: console.log(test, 'tset')
-  $: if ($dragTooltipId === test) {
-    console.log('ett')
-  }
-  
-  
+  const { editTooltip, dragTooltipId } = visState;  
 
   let left = 100;
   let top = 100;
 
   $: cursor = $editTooltip ? "pointer" : "move";
-  let moving = false;
-
-  $: console.log('test-12', test)
+  let moving = false; 
 
   const onMouseDown = () => {    
     moving = $editTooltip ? false : true;
   };
 
   const onMouseMove = (e: MouseEvent) => {    
-    if(moving && test === $dragTooltipId){      
+    if(moving && dragId === $dragTooltipId){      
       left += e.movementX;
       top += e.movementY;}
   };
@@ -40,7 +30,7 @@
 <div 
   on:mousedown={onMouseDown}
   style="left: {left}px; top: {top}px; cursor: {cursor}"
-  class="${test === 'vis'} ? draggable : '' "
+  class="${dragId === 'vis'} ? draggable : '' "
 >
   <!--The <slot> tag indicates the place where its children should be placed-->
   <slot />

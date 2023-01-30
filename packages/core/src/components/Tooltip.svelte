@@ -16,11 +16,9 @@
   // @ts-ignore
   import { VisahoiState } from "./state";
 
-
   export let visElement;
   export let visState: VisahoiState;
-  export let setDragId;
-  
+  export let setDragId;  
 
   const {
     activeMarker,
@@ -32,8 +30,7 @@
     onboardingStages,
     onboardingMessages,
     editTooltip,
-    visahoiIcons,
-    contextId,
+    visahoiIcons,    
     dragTooltipId
   } = visState;
 
@@ -61,21 +58,20 @@
 
   const tooltipId = uuidv4();
   const arrowId = tooltipId + "-arrow";
-  $: dragId = `${tooltipId}-${$contextId}`;
-  console.log(dragId, 'drag from the tooltip')
+  $: dragId = `${tooltipId}`;
+  
+// To set the dragTooltipId in the store 
+// Pass the dragId to the parent component tooltips.svelte
 
-  const onTooltipClicked = () => {
-    console.log('inside on tooltip clicked')
-    console.log($contextId, 'contextidid')
-    console.log(dragId, 'id..')
-    dragTooltipId.set(dragId)
-    console.log($dragTooltipId, 'jg')
+  const onMouseDown = () => {    
+    dragTooltipId.set(dragId)    
     setDragId(dragId)
   }
 
+  // Set the dragId back to initial 
+
   const onMouseUp = () => {
-    setDragId('');
-    console.log('on mouse up')
+    setDragId('');    
   }
 
   const closeTooltip = () => {
@@ -216,8 +212,7 @@
     : 'hidden'}"
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
-
-  on:mousedown={onTooltipClicked}
+  on:mousedown={onMouseDown}
   on:mouseup={onMouseUp}
     
 >
