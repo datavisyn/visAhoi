@@ -37,6 +37,7 @@ export class VisahoiState {
   markerInformation: Writable<IMarkerInformation[]>;
   visElement: Writable<Element>;  
   dragTooltipId: Writable<string>;
+  contextId: Writable<string>;
   constructor () {
     this.visahoiIcons = initializeStoreValue<IAhoiIcons>(null)
     this.showOnboarding = initializeStoreValue<boolean>(false)
@@ -62,5 +63,6 @@ export class VisahoiState {
     this.markerInformation = initializeStoreValue<IMarkerInformation[]>([])
     this.visElement = initializeStoreValue<Element>(null)    
     this.dragTooltipId = initializeStoreValue<string>('')
+    this.contextId = initializeStoreValue<string>('')
   }
 }

@@ -33,7 +33,8 @@
     onboardingMessages,
     editTooltip,
     visahoiIcons,    
-    dragTooltipId
+    dragTooltipId,
+    contextId
   } = visState;
 
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
@@ -57,9 +58,9 @@
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
-
-  const contextKey = [...get(stores).keys()].toString();
-  const tooltipId = `visahoi-tooltip-${contextKey}-${uuidv4()}`;  
+  
+  const tooltipId = `visahoi-tooltip-${$contextId}-${uuidv4()}`;  
+  console.log(tooltipId, 'id')
   const arrowId = tooltipId + "-arrow";
   $: dragId = tooltipId;
   
