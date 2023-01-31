@@ -97,7 +97,15 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar chart.<br/>${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the bar chart to get a more detailed view on the data.</br>${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.</br>${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the bar chart to select a certain data.</br>${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select the desired data by drawing a lasso loop the chart.</br>${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in the bars of the chart.</br>${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the bars in the chart.<br/>${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Looks at all the data points in the plot and changes the layout to show all of them.<br/>${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.</br>`,      
+      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar chart.<br/>
+      ${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the bar chart to get a more detailed view on the data.</br>
+      ${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.</br>
+      ${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the bar chart to select a certain data.</br>
+      ${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select the desired data by drawing a lasso loop.</br>
+      ${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in the bars of the chart.</br>
+      ${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the bars in the chart.<br/>
+      ${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Looks at all the data points in the plot and changes the layout to show all of them.<br/>
+      ${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.</br>`,      
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {

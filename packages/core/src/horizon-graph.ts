@@ -135,7 +135,15 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the horizon graph.<br/>${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the chart to get a more detailed view on the data.</br>${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.</br>${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the chart to select a certain subset of the data.</br>${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select by drawing a lasso loop in the graph.</br>${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in chart.</br>${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the chart.<br/>${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Changes the layout to show all.<br/>${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.</br>`,      
+      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the horizon graph.<br/>
+      ${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the chart to get a more detailed view on the data.</br>
+      ${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.</br>
+      ${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the chart to select a certain subset of the data.</br>
+      ${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select by drawing a lasso loop in the graph.</br>
+      ${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in graph.</br>
+      ${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the graph.<br/>
+      ${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Changes the layout to show complete graph.<br/>
+      ${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.</br>`,      
       title: "Chart interactions",
       onboardingStage: using,
       marker: {
