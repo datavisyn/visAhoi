@@ -124,11 +124,6 @@
     ? '10px'
     : ''};"
 >
-      <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
-      {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
-        <NavigationMarker markerInformation={marker} order={index + 1} />
-      {/each}
-    {/if} -->
 
       {#if $activeOnboardingStage && $showOnboardingNavigation}
         {#each $markerInformation.sort((a, b) => {
