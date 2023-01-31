@@ -43,7 +43,7 @@ export class VisahoiState {
     this.showOnboarding = initializeStoreValue<boolean>(false)
     this.showOnboardingSteps = initializeStoreValue<boolean>(false)
     this.onboardingMessages = initializeStoreValue<IOnboardingMessage[]>([])
-    this.navigationAlignment = initializeStoreValue<NavigationAlignment>('column')
+    this.navigationAlignment = initializeStoreValue<NavigationAlignment>('vertical')
     this.onboardingStages = initializeStoreValue<IOnboardingStage[]>([])
     this.activeOnboardingStage = initializeStoreValue<IOnboardingStage | null>(null)
     this.activeMarker = initializeStoreValue<IMarkerInformation | null>(null)

@@ -1,5 +1,4 @@
-<script lang="ts">
-  import { getContext, getAllContexts } from "svelte";
+<script lang="ts">  
   import { IOnboardingStage } from "../interfaces.js";
   // @ts-ignore
   import visahoiCloseIcon from '../assets/xmark-solid.svg';
@@ -10,7 +9,7 @@
   export let visState: VisahoiState;
 
   const {visahoiIcons, activeOnboardingStage, showOnboardingSteps, navigationAlignment, onboardingStages} = visState;
-
+  const right: string = (index + 1) * 40 + index * 45 + "px";
 
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
 
@@ -22,29 +21,66 @@
   const bottom: string = (index + 1) * 75 + "px";
 </script>
 
-<div
-  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
-    stage.backgroundColor}; --bottom:{bottom}"
-  class="visahoi-navigation-item {!$showOnboardingSteps ||
-  $activeOnboardingStage
-    ? 'removed'
-    : ''}
-    {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
-  on:click={handleClick}
->
-  {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
-    <div class="visahoi-navigation-item-circle">
-      {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
+{#if $navigationAlignment === "vertical"}
+  <div
+    style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+      stage.backgroundColor}; --bottom:{bottom}"
+    class="visahoi-navigation-item {!$showOnboardingSteps ||
+    $activeOnboardingStage
+      ? 'removed'
+      : ''}"
+    on:click={handleClick}
+  >
+    {#key $onboardingStages || $onboardingStages === null}
+      <div class="visahoi-navigation-item-circle">        
+        {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
         {@html stage.icon}
       {:else}
         {@html closeIcon}
       {/if}
-    </div>
-  {/key}
-  <span class="visahoi-stage-title">{stage.title}</span>
-</div>
+      </div>
+    {/key}
+    <span class="visahoi-stage-title">{stage.title}</span>
+  </div>
+{:else}
+  <div
+    style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+      stage.backgroundColor}; --right:{right}"
+    class="visahoi-horizontal-navigation-item {!$showOnboardingSteps ||
+    $activeOnboardingStage
+      ? 'removed-horizontal'
+      : ''}"
+    on:click={handleClick}
+  >
+    {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
+      <div class="visahoi-navigation-item-circle">        
+        {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
+        {@html stage.icon}
+      {:else}
+        {@html closeIcon}
+      {/if}
+      </div>
+    {/key}
+    <span class="visahoi-stage-title">{stage.title}</span>
+  </div>
+{/if}
 
 <style>
+  .visahoi-horizontal-navigation-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    right: var(--right);
+    transition: opacity 0.5s ease, right 0.5s ease;
+    margin: 5px;
+    width: 80px;
+    bottom: 0;
+    opacity: 1;
+    z-index: 15;
+  }
   .visahoi-navigation-item {
     position: absolute;
     display: flex;
@@ -84,18 +120,11 @@
     z-index: 1;
   }
 
-  .active {
-    bottom: 0;
-    z-index: 10;
-  }
-
-  /* .horizontal {
-    right: calc(var(--order) * 100px);
-  }
-
-  .vertical {
-    bottom: calc(var(--order) * 100px);
-  } */
+  .removed-horizontal {
+    right: 0;
+    opacity: 0;
+    z-index: 1;
+  } 
 
   .visahoi-stage-title {
     font-weight: bold;

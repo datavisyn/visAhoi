@@ -177,9 +177,9 @@ const registerEventListener = () => {
       activeBackgroundColor: 'purple',
       hoverBackgroundColor: 'green'
     })
-  })
+  })    
 
-  newMessageBtn.addEventListener('click', async () => {   
+  newMessageBtn.addEventListener('click', async () => {
     const newOnboardingStage = createBasicOnboardingStage(chart.id, {      
       title: 'stage-1',      
       icon: `<img src=${editIcon} />`,

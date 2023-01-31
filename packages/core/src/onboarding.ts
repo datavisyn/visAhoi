@@ -54,6 +54,10 @@ export const injectOnboarding = (
       visahoiIcons.set(icons)
     }
 
+    if (ahoiConfig?.alignment) {
+      navigationAlignment.set(ahoiConfig.alignment)
+    }
+
     if (ahoiConfig?.showOnboardingNavigation) {
       showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation)
     }
