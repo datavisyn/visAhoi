@@ -15,6 +15,9 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingTreemapSpec {
   let minLabel: string = ''
   let parentLabel: string = ''
 
+  const test = document.getElementsByClassName('modebar-btn')[0].getAttribute('data-title');
+  console.log(test, 'value')
+
   // set the parent for getting the max and min values of the sub-category
   chart.data.map((d) => {
     if (d.parents.length > 1) {
