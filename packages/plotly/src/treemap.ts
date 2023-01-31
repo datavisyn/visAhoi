@@ -15,6 +15,9 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingTreemapSpec {
   let minLabel: string = ''
   let parentLabel: string = ''
 
+  const aa = document.getElementsByClassName('modebar-btn');
+  
+
   const test = document.getElementsByClassName('modebar-btn')[0].getAttribute('data-title');
   console.log(test, 'value')
 
