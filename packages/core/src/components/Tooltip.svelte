@@ -60,7 +60,6 @@
   let activeMarkerInformation: IMarkerInformation | null = null;
   
   const tooltipId = `visahoi-tooltip-${$contextId}-${uuidv4()}`;  
-  console.log(tooltipId, 'id')
   const arrowId = tooltipId + "-arrow";
   $: dragId = tooltipId;
   
