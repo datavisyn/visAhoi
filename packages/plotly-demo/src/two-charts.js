@@ -123,7 +123,8 @@ const getAhoiConfig = () => {
     chart
   )
   const ahoiConfig = {
-    onboardingMessages: defaultOnboardingMessages
+    onboardingMessages: defaultOnboardingMessages,
+    alignment: 'horizontal'
   }
   return ahoiConfig
 }

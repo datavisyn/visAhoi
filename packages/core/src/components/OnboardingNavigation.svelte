@@ -7,7 +7,8 @@
   // @ts-ignore
   import visahoiChevronUpIcon from "../assets/chevron-up-solid.svg";  
   // @ts-ignore
-  import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg";  
+  import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg"; 
+     
   import { VisahoiState } from "./state.js";
   
   export let visState: VisahoiState;
@@ -15,88 +16,31 @@
 
   const chevronUpIcon: string = $visahoiIcons?.chevronUp || visahoiChevronUpIcon;
   const chevronDownIcon: string = $visahoiIcons?.chevronDown || visahoiChevronDownIcon;
-
+  
+  
   $: nextHeight = $markerInformation.length * 35 + 75 + "px";
   $: prevHeight = $markerInformation.length * 35 + 50 + "px";
+  $: isDisabledNextNavIcon = $markerIndexId === 0 ? true : $markerIndexId === $markerInformation.length - 1 ? false : false;
+  $: isDisabledPreviousNavIcon = $markerIndexId === 0 ? false : $markerIndexId === $markerInformation.length - 1 ? true : false;  
 
-  let index: number;
+  let index: number;  
 
-  $: enableDisableNavIcons = async () => {
-    switch ($markerIndexId) {
-      case 0: {
-        await tick();
-        const preElementId = document.getElementById("navigation-next");
-        if(preElementId) {
-          preElementId.style.pointerEvents = "none";
-          preElementId.style.opacity = "0.5";
-        }
-
-        const nextElementId = document.getElementById("navigation-previous");
-        if(nextElementId) {
-          nextElementId.style.pointerEvents = "all";
-          nextElementId.style.opacity = "1";
-        }
-        break;
-      }
-      case $markerInformation.length - 1: {
-        await tick();
-        const nextElementId = document.getElementById("navigation-previous");
-        if(nextElementId) {
-          nextElementId.style.pointerEvents = "none";
-          nextElementId.style.opacity = "0.5";
-        }
-
-        const preElementId = document.getElementById("navigation-next");
-        if(preElementId) {
-          preElementId.style.pointerEvents = "all";
-          preElementId.style.opacity = "1";
-        }
-
-        break;
-      }
-      default: {
-        await tick();
-        const preElementId = document.getElementById("navigation-previous");
-        if(preElementId) {
-          preElementId.style.pointerEvents = "all";
-          preElementId.style.opacity = "1";
-        }
-
-        const nextElementId = document.getElementById("navigation-next");
-        if(nextElementId) {
-          nextElementId.style.pointerEvents = "all";
-          nextElementId.style.opacity = "1";
-        }
-      }
-    }
-  };
-
-  $: enableDisableNavIcons();
-
-  const navNext = () => {
+  const onNavigatePrevious = () => {    
     if ($previousMarkerId) {
       const elementId = getNavigationMarkerDomId($previousMarkerId);
       const prevMarkerElement = document.getElementById(elementId);
       if(prevMarkerElement) {
         prevMarkerElement.style.opacity = "0.5";
       }
-    }
-    const nextElement = document.getElementById("navigation-next");
-    if(nextElement) {
-      nextElement.style.pointerEvents = "all";
-      nextElement.style.opacity = "1";
-    }
+    }    
+    isDisabledNextNavIcon = false
 
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           index = i + 1;
-          if (index + 1 === $markerInformation.length) {
-            const element = document.getElementById("navigation-previous");
-            if(element) {
-              element.style.pointerEvents = "none";
-              element.style.opacity = "0.5";
-            }
+          if (index + 1 === $markerInformation.length) {            
+            isDisabledPreviousNavIcon = true
           }
         }
       });
@@ -119,31 +63,23 @@
     }
   };
 
-  const onPreviousArrowClick = () => {
+  const onNavigateNext = () => {
     if ($previousMarkerId) {
       const previousMarkerElementId = getNavigationMarkerDomId($previousMarkerId);
       const previousMarkerElement = document.getElementById(previousMarkerElementId)
       if(previousMarkerElement) {
         previousMarkerElement.style.opacity = "0.5";
       }
-    }
-    const previousNavigationArrowElement = document.getElementById("navigation-previous");
-    if(previousNavigationArrowElement) {
-      previousNavigationArrowElement.style.pointerEvents = "all";
-      previousNavigationArrowElement.style.opacity = "1";
-    }
+    }    
+    isDisabledPreviousNavIcon = false;
 
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           index = i - 1;
 
-          if (index === 0) {
-            const nextNavigationArrowElement = document.getElementById("navigation-next");
-            if(nextNavigationArrowElement) {
-              nextNavigationArrowElement.style.pointerEvents = "none";
-              nextNavigationArrowElement.style.opacity = "0.5";
-            }
+          if (index === 0) {            
+            isDisabledNextNavIcon = true
           }
         }
       });
@@ -169,15 +105,25 @@
 
 <div
   class="visahoi-navigation-container"
-  style="--flexDirection:{$navigationAlignment}; height: '60px' "
+  style="--flexDirection:{$navigationAlignment === 'vertical'
+    ? 'column'
+    : 'row'}; bottom:{$navigationAlignment === 'horizontal'
+    ? '30px'
+    : '80px'}; right: {$navigationAlignment === 'horizontal'
+    ? '90px'
+    : ''}; height: '60px' "
 >
   {#key $markerInformation || $onboardingStages}
-    <div class="visahoi-navigation-marker-container">
-      <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
-      {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
-        <NavigationMarker markerInformation={marker} order={index + 1} />
-      {/each}
-    {/if} -->
+  <div
+  class="visahoi-navigation-marker-container"
+  style="--flexDirection:{$navigationAlignment === 'vertical'
+    ? 'column'
+    : 'row'}; bottom:{$navigationAlignment === 'horizontal'
+    ? '30px'
+    : '80px'}; right: {$navigationAlignment === 'horizontal'
+    ? '10px'
+    : ''};"
+>
 
       {#if $activeOnboardingStage && $showOnboardingNavigation}
         {#each $markerInformation.sort((a, b) => {
@@ -195,19 +141,33 @@
       {#if $activeOnboardingStage && $showOnboardingNavigation}
         <div
           id="navigation-next"
-          style="--bottom-height: {nextHeight}"
-          class="visahoi-navigation-next"
-          on:click={onPreviousArrowClick}
-        >
+          style="--bottom-height: {nextHeight}; --opacity: {isDisabledNextNavIcon ? 0.5 : 1}; --events: {isDisabledNextNavIcon ? 'none' : 'all'}" 
+          class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
+            ? 'horizontal'
+            : 'vertical'}"
+            
+          on:click={onNavigateNext}
+        >          
+          {#if $navigationAlignment === "vertical"}
           <span style="display: flex">{@html chevronUpIcon}</span>
+          {:else}            
+            <span style="display: flex; transform: rotate(270deg)" >{@html chevronUpIcon}</span>
+          {/if}
         </div>
         <div
           id="navigation-previous"
-          style="--bottom-height: {prevHeight}"
-          class="visahoi-navigation-previous"
-          on:click={navNext}
-        >
+          style="--bottom-height: {prevHeight}; --opacity: {isDisabledPreviousNavIcon ? 0.5 : 1}; --events: {isDisabledPreviousNavIcon ? 'none' : 'all'}"
+          class="visahoi-navigation-previous {$navigationAlignment ===
+            'horizontal'
+              ? 'horizontal'
+              : 'vertical'}"
+          on:click={onNavigatePrevious}
+        >          
+          {#if $navigationAlignment === "vertical"}
           <span style="display: flex">{@html chevronDownIcon}</span>
+          {:else}            
+              <span style="display: flex; transform: rotate(270deg)">{@html chevronDownIcon}</span> 
+          {/if}
         </div>
       {/if}
     </div>
@@ -222,32 +182,31 @@
 <style>
   .visahoi-navigation-marker-container {
     position: absolute;
-    display: flex;
-    flex-direction: column;
+    display: flex;    
+    flex-direction: var(--flexDirection);
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
-    width: 80px;
-    /* bottom: 20px; */
-    bottom: 80px;
+    transition: opacity 0.5s ease, bottom 0.5s ease;   
+    bottom: var(--bottom);
+    right: var(--right);
     opacity: 1;
     z-index: 15;
   }
   .visahoi-navigation-next {
     position: absolute;
     bottom: var(--bottom-height);
+    opacity: var(--opacity);
+    pointer-events: var(--events);
     margin-bottom: 15px;
-    /* opacity: var(--opacity);
-    pointer-events: var(--pointerEvents); */
   }
 
   .visahoi-navigation-previous {
     position: absolute;
     bottom: var(--bottom-height);
-    margin-bottom: 15px;
-    /* opacity: var(--opacity);
-    pointer-events: var(--pointerEvents); */
+    opacity: var(--opacity);
+    pointer-events: var(--events);
+    margin-bottom: 15px;    
   }
 
   .visahoi-navigation-container {
@@ -258,5 +217,14 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
+  } 
+  
+  .horizontal {
+    right: var(--bottom-height);
+    bottom: 0;
+  }
+
+  .vertical {
+    bottom: var(--bottom-height);
   }
 </style>
