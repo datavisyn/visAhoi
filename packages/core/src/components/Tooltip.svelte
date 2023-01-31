@@ -15,6 +15,8 @@
   import visahoiTrashIcon from "../assets/trash-solid-white.svg";
   // @ts-ignore
   import { VisahoiState } from "./state";
+  import { stores } from "./stores";
+  import { get } from "svelte/store";
 
   export let visElement;
   export let visState: VisahoiState;
@@ -56,7 +58,8 @@
 
   let activeMarkerInformation: IMarkerInformation | null = null;
 
-  const tooltipId = uuidv4();
+  const contextKey = [...get(stores).keys()].toString();
+  const tooltipId = `visahoi-tooltip-${contextKey}-${uuidv4()}`;  
   const arrowId = tooltipId + "-arrow";
   $: dragId = tooltipId;
   
