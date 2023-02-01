@@ -43,10 +43,8 @@ export const injectOnboarding = (
       backdropOpacity,
       showHideCloseText,
       showOnboardingNavigation,
-      // isEditModeActive,
-      // markerInformation,
       showOnboarding,
-      showOnboardingSteps
+      visElement
     } = visState
 
     onboardingMessages.set(ahoiConfig.onboardingMessages)
@@ -92,8 +90,16 @@ export const injectOnboarding = (
 
     const ref = { update: () => {} }
 
-    const updateOnboarding = (config: IAhoiConfig) => {
+    /**
+     * 
+     * @param config the ahoiConfig to update
+     * @param element optional the updated element
+     */
+    const updateOnboarding = (config: IAhoiConfig, element?: Element) => {
       onboardingMessages.set(config.onboardingMessages)
+      if(element) {
+        visElement.set(element)
+      }
       ref.update()
     }
 

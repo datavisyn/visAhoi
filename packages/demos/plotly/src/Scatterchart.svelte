@@ -2,11 +2,11 @@
   import "@visahoi/plotly/build/css/main.css";
   import ResizeObserver from "svelte-resize-observer";
   import Plotly from "plotly.js-dist";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import {
     generateBasicAnnotations,
     ahoi,
-    EVisualizationType,
+    EVisualizationType
   } from "@visahoi/plotly";
 
   export let contextKey;
@@ -19,7 +19,7 @@
   };
 
   let onboardingUI;
-  let plot;
+  let runtimeObject;
 
   const data = [trace1];
   const layout = {
@@ -37,7 +37,7 @@
     const defaultOnboardingMessages = generateBasicAnnotations(
       contextKey,
       EVisualizationType.SCATTERPLOT,
-      plot
+      runtimeObject
     );
     const ahoiConfig = {
       onboardingMessages: defaultOnboardingMessages,
@@ -49,28 +49,42 @@
   const onResize = (e) => {
     if(onboardingUI) {
       // update onboarding
-      onboardingUI.updateOnboarding(getAhoiConfig())
+      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
     }
-    if(plot) {
-      Plotly.Plots.resize(plot)
+    if(runtimeObject) {
+      Plotly.Plots.resize(runtimeObject)
     }
   }
 
   onMount(async () => {
     const plotDiv = document.getElementById(contextKey);
-    plot = await new Plotly.newPlot(plotDiv, data, layout);
-    console.log("on mount", plotDiv)
-    onboardingUI = await ahoi(
-      contextKey,
-      EVisualizationType.SCATTERPLOT,
-      plot,
-      getAhoiConfig()
-    );
+    runtimeObject = await new Plotly.newPlot(plotDiv, data, layout);
+    if(onboardingUI) {
+      onboardingUI.showOnboarding()
+    } else {
+      onboardingUI = await ahoi(
+        contextKey,
+        EVisualizationType.SCATTERPLOT,
+        runtimeObject,
+        getAhoiConfig()
+      );
+    }
   });
+
+  onDestroy(() => {
+    if(onboardingUI) {
+      onboardingUI.removeOnboarding()
+    }
+  })
 </script>
 
-{console.log("here")}
 <div id="plotly">
   <ResizeObserver on:resize={onResize} />
   <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
 </div>
+
+<style>
+  :global(*) {
+    font-family: sans-serif;
+  }
+</style>

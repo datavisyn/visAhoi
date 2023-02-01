@@ -34,7 +34,6 @@
   };
 
   ref.update = () => {
-    console.log("ahoi update", $visElement)
     setVisElementPosition();
     setMarkerInformation();
   };
