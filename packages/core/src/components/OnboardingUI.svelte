@@ -34,11 +34,13 @@
   };
 
   ref.update = () => {
+    console.log("ahoi update", $visElement)
     setVisElementPosition();
     setMarkerInformation();
   };
 
   onMount(() => {
+    console.log("ahoi mount")
     setVisElementPosition();
     setMarkerInformation();
   });

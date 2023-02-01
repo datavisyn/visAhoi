@@ -1,0 +1,36 @@
+{
+  "name": "demos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/svelte": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-svelte-csf": "^2.0.11",
+    "babel-loader": "^8.3.0",
+    "svelte": "^3.55.1",
+    "svelte-loader": "^3.1.5"
+  },
+  "dependencies": {
+    "@visahoi/plotly": "3.0.0",
+    "plotly.js": "^2.2.1",
+    "plotly.js-dist-min": "~2.12.0",
+    "@types/plotly.js-dist-min": "^2.3.0",
+    "svelte-resize-observer": "^2.0.0"
+  }
+}
