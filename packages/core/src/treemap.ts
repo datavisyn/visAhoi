@@ -37,6 +37,26 @@ function generateMessages (
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage  
+
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
+ 
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
+
+  let modeIconDescription = ''
+  const cameraIcon = `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the treemap.<br/>`: ''}`
+  const zoomIcon = `${modebarText.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the treemap to get a more detailed view of the data.<br/`: ''}`
+  const panIcon = `${modebarText.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.<br/`: ''}`
+  const selectionIcon = `${modebarText.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over to select a certain subset of the data.<br/>`: ''}`
+  const lassoSelectIcon = `${modebarText.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select by drawing a lasso loop.<br/>`: ''}`
+  const zoomInIcon = `${modebarText.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in the treemap.<br/>`: ''}`
+  const zoomOutIcon = `${modebarText.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the treemap.<br/>`: ''}`
+  const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Shows the complete treemap.<br/>`: ''}`
+  const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: It takes the treemap to the inital layout settings.<br/>`: ''}`
   
   const messages: IOnboardingMessage[] = [
     {
@@ -105,7 +125,7 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the treemap.`,      
+      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {

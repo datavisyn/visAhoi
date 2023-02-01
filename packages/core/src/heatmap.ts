@@ -25,6 +25,8 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   plotlyModebar?: ISpecProp;
 }
 
+
+
 function generateMessages (
   spec: IOnboardingHeatmapSpec,
   visElement: Element
@@ -38,6 +40,28 @@ function generateMessages (
   const analyzing = defaultOnboardingStages.get(
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
+
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
+  
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
+
+  let modeIconDescription = ''
+  const cameraIcon = `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the heatmap.<br/>`: ''}`
+  const zoomIcon = `${modebarText.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the heatmap to get a more detailed view.<br/`: ''}`
+  const panIcon = `${modebarText.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.<br/`: ''}`
+  const selectionIcon = `${modebarText.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over heatmap to select a certain subset of the data.<br/>`: ''}`
+  const lassoSelectIcon = `${modebarText.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select by drawing a lasso loop.<br/>`: ''}`
+  const zoomInIcon = `${modebarText.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in the heatmap.<br/>`: ''}`
+  const zoomOutIcon = `${modebarText.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the heatmap.<br/>`: ''}`
+  const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Changes the layout to show the complete heatmap.<br/>`: ''}`
+  const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: It takes the heatmap to the inital layout settings.<br/>`: ''}`
+  
+  console.log('dhfjwlkjbjk')
 
   const messages = [
     {
@@ -104,13 +128,7 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the heatmap.<br/>
-      ${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the chart to get a more detailed view on the data.</br>$
-      {SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.</br>      
-      ${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in chart.</br>
-      ${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the chart.<br/>
-      ${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Changes the layout to show complete chart.<br/>
-      ${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.</br>`,      
+      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),   
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
