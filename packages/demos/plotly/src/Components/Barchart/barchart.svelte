@@ -13,7 +13,7 @@
     
 
     var trace1 = {
-  x: ['giraffes', 'orangutans', 'monkeys'],
+  x: ['January', 'February', 'March'],
   y: [20, 14, 23],
   name: 'SF Zoo',
   type: 'bar'
@@ -24,15 +24,15 @@
   
     const data = [trace1];
     const layout = {
-      title: "Horsepower and miles per gallon for various cars",
+      title: "Average temperature in a month",
       xaxis: {
-        title: "Horsepower",
+        title: "Month",
       },
       yaxis: {
-        title: "Miles per Gallon",
+        title: "Average temperature",
       },
     };
-    const showOnboarding = false;
+    const showOnboarding = true;
   
     const getAhoiConfig = () => {
       const defaultOnboardingMessages = generateBasicAnnotations(

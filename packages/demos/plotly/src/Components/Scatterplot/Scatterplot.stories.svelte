@@ -1,5 +1,5 @@
 <script>
-  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';  
 
   import Scatterchart from './Scatterchart.svelte';
 
@@ -17,7 +17,7 @@
   </Scatterchart>
 </Template>
 
-<Story name="Basic" args={{contextKey: "test"}}/>
+<Story name="Basic" args={{contextKey: "test"}} />
 
 <!-- <Story name="Square" source args={{rounded: false}}/> -->
 

@@ -7,7 +7,7 @@ export default {
   component: Scatterchart,
   argTypes: {
     name: { control: 'text' },
-  },
+  },  
 };
 
 // More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args
@@ -21,3 +21,9 @@ export const Basic = Template.bind({});
 Basic.args = {
   contextKey: 'Button',
 };
+// Basic.parameters = {
+//   componentSource: {
+//     code: 'This is sample code',
+//     language: 'javascript'
+//   }
+// }

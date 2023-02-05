@@ -1,0 +1,23 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import Scatterchart from './Scatterchart.svelte';
+
+<Meta title="Plotly/Scatterplot12" component={Scatterchart} />
+
+export const Template = (args) => <Scatterchart {...args}  />;
+
+# Plotly - Scatterplot
+
+A scatterplot shows the relationship between two quantitative variables measured for the same individuals. The values of one variable appear on the horizontal axis, and the values of the other variable appear on the vertical axis. Each individual in the data appears as a point on the graph.
+
+<Canvas>
+  <Story 
+    name="Scatter-mdx"
+    args={{ 
+        contextKey: 'vis3'      
+    }}
+    >
+    
+    {Template.bind({})}
+  </Story>
+</Canvas>
+

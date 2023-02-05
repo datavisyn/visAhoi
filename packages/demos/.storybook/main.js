@@ -6,8 +6,11 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
+    "@storybook/addon-docs",
     "@storybook/addon-interactions",
-    "@storybook/addon-svelte-csf"
+    "@storybook/addon-svelte-csf",
+    "@storybook/addon-storysource"
   ],
-  "framework": "@storybook/svelte"
+  "framework": "@storybook/svelte",
+  
 }
