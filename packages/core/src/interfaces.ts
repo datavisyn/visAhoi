@@ -34,7 +34,7 @@ export interface IBackdrop {
   color?: string;
 }
 
-export type NavigationAlignment = 'row' | 'column';
+export type NavigationAlignment = 'horizontal' | 'vertical';
 
 interface IPoint {
   x: number;
@@ -94,7 +94,7 @@ export interface IAhoiIcons {
   edit: string;
   check: string;
   chevronUp: string;
-  chevronDown: string;
+  chevronDown: string;  
 }
 
 export type OnboardingStage = string;
@@ -135,6 +135,7 @@ export interface IAhoiConfig {
   backdrop?: IBackdropConfig;
   showHelpCloseText?: boolean;
   showOnboardingNavigation?: boolean;
+  alignment?: NavigationAlignment;
 }
 
 export enum EDefaultOnboardingStages {

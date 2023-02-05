@@ -23,6 +23,9 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   minValue?: ISpecProp;
   emptyValue?: ISpecProp;
   plotlyModebar?: ISpecProp;
+  minColor?: ISpecProp;
+  maxColor?: ISpecProp;
+  midColor?: ISpecProp;
 }
 
 
@@ -61,7 +64,10 @@ function generateMessages (
   const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Changes the layout to show the complete heatmap.<br/>`: ''}`
   const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: It takes the heatmap to the inital layout settings.<br/>`: ''}`
   
-  console.log('dhfjwlkjbjk')
+
+  function createColorRect (color = 'white') { 
+    return `<div class="colorRect" style="background-color: ${color}"></div>`
+  }
 
   const messages = [
     {
@@ -90,8 +96,8 @@ function generateMessages (
     },
     {
       anchor: getAnchor(spec.legendDescription, visElement),
-      requires: ['legendDescription'],
-      text: 'A deep red color indicates a high temperature whereas a deep blue color indicates a low temperature. Medium values are visualized by a neutral light gray.',
+      requires: ['legendDescription', 'minColor', 'maxColor', 'yAxis'],
+      text: `Hightest ${spec.yAxis?.value} is visualized by ${createColorRect(spec.maxColor?.value)} whereas lowest is indicated with ${createColorRect(spec.minColor?.value)}. The medium values are vizualized with ${createColorRect(spec.midColor?.value)}.`,
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
@@ -141,7 +147,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.maxValue, visElement),
       requires: ['maxValue'],
-      text: `The deep red colored rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value}.`,
+      text: `The ${createColorRect(spec.maxColor?.value)} rectangle holds the maximum value in the heatmap. In this heatmap the maximum value is ${spec.maxValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
@@ -153,7 +159,7 @@ function generateMessages (
     {
       anchor: getAnchor(spec.minValue, visElement),
       requires: ['minValue'],
-      text: `The deep blue colored rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
+      text: `The ${createColorRect(spec.minColor?.value)} rectangle holds the minimum value in the heatmap. In this heatmap the minimum value is ${spec.minValue?.value}.`,
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
