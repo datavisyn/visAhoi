@@ -11,5 +11,8 @@ export default defineConfig({
   // so that it can appear in the dependency graph and trigger hot reload.
   optimizeDeps: {
     exclude: ['@visahoi']
+  },
+  build: {
+    outDir: './build'
   }
 });
