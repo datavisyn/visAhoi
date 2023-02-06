@@ -27,11 +27,13 @@ jobs:
         run: npm run bootstrap
       - name: Build packages in workspace
         run: npm run build
+      - name: Where am I?
+        run: ls
       - name: Upload demo build artifcats
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: demos
-          path: packages/echarts-demo/build/
+          path: ./packages/echarts-demo/build/
 
   deploy:
     needs: build
@@ -42,7 +44,7 @@ jobs:
           ref: gh-pages
       - name: Remove old demos
         run: rm -rf ./demos
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: demos
           path: packages/echarts-demo/build/
