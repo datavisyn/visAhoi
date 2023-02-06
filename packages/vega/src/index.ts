@@ -94,10 +94,9 @@ export const generateBasicAnnotations = async (
       onboardingMessages = scatterplotFactory(contextKey, vegaSpec, d3Data, visElement)
       break
 
-    default:
-      throw new Error(
-        `No onboarding for visualization type ${visType} available.`
-      )
+    case EVisualizationType.GENERIC:
+      onboardingMessages = []
+      break 
   }
   return onboardingMessages
 }
