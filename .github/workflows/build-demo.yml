@@ -27,13 +27,14 @@ jobs:
         run: npm run bootstrap
       - name: Build packages in workspace
         run: npm run build
-      - name: Where am I?
-        run: ls
       - name: Upload demo build artifcats
         uses: actions/upload-artifact@v3
         with:
           name: demos
-          path: ./packages/echarts-demo/build/
+          path: |
+            packages/echarts-demo/build/
+            packages/plotly-demo/build/
+            packages/vega-demo/build/
 
   deploy:
     needs: build
@@ -47,7 +48,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: demos
-          path: packages/echarts-demo/build/
+          path: ./demos
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           # Required
