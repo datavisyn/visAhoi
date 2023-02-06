@@ -31,10 +31,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: demos
-          path: |
-            packages/echarts-demo/build/
-            packages/plotly-demo/build/
-            packages/vega-demo/build/
+          path: packages/echarts-demo/build/
+
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
