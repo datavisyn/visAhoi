@@ -198,7 +198,6 @@ const registerEventListener = () => {
           y: 250
         }
       },
-      id: 'unique-message-id-6'
     }))
   })
 }

@@ -45,6 +45,7 @@ export function generateMessages (
   switch (visType) {
     case EVisualizationType.BAR_CHART:
       messages = barChart.generateMessages(
+        contextKey,
         <IOnboardingBarChartSpec>spec,
         visElement
       )
@@ -52,6 +53,7 @@ export function generateMessages (
 
     case EVisualizationType.CHANGE_MATRIX:
       messages = changeMatrix.generateMessages(
+        contextKey,
         <IOnboardingChangeMatrixSpec>spec,
         visElement
       )
@@ -59,6 +61,7 @@ export function generateMessages (
 
     case EVisualizationType.HORIZON_GRAPH:
       messages = horizonGraph.generateMessages(
+        contextKey,
         <IOnboardingHorizonGraphSpec>spec,
         visElement
       )
@@ -66,6 +69,7 @@ export function generateMessages (
 
     case EVisualizationType.SCATTERPLOT:
       messages = scatterplot.generateMessages(
+        contextKey,
         <IOnboardingScatterplotSpec>spec,
         visElement
       )
@@ -73,6 +77,7 @@ export function generateMessages (
 
     case EVisualizationType.TREEMAP:
       messages = treemap.generateMessages(
+        contextKey,
         <IOnboardingTreemapSpec>spec,
         visElement
       )
@@ -80,6 +85,7 @@ export function generateMessages (
 
     case EVisualizationType.HEATMAP:
       messages = heatmap.generateMessages(
+        contextKey,
         <IOnboardingHeatmapSpec>spec,
         visElement
       )
