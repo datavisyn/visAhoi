@@ -25,6 +25,7 @@ export interface IOnboardingTreemapSpec extends IOnboardingSpec {
 }
 
 function generateMessages (
+  contextKey,
   spec: IOnboardingTreemapSpec,
   visElement: Element
 ): IOnboardingMessage[] {
@@ -66,9 +67,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-1`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-1`,
       order: 2
     },
     {
@@ -78,9 +79,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-2`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-2`,
       order: 3
     },
     {
@@ -90,9 +91,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-3`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-3`,
       order: 4
     },
     {
@@ -102,9 +103,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-4`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-4`,
       order: 5
     },
 
@@ -115,9 +116,9 @@ function generateMessages (
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-5`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-5`,
       order: 1
     },
 
@@ -142,9 +143,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-8`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-8`,
       order: 2
     },
 
@@ -155,9 +156,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-9`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-9`,
       order: 1
     }
   ]
@@ -170,9 +171,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-10`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-10`,
       order: 1
     })
   }

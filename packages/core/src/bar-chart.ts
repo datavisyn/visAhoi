@@ -30,6 +30,7 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
 }
 
 function generateMessages (
+  contextKey,
   spec: IOnboardingBarChartSpec,
   visElement: Element,
   ahoiConfig?: IAhoiConfig
@@ -71,9 +72,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-1`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-1`,
       order: 2
     },
     {
@@ -83,9 +84,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-2`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-2`,
       order: 3
     },
     {
@@ -95,9 +96,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-3`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-3`,
       order: 4
     },
     {
@@ -107,24 +108,12 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-4`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-4`,
       order: 1
     },
-    {
-      // basic chart interactions for plotly
-      anchor: getAnchor(spec.plotlyModebar, visElement),
-      requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
-      title: "Chart interactions",
-      onboardingStage: interacting,
-      marker: {
-        id: uuidv4()
-      },
-      id: uuidv4(),
-      order: 2
-    },
+    
     {
       anchor: getAnchor(spec.yMax, visElement),
       requires: ['yAxisTitle', 'yMax'],
@@ -132,9 +121,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-5`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-5`,
       order: 2
     },
     {
@@ -144,10 +133,10 @@ function generateMessages (
       title: 'Interacting with the chart',
       onboardingStage: interacting,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-6`
       },
-      id: uuidv4(),
-      order: 3
+      id: `visahoi-message-${contextKey}-6`,
+      order: 1
     },
     {
       anchor: getAnchor(spec.plotlyLegendInteractions, visElement),
@@ -156,10 +145,10 @@ function generateMessages (
       title: "Legend interactions",
       onboardingStage: interacting,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-7`
       },
-      id: uuidv4(),
-      order: 3
+      id: `visahoi-message-${contextKey}-7`,
+      order: 2
     },
     {
       // basic chart interactions for plotly
@@ -169,11 +158,24 @@ function generateMessages (
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-8`
       },
-      id: uuidv4(),
-      order: 1
-    },    
+      id: `visahoi-message-${contextKey}-8`,
+      order: 3
+    }, 
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: `visahoi-marker-${contextKey}-9`
+      },
+      id: `visahoi-message-${contextKey}-9`,
+      order: 4
+    },   
   ]
 
   if (spec.chartTitle?.value !== undefined) {
@@ -184,12 +186,12 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-10`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-10`,
       order: 1
     })
-  }
+  }  
 
   // Filter for messages where all template variables are available in the spec
   return messages.filter((message) =>
