@@ -42,12 +42,12 @@ export const injectOnboarding = (
       showBackdrop,
       backdropOpacity,
       showHideCloseText,
-      showOnboardingNavigation,
-      // isEditModeActive,
-      // markerInformation,
+      showOnboardingNavigation,      
       showOnboarding,
-      showOnboardingSteps
+      contextId     
     } = visState
+    
+    contextId.set(contextKey)
 
     onboardingMessages.set(ahoiConfig.onboardingMessages)
     if (icons) {
@@ -182,7 +182,11 @@ export const createBasicOnboardingMessage = (
     const { onboardingStages, onboardingMessages, markerInformation, visElement } = visState
 
     const marker: IMarker = {
-      id: getMarkerDomId(uuidv4())
+      id: `visahoi-marker-${contextKey}- ${uuidv4()}`
+    }
+
+    if (!message.id) {      
+      message.id = `visahoi-message-${contextKey}- ${uuidv4()}`
     }
 
     if (!message.order) {
