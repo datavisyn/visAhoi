@@ -47,7 +47,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: demos
-          path: ./demos
+          path: packages/echarts-demo/build/
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           # Required
