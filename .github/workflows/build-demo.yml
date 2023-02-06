@@ -5,8 +5,8 @@ name: Build and deploy demos
 
 on:
   push:
-    branches:
-      - develop
+    # branches:
+    #   - develop
   # Only pushes to the develop branch should trigger the build and deploy of demos
   # pull_request:
   #   branches:
