@@ -15,10 +15,12 @@
   import visahoiTrashIcon from "../assets/trash-solid-white.svg";
   // @ts-ignore
   import { VisahoiState } from "./state";
-
+  import { stores } from "./stores";
+  import { get } from "svelte/store";
 
   export let visElement;
   export let visState: VisahoiState;
+  export let setDragId;  
 
   const {
     activeMarker,
@@ -30,7 +32,9 @@
     onboardingStages,
     onboardingMessages,
     editTooltip,
-    visahoiIcons,
+    visahoiIcons,    
+    dragTooltipId,
+    contextId
   } = visState;
 
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
@@ -54,9 +58,24 @@
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
-
-  const tooltipId = uuidv4();
+  
+  const tooltipId = `visahoi-tooltip-${$contextId}-${uuidv4()}`;  
   const arrowId = tooltipId + "-arrow";
+  $: dragId = tooltipId;
+  
+// To set the dragTooltipId in the store 
+// Pass the dragId to the parent component tooltips.svelte
+
+  const onMouseDown = () => {    
+    dragTooltipId.set(dragId)    
+    setDragId(dragId)
+  }
+
+  // Set the dragId back to initial 
+
+  const onMouseUp = () => {
+    setDragId('');    
+  }
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
@@ -196,6 +215,9 @@
     : 'hidden'}"
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
+  on:mousedown={onMouseDown}
+  on:mouseup={onMouseUp}
+    
 >
   <div class="visahoi-tooltip-header">
     <div class="visahoi-tooltip-title">
