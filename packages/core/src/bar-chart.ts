@@ -9,8 +9,6 @@ import {
   SvgIcons
 } from './interfaces'
 import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
-
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
