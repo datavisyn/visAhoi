@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "@visahoi/echarts": "./@visahoi/echarts.js",
-    "echarts": "./echarts.js"
-  }
-}
