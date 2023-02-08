@@ -57,9 +57,17 @@ function generateMessages (
   let modeIconDescription = ''
 
   const modebarInteractions = getModeBarInteractions(modebarText); 
-  // if(modebarInteractions.cameraIcon !== '') {
-  //   modebarInteractions.modeBarDescriptions.set('Download plot as a png', 'You can download a .png of the bar-chart') 
-  // }  
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar-chart.<br/>`: ''}`)
+  
+  let cameraIcon = modebarInteractions.get('Download plot as a png') || '';  
+  const zoomIcon = modebarInteractions.get('Zoom') || '';
+  const panIcon = modebarInteractions.get('Pan') || '';
+  const selectionIcon = modebarInteractions.get('Box Select') || '';
+  const lassoSelectIcon = modebarInteractions.get('Lasso Select') || '';
+  const zoomInIcon = modebarInteractions.get('Zoom in') || '';
+  const zoomOutIcon = modebarInteractions.get('Zoom out') || '';
+  const autoScaleIcon = modebarInteractions.get('Autoscale') || '';
+  const resetIcon = modebarInteractions.get('Reset axes') || '';  
   
   const messages: IOnboardingMessage[] = [
     {
@@ -164,7 +172,7 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(modebarInteractions.cameraIcon, modebarInteractions.zoomIcon, modebarInteractions.panIcon, modebarInteractions.selectionIcon, modebarInteractions.lassoSelectIcon, modebarInteractions.zoomInIcon, modebarInteractions.zoomOutIcon, modebarInteractions.autoScaleIcon, modebarInteractions.resetIcon),
+      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
