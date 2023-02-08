@@ -6,9 +6,8 @@ import {
   EDefaultOnboardingStages,
   defaultOnboardingStages,
   SvgIcons
-} from './interfaces'
-import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
+} from './interfaces';
+import { getAnchor } from './utils';
 import { getModeBarInteractions, getModeBarMessages } from './onboarding';
 
 export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {

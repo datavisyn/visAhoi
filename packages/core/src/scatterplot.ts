@@ -7,8 +7,8 @@ import {
   EDefaultOnboardingStages,
   IOnboardingStage,
   SvgIcons
-} from './interfaces'
-import { getAnchor } from './utils'
+} from './interfaces';
+import { getAnchor } from './utils';
 import { getModeBarInteractions, getModeBarMessages } from './onboarding';
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
