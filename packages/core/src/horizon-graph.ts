@@ -157,9 +157,9 @@ function generateMessages (
       title: "Chart interactions",
       onboardingStage: using,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-8`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-8`,
       order: 2
     },
   ]
