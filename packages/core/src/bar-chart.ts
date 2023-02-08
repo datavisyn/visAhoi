@@ -1,3 +1,4 @@
+
 import {
   ISpecProp,
   IOnboardingSpec,
@@ -8,6 +9,7 @@ import {
   IAhoiConfig,
   SvgIcons
 } from './interfaces'
+import { getModeBarInteractions } from './onboarding';
 import { getAnchor } from './utils'
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
@@ -53,15 +55,12 @@ function generateMessages (
   }
 
   let modeIconDescription = ''
-  const cameraIcon = `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar chart.<br/>`: ''}`
-  const zoomIcon = `${modebarText.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the bar chart to get a more detailed view on the data.<br/>`: ''}`
-  const panIcon = `${modebarText.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.<br/>`: ''}`
-  const selectionIcon = `${modebarText.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the bar chart to select a certain data.<br/>`: ''}`
-  const lassoSelectIcon = `${modebarText.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso Select</b>: Select the desired data by drawing a lasso loop.<br/>`: ''}`
-  const zoomInIcon = `${modebarText.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in the bars of the chart.<br/>`: ''}`
-  const zoomOutIcon = `${modebarText.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the bars in the chart.<br/>`: ''}`
-  const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Looks at all the data points in the plot and changes the layout to show all of themLooks at all the data points in the plot and changes the layout to show all of them.<br/>`: ''}`
-  const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.<br/>`: ''}`
+
+  const modebarInteractions = getModeBarInteractions(modebarText); 
+  // if(modebarInteractions.cameraIcon !== '') {
+  //   modebarInteractions.modeBarDescriptions.set('Download plot as a png', 'You can download a .png of the bar-chart') 
+  // }  
+  
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
@@ -165,7 +164,7 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
+      text: modeIconDescription.concat(modebarInteractions.cameraIcon, modebarInteractions.zoomIcon, modebarInteractions.panIcon, modebarInteractions.selectionIcon, modebarInteractions.lassoSelectIcon, modebarInteractions.zoomInIcon, modebarInteractions.zoomOutIcon, modebarInteractions.autoScaleIcon, modebarInteractions.resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {

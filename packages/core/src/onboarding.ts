@@ -8,7 +8,8 @@ import {
   IMarker,
   IOnboardingMessage,
   IOnboardingStage,
-  NavigationAlignment
+  NavigationAlignment,
+  SvgIcons
 } from './interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
@@ -351,3 +352,46 @@ export const setEditMode = (contextKey: string, value: boolean) => {
     return null
   }
 }
+
+export const getModeBarInteractions = (text) => {
+  console.log(text);
+  const modeBarDescriptions = new Map([
+    ['Download plot as a png', 'You can download a .png of the chart'],
+    ['Zoom', 'Click and drag the mouse over a certain part of the visualization to zoom in and get a more detailed view of the data.'],
+    ['Pan', 'You can move the view left and right while dragging the mouse.'],
+    ['Box Select', 'Drag the mouse over the chart to select some data.'],
+    ['Lasso Select', 'Select the desired data by drawing a lasso loop.'],
+    ['Zoom in', ' Zoom in to get a more detailed view of the chart.'],
+    ['Zoom out', 'Zoom out to get a better overview of the chart.'],
+    ['Autoscale', 'Zooms out to get a view of the whole visualization.'],
+    ['Reset axes', 'It takes the chart to the inital layout settings.']
+  ])
+  
+  let cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon;
+  
+  
+  cameraIcon = `${text.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: ${modeBarDescriptions.get('Download plot as a png')}<br/>`: ''}`
+zoomIcon = `${text.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: ${modeBarDescriptions.get('Zoom')}<br/>`: ''}`
+panIcon = `${text.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: ${modeBarDescriptions.get('Pan')}<br/>`: ''}`
+selectionIcon = `${text.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: ${modeBarDescriptions.get('Box Select')}<br/>`: ''}`
+ lassoSelectIcon = `${text.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso Select</b>: ${modeBarDescriptions.get('Lasso Select')}<br/>`: ''}`
+ zoomInIcon = `${text.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: ${modeBarDescriptions.get('Zoom in')}<br/>`: ''}`
+ zoomOutIcon = `${text.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out</b>: ${modeBarDescriptions.get('Zoom out')}<br/>`: ''}`
+ autoScaleIcon = `${text.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: ${modeBarDescriptions.get('Autoscale')}<br/>`: ''}`
+ resetIcon = `${text.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: ${modeBarDescriptions.get('Reset axes')}<br/>`: ''}`
+
+  
+  return {modeBarDescriptions, cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon}
+}
+
+
+// const cameraIcon = `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: ${getModeBarInteractions().get('Download plot as a png')}<br/>`: ''}`
+// const zoomIcon = `${modebarText.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: ${getModeBarInteractions().get('Zoom')}<br/>`: ''}`
+// const panIcon = `${modebarText.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: ${getModeBarInteractions().get('Pan')}<br/>`: ''}`
+// // export  const selectionIcon = `${modebarText.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: ${getModeBarInteractions().get('Box Select')}<br/>`: ''}`
+// // export  const lassoSelectIcon = `${modebarText.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso Select</b>: ${getModeBarInteractions().get('Lasso Select')}<br/>`: ''}`
+// // export  const zoomInIcon = `${modebarText.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: ${getModeBarInteractions().get('Zoom in')}<br/>`: ''}`
+// // export  const zoomOutIcon = `${modebarText.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out</b>: ${getModeBarInteractions().get('Zoom out')}<br/>`: ''}`
+// // export  const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: ${getModeBarInteractions().get('Autoscale')}<br/>`: ''}`
+// // export  const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: ${getModeBarInteractions().get('Reset axes')}<br/>`: ''}`
+
