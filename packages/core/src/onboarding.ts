@@ -353,7 +353,7 @@ export const setEditMode = (contextKey: string, value: boolean) => {
   }
 }
 
-export const getModeBarInteractions = (text: string) => {
+export const getGeneralChartInteractions = (text: string[]) => {
   const modeBarDescriptions = new Map([
     ['Download plot as a png', `${text.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the chart.<br/>`: ''}`],
     ['Zoom', `${text.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: Click and drag the mouse over a certain part of the visualization to zoom in and get a more detailed view of the data.<br/>`: ''}`],

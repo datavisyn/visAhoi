@@ -9,7 +9,7 @@ import {
   IAhoiConfig,
   SvgIcons
 } from './interfaces';
-import { getModeBarInteractions, getModeBarMessages } from './onboarding';
+import { getGeneralChartInteractions, getModeBarMessages } from './onboarding';
 import { getAnchor } from './utils';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
@@ -56,7 +56,7 @@ function generateMessages (
 
   let modeIconDescription = ''
   
-  const modebarInteractions = getModeBarInteractions(modebarText); 
+  const modebarInteractions = getGeneralChartInteractions(modebarText); 
   modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar-chart.<br/>`: ''}`)
 
   const modeBar = getModeBarMessages(modebarInteractions);   

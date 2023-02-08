@@ -8,7 +8,7 @@ import {
   SvgIcons
 } from './interfaces';
 import { getAnchor } from './utils';
-import { getModeBarInteractions, getModeBarMessages } from './onboarding';
+import { getGeneralChartInteractions, getModeBarMessages } from './onboarding';
 
 export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -55,7 +55,7 @@ function generateMessages (
   }
 
   let modeIconDescription = ''
-  const modebarInteractions = getModeBarInteractions(modebarText); 
+  const modebarInteractions = getGeneralChartInteractions(modebarText); 
   modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the scatterplot.<br/>`: ''}`)
 
   const modeBar = getModeBarMessages(modebarInteractions);
