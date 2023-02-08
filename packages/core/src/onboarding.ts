@@ -353,24 +353,7 @@ export const setEditMode = (contextKey: string, value: boolean) => {
   }
 }
 
-// export const getModeBarInteractions = () => {
-  
-//   const modeBarDescriptions = new Map([
-//     ['Download plot as a png', 'You can download a .png of the chart'],
-//     ['Zoom', 'Click and drag the mouse over a certain part of the visualization to zoom in and get a more detailed view of the data.'],
-//     ['Pan', 'You can move the view left and right while dragging the mouse.'],
-//     ['Box Select', 'Drag the mouse over the chart to select some data.'],
-//     ['Lasso Select', 'Select the desired data by drawing a lasso loop.'],
-//     ['Zoom in', ' Zoom in to get a more detailed view of the chart.'],
-//     ['Zoom out', 'Zoom out to get a better overview of the chart.'],
-//     ['Autoscale', 'Zooms out to get a view of the whole visualization.'],
-//     ['Reset axes', 'It takes the chart to the inital layout settings.']
-//   ])  
-//   return modeBarDescriptions
-// }
-
-
-export const getModeBarInteractions = (text) => {
+export const getModeBarInteractions = (text: string) => {
   const modeBarDescriptions = new Map([
     ['Download plot as a png', `${text.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the chart.<br/>`: ''}`],
     ['Zoom', `${text.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: Click and drag the mouse over a certain part of the visualization to zoom in and get a more detailed view of the data.<br/>`: ''}`],
@@ -385,4 +368,15 @@ export const getModeBarInteractions = (text) => {
   return modeBarDescriptions
 }
 
-  
+export const getModeBarMessages = (modebarInteractions: Map<string,string>) => { 
+  const cameraIcon = modebarInteractions.get('Download plot as a png') || '';  
+  const zoomIcon = modebarInteractions.get('Zoom') || '';
+  const panIcon = modebarInteractions.get('Pan') || '';
+  const selectionIcon = modebarInteractions.get('Box Select') || '';
+  const lassoSelectIcon = modebarInteractions.get('Lasso Select') || '';
+  const zoomInIcon = modebarInteractions.get('Zoom in') || '';
+  const zoomOutIcon = modebarInteractions.get('Zoom out') || '';
+  const autoScaleIcon = modebarInteractions.get('Autoscale') || '';
+  const resetIcon = modebarInteractions.get('Reset axes') || '';  
+  return {cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon};
+}

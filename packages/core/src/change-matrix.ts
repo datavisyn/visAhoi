@@ -10,6 +10,7 @@ import {
 } from './interfaces'
 import { getAnchor } from './utils'
 import { v4 as uuidv4 } from "uuid";
+import { getModeBarInteractions, getModeBarMessages } from './onboarding';
 
 
 export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
@@ -51,15 +52,11 @@ function generateMessages (
   }
 
   let modeIconDescription = ''
-  const cameraIcon = `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the change-matrix.<br/>`: ''}`
-  const zoomIcon = `${modebarText.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the chart to get a more detailed view on the data.<br/>`: ''}`
-  const panIcon = `${modebarText.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.<br/>`: ''}`
-  const selectionIcon = `${modebarText.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the chart to select a certain subset of the data.<br/>`: ''}`
-  const lassoSelectIcon = `${modebarText.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select by drawing a lasso loop in the chart.<br/>`: ''}`
-  const zoomInIcon = `${modebarText.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in chart.<br/>`: ''}`
-  const zoomOutIcon = `${modebarText.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the chart.<br/>`: ''}`
-  const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Changes the layout to show the complete chart.<br/>`: ''}`
-  const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.<br/>`: ''}`
+  
+  const modebarInteractions = getModeBarInteractions(modebarText); 
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the change-matrix.<br/>`: ''}`)
+
+  const modeBar = getModeBarMessages(modebarInteractions);
 
   function createColorRect (color = 'white') {
     return `<div class="colorRect" style="background-color: ${color}"></div>`
@@ -143,7 +140,7 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {

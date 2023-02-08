@@ -9,7 +9,7 @@ import {
   IAhoiConfig,
   SvgIcons
 } from './interfaces'
-import { getModeBarInteractions } from './onboarding';
+import { getModeBarInteractions, getModeBarMessages } from './onboarding';
 import { getAnchor } from './utils'
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
@@ -55,19 +55,11 @@ function generateMessages (
   }
 
   let modeIconDescription = ''
-
+  
   const modebarInteractions = getModeBarInteractions(modebarText); 
   modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar-chart.<br/>`: ''}`)
-  
-  let cameraIcon = modebarInteractions.get('Download plot as a png') || '';  
-  const zoomIcon = modebarInteractions.get('Zoom') || '';
-  const panIcon = modebarInteractions.get('Pan') || '';
-  const selectionIcon = modebarInteractions.get('Box Select') || '';
-  const lassoSelectIcon = modebarInteractions.get('Lasso Select') || '';
-  const zoomInIcon = modebarInteractions.get('Zoom in') || '';
-  const zoomOutIcon = modebarInteractions.get('Zoom out') || '';
-  const autoScaleIcon = modebarInteractions.get('Autoscale') || '';
-  const resetIcon = modebarInteractions.get('Reset axes') || '';  
+
+  const modeBar = getModeBarMessages(modebarInteractions);   
   
   const messages: IOnboardingMessage[] = [
     {
@@ -172,7 +164,7 @@ function generateMessages (
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(cameraIcon, zoomIcon, panIcon, selectionIcon, lassoSelectIcon, zoomInIcon, zoomOutIcon, autoScaleIcon, resetIcon),
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {

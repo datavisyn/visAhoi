@@ -9,9 +9,7 @@ import {
   SvgIcons
 } from './interfaces'
 import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
-// @ts-ignore
-import chevronUp from "../src/assets/chevron-up-solid.svg";
+import { getModeBarInteractions, getModeBarMessages } from './onboarding';
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -53,25 +51,21 @@ function generateMessages (
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage
 
-  // const modebar = document.getElementsByClassName('modebar-btn');
-  // const modebarText = []
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
   
-  // if(modebar){
-  //   for(let i=0; i<modebar.length; i++){
-  //     modebarText.push(modebar.item(i)?.dataset?.title)
-  //   }    
-  // }
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
 
   let modeIconDescription = ''
-  // const cameraIcon = `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the scatterplot.<br/>`: ''}`
-  // const zoomIcon = `${modebarText.includes('Zoom') ? `${SvgIcons.ZOOM} <b>Zooming</b>: With the left click you can zoom in the scatterplot to get a more detailed view on the data.<br/`: ''}`
-  // const panIcon = `${modebarText.includes('Pan') ? `${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.<br/`: ''}`
-  // const selectionIcon = `${modebarText.includes('Box Select') ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the dots in the scatterplot to select a certain subset of the data.<br/>`: ''}`
-  // const lassoSelectIcon = `${modebarText.includes('Lasso Select') ? `${SvgIcons.LASSO_SELECTION} <b>Lasso select</b>: Select points by drawing a lasso loop around the points in the graph.<br/>`: ''}`
-  // const zoomInIcon = `${modebarText.includes('Zoom in') ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: With this you can zoom in the data points of the graph.<br/>`: ''}`
-  // const zoomOutIcon = `${modebarText.includes('Zoom out') ? `${SvgIcons.ZOOM_OUT} <b>Zoom out:</b> With this you can zoom out the data points in the graph.<br/>`: ''}`
-  // const autoScaleIcon = `${modebarText.includes('Autoscale') ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Looks at all the data points in the plot and changes the layout to show all of them.<br/>`: ''}`
-  // const resetIcon = `${modebarText.includes('Reset axes') ? `${SvgIcons.RESET} <b>Reset</b>: It takes the plot to the inital layout settings.<br/>`: ''}`
+  
+  const modebarInteractions = getModeBarInteractions(modebarText); 
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the scatterplot.<br/>`: ''}`)
+
+  const modeBar = getModeBarMessages(modebarInteractions);
   
 
 
@@ -89,19 +83,19 @@ function generateMessages (
       id: `visahoi-message-${contextKey}-1`,
       order: 1
     },
-    // {
-    //   // basic chart interactions for plotly
-    //   anchor: getAnchor(spec.plotlyModebar, visElement),
-    //   requires: ['plotlyModebar'],   
-    //   text: modeIconDescription.concat(cameraIcon),
-    //   title: "Chart interactions",
-    //   onboardingStage: interacting,
-    //   marker: {
-    //     id: `visahoi-marker-${contextKey}-2`
-    //   },
-    //   id: `visahoi-message-${contextKey}-2`,
-    //   order: 2
-    // },
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],   
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: `visahoi-marker-${contextKey}-2`
+      },
+      id: `visahoi-message-${contextKey}-2`,
+      order: 2
+    },
     {
       anchor: getAnchor(spec.plotlyLegendInteractions, visElement),
       requires: ['plotlyLegendInteractions'],
