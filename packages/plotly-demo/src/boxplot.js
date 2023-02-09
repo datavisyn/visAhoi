@@ -96,8 +96,8 @@ const registerEventListener = () => {
         
     defaultOnboardingMessages.push(
       createBasicOnboardingMessage('boxplot', {
-        text: 'Boxplot Visualization',
-        title:'It allows to examine the distribution of data, especially to compare with multiple groups.',
+        title: 'Boxplot Visualization',
+        text: 'It allows to examine the distribution of data, especially to compare with multiple groups.',
         onboardingStage: newStage,
         anchor: {
           coords: {
