@@ -26,6 +26,10 @@ const demos = [
   {
     title: 'Heatmap',
     link: './heatmap.html'
+  },
+  {
+    title: 'Box Plot',
+    link: './boxplot.html'
   }
 ]
 

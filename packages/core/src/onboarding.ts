@@ -14,7 +14,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
 import { getMarkerInformation } from './components/getMarkerInformation'
 import { VisahoiState } from './components/state'
-import { getMarkerDomId } from './utils'
 
 let onboardingUI: OnboardingUI
 

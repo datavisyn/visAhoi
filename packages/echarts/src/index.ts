@@ -84,6 +84,11 @@ export const generateBasicAnnotations = (
     case EVisualizationType.GENERIC:
       onboardingMessages = []
       break 
+
+      default:
+        throw new Error(
+          `No onboarding for visualization type ${visType} available. Please use visualization type 'GENERIC' to create your own onboardings.`
+        )
   }
   return onboardingMessages
 }
