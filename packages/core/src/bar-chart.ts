@@ -9,8 +9,7 @@ import {
   IAhoiConfig,
   SvgIcons
 } from './interfaces';
-import { getGeneralChartInteractions, getModeBarMessages } from './onboarding';
-import { getAnchor } from './utils';
+import { getAnchor, getGeneralChartInteractions, getModeBarMessages } from './utils';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;

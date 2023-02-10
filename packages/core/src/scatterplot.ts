@@ -8,8 +8,7 @@ import {
   IOnboardingStage,
   SvgIcons
 } from './interfaces';
-import { getAnchor } from './utils';
-import { getGeneralChartInteractions, getModeBarMessages } from './onboarding';
+import { getAnchor, getGeneralChartInteractions, getModeBarMessages } from './utils';
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
