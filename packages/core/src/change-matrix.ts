@@ -5,10 +5,10 @@ import {
   defaultOnboardingStages,
   EDefaultOnboardingStages,
   IOnboardingStage,
-  TooltipPosition
-} from './interfaces'
-import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
+  TooltipPosition,
+  SvgIcons
+} from './interfaces';
+import { getAnchor, getGeneralChartInteractions, getModeBarMessages } from './utils';
 
 
 export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
@@ -22,6 +22,7 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
   interactionDesc?: ISpecProp;
   minColor?: ISpecProp;
   maxColor?: ISpecProp;
+  plotlyModebar?: ISpecProp;
 }
 
 function generateMessages (
@@ -38,6 +39,22 @@ function generateMessages (
   const analyzing = defaultOnboardingStages.get(
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
+
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
+  
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
+
+  let modeIconDescription = ''
+  
+  const modebarInteractions = getGeneralChartInteractions(modebarText); 
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the change-matrix.<br/><br/>`: ''}`)
+
+  const modeBar = getModeBarMessages(modebarInteractions);
 
   function createColorRect (color = 'white') {
     return `<div class="colorRect" style="background-color: ${color}"></div>`
@@ -116,7 +133,20 @@ function generateMessages (
       },
       id: `visahoi-message-${contextKey}-6`,
       order: 1
-    }
+    },
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
+      title: "Chart interactions",
+      onboardingStage: interacting,
+      marker: {
+        id: `visahoi-marker-${contextKey}-7`
+      },
+      id: `visahoi-message-${contextKey}-7`,
+      order: 2
+    },
   ]
 
   if (spec.chartTitle?.value !== undefined) {

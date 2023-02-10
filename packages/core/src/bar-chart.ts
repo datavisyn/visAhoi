@@ -1,3 +1,4 @@
+
 import {
   ISpecProp,
   IOnboardingSpec,
@@ -5,10 +6,10 @@ import {
   EDefaultOnboardingStages,
   defaultOnboardingStages,
   IOnboardingStage,
-  IAhoiConfig
-} from './interfaces'
-import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
+  IAhoiConfig,
+  SvgIcons
+} from './interfaces';
+import { getAnchor, getGeneralChartInteractions, getModeBarMessages } from './utils';
 
 export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -24,6 +25,7 @@ export interface IOnboardingBarChartSpec extends IOnboardingSpec {
   xAxisTitle?: ISpecProp;
   yAxisTitle?: ISpecProp;
   interactionDesc?: ISpecProp;
+  plotlyModebar?: ISpecProp;
 }
 
 function generateMessages (
@@ -42,6 +44,22 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
+ 
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
+
+  let modeIconDescription = ''
+  
+  const modebarInteractions = getGeneralChartInteractions(modebarText); 
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the bar-chart.<br/><br/>`: ''}`)
+
+  const modeBar = getModeBarMessages(modebarInteractions);   
+  
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
@@ -91,6 +109,7 @@ function generateMessages (
       id: `visahoi-message-${contextKey}-4`,
       order: 1
     },
+    
     {
       anchor: getAnchor(spec.yMax, visElement),
       requires: ['yAxisTitle', 'yMax'],
@@ -113,7 +132,7 @@ function generateMessages (
         id: `visahoi-marker-${contextKey}-6`
       },
       id: `visahoi-message-${contextKey}-6`,
-      order: 3
+      order: 1
     },
     {
       anchor: getAnchor(spec.plotlyLegendInteractions, visElement),
@@ -125,7 +144,7 @@ function generateMessages (
         id: `visahoi-marker-${contextKey}-7`
       },
       id: `visahoi-message-${contextKey}-7`,
-      order: 3
+      order: 2
     },
     {
       // basic chart interactions for plotly
@@ -138,20 +157,21 @@ function generateMessages (
         id: `visahoi-marker-${contextKey}-8`
       },
       id: `visahoi-message-${contextKey}-8`,
-      order: 1
-    },
+      order: 3
+    }, 
     {
+      // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
       requires: ['plotlyModebar'],
-      text: "The modebar offers some general interaction possibilities for the visualization like selection, panning and zooming or taking screenshots.",
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
         id: `visahoi-marker-${contextKey}-9`
       },
       id: `visahoi-message-${contextKey}-9`,
-      order: 2
-    }
+      order: 4
+    },   
   ]
 
   if (spec.chartTitle?.value !== undefined) {

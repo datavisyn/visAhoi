@@ -107,6 +107,12 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
         coords: { x: nullX, y: nullY }
       }
     },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
     minColor: {
       value: minColor 
     },

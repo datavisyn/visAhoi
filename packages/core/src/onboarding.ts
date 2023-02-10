@@ -8,7 +8,7 @@ import {
   IMarker,
   IOnboardingMessage,
   IOnboardingStage,
-  NavigationAlignment
+  NavigationAlignment,
 } from './interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'

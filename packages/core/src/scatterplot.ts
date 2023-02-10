@@ -1,13 +1,14 @@
+
 import {
   ISpecProp,
   IOnboardingSpec,
   IOnboardingMessage,
   defaultOnboardingStages,
   EDefaultOnboardingStages,
-  IOnboardingStage
-} from './interfaces'
-import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
+  IOnboardingStage,
+  SvgIcons
+} from './interfaces';
+import { getAnchor, getGeneralChartInteractions, getModeBarMessages } from './utils';
 
 export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -33,6 +34,7 @@ function createColorRect (color = 'white') {
   return `<div class="colorRect" style="background-color: ${color}"></div>`
 }
 
+
 function generateMessages (
   contextKey,
   spec: IOnboardingScatterplotSpec,
@@ -47,6 +49,24 @@ function generateMessages (
   const interacting = defaultOnboardingStages.get(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage
+
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
+  
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
+
+  let modeIconDescription = ''
+  
+  const modebarInteractions = getGeneralChartInteractions(modebarText); 
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the scatterplot.<br/><br/>`: ''}`)
+
+  const modeBar = getModeBarMessages(modebarInteractions);
+  
+
 
   const messages: IOnboardingMessage[] = [
     {
@@ -65,8 +85,8 @@ function generateMessages (
     {
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebar, visElement),
-      requires: ['plotlyModebar'],
-      text: "",
+      requires: ['plotlyModebar'],   
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
@@ -87,19 +107,6 @@ function generateMessages (
       id: `visahoi-message-${contextKey}-3`,
       order: 3
     },
-    // {
-    //   anchor: getAnchor(spec.xAxisTitle, visElement),
-    //   requires: ['xAxisTitle', 'yAxisTitle'],
-    //   text: `The columns show the ${spec.xAxisTitle?.value}, while the rows show the ${spec.yAxisTitle?.value}.`,
-    //   title: 'Reading the chart',
-    //   onboardingStage: reading,
-    //   marker: {
-    //     id: uuidv4()
-    //   },
-    //   id: uuidv4(),
-    //   order: 3
-    // }
-
   ]
 
   if (spec.type?.value !== undefined) {

@@ -145,7 +145,13 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingTreemapSpec {
     },
     minValue: {
       value: minVal
-    }
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
   }
 }
 
