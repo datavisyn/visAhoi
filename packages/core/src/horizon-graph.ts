@@ -51,7 +51,7 @@ function generateMessages (
 
   let modeIconDescription = ''
   const modebarInteractions = getGeneralChartInteractions(modebarText); 
-  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the horizon graph.<br/>`: ''}`)
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the horizon graph.<br/><br/>`: ''}`)
 
   const modeBar = getModeBarMessages(modebarInteractions);
 
