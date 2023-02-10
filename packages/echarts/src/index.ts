@@ -81,10 +81,14 @@ export const generateBasicAnnotations = (
       onboardingMessages = heatmapFactory(contextKey, chart, coords, visElement)
       break
 
-    default:
-      throw new Error(
-        `No onboarding for visualization type ${visType} available.`
-      )
+    case EVisualizationType.GENERIC:
+      onboardingMessages = []
+      break 
+
+      default:
+        throw new Error(
+          `No onboarding for visualization type ${visType} available. Please use visualization type 'GENERIC' to create your own onboardings.`
+        )
   }
   return onboardingMessages
 }

@@ -15,6 +15,7 @@ export enum EVisualizationType {
   SCATTERPLOT = 'scatterplot',
   TREEMAP = 'treemap',
   HEATMAP = 'heatmap',
+  GENERIC = 'generic',
 }
 
 export interface IBackdrop {
