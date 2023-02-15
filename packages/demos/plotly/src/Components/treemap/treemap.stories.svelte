@@ -1,0 +1,17 @@
+<script>
+    import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+    import Treemap from './treemap.svelte';
+  
+    
+  </script>
+  
+  <Meta title="Plotly/Treemap" component={Treemap}/>
+  
+  <Template let:args>
+    <Treemap {...args}>
+  
+    </Treemap>
+  </Template>
+  
+  <Story name="Demo" args={{contextKey: "treemap"}}/>
+  

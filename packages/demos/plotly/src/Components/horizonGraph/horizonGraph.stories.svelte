@@ -5,7 +5,7 @@
     
   </script>
   
-  <Meta title="Plotly/horizonGraph" component={HorizonGraph}/>
+  <Meta title="Plotly/HorizonGraph" component={HorizonGraph}/>
   
   <Template let:args>
     <HorizonGraph {...args}>
@@ -13,5 +13,5 @@
     </HorizonGraph>
   </Template>
   
-  <Story name="Basic" args={{contextKey: "horizonGraph"}}/>
+  <Story name="Demo" args={{contextKey: "horizonGraph"}}/>
   

@@ -13,11 +13,6 @@
     </Barchart>
   </Template>
   
-  <Story name="Basic" args={{contextKey: "test"}}/>
+  <Story name="Demo" args={{contextKey: "test"}}/>
   
-  <!-- <Story name="Square" source args={{rounded: false}}/> -->
   
-  <!-- Dynamic snippet should be disabled for this story -->
-  <!-- <Story name="Button No Args">
-    <Button>Label</Button>
-  </Story> -->

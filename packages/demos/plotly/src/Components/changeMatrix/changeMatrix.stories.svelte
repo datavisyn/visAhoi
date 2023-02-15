@@ -13,5 +13,5 @@
     </ChangeMatrix>
   </Template>
   
-  <Story name="Basic" args={{contextKey: "changeMatrix"}}/>
+  <Story name="Demo" args={{contextKey: "changeMatrix"}}/>
   
