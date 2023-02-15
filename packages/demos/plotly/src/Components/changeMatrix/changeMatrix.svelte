@@ -1,3 +1,4 @@
+
 <script lang="ts">
     import "@visahoi/plotly/build/css/main.css";
     import ResizeObserver from "svelte-resize-observer";
@@ -7,66 +8,18 @@
       generateBasicAnnotations,
       ahoi,
       EVisualizationType
-    } from "@visahoi/plotly"; 
-    
-    export let contextKey;    
-
+    } from "@visahoi/plotly";
   
-    let onboardingUI;
-    let runtimeObject;   
-    
-    let chart = null 
-    const showOnboarding = true;
-    let traces, config, layout;
-
-    const onResize = (e) => {
-      if(onboardingUI) {
-        // update onboarding
-        onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-      }
-      if(runtimeObject) {
-        Plotly.Plots.resize(runtimeObject)
-      }
-    }
+    export let contextKey;
   
-
-
-async function render () {
-  const response = await fetch('../../../../data/matrix.json')
-  console.log(response)
-  const data = await response.json()
-  const { x, y, z } = processData(data)
-  chart = await makePlotly(x, y, z) 
-}
-
-function processData (allRows) {
-  const nestedDataByCity = new Map()
-
-  allRows.forEach((row) => {
-    if (nestedDataByCity.has(row.a)) {
-      nestedDataByCity.set(row.a, [...nestedDataByCity.get(row.a), row])
-    } else {
-      nestedDataByCity.set(row.a, [row])
-    }
-  })
-
-  const x = new Set(allRows.map((row) => row.b))
-  const y = [...nestedDataByCity.keys()]
-  const z = [...nestedDataByCity.values()].map((value) => [
-    ...value.map((v) => v.c)
-  ])
-
-  return { x, y, z }
-}
-
-function makePlotly (x, y, z) {
-  document.getElementById('plot')
-   traces = [
-    {
+    const trace = {
+      x: [ 1, 2,3,4,5,6,7,8,9,10,11,12],
+      y:  ['Munich', 'Oslo', 'Tallinn'],
+      z: [[-0.6, -8.4, -2.2, 1.35, -6.2, 1.1, 1.1, -1.2, 3.8, 0.5, -1.45, 0],
+       [-3.5, -8.65, -3.8, -0.5, -2.4, -3.55, 2, 0.4, 0.25, -0.3, 2.3, 0.5],
+       [0.2, -6.95, -1.5, -3.1, -2.1, -1, 0.8, 1.1, 0.95, 2, 2.65, 2.4]],
+      mode: "markers",
       type: 'heatmap',
-      x, // date
-      y, // city
-      z, // values,
       zmin: -9,
       zmax: 9,
       colorscale: [
@@ -80,10 +33,14 @@ function makePlotly (x, y, z) {
           text: 'Value Change'
         }
       }
-    }
-  ]
+    };
+  
+    let onboardingUI;
+    let runtimeObject;
+  
+    const data = [trace];
 
-   layout = {
+    const layout = {
     title: 'Average temperature change in °C between 1990 and 1991',
     xaxis: {
       title: 'Month'
@@ -93,12 +50,10 @@ function makePlotly (x, y, z) {
     }
   }
 
-   config = {
+  const config = {
     responsive: true
   }
-
-  return Plotly.newPlot('vis', traces, layout, config)
-}
+    const showOnboarding = false;
   
     const getAhoiConfig = () => {
       const defaultOnboardingMessages = generateBasicAnnotations(
@@ -113,11 +68,19 @@ function makePlotly (x, y, z) {
       return ahoiConfig;
     };
   
-   
+    const onResize = (e) => {
+      if(onboardingUI) {
+        // update onboarding
+        onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
+      }
+      if(runtimeObject) {
+        Plotly.Plots.resize(runtimeObject)
+      }
+    }
+  
     onMount(async () => {
-      render();    
       const plotDiv = document.getElementById(contextKey);
-      runtimeObject = await new Plotly.newPlot(plotDiv, traces, config, layout);
+      runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
       if(onboardingUI) {
         onboardingUI.showOnboarding()
       } else {
@@ -139,7 +102,6 @@ function makePlotly (x, y, z) {
   
   <div id="plotly">
     <ResizeObserver on:resize={onResize} />
-    
     <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
   </div>
   
