@@ -37,7 +37,7 @@
     setMarkerInformation();
   };
 
-  onMount(() => {  
+  onMount(() => {
     setVisElementPosition();
     setMarkerInformation();
   });
