@@ -144,8 +144,13 @@ function extractOnboardingSpec (
           y: traceNodes[2].childNodes[0].getBoundingClientRect().y + 30
         }
       }
-    }
-
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
   }
 }
 

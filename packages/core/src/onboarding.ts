@@ -8,13 +8,12 @@ import {
   IMarker,
   IOnboardingMessage,
   IOnboardingStage,
-  NavigationAlignment
+  NavigationAlignment,
 } from './interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { get } from 'svelte/store'
 import { getMarkerInformation } from './components/getMarkerInformation'
 import { VisahoiState } from './components/state'
-import { getMarkerDomId } from './utils'
 
 let onboardingUI: OnboardingUI
 
@@ -44,8 +43,11 @@ export const injectOnboarding = (
       showHideCloseText,
       showOnboardingNavigation,
       showOnboarding,
+      contextId,
       visElement
     } = visState
+    
+    contextId.set(contextKey)
 
     onboardingMessages.set(ahoiConfig.onboardingMessages)
     if (icons) {
@@ -188,7 +190,11 @@ export const createBasicOnboardingMessage = (
     const { onboardingStages, onboardingMessages, markerInformation, visElement } = visState
 
     const marker: IMarker = {
-      id: getMarkerDomId(uuidv4())
+      id: `visahoi-marker-${contextKey}- ${uuidv4()}`
+    }
+
+    if (!message.id) {      
+      message.id = `visahoi-message-${contextKey}- ${uuidv4()}`
     }
 
     if (!message.order) {

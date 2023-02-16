@@ -94,7 +94,13 @@ function extractOnboardingSpec (
     },
     maxColor: {
       value: maxColor[1]
-    }
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: '.modebar--hover'
+      }
+    },
   }
 }
 

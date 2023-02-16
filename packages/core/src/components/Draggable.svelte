@@ -2,23 +2,24 @@
   import { VisahoiState } from "./state";
 
   export let visState: VisahoiState;
-  const { editTooltip } = visState;
+  export let dragId: string;
+
+  const { editTooltip, dragTooltipId } = visState;  
 
   let left = 100;
   let top = 100;
 
   $: cursor = $editTooltip ? "pointer" : "move";
-  let moving = false;
+  let moving = false; 
 
-  const onMouseDown = () => {
+  const onMouseDown = () => {    
     moving = $editTooltip ? false : true;
   };
 
-  const onMouseMove = (e: MouseEvent) => {
-    if (moving) {
+  const onMouseMove = (e: MouseEvent) => {    
+    if(moving && dragId === $dragTooltipId){      
       left += e.movementX;
-      top += e.movementY;
-    }
+      top += e.movementY;}
   };
 
   const onMouseUp = () => {
@@ -26,7 +27,7 @@
   };
 </script>
 
-<div
+<div 
   on:mousedown={onMouseDown}
   style="left: {left}px; top: {top}px; cursor: {cursor}"
   class="draggable"
@@ -35,7 +36,7 @@
   <slot />
 </div>
 
-<svelte:window
+ <svelte:window
   on:mouseup={onMouseUp}
   on:mousemove={onMouseMove}
   on:mousedown={onMouseDown}

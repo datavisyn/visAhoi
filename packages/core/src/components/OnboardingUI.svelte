@@ -13,7 +13,6 @@
   export let visState: VisahoiState;
   const {showOnboarding, visElement, visXPosition, visYPosition, visHeight, visWidth, onboardingMessages, markerInformation, activeMarker, activeOnboardingStage, showBackdrop} = visState
 
-
   const setVisElementPosition = () => {
     visXPosition.set($visElement.getBoundingClientRect().x);
     visYPosition.set($visElement.getBoundingClientRect().y);
@@ -38,8 +37,7 @@
     setMarkerInformation();
   };
 
-  onMount(() => {
-    console.log("ahoi mount")
+  onMount(() => {  
     setVisElementPosition();
     setMarkerInformation();
   });

@@ -4,10 +4,10 @@ import {
   IOnboardingMessage,
   IOnboardingStage,
   EDefaultOnboardingStages,
-  defaultOnboardingStages
-} from './interfaces'
-import { getAnchor } from './utils'
-import { v4 as uuidv4 } from "uuid";
+  defaultOnboardingStages,
+  SvgIcons
+} from './interfaces';
+import { getAnchor, getGeneralChartInteractions, getModeBarMessages } from './utils';
 
 export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   chartTitle?: ISpecProp;
@@ -17,6 +17,7 @@ export interface IOnboardingHorizonGraphSpec extends IOnboardingSpec {
   positiveColor?: ISpecProp;
   negativeColor?: ISpecProp;
   interactDesc?: ISpecProp;
+  plotlyModebar?: ISpecProp;
 }
 
 function createColorRect (color = 'white') {
@@ -24,6 +25,7 @@ function createColorRect (color = 'white') {
 }
 
 function generateMessages (
+  contextKey,
   spec: IOnboardingHorizonGraphSpec,
   visElement: Element
 ): IOnboardingMessage[] {
@@ -37,6 +39,22 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
+
+  const modebar = document.getElementsByClassName('modebar-btn');
+  const modebarText = []
+  
+  if(modebar){
+    for(let i=0; i<modebar.length; i++){
+      modebarText.push(modebar.item(i)?.dataset?.title)
+    }    
+  }
+
+  let modeIconDescription = ''
+  const modebarInteractions = getGeneralChartInteractions(modebarText); 
+  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the horizon graph.<br/><br/>`: ''}`)
+
+  const modeBar = getModeBarMessages(modebarInteractions);
+
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
@@ -45,9 +63,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-1`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-1`,
       order: 2
     },
     {
@@ -57,9 +75,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-2`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-2`,
       order: 3
     },
     {
@@ -74,9 +92,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-3`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-3`,
       order: 4
     },
     {
@@ -88,9 +106,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-4`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-4`,
       order: 5
     },
     {
@@ -100,9 +118,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-5`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-5`,
       order: 1
     },
     {
@@ -112,9 +130,9 @@ function generateMessages (
       title: 'Analyzing the chart',
       onboardingStage: analyzing,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-6`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-6`,
       order: 2
     },
     {
@@ -124,11 +142,24 @@ function generateMessages (
       title: 'Interaction with the chart',
       onboardingStage: using,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-7`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-7`,
       order: 1
-    }
+    },
+    {
+      // basic chart interactions for plotly
+      anchor: getAnchor(spec.plotlyModebar, visElement),
+      requires: ['plotlyModebar'],
+      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
+      title: "Chart interactions",
+      onboardingStage: using,
+      marker: {
+        id: `visahoi-marker-${contextKey}-8`
+      },
+      id: `visahoi-message-${contextKey}-8`,
+      order: 2
+    },
   ]
 
   if (spec.chartTitle?.value !== undefined) {
@@ -139,9 +170,9 @@ function generateMessages (
       title: 'Reading the chart',
       onboardingStage: reading,
       marker: {
-        id: uuidv4()
+        id: `visahoi-marker-${contextKey}-8`
       },
-      id: uuidv4(),
+      id: `visahoi-message-${contextKey}-8`,
       order: 1
     })
   }
