@@ -13,6 +13,6 @@
     </Barchart>
   </Template>
   
-  <Story name="Demo" args={{contextKey: "test"}}/>
+  <Story name="Demo" args={{contextKey: "barchart"}}/>
   
   

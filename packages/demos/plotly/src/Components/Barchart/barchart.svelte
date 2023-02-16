@@ -9,20 +9,20 @@
       EVisualizationType
     } from "@visahoi/plotly";   
   
-    export let contextKey; 
+    export let contextKey;
+    let onboardingUI;
+    let runtimeObject; 
     
 
-    var trace1 = {
-  x: ['January', 'February', 'March'],
-  y: [20, 14, 23],
-  name: 'SF Zoo',
-  type: 'bar'
-};
+    const data = [
+      {
+        x: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09', '2018-10', '2018-11', '2018-12', 'undefined-undefined'],
+        y:  [-2, -4, -2, 6, 16, 18, 22, 16, 12, 7, 3, -1, NaN],  
+        type: 'bar'
+      }
+    ];   
   
-    let onboardingUI;
-    let runtimeObject;
-  
-    const data = [trace1];
+    
     const layout = {
       title: "Average temperature in a month",
       xaxis: {
@@ -32,7 +32,11 @@
         title: "Average temperature",
       },
     };
-    const showOnboarding = true;
+
+    const config = {
+      responsive: true
+    }
+    
   
     const getAhoiConfig = () => {
       const defaultOnboardingMessages = generateBasicAnnotations(
@@ -59,7 +63,7 @@
   
     onMount(async () => {
       const plotDiv = document.getElementById(contextKey);
-      runtimeObject = await new Plotly.newPlot(plotDiv, data, layout);
+      runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
       if(onboardingUI) {
         onboardingUI.showOnboarding()
       } else {
