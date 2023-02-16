@@ -17,7 +17,7 @@
   </Scatterchart>
 </Template>
 
-<Story name="Basic" args={{contextKey: "test"}} />
+<Story name="Demo" args={{contextKey: "scatterplot"}} />
 
 <!-- <Story name="Square" source args={{rounded: false}}/> -->
 
