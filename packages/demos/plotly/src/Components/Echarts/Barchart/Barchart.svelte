@@ -1,8 +1,10 @@
 <script lang="ts">
 import * as echarts from 'echarts';
+import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
 import { onMount, onDestroy } from "svelte";
 
-let contextKey;
+let contextKey = 'test';
+let onboardingUI;
 
 const options = {
     title: {
@@ -38,18 +40,44 @@ const options = {
     ]
   }
 
+  const getAhoiConfig = (contextKey, runtimeObject) => {    
+      const defaultOnboardingMessages = generateBasicAnnotations(
+        contextKey,
+        EVisualizationType.BAR_CHART,
+        runtimeObject
+      );      
+      const ahoiConfig = {
+        onboardingMessages: defaultOnboardingMessages,
+      };
+  
+      return ahoiConfig;
+    };
 
 // option && myChart.setOption(option);
 
 onMount(async () => {
-  const chartDom = document.getElementById('barchart');
-  console.log(chartDom, 'Chart dom');
-  const myChart = echarts.init(chartDom, null, {
+  const chartDom = document.getElementById('barchart');  
+  const runtimeObject = echarts.init(chartDom, null, {
   renderer: 'svg'
-});
-  myChart.setOption(options)
-console.log(myChart, 'Mychart')
-    });
+  });
+  runtimeObject.setOption(options);  
+  if(onboardingUI) {
+    onboardingUI.showOnboarding();    
+    } else {      
+      onboardingUI = await ahoi(
+        contextKey,
+        EVisualizationType.BAR_CHART,
+        runtimeObject,
+        getAhoiConfig(contextKey, runtimeObject)
+      );
+    }
+  });
+  
+  onDestroy(() => {
+    if(onboardingUI) {
+      onboardingUI.removeOnboarding();
+    }
+  });
 
 
 </script>

@@ -44,7 +44,7 @@ export const generateBasicAnnotations = (
   chart: any
 ): IOnboardingMessage[] => {
   const coords = {}
-  const visElement = chart._dom
+  const visElement = chart?._dom
 
   // TODO: coords
   const chartTitlePosition =
