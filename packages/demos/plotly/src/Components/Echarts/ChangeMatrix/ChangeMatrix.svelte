@@ -107,8 +107,7 @@
         );      
         const ahoiConfig = {
           onboardingMessages: defaultOnboardingMessages,
-        };
-        console.log(defaultOnboardingMessages, 'Onboardingmessage')
+        };       
         return ahoiConfig;
     };
     

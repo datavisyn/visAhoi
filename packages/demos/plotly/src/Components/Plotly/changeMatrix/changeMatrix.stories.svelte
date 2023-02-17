@@ -5,7 +5,7 @@
     
   </script>
   
-  <Meta title="Plotly/ChangeMatrix" component={ChangeMatrix}/>
+  <Meta title="Visahoi/Plotly/ChangeMatrix" component={ChangeMatrix}/>
   
   <Template let:args>
     <ChangeMatrix {...args}>

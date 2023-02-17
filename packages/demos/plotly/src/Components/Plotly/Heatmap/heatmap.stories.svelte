@@ -5,7 +5,7 @@
     
   </script>
   
-  <Meta title="Plotly/Heatmap" component={Heatmap}/>
+  <Meta title="Visahoi/Plotly/Heatmap" component={Heatmap}/>
   
   <Template let:args>
     <Heatmap {...args}>

@@ -38,7 +38,8 @@ function processData (allRows) {
       return a + b
     }, 0)
     return Math.round(sum / tempArray.length, 2)
-  })
+  })  
+
   return { x, y: averagedYValues }
 }
 

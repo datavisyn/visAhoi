@@ -24,7 +24,7 @@
     
   </script>
   
-  <Meta title="Echarts/Barchart" component={Barchart}/>
+  <Meta title="Visahoi/Echarts/Barchart" component={Barchart}/>
   
   <Template let:args>
     <Barchart {...args}>

@@ -9,7 +9,7 @@
   }
 </script>
 
-<Meta title="Plotly/Schatterplot" component={Scatterchart}/>
+<Meta title="Visahoi/Plotly/Schatterplot" component={Scatterchart}/>
 
 <Template let:args>
   <Scatterchart {...args}>

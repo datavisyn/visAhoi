@@ -5,7 +5,7 @@
     
   </script>
   
-  <Meta title="Plotly/Barchart" component={Barchart}/>
+  <Meta title="Visahoi/Plotly/Barchart" component={Barchart}/>
   
   <Template let:args>
     <Barchart {...args}>

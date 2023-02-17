@@ -5,7 +5,7 @@
     
 </script>
   
-  <Meta title="Echarts/ChangeMatrix" component={ChangeMatrix}/>
+  <Meta title="Visahoi/Echarts/ChangeMatrix" component={ChangeMatrix}/>
   
   <Template let:args>
     <ChangeMatrix {...args}>

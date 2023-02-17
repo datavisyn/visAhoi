@@ -5,7 +5,7 @@
     
   </script>
   
-  <Meta title="Plotly/HorizonGraph" component={HorizonGraph}/>
+  <Meta title="Visahoi/Plotly/HorizonGraph" component={HorizonGraph}/>
   
   <Template let:args>
     <HorizonGraph {...args}>

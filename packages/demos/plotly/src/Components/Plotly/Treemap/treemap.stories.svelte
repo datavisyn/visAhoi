@@ -5,7 +5,7 @@
     
   </script>
   
-  <Meta title="Plotly/Treemap" component={Treemap}/>
+  <Meta title="Visahoi/Plotly/Treemap" component={Treemap}/>
   
   <Template let:args>
     <Treemap {...args}>
