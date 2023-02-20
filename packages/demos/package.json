@@ -32,9 +32,13 @@
     "@types/plotly.js-dist-min": "^2.3.0",
     "@visahoi/plotly": "3.0.0",
     "@visahoi/echarts": "3.0.0",
+    "@visahoi/vega": "3.0.0",
     "plotly.js": "^2.2.1",
     "plotly.js-dist-min": "~2.12.0", 
-    "echarts": "^5.1.2",   
+    "echarts": "^5.1.2",
+    "vega": "5.21.0",
+    "vega-embed": "6.19.1",
+    "vega-lite": "5.1.1",   
     "svelte-resize-observer": "^2.0.0"
   }
 }
