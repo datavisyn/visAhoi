@@ -3,11 +3,9 @@
     import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/vega';
     import { onMount, onDestroy } from "svelte";
     
-    let contextKey = 'barchart';
+    export let contextKey = 'barchart';
     let onboardingUI;
     let runtimeObject;   
-    
-  
     
     const getAhoiConfig = async () => {           
         const defaultOnboardingMessages =  await generateBasicAnnotations(
@@ -132,9 +130,7 @@
     </script>
     <div id="vega-lite" style="width: 100%; height: 100%;">             
       <div id="barchart" style="width: 500px; height: 500px;"> </div>
-    </div>
-    
-    
+    </div>    
     
     <style>
       :global(*) {
