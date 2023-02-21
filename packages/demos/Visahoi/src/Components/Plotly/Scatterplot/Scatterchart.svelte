@@ -8,21 +8,23 @@
     ahoi,
     EVisualizationType
   } from "@visahoi/plotly";
+  import type { PlotData } from "plotly.js";
+  import type { IAhoiConfig } from "@visahoi/core";
 
-  export let contextKey;
+  export let contextKey: string;
+  let onboardingUI;
+  let runtimeObject: Plotly;
 
-  const trace1 = {
+  const trace: Partial<PlotData>[] = [
+    {
     x: [1, 2, 3, 4],
     y: [10, 15, 13, 17],
     mode: "markers",
     type: "scatter",
-  };
-
-  let onboardingUI;
-  let runtimeObject;
-
-  const data = [trace1];
-  const layout = {
+    }
+  ];
+  
+  const layout: object = {
     title: "Horsepower and miles per gallon for various cars",
     xaxis: {
       title: "Horsepower",
@@ -31,9 +33,9 @@
       title: "Miles per Gallon",
     },
   };
-  const showOnboarding = false;
+ 
 
-  const getAhoiConfig = () => {
+  const getAhoiConfig = (): IAhoiConfig => {
     const defaultOnboardingMessages = generateBasicAnnotations(
       contextKey,
       EVisualizationType.SCATTERPLOT,
@@ -58,7 +60,7 @@
 
   onMount(async () => {
     const plotDiv = document.getElementById(contextKey);
-    runtimeObject = await new Plotly.newPlot(plotDiv, data, layout);
+    runtimeObject = await new Plotly.newPlot(plotDiv, trace, layout);
     if(onboardingUI) {
       onboardingUI.showOnboarding()
     } else {

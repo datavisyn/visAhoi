@@ -9,10 +9,14 @@
     ahoi,
     EVisualizationType
   } from "@visahoi/plotly";
+  import type { PlotData } from "plotly.js";
+  import type { IAhoiConfig } from "@visahoi/core";
 
-  export let contextKey;
+  export let contextKey: string;
+  let onboardingUI;
+  let runtimeObject: Plotly;
 
-  const traces = [
+  const traces: Partial<PlotData>[] = [
     {
       name: 'Between 0 and 15 °C',
       type: 'scatter',
@@ -57,14 +61,9 @@
       // hoverinfo: "x+y"
       hovertemplate: '-%{y:.2f}'
     }
-  ]
+  ]; 
 
-  let onboardingUI;
-  let runtimeObject;
-
-  const data = traces;
-
-  const layout = {
+  const layout: object = {
     title: 'Average temperature in Oslo, Norway in 2018',
     xaxis: {
       title: 'Month',
@@ -77,13 +76,11 @@
     showlegend: false
   }
 
-  const config = {
+  const config: object = {
     responsive: true
-  }
+  }  
 
-  const showOnboarding = false;
-
-  const getAhoiConfig = () => {
+  const getAhoiConfig = (): IAhoiConfig => {
     const defaultOnboardingMessages = generateBasicAnnotations(
       contextKey,
       EVisualizationType.HORIZON_GRAPH,
@@ -108,7 +105,7 @@
 
   onMount(async () => {
     const plotDiv = document.getElementById(contextKey);
-    runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
+    runtimeObject = await new Plotly.newPlot(plotDiv, traces, layout, config);
     if(onboardingUI) {
       onboardingUI.showOnboarding()
     } else {

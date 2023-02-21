@@ -1,20 +1,21 @@
 
 <script lang="ts">
-    import "@visahoi/plotly/build/css/main.css";
-    import ResizeObserver from "svelte-resize-observer";
-    import Plotly from "plotly.js-dist";
-    import { onMount, onDestroy } from "svelte";
-    import {
-      generateBasicAnnotations,
-      ahoi,
-      EVisualizationType
-    } from "@visahoi/plotly";
+  import "@visahoi/plotly/build/css/main.css";
+  import ResizeObserver from "svelte-resize-observer";
+  import Plotly from "plotly.js-dist";
+  import { onMount, onDestroy } from "svelte";
+  import {
+    generateBasicAnnotations,
+    ahoi,
+    EVisualizationType
+  } from "@visahoi/plotly";  
+  import type { IAhoiConfig } from "@visahoi/core";
   
-    export let contextKey;
+    export let contextKey: string;
     let onboardingUI;
-    let runtimeObject;
+    let runtimeObject: Plotly;
   
-    const data  = [
+    const data: object[]  = [
     {
       z: [
         [14, null, 19, 24, 16],
@@ -33,7 +34,7 @@
     }
   ];
 
-  const layout = {
+  const layout: object = {
     title: 'Average temperature in a week',
     xaxis: {
       title: 'Weekday'
@@ -41,54 +42,55 @@
     yaxis: {
       title: 'Average temperature per day time'
     }
-  }
-  const config = {
+  };
+
+  const config: object = {
     responsive: true
-  }   
+  };   
   
-    const getAhoiConfig = () => {
-      const defaultOnboardingMessages = generateBasicAnnotations(
+  const getAhoiConfig = (): IAhoiConfig => {
+    const defaultOnboardingMessages = generateBasicAnnotations(
+      contextKey,
+      EVisualizationType.HEATMAP,
+      runtimeObject
+    );
+    const ahoiConfig = {
+      onboardingMessages: defaultOnboardingMessages,
+    };
+
+    return ahoiConfig;
+  };
+  
+  const onResize = (e) => {
+    if(onboardingUI) {
+      // update onboarding
+      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
+    }
+    if(runtimeObject) {
+      Plotly.Plots.resize(runtimeObject)
+    }
+  }
+  
+  onMount(async () => {
+    const plotDiv = document.getElementById(contextKey);
+    runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
+    if(onboardingUI) {
+      onboardingUI.showOnboarding()
+    } else {
+      onboardingUI = await ahoi(
         contextKey,
         EVisualizationType.HEATMAP,
-        runtimeObject
+        runtimeObject,
+        getAhoiConfig()
       );
-      const ahoiConfig = {
-        onboardingMessages: defaultOnboardingMessages,
-      };
-  
-      return ahoiConfig;
-    };
-  
-    const onResize = (e) => {
-      if(onboardingUI) {
-        // update onboarding
-        onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-      }
-      if(runtimeObject) {
-        Plotly.Plots.resize(runtimeObject)
-      }
     }
+  });
   
-    onMount(async () => {
-      const plotDiv = document.getElementById(contextKey);
-      runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
-      if(onboardingUI) {
-        onboardingUI.showOnboarding()
-      } else {
-        onboardingUI = await ahoi(
-          contextKey,
-          EVisualizationType.HEATMAP,
-          runtimeObject,
-          getAhoiConfig()
-        );
-      }
-    });
-  
-    onDestroy(() => {
-      if(onboardingUI) {
-        onboardingUI.removeOnboarding()
-      }
-    })
+  onDestroy(() => {
+    if(onboardingUI) {
+      onboardingUI.removeOnboarding()
+    }
+  })
   </script>
   
   <div id="plotly">

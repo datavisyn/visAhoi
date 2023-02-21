@@ -9,15 +9,14 @@
       ahoi,
       EVisualizationType
     } from "@visahoi/plotly";
+  import type { PlotData } from "plotly.js";
+  import type { IAhoiConfig } from "@visahoi/core";
   
-    export let contextKey;
-  
-    
-  
+    export let contextKey: string;  
     let onboardingUI;
-    let runtimeObject;
+    let runtimeObject: Plotly;
 
-    const traces = [
+    const data: Partial<PlotData>[] = [
     {
       type: 'treemap',
       branchvalues: 'total',
@@ -28,72 +27,68 @@
         // colorscale: 'Greys',
       }
     }
-  ]
-  const config = {
+  ];
+
+  const config: object = {
     responsive: true
-  }
-  const layout = {
+  };
+
+  const layout: object = {
     title: 'Jobs Plan'
+  };
+  
+  const getAhoiConfig = (): IAhoiConfig => {
+    const defaultOnboardingMessages = generateBasicAnnotations(
+      contextKey,
+      EVisualizationType.TREEMAP,
+      runtimeObject
+    );
+    const ahoiConfig = {
+      onboardingMessages: defaultOnboardingMessages,
+    };
+
+    return ahoiConfig;
+  };
+  
+  const onResize = (e) => {
+    if(onboardingUI) {
+      // update onboarding
+      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
+    }
+    if(runtimeObject) {
+      Plotly.Plots.resize(runtimeObject)
+    }
   }
   
-    const data = traces;
-  
-    
-  
-    const showOnboarding = false;
-  
-    const getAhoiConfig = () => {
-      const defaultOnboardingMessages = generateBasicAnnotations(
+  onMount(async () => {
+    const plotDiv = document.getElementById(contextKey);
+    runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
+    if(onboardingUI) {
+      onboardingUI.showOnboarding()
+    } else {
+      onboardingUI = await ahoi(
         contextKey,
         EVisualizationType.TREEMAP,
-        runtimeObject
+        runtimeObject,
+        getAhoiConfig()
       );
-      const ahoiConfig = {
-        onboardingMessages: defaultOnboardingMessages,
-      };
-  
-      return ahoiConfig;
-    };
-  
-    const onResize = (e) => {
-      if(onboardingUI) {
-        // update onboarding
-        onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-      }
-      if(runtimeObject) {
-        Plotly.Plots.resize(runtimeObject)
-      }
     }
+  });
   
-    onMount(async () => {
-      const plotDiv = document.getElementById(contextKey);
-      runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
-      if(onboardingUI) {
-        onboardingUI.showOnboarding()
-      } else {
-        onboardingUI = await ahoi(
-          contextKey,
-          EVisualizationType.TREEMAP,
-          runtimeObject,
-          getAhoiConfig()
-        );
-      }
-    });
-  
-    onDestroy(() => {
-      if(onboardingUI) {
-        onboardingUI.removeOnboarding()
-      }
-    })
-  </script>
-  
-  <div id="plotly">
-    <ResizeObserver on:resize={onResize} />
-    <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
-  </div>
-  
-  <style>
-    :global(*) {
-      font-family: sans-serif;
+  onDestroy(() => {
+    if(onboardingUI) {
+      onboardingUI.removeOnboarding()
     }
-  </style>
+  })
+</script>
+  
+<div id="plotly">
+  <ResizeObserver on:resize={onResize} />
+  <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
+</div>
+
+<style>
+  :global(*) {
+    font-family: sans-serif;
+  }
+</style>
