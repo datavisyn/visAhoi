@@ -2,12 +2,13 @@
     import embed from 'vega-embed';    
     import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/vega';
     import { onMount, onDestroy } from "svelte";
+    import type { IAhoiConfig } from '@visahoi/core';
     
-   export let contextKey = 'changeMatrix';
+    export let contextKey: string = 'changeMatrix';
     let onboardingUI;
-    let runtimeObject;   
+    let runtimeObject: object;   
     
-    const getAhoiConfig = async () => {           
+    const getAhoiConfig = async (): Promise<IAhoiConfig> => {           
         const defaultOnboardingMessages =  await generateBasicAnnotations(
           contextKey,
           EVisualizationType.CHANGE_MATRIX,

@@ -1,13 +1,14 @@
 <script lang="ts">
-    import embed from 'vega-embed';    
+    import embed, { EmbedOptions } from 'vega-embed';    
     import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/vega';
     import { onMount, onDestroy } from "svelte";
+  import type { IAhoiConfig } from '@visahoi/core';
     
-    export let contextKey = 'barchart';
+    export let contextKey: string = 'barchart';
     let onboardingUI;
     let runtimeObject;   
     
-    const getAhoiConfig = async () => {           
+    const getAhoiConfig = async (): Promise<IAhoiConfig> => {           
         const defaultOnboardingMessages =  await generateBasicAnnotations(
           contextKey,
           EVisualizationType.BAR_CHART,
