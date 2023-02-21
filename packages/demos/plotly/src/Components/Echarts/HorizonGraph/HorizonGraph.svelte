@@ -125,25 +125,22 @@
             getAhoiConfig(contextKey, runtimeObject)
           );
         }
-      });
+    });
       
-      onDestroy(() => {
-        if(onboardingUI) {
-          onboardingUI.removeOnboarding();
-        }
-      });
-    
-    
-</script>
-    
-     
-      <div id="changeMatrix" style="width: 600px; height: 600px;"> </div>
-   
-    
-    
-    <style>
-      :global(*) {
-        font-family: sans-serif;
+    onDestroy(() => {
+      if(onboardingUI) {
+        onboardingUI.removeOnboarding();
       }
-    </style>
+    });
+    
+    
+</script>  
+
+<div id="changeMatrix" style="width: 600px; height: 600px;"> </div>    
+    
+<style>
+  :global(*) {
+    font-family: sans-serif;
+  }
+</style>
     

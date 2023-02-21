@@ -98,23 +98,20 @@
           },
         },
       },
-    ],
-  };
+    ]};  
 
     const getAhoiConfig = (contextKey, runtimeObject) => {    
-        const defaultOnboardingMessages = generateBasicAnnotations(
-          contextKey,
-          EVisualizationType.HEATMAP,
-          runtimeObject
-        );      
-        const ahoiConfig = {
-          onboardingMessages: defaultOnboardingMessages,
-        };       
-        return ahoiConfig;
-    };
-    
-    // option && myChart.setOption(option);
-    
+      const defaultOnboardingMessages = generateBasicAnnotations(
+        contextKey,
+        EVisualizationType.HEATMAP,
+        runtimeObject
+      );      
+      const ahoiConfig = {
+        onboardingMessages: defaultOnboardingMessages,
+      };       
+      return ahoiConfig;
+    };    
+   
     onMount(async () => {
       const chartDom = document.getElementById('heatmap');  
       const runtimeObject = echarts.init(chartDom, null, {
@@ -144,9 +141,7 @@
     <div id="echarts" style="width: 100%; height: 100%;">
       <h1>Echarts Demo</h1>
       <div id="heatmap" style="width: 500px; height: 500px;"> </div>
-    </div>
-    
-    
+    </div>    
     
     <style>
       :global(*) {

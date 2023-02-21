@@ -96,16 +96,13 @@
       });
     
     
-</script>
+</script>     
+      
+<div id="scatterplot" style="width: 600px; height: 600px;"> </div>    
     
-     
-      <div id="scatterplot" style="width: 600px; height: 600px;"> </div>
-   
-    
-    
-    <style>
-      :global(*) {
-        font-family: sans-serif;
-      }
-    </style>
+<style>
+  :global(*) {
+    font-family: sans-serif;
+  }
+</style>
     
