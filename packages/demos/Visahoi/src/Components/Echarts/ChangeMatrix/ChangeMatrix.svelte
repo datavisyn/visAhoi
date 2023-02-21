@@ -3,14 +3,15 @@
     import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
     import ResizeObserver from "svelte-resize-observer";
     import { onMount, onDestroy } from "svelte";
+  import type { IAhoiConfig } from '@visahoi/core';
     
-    export let contextKey = 'changeMatrix';
+    export let contextKey: string = 'changeMatrix';
     let onboardingUI;
-    let runtimeObject;
+    let runtimeObject: echarts.ECharts;
 
-    const locations = ['Tallin', 'Oslo', 'Munich'];
+    const locations: string[] = ['Tallin', 'Oslo', 'Munich'];
 
-    const data = [
+    const data: number[][] = [
       [0, 2, -0.6],
       [1, 2, -8.4],
       [2, 2, -2.2],
@@ -50,7 +51,7 @@
     ];
 
     
-    const options = {
+    const options: echarts.EChartsCoreOption = {
         title: {
           text: 'Average temperature change in °C between 1990 and 1991',
           left: 'center'
@@ -101,7 +102,7 @@
         }
     };
 
-    const getAhoiConfig = () => {    
+    const getAhoiConfig = (): IAhoiConfig => {    
         const defaultOnboardingMessages = generateBasicAnnotations(
           contextKey,
           EVisualizationType.CHANGE_MATRIX,

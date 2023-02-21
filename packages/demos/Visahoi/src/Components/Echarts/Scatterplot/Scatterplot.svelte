@@ -1,14 +1,15 @@
 <script lang="ts">
-    import * as echarts from 'echarts';
-    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
-    import ResizeObserver from "svelte-resize-observer";
-    import { onMount, onDestroy } from "svelte";
+  import * as echarts from 'echarts';
+  import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
+  import ResizeObserver from "svelte-resize-observer";
+  import { onMount, onDestroy } from "svelte";
+  import type { IAhoiConfig } from '@visahoi/core';
     
-    export let contextKey = 'horizonGraph';
+    export let contextKey:string = 'horizonGraph';
     let onboardingUI;   
-    let runtimeObject; 
+    let runtimeObject: echarts.ECharts; 
 
-    const options = {
+    const options: echarts.EChartsCoreOption = {
     title: {
       text: 'Horsepower and miles per gallon for various cars',
       left: 'center'
@@ -58,7 +59,7 @@
     ]
   }
 
-    const getAhoiConfig = () => {    
+    const getAhoiConfig = (): IAhoiConfig => {    
         const defaultOnboardingMessages = generateBasicAnnotations(
           contextKey,
           EVisualizationType.SCATTERPLOT,

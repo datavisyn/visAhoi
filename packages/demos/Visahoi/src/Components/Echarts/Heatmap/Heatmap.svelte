@@ -3,15 +3,16 @@
     import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
     import ResizeObserver from "svelte-resize-observer";
     import { onMount, onDestroy } from "svelte";
+    import type { IAhoiConfig } from '@visahoi/core';
     
-    export let contextKey = 'changeMatrix';
+    export let contextKey: string = 'changeMatrix';
     let onboardingUI;
-    let runtimeObject;
+    let runtimeObject: echarts.ECharts;
 
-    const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    const dayTime = ['Morning', 'Afternoon', 'Evening'];
+    const day: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const dayTime: string[] = ['Morning', 'Afternoon', 'Evening'];
 
-    const data = [
+    const data: (string|number)[][]= [
         [0, 0, 14],
         [0, 1, 0],
         [0, 2, 19],
@@ -32,7 +33,7 @@
     });
 
     
-    const options = {
+    const options: echarts.EChartsCoreOption = {
     title: {
       text: 'Average temperature in a week',
       left: 'center',
@@ -102,7 +103,7 @@
       },
     ]};  
 
-    const getAhoiConfig = (contextKey, runtimeObject) => {    
+    const getAhoiConfig = (): IAhoiConfig => {    
       const defaultOnboardingMessages = generateBasicAnnotations(
         contextKey,
         EVisualizationType.HEATMAP,
@@ -127,7 +128,7 @@
             contextKey,
             EVisualizationType.HEATMAP,
             runtimeObject,
-            getAhoiConfig(contextKey, runtimeObject)
+            getAhoiConfig()
           );
         }
       });

@@ -1,14 +1,15 @@
 <script lang="ts">
-    import * as echarts from 'echarts';
-    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
-    import ResizeObserver from "svelte-resize-observer";
-    import { onMount, onDestroy } from "svelte";
+  import * as echarts from 'echarts';
+  import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
+  import ResizeObserver from "svelte-resize-observer";
+  import { onMount, onDestroy } from "svelte";
+  import type { IAhoiConfig } from '@visahoi/core';
     
     export let contextKey = 'changeMatrix';
     let onboardingUI;
-    let runtimeObject;
+    let runtimeObject: echarts.ECharts;
 
-    const data = 
+    const data: echarts.EChartsOption = 
       {
           "children": [
               {
@@ -191,7 +192,7 @@
 
 //   console.log(da) 
     
-  const options = {
+  const options: echarts.EChartsCoreOption = {
     series: [
       {
         type: 'treemap',
@@ -228,7 +229,7 @@
   };
 
 
-    const getAhoiConfig = () => {    
+    const getAhoiConfig = (): IAhoiConfig => {    
         const defaultOnboardingMessages = generateBasicAnnotations(
           contextKey,
           EVisualizationType.TREEMAP,

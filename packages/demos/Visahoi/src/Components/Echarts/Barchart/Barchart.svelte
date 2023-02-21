@@ -1,14 +1,19 @@
 <script lang="ts">
+// import OnboardingUI from '@visahoi/core/src/components/OnboardingUI.svelte'
 import * as echarts from 'echarts';
 import ResizeObserver from "svelte-resize-observer";
 import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
 import { onMount, onDestroy } from "svelte";
+import type { IAhoiConfig } from '@visahoi/core/src/interfaces';
 
-export let contextKey = 'barchart';
+export let contextKey: string = 'barchart';
+
+// TODO: Since onboardingUI is not exported it throws error
+// let onboardingUI: OnboardingUI;
 let onboardingUI;
-let runtimeObject;
+let runtimeObject: echarts.ECharts;
 
-const options = {
+const options: echarts.EChartsCoreOption = {
     title: {
       text: 'Average temperature in Oslo, Norway in 2018',
       left: 'center'
@@ -42,7 +47,7 @@ const options = {
     ]
   }
 
-  const getAhoiConfig = () => {    
+  const getAhoiConfig = (): IAhoiConfig => {    
       const defaultOnboardingMessages = generateBasicAnnotations(
         contextKey,
         EVisualizationType.BAR_CHART,
@@ -67,9 +72,10 @@ const options = {
 
   onMount(async () => {
     const chartDom = document.getElementById('barchart');  
-    runtimeObject = echarts.init(chartDom, null, {
+    runtimeObject  = echarts.init(chartDom, null, {
     renderer: 'svg'
     });
+    console.log(typeof(runtimeObject), 'Runtimeob')
     runtimeObject.setOption(options);  
     if(onboardingUI) {
       onboardingUI.showOnboarding();    
