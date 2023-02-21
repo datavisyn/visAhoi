@@ -1,10 +1,12 @@
 <script lang="ts">
     import * as echarts from 'echarts';
-    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
+    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
+    import ResizeObserver from "svelte-resize-observer";
     import { onMount, onDestroy } from "svelte";
     
-    let contextKey = 'horizonGraph';
-    let onboardingUI;    
+    export let contextKey = 'horizonGraph';
+    let onboardingUI;   
+    let runtimeObject; 
 
     const options = {
     title: {
@@ -56,7 +58,7 @@
     ]
   }
 
-    const getAhoiConfig = (contextKey, runtimeObject) => {    
+    const getAhoiConfig = () => {    
         const defaultOnboardingMessages = generateBasicAnnotations(
           contextKey,
           EVisualizationType.SCATTERPLOT,
@@ -73,7 +75,7 @@
     
     onMount(async () => {
       const chartDom = document.getElementById('scatterplot');  
-      const runtimeObject = echarts.init(chartDom, null, {
+      runtimeObject = echarts.init(chartDom, null, {
       renderer: 'svg'
       });
       runtimeObject.setOption(options);  
@@ -84,7 +86,7 @@
             contextKey,
             EVisualizationType.SCATTERPLOT,
             runtimeObject,
-            getAhoiConfig(contextKey, runtimeObject)
+            getAhoiConfig()
           );
         }
       });
@@ -93,12 +95,24 @@
         if(onboardingUI) {
           onboardingUI.removeOnboarding();
         }
-      });
-    
+      });  
+      
+      const onResize = (e) => {
+        if(onboardingUI) {
+        // update onboarding
+        onboardingUI.updateOnboarding()
+        }
+        if(runtimeObject) {
+          runtimeObject.resize();
+        }
+      };
     
 </script>     
       
-<div id="scatterplot" style="width: 600px; height: 600px;"> </div>    
+<div id="echarts" style="width: 100%; height: 100%;">
+  <!-- <ResizeObserver on:resize={onResize} /> -->
+  <div id="scatterplot" style="width: 600px; height: 600px;"> </div>   
+</div> 
     
 <style>
   :global(*) {

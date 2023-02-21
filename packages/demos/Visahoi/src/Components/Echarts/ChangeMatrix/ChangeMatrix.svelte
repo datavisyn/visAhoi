@@ -1,10 +1,12 @@
 <script lang="ts">
     import * as echarts from 'echarts';
-    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
+    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
+    import ResizeObserver from "svelte-resize-observer";
     import { onMount, onDestroy } from "svelte";
     
-    let contextKey = 'changeMatrix';
+    export let contextKey = 'changeMatrix';
     let onboardingUI;
+    let runtimeObject;
 
     const locations = ['Tallin', 'Oslo', 'Munich'];
 
@@ -99,7 +101,7 @@
         }
     };
 
-    const getAhoiConfig = (contextKey, runtimeObject) => {    
+    const getAhoiConfig = () => {    
         const defaultOnboardingMessages = generateBasicAnnotations(
           contextKey,
           EVisualizationType.CHANGE_MATRIX,
@@ -110,12 +112,10 @@
         };       
         return ahoiConfig;
     };
-    
-    // option && myChart.setOption(option);
-    
+     
     onMount(async () => {
       const chartDom = document.getElementById('changeMatrix');  
-      const runtimeObject = echarts.init(chartDom, null, {
+      runtimeObject = echarts.init(chartDom, null, {
       renderer: 'svg'
       });
       runtimeObject.setOption(options);  
@@ -126,21 +126,31 @@
             contextKey,
             EVisualizationType.CHANGE_MATRIX,
             runtimeObject,
-            getAhoiConfig(contextKey, runtimeObject)
+            getAhoiConfig()
           );
         }
       });
       
-      onDestroy(() => {
-        if(onboardingUI) {
-          onboardingUI.removeOnboarding();
-        }
-      });
+    onDestroy(() => {
+      if(onboardingUI) {
+        onboardingUI.removeOnboarding();
+      }
+    });
+
+    const onResize = (e) => {
+      if(onboardingUI) {
+      // update onboarding
+        onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
+      }
+      if(runtimeObject) {
+       runtimeObject.resize();
+      }
+    }
     
     
     </script>
     <div id="echarts" style="width: 100%; height: 100%;">
-      <h1>Echarts Demo</h1>
+     <!-- <ResizeObserver on:resize={onResize} /> -->
       <div id="changeMatrix" style="width: 500px; height: 500px;"> </div>
     </div>
     

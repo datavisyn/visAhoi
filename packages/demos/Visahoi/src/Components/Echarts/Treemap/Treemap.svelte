@@ -1,10 +1,12 @@
 <script lang="ts">
     import * as echarts from 'echarts';
-    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
+    import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
+    import ResizeObserver from "svelte-resize-observer";
     import { onMount, onDestroy } from "svelte";
     
-    let contextKey = 'changeMatrix';
+    export let contextKey = 'changeMatrix';
     let onboardingUI;
+    let runtimeObject;
 
     const data = 
       {
@@ -226,7 +228,7 @@
   };
 
 
-    const getAhoiConfig = (contextKey, runtimeObject) => {    
+    const getAhoiConfig = () => {    
         const defaultOnboardingMessages = generateBasicAnnotations(
           contextKey,
           EVisualizationType.TREEMAP,
@@ -240,7 +242,7 @@
     
     onMount(async () => {
       const chartDom = document.getElementById('treemap');  
-      const runtimeObject = echarts.init(chartDom, null, {
+      runtimeObject = echarts.init(chartDom, null, {
       renderer: 'svg'
       });
       runtimeObject.setOption(options);  
@@ -251,7 +253,7 @@
             contextKey,
             EVisualizationType.TREEMAP,
             runtimeObject,
-            getAhoiConfig(contextKey, runtimeObject)
+            getAhoiConfig()
           );
       }
     });
@@ -261,19 +263,27 @@
         onboardingUI.removeOnboarding();
       }
     });
-    
-    
-    </script>
-    <div id="echarts" style="width: 100%; height: 100%;">
-      <h1>Echarts Demo</h1>
-      <div id="treemap" style="width: 500px; height: 500px;"> </div>
-    </div>
-    
-    
-    
-    <style>
-      :global(*) {
-        font-family: sans-serif;
+
+    const onResize = (e) => {
+      if(onboardingUI) {
+      // update onboarding
+      onboardingUI.updateOnboarding()
       }
-    </style>
+      if(runtimeObject) {
+         runtimeObject.resize();
+      }
+    };
+    
+    
+  </script>
+  <div id="echarts" style="width: 100%; height: 100%;">
+    <!-- <ResizeObserver on:resize={onResize} /> -->
+    <div id="treemap" style="width: 500px; height: 500px;"> </div>
+  </div>    
+    
+  <style>
+    :global(*) {
+      font-family: sans-serif;
+    }
+  </style>
      

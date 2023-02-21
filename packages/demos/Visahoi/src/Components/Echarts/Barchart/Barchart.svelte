@@ -1,10 +1,12 @@
 <script lang="ts">
 import * as echarts from 'echarts';
+import ResizeObserver from "svelte-resize-observer";
 import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
 import { onMount, onDestroy } from "svelte";
 
-let contextKey = 'test';
+export let contextKey = 'barchart';
 let onboardingUI;
+let runtimeObject;
 
 const options = {
     title: {
@@ -40,7 +42,7 @@ const options = {
     ]
   }
 
-  const getAhoiConfig = (contextKey, runtimeObject) => {    
+  const getAhoiConfig = () => {    
       const defaultOnboardingMessages = generateBasicAnnotations(
         contextKey,
         EVisualizationType.BAR_CHART,
@@ -53,26 +55,32 @@ const options = {
     return ahoiConfig;
   };
 
-  
-
-// option && myChart.setOption(option);
-
-onMount(async () => {
-  const chartDom = document.getElementById('barchart');  
-  const runtimeObject = echarts.init(chartDom, null, {
-  renderer: 'svg'
-  });
-  runtimeObject.setOption(options);  
-  if(onboardingUI) {
-    onboardingUI.showOnboarding();    
-    } else {      
-      onboardingUI = await ahoi(
-        contextKey,
-        EVisualizationType.BAR_CHART,
-        runtimeObject,
-        getAhoiConfig(contextKey, runtimeObject)
-      );
+  const onResize = (e) => {
+    if(onboardingUI) {
+      // update onboarding
+      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
     }
+    if(runtimeObject) {
+      runtimeObject.resize();
+    }
+  }
+
+  onMount(async () => {
+    const chartDom = document.getElementById('barchart');  
+    runtimeObject = echarts.init(chartDom, null, {
+    renderer: 'svg'
+    });
+    runtimeObject.setOption(options);  
+    if(onboardingUI) {
+      onboardingUI.showOnboarding();    
+      } else {      
+        onboardingUI = await ahoi(
+          contextKey,
+          EVisualizationType.BAR_CHART,
+          runtimeObject,
+          getAhoiConfig()
+        );
+      }
   });
   
   onDestroy(() => {
@@ -83,8 +91,9 @@ onMount(async () => {
 
 
 </script>
+
 <div id="echarts" style="width: 100%; height: 100%;">
-  <h1>Echarts Demo</h1>
+  <!-- <ResizeObserver on:resize={onResize} /> -->
   <div id="barchart" style="width: 500px; height: 500px;"> </div>
 </div>
 
