@@ -1,3 +1,5 @@
+// const sveltePreprocess = require ('svelte-preprocess');
+
 module.exports = {
   "stories": [
     "../**/*.stories.mdx",
@@ -12,5 +14,24 @@ module.exports = {
     "@storybook/addon-storysource"
   ],
   "framework": "@storybook/svelte",
+  
+  // svelteOptions: {
+  //   preprocess: sveltePreprocess({
+  //     babel: {
+  //       presets: [
+  //         [
+  //         '@babel/preset-env',
+  //         {
+  //           loose: true,
+  //           modules: false,
+  //           targets: {
+  //             esmodules: true,
+  //           }
+  //         }
+  //       ]
+  //     ]
+  //     }
+  //   })
+  // }
   
 }

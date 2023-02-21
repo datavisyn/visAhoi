@@ -50,8 +50,10 @@ const options = {
         onboardingMessages: defaultOnboardingMessages,
       };
   
-      return ahoiConfig;
-    };
+    return ahoiConfig;
+  };
+
+  
 
 // option && myChart.setOption(option);
 
