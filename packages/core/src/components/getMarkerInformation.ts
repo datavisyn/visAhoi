@@ -1,4 +1,4 @@
-import { IAnchorPosition, IMarkerInformation, IOnboardingMessage, isOnboardingElementAnchor, ITooltip, IOnboardingCoordsAnchor } from '../interfaces'
+import { IAnchorPosition, IMarkerInformation, IOnboardingMessage, isOnboardingElementAnchor, ITooltip,  isOnboardingCoordsAnchor } from '../interfaces'
 import { getColor } from '../utils'
 
 const r = 10
@@ -31,20 +31,22 @@ export function getMarkerInformation (visElement: Element, onboardingMessages: I
     }
 
     // If we have coords we can use them
-    if (anchor.coords) {
-      if (anchor.coords.hasOwnProperty('bounds')) {
-        // This means we use th coords of a bar chart or anything with x1 and x2
-        anchorPosition.cy = (anchor.coords.bounds.y1 + anchor.coords.bounds.y2) / 2
-        anchorPosition.cx = (anchor.coords.bounds.x1 + anchor.coords.bounds.x2) / 2
-        anchorPosition.x = (anchor.coords.bounds.x1 + anchor.coords.bounds.x2) / 2
-        anchorPosition.y = (anchor.coords.bounds.y1 + anchor.coords.bounds.y2) / 2 + textOffset
-      } else {
+    if (isOnboardingCoordsAnchor(anchor)) {
+      // if (anchor.coords.hasOwnProperty('bounds')) {
+      //   // This means we use th coords of a bar chart or anything with x1 and x2
+      //   anchorPosition.cy = (anchor.coords.bounds.y1 + anchor.coords.bounds.y2) / 2
+      //   anchorPosition.cx = (anchor.coords.bounds.x1 + anchor.coords.bounds.x2) / 2
+      //   anchorPosition.x = (anchor.coords.bounds.x1 + anchor.coords.bounds.x2) / 2
+      //   anchorPosition.y = (anchor.coords.bounds.y1 + anchor.coords.bounds.y2) / 2 + textOffset
+      // } 
+      // else 
+      // {
         // Otherwise we need to use the passed coords if there are some which require x and y
         anchorPosition.cx = anchor.coords.x
         anchorPosition.cy = anchor.coords.y
         anchorPosition.x = anchor.coords.x
         anchorPosition.y = anchor.coords.y + textOffset
-      }
+      // }
     } else {
       // Find the positioning only if we provided no coords
       let node

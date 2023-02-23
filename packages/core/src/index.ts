@@ -21,6 +21,15 @@ export { IOnboardingHorizonGraphSpec } from './horizon-graph'
 export { IOnboardingScatterplotSpec } from './scatterplot'
 export { IOnboardingTreemapSpec } from './treemap'
 
+/**
+ * To generate the onboarding messages.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {EVisualizationType} visType - Visualization type.
+ * @param {IOnboardingSpec} spec - The values to be displaced and the position to place the markers.
+ * @param {Element} visElement - The dom element to which the onboarding messages are mounted.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages.
+ */
+
 export function generateMessages (
   contextKey: string,
   visType: EVisualizationType,

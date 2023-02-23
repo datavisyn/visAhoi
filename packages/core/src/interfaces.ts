@@ -41,7 +41,7 @@ export type NavigationAlignment = 'horizontal' | 'vertical';
 
 interface IPoint {
   x: number;
-  y: number;
+  y: number;  
 }
 
 interface IOnboardingAnchorBase {
@@ -51,7 +51,8 @@ interface IOnboardingAnchorBase {
 
 interface IOnboardingCoordsAnchor extends IOnboardingAnchorBase {
   sel?: string; // TODO: can we remove this? it is part of IOnboardingDOMAnchor
-  coords: IPoint | number[];
+  // coords: IPoint | number[];
+  coords: IPoint;
 }
 
 interface IOnboardingDOMAnchor extends IOnboardingAnchorBase {
@@ -71,6 +72,12 @@ export const isOnboardingElementAnchor = (
   element: OnboardingAnchor
 ): element is IOnboardingElementAnchor => {
   return (element as IOnboardingElementAnchor).element !== undefined
+}
+
+export const isOnboardingCoordsAnchor = (
+  element: OnboardingAnchor
+): element is IOnboardingCoordsAnchor => {
+  return (element as IOnboardingCoordsAnchor).coords !== undefined
 }
 
 export interface ISpecProp {

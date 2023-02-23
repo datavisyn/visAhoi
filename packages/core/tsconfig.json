@@ -24,7 +24,7 @@
     "build",
   ],
   "typedocOptions": {        
-    "entryPoints": ["src/onboarding.ts"],
+    "entryPoints": ["src/index.ts"],
     "out": "documentation"
 }
 }

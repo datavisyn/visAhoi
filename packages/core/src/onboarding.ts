@@ -19,11 +19,11 @@ let onboardingUI: OnboardingUI
 
 /**
  * This function creates the basic onboarding
- * @param {string} contextKey - It is of type string. Each visualization has a  in store. If  
- * @param {IAhoiConfig} ahoiConfig - The ahoi config for the onboarding
- * @param {HTMLElement} visElement - The html element to which the onboardings are injected
- * @param {NavigationAlignment} alignment - It indicates the navigation alignment of the onboarding
- * @param {IAhoiIcons} icons - It is optional. Pass the icons if you require to change the icons
+ * @param {string} contextKey - Context key of the visualization.  
+ * @param {IAhoiConfig} ahoiConfig - The configuration required for onboarding.
+ * @param {HTMLElement} visElement - The html element to which the onboardings are injected.
+ * @param {NavigationAlignment} alignment - It indicates the navigation alignment of the onboarding.
+ * @param {IAhoiIcons} icons - It is optional. Pass the icons if you require to change the icons.
  * @returns It returns the onboarding. If a store is not generated yet for the visualization. It returns null
  */
 
@@ -170,10 +170,10 @@ export const getOnboardingMessages = (contextKey: string): IOnboardingMessage[] 
 }
 
 /**
- * This function is used to create new onboarding stages
+ * This function is used to create new onboarding stages.
  * @param {string} contextKey - Context key of the visualization.
- * @param {IOnboardingStage} stage - New onbaording stage
- * @returns It returns the created onboarding stage
+ * @param {IOnboardingStage} stage - New onbaording stage.
+ * @returns {IOnboardingStage} - It returns the created onboarding stage
  */
 
 export const createBasicOnboardingStage = (contextKey: string, stage: IOnboardingStage) => {
@@ -198,10 +198,10 @@ export const createBasicOnboardingStage = (contextKey: string, stage: IOnboardin
 }
 
 /**
- * This function creates new onboarding messages
+ * This function creates new onboarding messages.
  * @param {string} contextKey - Context key of the visualization.
- * @param {IOnboardingMessage} message - New onboarding message
- * @returns It returns the created onboarding message
+ * @param {IOnboardingMessage} message - New onboarding message.
+ * @returns {IOnboardingMessage} -It returns the created onboarding message.
  */
 export const createBasicOnboardingMessage = (
   contextKey: string,
@@ -254,6 +254,13 @@ export const createBasicOnboardingMessage = (
   }
 }
 
+/**
+ * To delete the existing onboarding stage.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {string} id - Id of onboarding stage to be deleted.
+ * @returns {IOnboardingStage[]} - It returns all other onboarding stages.
+ */
+
 export const deleteOnboardingStage = (contextKey: string, id: string) => {
   const s = get(stores)
   const visState = s.get(contextKey)
@@ -276,7 +283,7 @@ export const deleteOnboardingStage = (contextKey: string, id: string) => {
  * This function is called to change the existing onboarding stages.
  * @param {string} contextKey - Context key of the visualization.
  * @param {Pick<IOnboardingStage>} stage - The id of the onboarding stage along with the fields that are to be changed. 
- * @returns It returns the all the onboarding stages along with updated onboarding stage.
+ * @returns {IOnboardingStage[]} - It returns the all the onboarding stages along with updated onboarding stage.
  */
 
 export const setOnboardingStage = (contextKey: string, stage: Partial<IOnboardingStage>) => {
@@ -341,7 +348,7 @@ export const setOnboardingStage = (contextKey: string, stage: Partial<IOnboardin
  * To change the existing onboarding messages
  * @param {string} contextKey - Context key of the visualization
  * @param {Pick<IOnboardingMessage>} message - The id of the onbaording message to be changed along with the fields title or text which is to be changed. 
- * @returns It returns all the onboardingMessages along with the updated onboarding message or null if no store exists for the context key.
+ * @returns {IOnboardingStage[]} - It returns all the onboardingMessages along with the updated onboarding message or null if no store exists for the context key.
  */
 
 export const setOnboardingMessage = (

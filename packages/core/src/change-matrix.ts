@@ -31,7 +31,7 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
  * @param {IOnboardingBarChartSpec} spec - The values to be displaced and the position to place the markers.
  * @param {Element} visElement - The DOM element to which the onbaording message are mounted.
  * @param {IAhoiConfig} ahoiConfig - The configuration for the onboarding.
- * @returns It returns all the generated onboarding messages.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages.
  */
 
 function generateMessages (
@@ -49,21 +49,21 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
-  const modebar = document.getElementsByClassName('modebar-btn');
-  const modebarText = []
+  // const modebar = document.getElementsByClassName('modebar-btn');
+  // const modebarText = []
   
-  if(modebar){
-    for(let i=0; i<modebar.length; i++){
-      modebarText.push(modebar.item(i)?.dataset?.title)
-    }    
-  }
+  // if(modebar){
+  //   for(let i=0; i<modebar.length; i++){
+  //     modebarText.push(modebar.item(i)?.dataset?.title)
+  //   }    
+  // }
 
-  let modeIconDescription = ''
+  // let modeIconDescription = ''
   
-  const modebarInteractions = getGeneralChartInteractions(modebarText); 
-  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the change-matrix.<br/><br/>`: ''}`)
+  // const modebarInteractions = getGeneralChartInteractions(modebarText); 
+  // modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the change-matrix.<br/><br/>`: ''}`)
 
-  const modeBar = getModeBarMessages(modebarInteractions);
+  // const modeBar = getModeBarMessages(modebarInteractions);
 
   function createColorRect (color = 'white') {
     return `<div class="colorRect" style="background-color: ${color}"></div>`
@@ -143,19 +143,19 @@ function generateMessages (
       id: `visahoi-message-${contextKey}-6`,
       order: 1
     },
-    {
-      // basic chart interactions for plotly
-      anchor: getAnchor(spec.plotlyModebar, visElement),
-      requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
-      title: "Chart interactions",
-      onboardingStage: interacting,
-      marker: {
-        id: `visahoi-marker-${contextKey}-7`
-      },
-      id: `visahoi-message-${contextKey}-7`,
-      order: 2
-    },
+    // {
+    //   // basic chart interactions for plotly
+    //   anchor: getAnchor(spec.plotlyModebar, visElement),
+    //   requires: ['plotlyModebar'],
+    //   text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
+    //   title: "Chart interactions",
+    //   onboardingStage: interacting,
+    //   marker: {
+    //     id: `visahoi-marker-${contextKey}-7`
+    //   },
+    //   id: `visahoi-message-${contextKey}-7`,
+    //   order: 2
+    // },
   ]
 
   if (spec.chartTitle?.value !== undefined) {

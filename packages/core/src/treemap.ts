@@ -29,7 +29,7 @@ export interface IOnboardingTreemapSpec extends IOnboardingSpec {
  * @param {IOnboardingBarChartSpec} spec - The values to be displaced and the position to place the markers.
  * @param {Element} visElement - The DOM element to which the onbaording message are mounted.
  * @param {IAhoiConfig} ahoiConfig - The configuration for the onboarding.
- * @returns It returns all the generated onboarding messages.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages.
  */
 
 function generateMessages (
@@ -47,20 +47,20 @@ function generateMessages (
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage  
 
-  const modebar = document.getElementsByClassName('modebar-btn');
-  const modebarText = []
+  // const modebar = document.getElementsByClassName('modebar-btn');
+  // const modebarText = []
  
-  if(modebar){
-    for(let i=0; i<modebar.length; i++){
-      modebarText.push(modebar.item(i)?.dataset?.title)
-    }    
-  }
+  // if(modebar){
+  //   for(let i=0; i<modebar.length; i++){
+  //     modebarText.push(modebar.item(i)?.dataset?.title)
+  //   }    
+  // }
 
-  let modeIconDescription = ''
-  const modebarInteractions = getGeneralChartInteractions(modebarText); 
-  modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the treemap.<br/><br/>`: ''}`)
+  // let modeIconDescription = ''
+  // const modebarInteractions = getGeneralChartInteractions(modebarText); 
+  // modebarInteractions.set('Download plot as a png', `${modebarText.includes('Download plot as a png') ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the treemap.<br/><br/>`: ''}`)
 
-  const modeBar = getModeBarMessages(modebarInteractions);
+  // const modeBar = getModeBarMessages(modebarInteractions);
   
   const messages: IOnboardingMessage[] = [
     {
@@ -125,19 +125,19 @@ function generateMessages (
       order: 1
     },
 
-    {
-      // basic chart interactions for plotly
-      anchor: getAnchor(spec.plotlyModebar, visElement),
-      requires: ['plotlyModebar'],
-      text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
-      title: "Chart interactions",
-      onboardingStage: interacting,
-      marker: {
-        id: `visahoi-marker-${contextKey}-6`
-      },
-      id: `visahoi-message-${contextKey}-6`,
-      order: 2
-    },
+    // {
+    //   // basic chart interactions for plotly
+    //   anchor: getAnchor(spec.plotlyModebar, visElement),
+    //   requires: ['plotlyModebar'],
+    //   text: modeIconDescription.concat(modeBar.cameraIcon, modeBar.zoomIcon, modeBar.panIcon, modeBar.selectionIcon, modeBar.lassoSelectIcon, modeBar.zoomInIcon, modeBar.zoomOutIcon, modeBar.autoScaleIcon, modeBar.resetIcon),
+    //   title: "Chart interactions",
+    //   onboardingStage: interacting,
+    //   marker: {
+    //     id: `visahoi-marker-${contextKey}-6`
+    //   },
+    //   id: `visahoi-message-${contextKey}-6`,
+    //   order: 2
+    // },
 
     {
       anchor: getAnchor(spec.maxValueDesc, visElement),
