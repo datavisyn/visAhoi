@@ -30,10 +30,24 @@ export interface IOnboardingScatterplotSpec extends IOnboardingSpec {
   maxColor?: ISpecProp;
 }
 
+/**
+ * To create a small div inside the tooltip.
+ * @param {string} color - The background color required for html element. 
+ * @returns It returns html element.
+ */
+
 function createColorRect (color = 'white') {
   return `<div class="colorRect" style="background-color: ${color}"></div>`
 }
 
+/**
+ * To generate onbaording messages for scatterplot.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {IOnboardingBarChartSpec} spec - The values to be displaced and the position to place the markers.
+ * @param {Element} visElement - The DOM element to which the onbaording message are mounted.
+ * @param {IAhoiConfig} ahoiConfig - The configuration for the onboarding.
+ * @returns It returns all the generated onboarding messages.
+ */
 
 function generateMessages (
   contextKey,
