@@ -6,7 +6,7 @@
     "declaration": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
     "module": "ES2020",
     "target": "ES2020",
@@ -21,6 +21,10 @@
   "exclude": [
     "node_modules",
     "dist",
-    "build"
-  ]
+    "build",
+  ],
+  "typedocOptions": {        
+    "entryPoints": ["src/onboarding.ts"],
+    "out": "documentation"
+}
 }

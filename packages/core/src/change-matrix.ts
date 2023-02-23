@@ -25,6 +25,15 @@ export interface IOnboardingChangeMatrixSpec extends IOnboardingSpec {
   plotlyModebar?: ISpecProp;
 }
 
+/**
+ * To generate onbaording messages for change matrix.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {IOnboardingBarChartSpec} spec - The values to be displaced and the position to place the markers.
+ * @param {Element} visElement - The DOM element to which the onbaording message are mounted.
+ * @param {IAhoiConfig} ahoiConfig - The configuration for the onboarding.
+ * @returns It returns all the generated onboarding messages.
+ */
+
 function generateMessages (
   contextKey,
   spec: IOnboardingChangeMatrixSpec,

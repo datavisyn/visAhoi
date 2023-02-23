@@ -27,7 +27,14 @@ export interface IOnboardingHeatmapSpec extends IOnboardingSpec {
   midColor?: ISpecProp;
 }
 
-
+/**
+ * To generate onbaording messages for heatmap.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {IOnboardingBarChartSpec} spec - The values to be displaced and the position to place the markers.
+ * @param {Element} visElement - The DOM element to which the onbaording message are mounted.
+ * @param {IAhoiConfig} ahoiConfig - The configuration for the onboarding.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages.
+ */
 
 function generateMessages (
   contextKey,

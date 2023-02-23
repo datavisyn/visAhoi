@@ -17,6 +17,16 @@ import { VisahoiState } from './components/state'
 
 let onboardingUI: OnboardingUI
 
+/**
+ * This function creates the basic onboarding
+ * @param {string} contextKey - It is of type string. Each visualization has a  in store. If  
+ * @param {IAhoiConfig} ahoiConfig - The ahoi config for the onboarding
+ * @param {HTMLElement} visElement - The html element to which the onboardings are injected
+ * @param {NavigationAlignment} alignment - It indicates the navigation alignment of the onboarding
+ * @param {IAhoiIcons} icons - It is optional. Pass the icons if you require to change the icons
+ * @returns It returns the onboarding. If a store is not generated yet for the visualization. It returns null
+ */
+
 export const injectOnboarding = (
   contextKey: string,
   ahoiConfig: IAhoiConfig,
@@ -123,6 +133,12 @@ export const injectOnboarding = (
   }
 }
 
+/**
+ * This function is used to get all the onboarding stages available for the visualization.
+ * @param {string} contextKey - Context key of the visualization.
+ * @returns {IOnboardingStage[]} - It returns all the available onboarding stages. If no onboarding stages are still available it returns null. 
+ */
+
 export const getOnboardingStages = (contextKey: string): IOnboardingStage[] => {
   const s = get(stores)
   const visState = s.get(contextKey)
@@ -135,6 +151,12 @@ export const getOnboardingStages = (contextKey: string): IOnboardingStage[] => {
   }
 }
 
+/**
+ * This function is used to get all the onboarding messages available for the visualization.
+ * @param {string} contextKey - Context key of the visualization.
+ * @returns {IOnboardingMessage[]} - It returns all the available onboarding messages or returns and empty array if no onboarding messages are available.
+ */
+
 export const getOnboardingMessages = (contextKey: string): IOnboardingMessage[] => {
   const s = get(stores)
   const visState = s.get(contextKey)
@@ -146,6 +168,13 @@ export const getOnboardingMessages = (contextKey: string): IOnboardingMessage[] 
     return []
   }
 }
+
+/**
+ * This function is used to create new onboarding stages
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {IOnboardingStage} stage - New onbaording stage
+ * @returns It returns the created onboarding stage
+ */
 
 export const createBasicOnboardingStage = (contextKey: string, stage: IOnboardingStage) => {
   const s = get(stores)
@@ -168,13 +197,19 @@ export const createBasicOnboardingStage = (contextKey: string, stage: IOnboardin
   }
 }
 
+/**
+ * This function creates new onboarding messages
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {IOnboardingMessage} message - New onboarding message
+ * @returns It returns the created onboarding message
+ */
 export const createBasicOnboardingMessage = (
   contextKey: string,
   message: Pick<
     IOnboardingMessage,
     'title' | 'text' | 'onboardingStage' | 'anchor' | 'id' | 'order'
   >
-): IOnboardingMessage => {
+): IOnboardingMessage | null => {
   const s = get(stores)
   const visState = s.get(contextKey)
   if (visState) {
@@ -237,6 +272,13 @@ export const deleteOnboardingStage = (contextKey: string, id: string) => {
   }
 }
 
+/**
+ * This function is called to change the existing onboarding stages.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {Pick<IOnboardingStage>} stage - The id of the onboarding stage along with the fields that are to be changed. 
+ * @returns It returns the all the onboarding stages along with updated onboarding stage.
+ */
+
 export const setOnboardingStage = (contextKey: string, stage: Partial<IOnboardingStage>) => {
   const s = get(stores)
   const visState = s.get(contextKey)
@@ -295,6 +337,13 @@ export const setOnboardingStage = (contextKey: string, stage: Partial<IOnboardin
   }
 }
 
+/**
+ * To change the existing onboarding messages
+ * @param {string} contextKey - Context key of the visualization
+ * @param {Pick<IOnboardingMessage>} message - The id of the onbaording message to be changed along with the fields title or text which is to be changed. 
+ * @returns It returns all the onboardingMessages along with the updated onboarding message or null if no store exists for the context key.
+ */
+
 export const setOnboardingMessage = (
   contextKey: string,
   message: Pick<IOnboardingMessage, 'title' | 'text' | 'id'>
@@ -338,6 +387,13 @@ export const setOnboardingMessage = (
     return null
   }
 }
+
+/**
+ * To set the edit mode
+ * @param {string} contextKey - Context key of the visualization
+ * @param {boolean} value - True is passed to enable edit mode. 
+ * @returns It return the isEditModeActive with the new value or null if the store doesn't exist for the context key.
+ */
 
 export const setEditMode = (contextKey: string, value: boolean) => {
   const s = get(stores)

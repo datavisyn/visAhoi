@@ -1,10 +1,17 @@
-import { IAnchorPosition, IMarkerInformation, IOnboardingMessage, isOnboardingElementAnchor, ITooltip } from '../interfaces'
+import { IAnchorPosition, IMarkerInformation, IOnboardingMessage, isOnboardingElementAnchor, ITooltip, IOnboardingCoordsAnchor } from '../interfaces'
 import { getColor } from '../utils'
 
 const r = 10
 const w = 30
 const h = 30
 const textOffset = 5
+
+/**
+ * To get all the informations to place the markers over the visualization. 
+ * @param {Element} visElement - The DOM element over which the marker to be placed.
+ * @param {IOnboardingMessages} onboardingMessages - All onboarding messages for the visualization
+ * @returns {IMarkerInformation[]} It returns marker information.
+ */
 
 export function getMarkerInformation (visElement: Element, onboardingMessages: IOnboardingMessage[]): IMarkerInformation[] {
   const markerInformation: IMarkerInformation[] = []
