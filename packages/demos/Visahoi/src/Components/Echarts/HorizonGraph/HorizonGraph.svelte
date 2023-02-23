@@ -140,7 +140,7 @@
     const onResize = (e) => {
       if(onboardingUI) {
       // update onboarding
-       onboardingUI.updateOnboarding()
+       onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
       }
      if(runtimeObject) {
       runtimeObject.resize();
@@ -151,8 +151,8 @@
 </script>  
 
 <div id="echarts" style="width: 100%; height: 100%;">
-<!-- <ResizeObserver on:resize={onResize} /> -->
-<div id="changeMatrix" style="width: 600px; height: 600px;"> </div> 
+  <ResizeObserver on:resize={onResize} />
+  <div id="changeMatrix" style="width: 600px; height: 600px;"> </div> 
 </div>   
     
 <style>

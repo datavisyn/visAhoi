@@ -98,7 +98,7 @@
     const onResize = (e) => {
       if(onboardingUI) {
       // update onboarding
-      onboardingUI.updateOnboarding()
+      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
       }
       if(runtimeObject) {
          runtimeObject.resize();
@@ -108,7 +108,7 @@
     
   </script>
   <div id="echarts" style="width: 100%; height: 100%;">
-    <!-- <ResizeObserver on:resize={onResize} /> -->
+    <ResizeObserver on:resize={onResize} />
     <div id="treemap" style="width: 500px; height: 500px;"> </div>
   </div>    
     
