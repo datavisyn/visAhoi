@@ -24,6 +24,13 @@ const getMinMax = (values) => {
   return [min, max]
 }
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for horizon graph.
+ */
+
 function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
   // TODO: It is now hardcoded to get the colors and position. It have to be changed.
   const xAxis = [
@@ -44,8 +51,8 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
 
   const tags = document.getElementsByTagName('g')
 
-  const minYPosition = tags[tags.length - 1].childNodes[0].getBoundingClientRect().y
-  const maxYPosition = tags[tags.length - 2].childNodes[0].getBoundingClientRect().y
+  const minYPosition = tags[tags.length - 1].children[0].getBoundingClientRect().y
+  const maxYPosition = tags[tags.length - 2].children[0].getBoundingClientRect().y
 
   return {
     chartTitle: {
@@ -116,6 +123,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingHorizonGraphSpec {
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for horizon graph.
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings are to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function horizonGraphFactory (
   contextKey, 

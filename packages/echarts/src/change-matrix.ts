@@ -5,6 +5,13 @@ import {
   generateMessages
 } from '@visahoi/core'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for change matrix.
+ */
+
 function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
   // const dataCoords = chart._chartsViews[0]._data._itemLayouts;
   const legendPosition =
@@ -21,14 +28,14 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
   const minXIndex = dataArr.indexOf(min)
 
   // TODO: Get the value to child nodes from the index directly.
-  const maxPositionX = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getBoundingClientRect().x
-  const maxPositionY = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getBoundingClientRect().y
+  const maxPositionX = document.getElementsByTagName('g')[0].children[maxXIndex + 38]?.getBoundingClientRect().x
+  const maxPositionY = document.getElementsByTagName('g')[0].children[maxXIndex + 38]?.getBoundingClientRect().y
 
-  const minPositionX = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getBoundingClientRect().x
-  const minPositionY = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getBoundingClientRect().y
+  const minPositionX = document.getElementsByTagName('g')[0].children[minXIndex + 38]?.getBoundingClientRect().x
+  const minPositionY = document.getElementsByTagName('g')[0].children[minXIndex + 38]?.getBoundingClientRect().y
 
-  const maxColor = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 38]?.getAttribute('fill')
-  const minColor = document.getElementsByTagName('g')[0].childNodes[minXIndex + 38]?.getAttribute('fill')
+  const maxColor = document.getElementsByTagName('g')[0].children[maxXIndex + 38]?.getAttribute('fill')
+  const minColor = document.getElementsByTagName('g')[0].children[minXIndex + 38]?.getAttribute('fill')
 
   return {
     chartTitle: {
@@ -101,6 +108,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingChangeMatrixSpec {
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for change matrix.
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings are to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function changeMatrixFactory (
   contextKey,

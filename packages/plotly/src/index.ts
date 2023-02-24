@@ -99,12 +99,12 @@ export const generateBasicAnnotations = (
 }
 
 /**
- * 
+ * Inject onboarding to visualization 
  * @param {string} contextKey - Context key of visualization.
  * @param {EVisualizationType} visType - Visualization type.
  * @param {any} chart - Runtime object of visualization.
  * @param {IAhoiConfig} ahoiConfig - basic onboarding configurations
- * @param {IAhoiIcons} icons - Icons for onboardings can be changed pass them if required to be changed.
+ * @param {IAhoiIcons} icons - Icons for onboardings can be changed. Pass the icons if required to change them.
  * @returns It returns the onboarding.
  */
 export async function ahoi (

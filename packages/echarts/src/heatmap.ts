@@ -6,20 +6,26 @@ import {
 } from '@visahoi/core'
 import { IOnboardingHeatmapSpec } from '@visahoi/core/src/heatmap'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for heatmap.
+ */
+
 function extractOnboardingSpec (chart, coords): IOnboardingHeatmapSpec {
   const data = chart?._model.option
 
   const dataArr: number[] = []
   data.series[0].data.map((d) => dataArr.push(d[d.length - 1]))
 
-  // The 0 value is indicated as '-'. Remove this from the data array.
-  const index = dataArr.indexOf('-')
-
-  if (index !== -1) {
-    dataArr.splice(index, 1)
-  }
-  const maxValue: number = Math.max(...dataArr)
-  const minValue: number = Math.min(...dataArr)
+  // The 0 value is indicated as '-'. Remove this from the data array. 
+  const newArray = dataArr.filter(
+    element => typeof element === 'number'
+  );
+ 
+  const maxValue: number = Math.max(...newArray)
+  const minValue: number = Math.min(...newArray)
 
   const minColor = chart._model.option.visualMap[0].inRange.color[0]
   const maxColor = chart._model.option.visualMap[0].inRange.color[2]
@@ -86,6 +92,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingHeatmapSpec {
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for heatmap.
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings are to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function heatmapFactory (
   contextKey, 

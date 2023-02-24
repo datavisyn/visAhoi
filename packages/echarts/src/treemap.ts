@@ -1,6 +1,13 @@
 import { EVisualizationType, IOnboardingMessage, generateMessages } from '@visahoi/core'
 import { IOnboardingTreemapSpec } from '@visahoi/core/src/treemap'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for treemap.
+ */
+
 function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
   const options = chart._model?.option?.series[0]
   const childrenData = chart._model?.option?.series[0].data[0].children
@@ -98,6 +105,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingTreemapSpec {
 
   }
 }
+
+/**
+ * To generate basic onboarding messages for treemap.
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings are to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function treemapFactory (contextKey, chart, coords, visElementId: Element): IOnboardingMessage[] {
   const onbordingSpec = extractOnboardingSpec(chart, coords)

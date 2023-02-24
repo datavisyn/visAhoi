@@ -33,10 +33,11 @@ export {
 }
 
 /**
- *
- * @param visType see EVisualizationType
- * @param chart runtime object of the visualization
- * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ * To generate basic messages for specified visualization.
+ * @param {string} contextKey - Context key of the visualization.
+ * @param {EVisualizationType} visType - Visualization type.
+ * @param {any} chart - Runtime object of the visualization
+ * @returns {IOnboardingMessage[]} - Returns all the generated onboarding messages. 
  */
 export const generateBasicAnnotations = (
   contextKey: string,
@@ -47,12 +48,12 @@ export const generateBasicAnnotations = (
   const visElement = chart._dom
 
   // TODO: coords
-  const chartTitlePosition =
-    chart._componentsMap['_ec_\u0000series\u00000\u00000_title']?.group
-      .position
-  coords.chartTitle = chartTitlePosition
-    ? { x: chartTitlePosition[0], y: chartTitlePosition[1] + 20 }
-    : null
+  // const chartTitlePosition =
+  //   chart._componentsMap['_ec_\u0000series\u00000\u00000_title']?.group
+  //     .position
+  // coords.chartTitle = chartTitlePosition
+  //   ? { x: chartTitlePosition[0], y: chartTitlePosition[1] + 20 }
+  //   : null
 
   let onboardingMessages: IOnboardingMessage[]
 
@@ -94,10 +95,12 @@ export const generateBasicAnnotations = (
 }
 
 /**
- *
- * @param visType
- * @param chart
- * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
+ * Inject onboarding to visualization
+ * @param {EVisualizationType} visType - Visualization type.
+ * @param {any} chart - Runtime object of visualization.
+ * @param {IAhoiConfig} ahoiConfig - Basic onboarding configurations. 
+ * @param {IAhoiIcons} icons - Icons for onboardings can be changed. Pass the icons if required to change them.
+ * @returns It returns the onboarding.
  */
 export async function ahoi (
   contextKey: string,

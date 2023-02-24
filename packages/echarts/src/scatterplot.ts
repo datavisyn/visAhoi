@@ -5,6 +5,13 @@ import {
 } from '@visahoi/core'
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for scatterplot.
+ */
+
 function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
   const dataCoords = chart._chartsViews[0]._symbolDraw._data._itemLayouts
   const options = chart._model.option
@@ -23,11 +30,11 @@ function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
   const minY = yVals[minXIndex]
 
   // TODO: Get the value to child nodes only for the rect.
-  const maxPositionX = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 40]?.getBoundingClientRect().x
-  const maxPositionY = document.getElementsByTagName('g')[0].childNodes[maxXIndex + 40]?.getBoundingClientRect().y
+  const maxPositionX = document.getElementsByTagName('g')[0].children[maxXIndex + 40]?.getBoundingClientRect().x
+  const maxPositionY = document.getElementsByTagName('g')[0].children[maxXIndex + 40]?.getBoundingClientRect().y
 
-  const minPositionX = document.getElementsByTagName('g')[0].childNodes[minXIndex + 40]?.getBoundingClientRect().x
-  const minPositionY = document.getElementsByTagName('g')[0].childNodes[minXIndex + 40]?.getBoundingClientRect().y
+  const minPositionX = document.getElementsByTagName('g')[0].children[minXIndex + 40]?.getBoundingClientRect().x
+  const minPositionY = document.getElementsByTagName('g')[0].children[minXIndex + 40]?.getBoundingClientRect().y
   return {
     chartTitle: {
       value: options?.title[0]?.text,
@@ -92,6 +99,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingScatterplotSpec {
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for scatterplot.
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings are to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function scatterplotFactory (
   contextKey, 

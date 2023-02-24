@@ -5,6 +5,13 @@ import {
   generateMessages
 } from '@visahoi/core'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for barchart.
+ */
+
 function extractOnboardingSpec (chart, coords): IOnboardingBarChartSpec {
   const dataCoords = chart._chartsViews[0]._data._itemLayouts
   const data = chart._chartsViews[0]._data
@@ -100,6 +107,15 @@ function extractOnboardingSpec (chart, coords): IOnboardingBarChartSpec {
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for barchart.
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings are to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function barChartFactory (
   contextKey, 
