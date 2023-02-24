@@ -6,7 +6,7 @@
     "declaration": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
     "module": "ES2020",
     "target": "ES2020",
@@ -22,5 +22,9 @@
     "node_modules",
     "dist",
     "build"
-  ]
+  ],
+  "typedocOptions": {        
+    "entryPoints": ["src/index.ts"],
+    "out": "documentation"
+  }
 }

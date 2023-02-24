@@ -53,7 +53,7 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
   const { x, y, b } = getOrientation(v.scales)
   const axesMinMax = getMinMax(a)
 
-  const dataArray = getPropertyValues(a)
+  const dataArray: any = getPropertyValues(a)
   const minIndex = dataArray?.temp?.indexOf(axesMinMax[0].min)
   const maxIndex = dataArray?.temp?.indexOf(axesMinMax[0].max)
 
@@ -72,8 +72,8 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
       anchor: {
         sel: 'svg',
         coords: {
-          x: rectBars[0].childNodes[3]?.getBoundingClientRect()?.x,
-          y: rectBars[0].childNodes[3]?.getBoundingClientRect()?.y
+          x: rectBars[0].children[3]?.getBoundingClientRect()?.x,
+          y: rectBars[0].children[3]?.getBoundingClientRect()?.y
         }
       }
     },
@@ -101,8 +101,8 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
         sel: 'svg',
         coords: minIndex
           ? {
-              x: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.x,
-              y: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.y
+              x: rectBars[0].children[minIndex]?.getBoundingClientRect()?.x,
+              y: rectBars[0].children[minIndex]?.getBoundingClientRect()?.y
             }
           : elems[2]
       }
@@ -113,8 +113,8 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
         sel: 'svg',
         coords: maxIndex
           ? {
-              x: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.x,
-              y: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.y
+              x: rectBars[0].children[maxIndex]?.getBoundingClientRect()?.x,
+              y: rectBars[0].children[maxIndex]?.getBoundingClientRect()?.y
             }
           : elems[7]
       }
@@ -137,8 +137,8 @@ function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: 
       value: (<any>v.axes![2]).title,
       anchor: {
         coords: {
-          x: rectBars[0].childNodes[2]?.getBoundingClientRect()?.x,
-          y: rectBars[0].childNodes[2]?.getBoundingClientRect()?.y
+          x: rectBars[0].children[2]?.getBoundingClientRect()?.x,
+          y: rectBars[0].children[2]?.getBoundingClientRect()?.y
         }
       }
     }

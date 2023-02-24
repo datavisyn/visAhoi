@@ -28,28 +28,30 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
 
   const data = points.map((point) => point)
 
-  const dataArray = data.map((d) => d?.__data__.datum)
+  // TODO: Fix type error. It is removed for generating documentation
 
-  const xArray = dataArray.map(t => t[xAxisLabel])
-  const yArray = dataArray.map(t => t[yAxisLabel])
+  // const dataArray = data.map((d) => d?.__data__.datum)
 
-  const maxX = Math.max(...xArray)
-  const minX = Math.min(...xArray)
+  // const xArray = dataArray.map(t => t[xAxisLabel])
+  // const yArray = dataArray.map(t => t[yAxisLabel])
 
-  const maxIndex = xArray.indexOf(maxX)
-  const minIndex = xArray.indexOf(minX)
+  // const maxX = Math.max(...xArray)
+  // const minX = Math.min(...xArray)
 
-  const maxY = yArray[maxIndex]
-  const minY = yArray[minIndex]
+  // const maxIndex = xArray.indexOf(maxX)
+  // const minIndex = xArray.indexOf(minX)
 
-  const maxPositionX = xVals[maxIndex]
-  const maxPositionY = yVals[maxIndex]
-  const minPositionX = xVals[minIndex]
-  const minPositionY = yVals[minIndex]
+  // const maxY = yArray[maxIndex]
+  // const minY = yArray[minIndex]
+
+  // const maxPositionX = xVals[maxIndex]
+  // const maxPositionY = yVals[maxIndex]
+  // const minPositionX = xVals[minIndex]
+  // const minPositionY = yVals[minIndex]
   const legendMarkers = document.getElementsByClassName('mark-symbol role-legend-symbol')
 
-  const minColor = legendMarkers[0].childNodes[0]?.getAttribute('fill')
-  const maxColor = legendMarkers[legendMarkers.length - 1].childNodes[0]?.getAttribute('fill')
+  const minColor = legendMarkers[0].children[0]?.getAttribute('fill')
+  const maxColor = legendMarkers[legendMarkers.length - 1].children[0]?.getAttribute('fill')
 
   return {
     chartTitle: {
@@ -87,32 +89,32 @@ function extractOnboardingSpec (vegaSpec: Spec, elems: any[]): IOnboardingScatte
         offset: { top: -30 }
       }
     },
-    maxValue: {
-      value: maxPositionX,
-      anchor: {
-        coords: { x: maxPositionX, y: maxPositionY },
-        offset: { left: 25 }
-      }
-    },
-    maxX: {
-      value: maxX
-    },
-    maxY: {
-      value: maxY
-    },
-    minValue: {
-      value: minPositionX,
-      anchor: {
-        coords: { x: minPositionX, y: minPositionY },
-        offset: { left: 25 }
-      }
-    },
-    minX: {
-      value: minX
-    },
-    minY: {
-      value: minY
-    },
+    // maxValue: {
+    //   value: maxPositionX,
+    //   anchor: {
+    //     coords: { x: maxPositionX, y: maxPositionY },
+    //     offset: { left: 25 }
+    //   }
+    // },
+    // maxX: {
+    //   value: maxX
+    // },
+    // maxY: {
+    //   value: maxY
+    // },
+    // minValue: {
+    //   value: minPositionX,
+    //   anchor: {
+    //     coords: { x: minPositionX, y: minPositionY },
+    //     offset: { left: 25 }
+    //   }
+    // },
+    // minX: {
+    //   value: minX
+    // },
+    // minY: {
+    //   value: minY
+    // },
     interactDesc: {
       value: (<any>v.marks![0]).style,
       anchor: {

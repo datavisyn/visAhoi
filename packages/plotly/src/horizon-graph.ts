@@ -83,16 +83,16 @@ function extractOnboardingSpec (
         }
       }
     },
-    // yMax: {
-    //   value: max.toFixed(2),
-    //   anchor: {
-    //     coords: {
-    //       // https://stackoverflow.com/questions/1461059/is-there-an-equivalent-to-getboundingclientrect-for-text-nodes
-    //       x: xGrids[1].childNodes[maxIndex - 1]?.getBoundingClientRect().x,
-    //       y: traceNodes[1].childNodes[0].getBoundingClientRect().y
-    //     }
-    //   }
-    // },
+    yMax: {
+      value: max.toFixed(2),
+      anchor: {
+        coords: {
+          // https://stackoverflow.com/questions/1461059/is-there-an-equivalent-to-getboundingclientrect-for-text-nodes
+          x: xGrids[1].children[maxIndex - 1]?.getBoundingClientRect().x,
+          y: traceNodes[1].childNodes[0].getBoundingClientRect().y
+        }
+      }
+    },
     yMin: {
       value: min.toFixed(2),
       anchor: {
