@@ -5,6 +5,13 @@ import {
   generateMessages
 } from '@visahoi/core'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingBarChartSpec} - It returns the specification for barchart.
+ */
+
 function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll('g.points')
@@ -109,7 +116,16 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
     }
 
   }
-}
+};
+
+/**
+ * To generate basic onboarding messages for barchart 
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization
+ */
 
 export function barChartFactory (
   contextKey: string, 

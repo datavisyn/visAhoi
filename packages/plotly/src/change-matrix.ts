@@ -5,6 +5,14 @@ import {
   generateMessages
 } from '@visahoi/core'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingChangeMatrixSpec} - It returns the specification for change matrix.
+ */
+
+
 function extractOnboardingSpec (
   chart: any,
   coords
@@ -103,6 +111,15 @@ function extractOnboardingSpec (
     },
   }
 }
+
+/**
+ * To generate basic onboarding messages for change matrix. 
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function changeMatrixFactory (
   contextKey: string, 

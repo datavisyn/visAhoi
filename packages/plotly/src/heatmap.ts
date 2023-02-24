@@ -5,6 +5,13 @@ import {
 } from '@visahoi/core'
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingScatterplotSpec} - It returns the specification for scatterplot.
+ */
+
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
   const heatmapData = (<any>(
     Array.from(<NodeList>chart.querySelectorAll('.hm'))[0]
@@ -124,6 +131,15 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for heatmap. 
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {Element} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function heatmapFactory (
   contextKey: string, 

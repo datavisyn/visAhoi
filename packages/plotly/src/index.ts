@@ -36,7 +36,8 @@ export {
  * To generate basic messages for specified visualization.
  * @param {string} contextKey - Context key of the visualization.
  * @param {EVisualizationType} visType - Visualization type.
- * @param {any} chart - Runtime object of the visualization. 
+ * @param {any} chart - Runtime object of the visualization.
+ * @returns {IOnboardingMessage[]} - It returns onboarding messages for the specified visualization type.
  */
 export const generateBasicAnnotations = (
   contextKey: string,

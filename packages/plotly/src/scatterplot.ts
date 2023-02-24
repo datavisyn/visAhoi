@@ -6,6 +6,13 @@ import {
 } from '@visahoi/core'
 import { IOnboardingScatterplotSpec } from '@visahoi/core/src/scatterplot'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingScatterplotSpec} - It returns the specification for scatterplot.
+ */
+
 function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec {
   const traceNodes = chart?.querySelectorAll('g.points')
   const areaNodes = traceNodes ? traceNodes?.[0]?.querySelectorAll('path.point') : null
@@ -168,6 +175,15 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingScatterplotSpec 
     }
   }
 }
+
+/**
+ * To generate basic onboarding messages for scatterplot. 
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {Element} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function scatterplotFactory (
   contextKey: string, 

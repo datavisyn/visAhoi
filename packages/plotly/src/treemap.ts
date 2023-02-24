@@ -5,6 +5,13 @@ import {
   generateMessages
 } from '@visahoi/core'
 
+/**
+ * To get onboarding specifications.
+ * @param {any} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y position. It is optional.
+ * @returns {IOnboardingScatterplotSpec} - It returns the specification for treemap.
+ */
+
 function extractOnboardingSpec (chart: any, coords): IOnboardingTreemapSpec {
   const indexArr: number[] = []
   const valArr: number[] = []
@@ -154,6 +161,15 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingTreemapSpec {
     },
   }
 }
+
+/**
+ * To generate basic onboarding messages for treemap. 
+ * @param {string} contextKey -Context key of the visualization.
+ * @param {Element} chart - Runtime object of the visualization.
+ * @param {any} coords - x and y cordinates to which the onboarding is attached.
+ * @param {Element} visElementId - The DOM element to which the onboardings to be placed.
+ * @returns {IOnboardingMessage[]} - It returns all the generated onboarding messages for the visualization.
+ */
 
 export function treemapFactory (
   contextKey: string, 

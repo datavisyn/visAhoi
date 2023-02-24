@@ -26,5 +26,5 @@
   "typedocOptions": {        
     "entryPoints": ["src/index.ts"],
     "out": "documentation"
-}
+  }
 }
