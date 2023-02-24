@@ -49,6 +49,8 @@ function generateMessages (
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage
 
+  //TODO: Fix type error. Removed to generate documentation
+
   // const modebar = document.getElementsByClassName('modebar-btn');
   // const modebarText = []
   
