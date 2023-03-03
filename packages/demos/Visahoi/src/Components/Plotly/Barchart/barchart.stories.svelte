@@ -1,18 +1,13 @@
 <script>
-    import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
-  
-    import Barchart from './barchart.svelte';  
-    
-  </script>
-  
-  <Meta title="Visahoi/Plotly/Barchart" component={Barchart}/>
-  
-  <Template let:args>
-    <Barchart {...args}>
-  
-    </Barchart>
-  </Template>
-  
-  <Story name="Demo" args={{contextKey: "barchart"}}/>
-  
-  
+  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+
+  import Barchart from "./barchart.svelte";
+</script>
+
+<Meta title="Visahoi/Plotly/Barchart" component={Barchart} />
+
+<Template let:args>
+  <Barchart {...args} />
+</Template>
+
+<Story name="Demo" args={{ contextKey: "barchart" }} />

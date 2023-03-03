@@ -1,105 +1,87 @@
-
 <script lang="ts">
   import "@visahoi/plotly/build/css/main.css";
-  import ResizeObserver from "svelte-resize-observer";
   import Plotly from "plotly.js-dist";
   import { onMount, onDestroy } from "svelte";
-  import {
-    generateBasicAnnotations,
-    ahoi,
-    EVisualizationType
-  } from "@visahoi/plotly";  
+  import { ahoi, EVisualizationType } from "@visahoi/plotly";
   import type { IAhoiConfig } from "@visahoi/core";
-  
-    export let contextKey: string;
-    let onboardingUI;
-    let runtimeObject: Plotly;
-  
-    const data: object[]  = [
+
+  export let contextKey: string;
+  let onboardingUI;
+  let runtimeObject: Plotly;
+
+  const data: object[] = [
     {
       z: [
         [14, null, 19, 24, 16],
         [17, 15, 28, 33, 20],
-        [19, 23, 29, 18, 18]
+        [19, 23, 29, 18, 18],
       ],
-      x: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      y: ['Morning', 'Afternoon', 'Evening'],
-      type: 'heatmap',
+      x: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      y: ["Morning", "Afternoon", "Evening"],
+      type: "heatmap",
       hoverongaps: false,
       colorscale: [
-        [0, '#337ab7'],
-        [0.5, '#f5f5f5'],
-        [1, '#ec6836']
-      ]
-    }
+        [0, "#337ab7"],
+        [0.5, "#f5f5f5"],
+        [1, "#ec6836"],
+      ],
+    },
   ];
 
   const layout: object = {
-    title: 'Average temperature in a week',
+    title: "Average temperature in a week",
     xaxis: {
-      title: 'Weekday'
+      title: "Weekday",
     },
     yaxis: {
-      title: 'Average temperature per day time'
-    }
+      title: "Average temperature per day time",
+    },
   };
 
   const config: object = {
-    responsive: true
-  };   
-  
-  const getAhoiConfig = (): IAhoiConfig => {
-    const defaultOnboardingMessages = generateBasicAnnotations(
-      contextKey,
-      EVisualizationType.HEATMAP,
-      runtimeObject
-    );
-    const ahoiConfig = {
-      onboardingMessages: defaultOnboardingMessages,
-    };
-
-    return ahoiConfig;
+    responsive: true,
   };
-  
-  const onResize = (e) => {
-    if(onboardingUI) {
-      // update onboarding
-      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-    }
-    if(runtimeObject) {
-      Plotly.Plots.resize(runtimeObject)
-    }
-  }
-  
+
+  // const onResize = (e) => {
+  //   if(onboardingUI) {
+  //     // update onboarding
+  //     onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
+  //   }
+  //   if(runtimeObject) {
+  //     Plotly.Plots.resize(runtimeObject)
+  //   }
+  // }
+
   onMount(async () => {
     const plotDiv = document.getElementById(contextKey);
     runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
-    if(onboardingUI) {
-      onboardingUI.showOnboarding()
+    if (onboardingUI) {
+      onboardingUI.showOnboarding();
     } else {
-      onboardingUI = await ahoi(
-        contextKey,
-        EVisualizationType.HEATMAP,
-        runtimeObject,
-        getAhoiConfig()
-      );
+      onboardingUI = await ahoi({
+        visType: EVisualizationType.HEATMAP,
+        chart: runtimeObject,
+        ahoiConfig: {
+          contextKey,
+        },
+      });
     }
   });
-  
+
   onDestroy(() => {
-    if(onboardingUI) {
-      onboardingUI.removeOnboarding()
+    if (onboardingUI) {
+      onboardingUI.removeOnboarding();
     }
-  })
-  </script>
-  
-  <div id="plotly">
-    <ResizeObserver on:resize={onResize} />
-    <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
-  </div>
-  
-  <style>
-    :global(*) {
-      font-family: sans-serif;
-    }
-  </style>
+  });
+</script>
+
+<div id="plotly">
+  <!-- <ResizeObserver on:resize={onResize} /> -->
+  <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
+</div>
+
+<style>
+  :global(*) {
+    font-family: sans-serif;
+  }
+</style>

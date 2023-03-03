@@ -1,7 +1,7 @@
 <script>
-  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';  
+  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-  import Scatterchart from './Scatterchart.svelte';
+  import Scatterchart from "./Scatterchart.svelte";
 
   let count = 0;
   function handleClick() {
@@ -9,19 +9,10 @@
   }
 </script>
 
-<Meta title="Visahoi/Plotly/Schatterplot" component={Scatterchart}/>
+<Meta title="Visahoi/Plotly/Schatterplot" component={Scatterchart} />
 
 <Template let:args>
-  <Scatterchart {...args}>
-
-  </Scatterchart>
+  <Scatterchart {...args} />
 </Template>
 
-<Story name="Demo" args={{contextKey: "scatterplot"}} />
-
-<!-- <Story name="Square" source args={{rounded: false}}/> -->
-
-<!-- Dynamic snippet should be disabled for this story -->
-<!-- <Story name="Button No Args">
-  <Button>Label</Button>
-</Story> -->
+<Story name="Demo" args={{ contextKey: "scatterplot" }} />

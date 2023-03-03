@@ -1,21 +1,21 @@
 // @ts-ignore
-import readingIcon from './assets/glasses-solid.svg';
+import readingIcon from "./assets/glasses-solid.svg";
 // @ts-ignore
-import analyzingIcon from './assets/lightbulb-solid.svg';
+import analyzingIcon from "./assets/lightbulb-solid.svg";
 // @ts-ignore
-import interactingIcon from './assets/hand-point-up-regular.svg';
+import interactingIcon from "./assets/hand-point-up-regular.svg";
 
 /**
  * Supported chart types
  */
 export enum EVisualizationType {
-  BAR_CHART = 'bar-chart',
-  CHANGE_MATRIX = 'change-matrix',
-  HORIZON_GRAPH = 'horizon-graph',
-  SCATTERPLOT = 'scatterplot',
-  TREEMAP = 'treemap',
-  HEATMAP = 'heatmap',
-  GENERIC = 'generic',
+  BAR_CHART = "bar-chart",
+  CHANGE_MATRIX = "change-matrix",
+  HORIZON_GRAPH = "horizon-graph",
+  SCATTERPLOT = "scatterplot",
+  TREEMAP = "treemap",
+  HEATMAP = "heatmap",
+  GENERIC = "generic",
 }
 
 export enum SvgIcons {
@@ -27,17 +27,15 @@ export enum SvgIcons {
   ZOOM_IN = `<svg viewBox="0 0 875 1000" class="icon" height="1em" width="1em" fill="gray" style="margin-right: 5px"><path d="m1 787l0-875 875 0 0 875-875 0z m687-500l-187 0 0-187-125 0 0 187-188 0 0 125 188 0 0 187 125 0 0-187 187 0 0-125z" transform="matrix(1 0 0 -1 0 850)"></path></svg>`,
   ZOOM_OUT = `<svg viewBox="0 0 875 1000" class="icon" height="1em" width="1em" fill="gray" style="margin-right: 5px"><path d="m1 787l0-875 875 0 0 875-875 0z m687-500l-187 0 0-187-125 0 0 187-188 0 0 125 188 0 0 187 125 0 0-187 187 0 0-125z" transform="matrix(1 0 0 -1 0 850)"></path></svg>`,
   AUTO_SCALE = `<svg viewBox="0 0 1000 1000" class="icon" height="1em" width="1em" fill="gray" style="margin-right: 5px"><path d="m250 850l-187 0-63 0 0-62 0-188 63 0 0 188 187 0 0 62z m688 0l-188 0 0-62 188 0 0-188 62 0 0 188 0 62-62 0z m-875-938l0 188-63 0 0-188 0-62 63 0 187 0 0 62-187 0z m875 188l0-188-188 0 0-62 188 0 62 0 0 62 0 188-62 0z m-125 188l-1 0-93-94-156 156 156 156 92-93 2 0 0 250-250 0 0-2 93-92-156-156-156 156 94 92 0 2-250 0 0-250 0 0 93 93 157-156-157-156-93 94 0 0 0-250 250 0 0 0-94 93 156 157 156-157-93-93 0 0 250 0 0 250z" transform="matrix(1 0 0 -1 0 850)"></path></svg>`,
-  RESET = `<svg viewBox="0 0 928.6 1000" class="icon" height="1em" width="1em" fill="gray" style="margin-right: 5px"><path d="m786 296v-267q0-15-11-26t-25-10h-214v214h-143v-214h-214q-15 0-25 10t-11 26v267q0 1 0 2t0 2l321 264 321-264q1-1 1-4z m124 39l-34-41q-5-5-12-6h-2q-7 0-12 3l-386 322-386-322q-7-4-13-4-7 2-12 7l-35 41q-4 5-3 13t6 12l401 334q18 15 42 15t43-15l136-114v109q0 8 5 13t13 5h107q8 0 13-5t5-13v-227l122-102q5-5 6-12t-4-13z" transform="matrix(1 0 0 -1 0 850)"></path></svg>`
+  RESET = `<svg viewBox="0 0 928.6 1000" class="icon" height="1em" width="1em" fill="gray" style="margin-right: 5px"><path d="m786 296v-267q0-15-11-26t-25-10h-214v214h-143v-214h-214q-15 0-25 10t-11 26v267q0 1 0 2t0 2l321 264 321-264q1-1 1-4z m124 39l-34-41q-5-5-12-6h-2q-7 0-12 3l-386 322-386-322q-7-4-13-4-7 2-12 7l-35 41q-4 5-3 13t6 12l401 334q18 15 42 15t43-15l136-114v109q0 8 5 13t13 5h107q8 0 13-5t5-13v-227l122-102q5-5 6-12t-4-13z" transform="matrix(1 0 0 -1 0 850)"></path></svg>`,
 }
 
-
-
-export interface IBackdrop { 
+export interface IBackdrop {
   visElement: Element;
   color?: string;
 }
 
-export type NavigationAlignment = 'horizontal' | 'vertical';
+export type NavigationAlignment = "horizontal" | "vertical";
 
 interface IPoint {
   x: number;
@@ -70,8 +68,8 @@ export type OnboardingAnchor =
 export const isOnboardingElementAnchor = (
   element: OnboardingAnchor
 ): element is IOnboardingElementAnchor => {
-  return (element as IOnboardingElementAnchor).element !== undefined
-}
+  return (element as IOnboardingElementAnchor).element !== undefined;
+};
 
 export interface ISpecProp {
   value: any;
@@ -97,7 +95,7 @@ export interface IAhoiIcons {
   edit: string;
   check: string;
   chevronUp: string;
-  chevronDown: string;  
+  chevronDown: string;
 }
 
 export type OnboardingStage = string;
@@ -112,7 +110,7 @@ export interface IOnboardingStage {
   order: number;
 }
 
-export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export interface IMarker {
   radius?: number;
@@ -134,22 +132,24 @@ export interface IOnboardingMessage {
 }
 
 export interface IAhoiConfig {
-  onboardingMessages: IOnboardingMessage[];
-  backdrop?: IBackdropConfig;
-  showHelpCloseText?: boolean;
-  showOnboardingNavigation?: boolean;
+  // onboardingMessages: IOnboardingMessage[];
+  contextKey: string;
   alignment?: NavigationAlignment;
+  backdrop?: IBackdropConfig;
+  icons?: IAhoiIcons;
+  showOnboardingNavigation?: boolean;
+  showHelpCloseText?: boolean;
 }
 
 export enum EDefaultOnboardingStages {
-  READING = 'reading-the-chart',
-  USING = 'using-the-chart',
-  ANALYZING = 'analyze-the-chart',
+  READING = "reading-the-chart",
+  USING = "using-the-chart",
+  ANALYZING = "analyze-the-chart",
 }
 
 export enum EDefaultOnboardingStageNavigation {
-  PREVIOUS = 'previous',
-  NEXT = 'next',
+  PREVIOUS = "previous",
+  NEXT = "next",
 }
 
 export interface IOnboardingStageNavigation {
@@ -166,35 +166,35 @@ export const defaultOnboardingStages: Map<
     EDefaultOnboardingStages.READING,
     {
       id: EDefaultOnboardingStages.READING,
-      title: 'Reading',
+      title: "Reading",
       icon: readingIcon,
-      hoverBackgroundColor: 'rgb(92, 59, 112)',
-      backgroundColor: 'rgb(123, 80, 150)',
-      activeBackgroundColor: 'rgb(76, 46, 94)',
-      order: 3
-    }
+      hoverBackgroundColor: "rgb(92, 59, 112)",
+      backgroundColor: "rgb(123, 80, 150)",
+      activeBackgroundColor: "rgb(76, 46, 94)",
+      order: 3,
+    },
   ],
   [
     EDefaultOnboardingStages.USING,
     {
       id: EDefaultOnboardingStages.USING,
-      title: 'Interacting',
+      title: "Interacting",
       icon: interactingIcon,
-      backgroundColor: 'rgb(0, 61, 92)',
-      order: 2
-    }
+      backgroundColor: "rgb(0, 61, 92)",
+      order: 2,
+    },
   ],
   [
     EDefaultOnboardingStages.ANALYZING,
     {
       id: EDefaultOnboardingStages.ANALYZING,
-      title: 'Analyzing',
+      title: "Analyzing",
       icon: analyzingIcon,
-      backgroundColor: 'rgb(254, 128, 41)',
-      order: 1
-    }
-  ]
-])
+      backgroundColor: "rgb(254, 128, 41)",
+      order: 1,
+    },
+  ],
+]);
 
 export interface IAnchorPosition {
   x: number;
