@@ -1,7 +1,6 @@
 // @ts-ignore
 import OnboardingUI from "./components/OnboardingUI.svelte";
 import { stores } from "./components/stores.js";
-import debounce from "lodash.debounce";
 import {
   IAhoiConfig,
   IAhoiIcons,
@@ -91,19 +90,6 @@ export const injectOnboarding = (
 
     const ref = { update: () => {} };
 
-    /**
-     *
-     * @param config the ahoiConfig to update
-     * @param element optional the updated element
-     */
-    const updateOnboarding = (config: IAhoiConfig, element?: Element) => {
-      onboardingMessages.set(customOnboardingMessages);
-      if (element) {
-        visElement.set(element);
-      }
-      ref.update();
-    };
-
     onboardingUI = new OnboardingUI({
       target: document.body as Element,
       props: {
@@ -117,7 +103,6 @@ export const injectOnboarding = (
     showOnboarding.set(true);
     return {
       contextKey,
-      updateOnboarding: debounce(updateOnboarding),
       showOnboarding: () => {
         showOnboarding.set(true);
       },
