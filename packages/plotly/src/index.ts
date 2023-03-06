@@ -138,6 +138,7 @@ export async function ahoi({
   chart,
   ahoiConfig = {
     contextKey: v4(),
+    alignment: "vertical",
   },
   customizeOnboardingMessages,
 }: {

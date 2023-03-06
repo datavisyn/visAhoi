@@ -130,25 +130,16 @@
 </script>
 
 <div
-  class="visahoi-navigation-container"
-  style="--flexDirection:{$navigationAlignment === 'vertical'
-    ? 'column'
-    : 'row'}; bottom:{$navigationAlignment === 'horizontal'
-    ? '30px'
-    : '80px'}; right: {$navigationAlignment === 'horizontal'
-    ? '90px'
-    : ''}; height: '60px' "
+  class="visahoi-navigation-container {$navigationAlignment === 'horizontal'
+    ? 'horizontal'
+    : 'vertical'}"
 >
   {#key $markerInformation || $onboardingStages}
     <div
-      class="visahoi-navigation-marker-container"
-      style="--flexDirection:{$navigationAlignment === 'vertical'
-        ? 'column'
-        : 'row'}; bottom:{$navigationAlignment === 'horizontal'
-        ? '30px'
-        : '80px'}; right: {$navigationAlignment === 'horizontal'
-        ? '10px'
-        : ''};"
+      class="visahoi-navigation-marker-container {$navigationAlignment ===
+      'horizontal'
+        ? 'horizontal'
+        : 'vertical'}"
     >
       {#if $activeOnboardingStage && $showOnboardingNavigation}
         {#each $markerInformation.sort((a, b) => {
@@ -215,7 +206,7 @@
   <OnboardingNavigationMainItem {visState} />
 </div>
 
-<style>
+<style lang="scss">
   .visahoi-navigation-marker-container {
     position: absolute;
     display: flex;
@@ -228,6 +219,14 @@
     right: var(--right);
     opacity: 1;
     z-index: 15;
+    bottom: 30px;
+    &.horizontal {
+      right: 10px;
+      flex-direction: row;
+    }
+    &.vertical {
+      flex-direction: column;
+    }
   }
   .visahoi-navigation-next {
     position: absolute;
@@ -253,14 +252,27 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
+    height: 60px;
+    &.vertical {
+      flex-direction: column;
+      bottom: 30px;
+      right: 90px;
+    }
+    &.horizontal {
+      flex-direction: row;
+      bottom: 30px;
+      right: 90px;
+    }
   }
 
-  .horizontal {
+  .visahoi-navigation-next.horizontal,
+  .visahoi-navigation-previous.horizontal {
     right: var(--bottom-height);
     bottom: 0;
   }
 
-  .vertical {
+  .visahoi-navigation-next.vertical,
+  .visahoi-navigation-previous.vertical {
     bottom: var(--bottom-height);
   }
 </style>
