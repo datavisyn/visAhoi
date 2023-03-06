@@ -43,7 +43,6 @@
   };
 
   onMount(async () => {
-    const plotDiv = document.getElementById(contextKey);
     runtimeObject = await new Plotly.newPlot(plotDiv, data, layout, config);
     if (onboardingUI) {
       onboardingUI.showOnboarding();

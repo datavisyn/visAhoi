@@ -136,14 +136,18 @@ export async function ahoi({
   chart: any;
   ahoiConfig?: IAhoiConfig;
   customizeOnboardingMessages?: (
-    defaultOnbaordingMessages: IOnboardingMessage[]
+    defaultOnbaordingMessages: IOnboardingMessage[],
+    contextKey: string
   ) => IOnboardingMessage[];
 }) {
   const visElement = chart.view._el;
   generateBasicAnnotations(ahoiConfig.contextKey, visType, chart).then(
     (defaultOnboardingMessages) => {
       const customOnboardingMessages = customizeOnboardingMessages
-        ? customizeOnboardingMessages(defaultOnboardingMessages)
+        ? customizeOnboardingMessages(
+            defaultOnboardingMessages,
+            ahoiConfig.contextKey
+          )
         : defaultOnboardingMessages;
       return injectOnboarding(ahoiConfig, visElement, customOnboardingMessages);
     }

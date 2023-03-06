@@ -11,6 +11,7 @@ import {
   setOnboardingStage,
   setEditMode,
   setOnboardingMessage,
+  // initializeOnboarding,
 } from "@visahoi/core";
 import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
@@ -133,7 +134,7 @@ export const generateBasicAnnotations = (
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi({
+export function ahoi({
   visType,
   chart,
   ahoiConfig = {
@@ -146,17 +147,22 @@ export async function ahoi({
   chart: any;
   ahoiConfig?: IAhoiConfig;
   customizeOnboardingMessages?: (
-    defaultOnbaordingMessages: IOnboardingMessage[]
+    defaultOnbaordingMessages: IOnboardingMessage[],
+    contextKey: string
   ) => IOnboardingMessage[];
 }) {
   const visElement = chart;
+  // initializeOnboarding(ahoiConfig.contextKey, visElement);
   const defaultOnboardingMessages = generateBasicAnnotations(
     ahoiConfig.contextKey,
     visType,
     chart
   );
   const customOnboardingMessages = customizeOnboardingMessages
-    ? customizeOnboardingMessages(defaultOnboardingMessages)
+    ? customizeOnboardingMessages(
+        defaultOnboardingMessages,
+        ahoiConfig.contextKey
+      )
     : defaultOnboardingMessages;
   return injectOnboarding(ahoiConfig, visElement, customOnboardingMessages);
 }

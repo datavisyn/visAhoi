@@ -3,11 +3,9 @@ import OnboardingUI from "./components/OnboardingUI.svelte";
 import { stores } from "./components/stores.js";
 import {
   IAhoiConfig,
-  IAhoiIcons,
   IMarker,
   IOnboardingMessage,
   IOnboardingStage,
-  NavigationAlignment,
 } from "./interfaces";
 import { v4 } from "uuid";
 import { get } from "svelte/store";
@@ -15,6 +13,34 @@ import { getMarkerInformation } from "./components/getMarkerInformation";
 import { VisahoiState } from "./components/state";
 
 let onboardingUI: OnboardingUI;
+
+// export const initializeOnboarding = (contextKey: string, element: Element) => {
+//   const s = get(stores);
+//   if (!s.has(contextKey)) {
+//     // INITIALIZING THE STORE FOR A NEW VIS
+//     const visState = new VisahoiState();
+//     visState.visElement.set(element);
+//     s.set(contextKey, visState);
+//     const { contextId, visElement } = visState;
+//     contextId.set(contextKey);
+
+//     console.log("done");
+//     console.log(s);
+
+//     const ref = { update: () => {} };
+
+//     onboardingUI = new OnboardingUI({
+//       target: document.body as Element,
+//       props: {
+//         // state for one specific visahoi Instance (usually a vis)
+//         visState,
+//         ref,
+//         visElement,
+//         contextKey,
+//       },
+//     });
+//   }
+// };
 
 export const injectOnboarding = (
   ahoiConfig: IAhoiConfig,
@@ -28,6 +54,7 @@ export const injectOnboarding = (
     const newState = new VisahoiState();
     newState.visElement.set(visElement);
     s.set(contextKey, newState);
+    // initializeOnboarding(contextKey, visElement);
   }
   const visState = s.get(contextKey);
   if (visState) {
@@ -170,7 +197,36 @@ export const createBasicOnboardingStage = (
   }
 };
 
+/**
+ * creates an onboarding message without adding it to the store
+ */
 export const createBasicOnboardingMessage = (
+  contextKey: string,
+  message: Pick<
+    IOnboardingMessage,
+    "title" | "text" | "onboardingStage" | "anchor" | "id" | "order"
+  >
+): IOnboardingMessage => {
+  return {
+    id: message.id || `visahoi-message-${contextKey}- ${v4()}`,
+    anchor: message.anchor,
+    text: message.text,
+    title: message.title,
+    onboardingStage: message.onboardingStage,
+    marker: {
+      id: `visahoi-marker-${contextKey}- ${v4()}`,
+    },
+    order: message.order || -1,
+  };
+};
+
+/**
+ * creates an onboarding messages and stores it to the visualization store
+ * @param contextKey
+ * @param message
+ * @returns
+ */
+export const addBasicOnboardingMessage = (
   contextKey: string,
   message: Pick<
     IOnboardingMessage,

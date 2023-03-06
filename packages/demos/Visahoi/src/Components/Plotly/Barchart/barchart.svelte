@@ -52,6 +52,29 @@
       onboardingUI = await ahoi({
         visType: EVisualizationType.BAR_CHART,
         chart: runtimeObject,
+        // customizeOnboardingMessages: (
+        //   defaultOnboardingMessages: IOnboardingMessage[],
+        //   contextKey: string
+        // ) => {
+        //   const reading = defaultOnboardingStages.get(
+        //     EDefaultOnboardingStages.READING
+        //   ) as IOnboardingStage;
+
+        //   const n = createBasicOnboardingMessage(contextKey, {
+        //     title: "title",
+        //     onboardingStage: reading,
+        //     id: "test-id",
+        //     order: 1,
+        //     anchor: {
+        //       coords: {
+        //         x: 200,
+        //         y: 200,
+        //       },
+        //     },
+        //     text: "hello world",
+        //   });
+        //   return [n];
+        // },
       });
     }
   });

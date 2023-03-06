@@ -26,7 +26,6 @@
     showBackdrop,
   } = visState;
 
-
   const setMarkerInformation = (visElement) => {
     const updatedMarkerInformation = getMarkerInformation(
       visElement,
@@ -43,9 +42,8 @@
 
   const resizeUpdate = (entry: ResizeObserverEntry) => {
     const newVisElement = entry.contentRect;
-    // console.log("resizeobserver: ", entries, newVisElement.width)
-    visXPosition.set(newVisElement.x);
-    visYPosition.set(newVisElement.y);
+    visXPosition.set(entry.target.getBoundingClientRect().x);
+    visYPosition.set(entry.target.getBoundingClientRect().y);
     visWidth.set(newVisElement.width);
     visHeight.set(newVisElement.height);
     visElement.set(entry.target);
@@ -58,10 +56,14 @@
     const resizeObserver = new ResizeObserver((entries) => {
       debouncedResizeUpdate(entries[0]);
     });
-    if($visElement !== null) {
+    if ($visElement !== null) {
       resizeObserver.observe($visElement);
+      // set initial visElement properties
+      visXPosition.set($visElement.getBoundingClientRect().x);
+      visYPosition.set($visElement.getBoundingClientRect().y);
+      visWidth.set($visElement.getBoundingClientRect().width);
+      visHeight.set($visElement.getBoundingClientRect().height);
       setMarkerInformation($visElement);
-
     }
   });
 </script>
