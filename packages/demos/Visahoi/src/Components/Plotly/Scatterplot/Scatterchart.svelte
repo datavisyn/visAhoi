@@ -5,7 +5,7 @@
   import { ahoi, EVisualizationType } from "@visahoi/plotly";
   import type { PlotData } from "plotly.js";
 
-  export let contextKey: string;
+  let plotDiv: HTMLElement;
   let onboardingUI;
   let runtimeObject: Plotly;
 
@@ -28,18 +28,7 @@
     },
   };
 
-  // const onResize = (e) => {
-  //   if(onboardingUI) {
-  //     // update onboarding
-  //     onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-  //   }
-  //   if(runtimeObject) {
-  //     Plotly.Plots.resize(runtimeObject)
-  //   }
-  // }
-
   onMount(async () => {
-    const plotDiv = document.getElementById(contextKey);
     runtimeObject = await new Plotly.newPlot(plotDiv, trace, layout);
     if (onboardingUI) {
       onboardingUI.showOnboarding();
@@ -47,9 +36,6 @@
       onboardingUI = await ahoi({
         chart: runtimeObject,
         visType: EVisualizationType.SCATTERPLOT,
-        ahoiConfig: {
-          contextKey,
-        },
       });
     }
   });
@@ -61,10 +47,7 @@
   });
 </script>
 
-<div id="plotly">
-  <!-- <ResizeObserver on:resize={onResize} /> -->
-  <div id={contextKey}><!-- Plotly chart will be drawn inside this DIV --></div>
-</div>
+<div bind:this={plotDiv} />
 
 <style>
   :global(*) {

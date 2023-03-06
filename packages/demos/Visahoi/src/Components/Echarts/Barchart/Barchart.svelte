@@ -1,109 +1,83 @@
 <script lang="ts">
-// import OnboardingUI from '@visahoi/core/src/components/OnboardingUI.svelte'
-import * as echarts from 'echarts';
-import ResizeObserver from "svelte-resize-observer";
-import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts'
-import { onMount, onDestroy } from "svelte";
-import type { IAhoiConfig } from '@visahoi/core/src/interfaces';
+  import * as echarts from "echarts";
+  import { ahoi, EVisualizationType } from "@visahoi/echarts";
+  import { onMount, onDestroy } from "svelte";
 
-export let contextKey: string = 'barchart';
+  let plotDiv: HTMLElement;
+  let onboardingUI;
+  let runtimeObject: echarts.ECharts;
 
-// TODO: Since onboardingUI is not exported it throws error
-// let onboardingUI: OnboardingUI;
-let onboardingUI;
-let runtimeObject: echarts.ECharts;
-
-const options: echarts.EChartsCoreOption = {
+  const options: echarts.EChartsCoreOption = {
     title: {
-      text: 'Average temperature in Oslo, Norway in 2018',
-      left: 'center'
+      text: "Average temperature in Oslo, Norway in 2018",
+      left: "center",
     },
     tooltip: {},
     xAxis: {
-      type: 'category',
-      name: 'Month',
-      nameLocation: 'middle',
+      type: "category",
+      name: "Month",
+      nameLocation: "middle",
       nameGap: 30,
-      data: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09', '2018-10', '2018-11', '2018-12', 'undefined-undefined'],
+      data: [
+        "2018-01",
+        "2018-02",
+        "2018-03",
+        "2018-04",
+        "2018-05",
+        "2018-06",
+        "2018-07",
+        "2018-08",
+        "2018-09",
+        "2018-10",
+        "2018-11",
+        "2018-12",
+        "undefined-undefined",
+      ],
       axisLabel: {
         formatter: function (value) {
-          const date = new Date(value)
-          return date.getMonth() + 1
-        }
-      }
+          const date = new Date(value);
+          return date.getMonth() + 1;
+        },
+      },
     },
     yAxis: {
-      type: 'value',
-      name: 'Average Temperature in °C',
-      nameLocation: 'middle',
-      nameGap: 35
+      type: "value",
+      name: "Average Temperature in °C",
+      nameLocation: "middle",
+      nameGap: 35,
     },
     series: [
       {
         data: [-2, -4, -2, 6, 16, 18, 22, 16, 12, 7, 3, -1, NaN],
-        type: 'bar',
-        color: 'lightgrey'
-      }
-    ]
-  }
-
-  const getAhoiConfig = (): IAhoiConfig => {    
-      const defaultOnboardingMessages = generateBasicAnnotations(
-        contextKey,
-        EVisualizationType.BAR_CHART,
-        runtimeObject
-      );      
-      const ahoiConfig = {
-        onboardingMessages: defaultOnboardingMessages,
-      };
-  
-    return ahoiConfig;
+        type: "bar",
+        color: "lightgrey",
+      },
+    ],
   };
 
-  const onResize = (e) => {
-    if(onboardingUI) {
-      // update onboarding
-      onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-    }
-    if(runtimeObject) {
-      runtimeObject.resize();
-    }
-  }
-
   onMount(async () => {
-    const chartDom = document.getElementById('barchart');  
-    runtimeObject  = echarts.init(chartDom, null, {
-    renderer: 'svg'
+    runtimeObject = echarts.init(plotDiv, null, {
+      renderer: "svg",
     });
-    console.log(typeof(runtimeObject), 'Runtimeob')
-    runtimeObject.setOption(options);  
-    if(onboardingUI) {
-      onboardingUI.showOnboarding();    
-      } else {      
-        onboardingUI = await ahoi(
-          contextKey,
-          EVisualizationType.BAR_CHART,
-          runtimeObject,
-          getAhoiConfig()
-        );
-      }
+    runtimeObject.setOption(options);
+    if (onboardingUI) {
+      onboardingUI.showOnboarding();
+    } else {
+      onboardingUI = await ahoi({
+        visType: EVisualizationType.BAR_CHART,
+        chart: runtimeObject,
+      });
+    }
   });
-  
+
   onDestroy(() => {
-    if(onboardingUI) {
+    if (onboardingUI) {
       onboardingUI.removeOnboarding();
     }
   });
-
-
 </script>
 
-<div id="echarts" style="width: 100%; height: 100%;">
-  <ResizeObserver on:resize={onResize} />
-  <div id="barchart" style="width: 500px; height: 500px;"> </div>
-</div>
-
-
+<div bind:this={plotDiv} style="width: 500px; height: 500px;" />
 
 <style>
   :global(*) {

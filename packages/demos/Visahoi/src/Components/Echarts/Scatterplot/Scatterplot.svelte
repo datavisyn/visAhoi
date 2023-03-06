@@ -1,123 +1,88 @@
 <script lang="ts">
-  import * as echarts from 'echarts';
-  import { generateBasicAnnotations, ahoi, EVisualizationType } from '@visahoi/echarts';
-  import ResizeObserver from "svelte-resize-observer";
+  import * as echarts from "echarts";
+  import { ahoi, EVisualizationType } from "@visahoi/echarts";
   import { onMount, onDestroy } from "svelte";
-  import type { IAhoiConfig } from '@visahoi/core';
-    
-    export let contextKey:string = 'horizonGraph';
-    let onboardingUI;   
-    let runtimeObject: echarts.ECharts; 
 
-    const options: echarts.EChartsCoreOption = {
+  let plotDiv: HTMLElement;
+  let onboardingUI;
+  let runtimeObject: echarts.ECharts;
+
+  const options: echarts.EChartsCoreOption = {
     title: {
-      text: 'Horsepower and miles per gallon for various cars',
-      left: 'center'
+      text: "Horsepower and miles per gallon for various cars",
+      left: "center",
     },
     tooltip: {},
     xAxis: {
-      type: 'value',
-      name: 'Horsepower',
-      nameLocation: 'middle',
-      nameGap: 30
+      type: "value",
+      name: "Horsepower",
+      nameLocation: "middle",
+      nameGap: 30,
     },
     yAxis: {
-      type: 'value',
-      name: 'Miles per Gallon',
-      nameLocation: 'middle',
-      nameGap: 35
+      type: "value",
+      name: "Miles per Gallon",
+      nameLocation: "middle",
+      nameGap: 35,
     },
     series: [
       {
         data: [
-        [10.0, 8.04],
-        [8.07, 6.95],
-        [13.0, 7.58],
-        [9.05, 8.81],
-        [11.0, 8.33],
-        [14.0, 7.66],
-        [13.4, 6.81],
-        [10.0, 6.33],
-        [14.0, 8.96],
-        [12.5, 6.82],
-        [9.15, 7.2],
-        [11.5, 7.2],
-        [3.03, 4.23],
-        [12.2, 7.83],
-        [2.02, 4.47],
-        [1.05, 3.33],
-        [4.05, 4.96],
-        [6.03, 7.24],
-        [12.0, 6.26],
-        [12.0, 8.84],
-        [7.08, 5.82],
-        [5.02, 5.68]
-      ],
-        type: 'scatter',
-        symbolSize: 4
-      }
-    ]
-  }
+          [10.0, 8.04],
+          [8.07, 6.95],
+          [13.0, 7.58],
+          [9.05, 8.81],
+          [11.0, 8.33],
+          [14.0, 7.66],
+          [13.4, 6.81],
+          [10.0, 6.33],
+          [14.0, 8.96],
+          [12.5, 6.82],
+          [9.15, 7.2],
+          [11.5, 7.2],
+          [3.03, 4.23],
+          [12.2, 7.83],
+          [2.02, 4.47],
+          [1.05, 3.33],
+          [4.05, 4.96],
+          [6.03, 7.24],
+          [12.0, 6.26],
+          [12.0, 8.84],
+          [7.08, 5.82],
+          [5.02, 5.68],
+        ],
+        type: "scatter",
+        symbolSize: 4,
+      },
+    ],
+  };
 
-    const getAhoiConfig = (): IAhoiConfig => {    
-        const defaultOnboardingMessages = generateBasicAnnotations(
-          contextKey,
-          EVisualizationType.SCATTERPLOT,
-          runtimeObject
-        );      
-        const ahoiConfig = {
-          onboardingMessages: defaultOnboardingMessages,
-        };
-        
-        return ahoiConfig;
-    };
-    
-    // option && myChart.setOption(option);
-    
-    onMount(async () => {
-      const chartDom = document.getElementById('scatterplot');  
-      runtimeObject = echarts.init(chartDom, null, {
-      renderer: 'svg'
+  onMount(async () => {
+    runtimeObject = echarts.init(plotDiv, null, {
+      renderer: "svg",
+    });
+    runtimeObject.setOption(options);
+    if (onboardingUI) {
+      onboardingUI.showOnboarding();
+    } else {
+      onboardingUI = await ahoi({
+        visType: EVisualizationType.SCATTERPLOT,
+        chart: runtimeObject,
       });
-      runtimeObject.setOption(options);  
-      if(onboardingUI) {
-        onboardingUI.showOnboarding();    
-        } else {      
-          onboardingUI = await ahoi(
-            contextKey,
-            EVisualizationType.SCATTERPLOT,
-            runtimeObject,
-            getAhoiConfig()
-          );
-        }
-      });
-      
-      onDestroy(() => {
-        if(onboardingUI) {
-          onboardingUI.removeOnboarding();
-        }
-      });  
-      
-      const onResize = (e) => {
-        if(onboardingUI) {
-        // update onboarding
-        onboardingUI.updateOnboarding(getAhoiConfig(), runtimeObject)
-        }
-        if(runtimeObject) {
-          runtimeObject.resize();
-        }
-      };
-    
-</script>     
-      
-<div id="echarts" style="width: 100%; height: 100%;">
-  <ResizeObserver on:resize={onResize} />
-  <div id="scatterplot" style="width: 600px; height: 600px;"> </div>   
-</div> 
-    
+    }
+  });
+
+  onDestroy(() => {
+    if (onboardingUI) {
+      onboardingUI.removeOnboarding();
+    }
+  });
+</script>
+
+<div bind:this={plotDiv} style="width: 600px; height: 600px;" />
+
 <style>
   :global(*) {
     font-family: sans-serif;
   }
 </style>
-    

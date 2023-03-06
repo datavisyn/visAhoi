@@ -9,7 +9,7 @@ import {
   IOnboardingStage,
   NavigationAlignment,
 } from "./interfaces";
-import { v4 as uuidv4 } from "uuid";
+import { v4 } from "uuid";
 import { get } from "svelte/store";
 import { getMarkerInformation } from "./components/getMarkerInformation";
 import { VisahoiState } from "./components/state";
@@ -153,7 +153,7 @@ export const createBasicOnboardingStage = (
   if (visState) {
     const { onboardingStages } = visState;
     if (!stage.id) {
-      stage.id = `visahoi-stage-${uuidv4()}`;
+      stage.id = `visahoi-stage-${v4()}`;
     }
     if (!stage.order) {
       const stages = get(onboardingStages);
@@ -188,11 +188,11 @@ export const createBasicOnboardingMessage = (
     } = visState;
 
     const marker: IMarker = {
-      id: `visahoi-marker-${contextKey}- ${uuidv4()}`,
+      id: `visahoi-marker-${contextKey}- ${v4()}`,
     };
 
     if (!message.id) {
-      message.id = `visahoi-message-${contextKey}- ${uuidv4()}`;
+      message.id = `visahoi-message-${contextKey}- ${v4()}`;
     }
 
     if (!message.order) {

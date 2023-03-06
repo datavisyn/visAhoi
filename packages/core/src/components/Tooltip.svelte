@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { v4 as uuidv4 } from "uuid";
+  import { v4 } from "uuid";
   import { IMarkerInformation, TooltipPosition } from "../interfaces";
   import { createPopper } from "@popperjs/core/dist/esm/";
   import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
@@ -20,7 +20,7 @@
 
   export let visElement;
   export let visState: VisahoiState;
-  export let setDragId;  
+  export let setDragId;
 
   const {
     activeMarker,
@@ -32,9 +32,9 @@
     onboardingStages,
     onboardingMessages,
     editTooltip,
-    visahoiIcons,    
+    visahoiIcons,
     dragTooltipId,
-    contextId
+    contextId,
   } = visState;
 
   const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
@@ -52,30 +52,30 @@
     },
     allowedAttributes: {
       "*": ["style"], // allow style attribute for all tags
-      "svg": ["*"],
-      "path": ["*"]
+      svg: ["*"],
+      path: ["*"],
     },
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
-  
-  const tooltipId = `visahoi-tooltip-${$contextId}-${uuidv4()}`;  
+
+  const tooltipId = `visahoi-tooltip-${$contextId}-${v4()}`;
   const arrowId = tooltipId + "-arrow";
   $: dragId = tooltipId;
-  
-// To set the dragTooltipId in the store 
-// Pass the dragId to the parent component tooltips.svelte
 
-  const onMouseDown = () => {    
-    dragTooltipId.set(dragId)    
-    setDragId(dragId)
-  }
+  // To set the dragTooltipId in the store
+  // Pass the dragId to the parent component tooltips.svelte
 
-  // Set the dragId back to initial 
+  const onMouseDown = () => {
+    dragTooltipId.set(dragId);
+    setDragId(dragId);
+  };
+
+  // Set the dragId back to initial
 
   const onMouseUp = () => {
-    setDragId('');    
-  }
+    setDragId("");
+  };
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
@@ -84,7 +84,7 @@
     const navigationMarkerId = document.getElementById(
       getNavigationMarkerDomId($activeMarker?.marker.id)
     );
-    if(navigationMarkerId) {
+    if (navigationMarkerId) {
       navigationMarkerId.style.opacity = "0.5";
     }
 
@@ -217,7 +217,6 @@
     .backgroundColor}"
   on:mousedown={onMouseDown}
   on:mouseup={onMouseUp}
-    
 >
   <div class="visahoi-tooltip-header">
     <div class="visahoi-tooltip-title">
@@ -242,18 +241,20 @@
         >
           <span style="display: flex; font-size: 13px" title="Edit">
             {@html editIcon}
-          </span
-          >
+          </span>
         </div>
         <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
-          <span style="display: flex; font-size: 13px" title="Delete" >{@html trashIcon}</span
+          <span style="display: flex; font-size: 13px" title="Delete"
+            >{@html trashIcon}</span
           >
         </div>
       {/if}
 
       {#if $editTooltip}
         <div class="visahoi-save-changes" on:click={saveChanges}>
-          <span style="display: flex; font-size: 13px" title="Save">{@html checkIcon}</span>
+          <span style="display: flex; font-size: 13px" title="Save"
+            >{@html checkIcon}</span
+          >
         </div>
       {/if}
 
@@ -266,11 +267,9 @@
           : closeTooltip}
       >
         {#if $editTooltip}
-          <span style="font-size: 13px" title="Cancel">{@html closeIcon}</span
-          >
+          <span style="font-size: 13px" title="Cancel">{@html closeIcon}</span>
         {:else}
-          <span style="font-size: 13px" title="Close">{@html closeIcon}</span
-          >
+          <span style="font-size: 13px" title="Close">{@html closeIcon}</span>
         {/if}
       </div>
     </div>
@@ -419,8 +418,10 @@
      The :global() is needed as the styles would be removed otherwise by rollup because they are not directly used in this component
   */
 
-  :global(.visahoi-tooltip[data-popper-placement^="top"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="top"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     left: -8px !important;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -431,12 +432,16 @@
     bottom: 8px !important;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="bottom"]
-      > .visahoi-popperjs-arrow) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="bottom"]
+        > .visahoi-popperjs-arrow
+    ) {
     top: -8px;
   }
-  :global(.visahoi-tooltip[data-popper-placement^="bottom"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="bottom"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     left: -8px;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -447,13 +452,16 @@
     top: 8px !important;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="left"]
-      > .visahoi-popperjs-arrow) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="left"] > .visahoi-popperjs-arrow
+    ) {
     right: 0;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="left"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="left"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-left: 8px solid var(--stage-color);
@@ -462,14 +470,17 @@
   :global(.visahoi-tooltip[data-popper-placement^="left"]) {
     right: 8px !important;
   }
-  :global(.visahoi-tooltip[data-popper-placement^="right"]
-      > .visahoi-popperjs-arrow) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="right"] > .visahoi-popperjs-arrow
+    ) {
     left: -8px;
     top: -8px !important;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="right"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="right"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-right: 8px solid var(--stage-color);

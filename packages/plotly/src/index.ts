@@ -18,7 +18,7 @@ import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { treemapFactory } from "./treemap";
 import { heatmapFactory } from "./heatmap";
-import { uuid } from "uuidv4";
+import { v4 } from "uuid";
 
 // just pass them through
 export {
@@ -137,13 +137,13 @@ export async function ahoi({
   visType,
   chart,
   ahoiConfig = {
-    contextKey: uuid(),
+    contextKey: v4(),
   },
   customizeOnboardingMessages,
 }: {
   visType: EVisualizationType;
   chart: any;
-  ahoiConfig: IAhoiConfig;
+  ahoiConfig?: IAhoiConfig;
   customizeOnboardingMessages?: (
     defaultOnbaordingMessages: IOnboardingMessage[]
   ) => IOnboardingMessage[];
