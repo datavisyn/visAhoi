@@ -1,6 +1,6 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import ChangeMatrix from "./changeMatrix.svelte";
+  import ChangeMatrix from "./ChangeMatrix.svelte";
 </script>
 
 <Meta title="Visahoi/Plotly/ChangeMatrix" component={ChangeMatrix} />

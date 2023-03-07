@@ -1,6 +1,6 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import Heatmap from "./heatmap.svelte";
+  import Heatmap from "./Heatmap.svelte";
 </script>
 
 <Meta title="Visahoi/Plotly/Heatmap" component={Heatmap} />

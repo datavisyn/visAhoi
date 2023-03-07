@@ -1,6 +1,6 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import HorizonGraph from "./horizonGraph.svelte";
+  import HorizonGraph from "./HorizonGraph.svelte";
 </script>
 
 <Meta title="Visahoi/Plotly/HorizonGraph" component={HorizonGraph} />

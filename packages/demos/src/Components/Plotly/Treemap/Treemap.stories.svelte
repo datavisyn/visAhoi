@@ -1,6 +1,6 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import Treemap from "./treemap.svelte";
+  import Treemap from "./Treemap.svelte";
 </script>
 
 <Meta title="Visahoi/Plotly/Treemap" component={Treemap} />
