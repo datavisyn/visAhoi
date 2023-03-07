@@ -5,7 +5,6 @@
   import { ahoi, EVisualizationType } from "@visahoi/plotly";
 
   let plotDiv: HTMLElement;
-  export let contextKey: string;
   let onboardingUI;
   let runtimeObject: Plotly;
 
@@ -51,7 +50,7 @@
         visType: EVisualizationType.HEATMAP,
         chart: runtimeObject,
         ahoiConfig: {
-          contextKey,
+          alignment: "horizontal",
         },
       });
     }

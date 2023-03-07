@@ -133,7 +133,7 @@ export interface IOnboardingMessage {
 
 export interface IAhoiConfig {
   // onboardingMessages: IOnboardingMessage[];
-  contextKey: string;
+  contextKey?: string;
   alignment?: NavigationAlignment;
   backdrop?: IBackdropConfig;
   icons?: IAhoiIcons;

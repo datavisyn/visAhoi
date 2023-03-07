@@ -221,11 +221,12 @@
     z-index: 15;
     bottom: 30px;
     &.horizontal {
-      right: 10px;
+      right: 20px;
       flex-direction: row;
     }
     &.vertical {
       flex-direction: column;
+      bottom: 80px;
     }
   }
   .visahoi-navigation-next {

@@ -1,7 +1,7 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-  import Barchart from "./barchart.svelte";
+  import Barchart from "./Barchart.svelte";
 </script>
 
 <Meta title="Visahoi/Plotly/Barchart" component={Barchart} />
