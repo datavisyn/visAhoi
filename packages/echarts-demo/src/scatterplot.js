@@ -52,7 +52,7 @@ function createPlot (values) {
     },
     series: [
       {
-        data: values,
+        data: [[1,10],[2,15],[3,13],[4,17]],
         type: 'scatter',
         symbolSize: 4
       }

@@ -7,8 +7,8 @@ import {
 
 function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
-  const traceNodes = chart.querySelectorAll('g.points')
-  const barNodes = traceNodes[0].querySelectorAll('g.point')
+  const traceNodes = chart?.querySelectorAll('g.points')
+  const barNodes = traceNodes[0]?.querySelectorAll('g.point')
   const barNodesData = Array.from(barNodes).map((point: any) => point.__data__)
 
   const t = barNodesData[0].trace
@@ -16,10 +16,10 @@ function extractOnboardingSpec (chart: any, coords): IOnboardingBarChartSpec {
   const max = t._extremes.y.max[0].val
   const minIndex = chart._fullData[0].y.indexOf(min)
   const maxIndex = chart._fullData[0].y.indexOf(max)
-  const minX = barNodes[minIndex].getBoundingClientRect().x
-  const minY = barNodes[minIndex].getBoundingClientRect().y
-  const maxX = barNodes[maxIndex].getBoundingClientRect().x
-  const maxY = barNodes[maxIndex].getBoundingClientRect().y
+  const minX = barNodes[minIndex]?.getBoundingClientRect().x
+  const minY = barNodes[minIndex]?.getBoundingClientRect().y
+  const maxX = barNodes[maxIndex]?.getBoundingClientRect().x
+  const maxY = barNodes[maxIndex]?.getBoundingClientRect().y
 
   return {
     chartTitle: {

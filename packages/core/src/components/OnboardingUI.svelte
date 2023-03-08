@@ -7,22 +7,30 @@
   import Backdrop from "./Backdrop.svelte";
   import { getMarkerInformation } from "./getMarkerInformation";
   import { VisahoiState } from "./state";
+  import { debounce } from "lodash";
 
   export let ref;
   // state for one specific visahoi Instance (usually a vis)
   export let visState: VisahoiState;
-  const {showOnboarding, visElement, visXPosition, visYPosition, visHeight, visWidth, onboardingMessages, markerInformation, activeMarker, activeOnboardingStage, showBackdrop} = visState
+  const {
+    showOnboarding,
+    visElement,
+    visXPosition,
+    visYPosition,
+    visHeight,
+    visWidth,
+    onboardingMessages,
+    markerInformation,
+    activeMarker,
+    activeOnboardingStage,
+    showBackdrop,
+  } = visState;
 
-  const setVisElementPosition = () => {
-    visXPosition.set($visElement.getBoundingClientRect().x);
-    visYPosition.set($visElement.getBoundingClientRect().y);
-    visWidth.set($visElement.clientWidth);
-    visHeight.set($visElement.clientHeight);
-  };
-
-  const setMarkerInformation = () => {
-    const updatedMarkerInformation = getMarkerInformation($visElement, $onboardingMessages);
-
+  const setMarkerInformation = (visElement) => {
+    const updatedMarkerInformation = getMarkerInformation(
+      visElement,
+      $onboardingMessages
+    );
     markerInformation.set(updatedMarkerInformation);
     // update data of active marker
     activeMarker.set(
@@ -32,33 +40,50 @@
     );
   };
 
-  ref.update = () => {
-    setVisElementPosition();
-    setMarkerInformation();
+  const resizeUpdate = (entry: ResizeObserverEntry) => {
+    const newVisElement = entry.contentRect;
+    visXPosition.set(entry.target.getBoundingClientRect().x);
+    visYPosition.set(entry.target.getBoundingClientRect().y);
+    visWidth.set(newVisElement.width);
+    visHeight.set(newVisElement.height);
+    visElement.set(entry.target);
+    setMarkerInformation(entry.target);
   };
+  // use debounce as the chart is also rendered when resizing ends
+  const debouncedResizeUpdate = debounce(resizeUpdate, 100);
 
   onMount(() => {
-    setVisElementPosition();
-    setMarkerInformation();
+    const resizeObserver = new ResizeObserver((entries) => {
+      debouncedResizeUpdate(entries[0]);
+    });
+    if ($visElement !== null) {
+      resizeObserver.observe($visElement);
+      // set initial visElement properties
+      visXPosition.set($visElement.getBoundingClientRect().x);
+      visYPosition.set($visElement.getBoundingClientRect().y);
+      visWidth.set($visElement.getBoundingClientRect().width);
+      visHeight.set($visElement.getBoundingClientRect().height);
+      setMarkerInformation($visElement);
+    }
   });
-
 </script>
+
 {#if $showOnboarding}
-<div
-  transition:fade="{{duration: 150}}"
-  class="visahoi-onboarding-ui"
-  style="width:{$visWidth + 'px'}; height:{$visHeight +
-    'px'}; top:{$visYPosition + window.scrollY + 'px'}; left:{$visXPosition +
-    window.scrollX +
-    'px'}; position: 'absolute'"
->
-  <Markers {visState} />
-  <Tooltips {visElement} {visState} />
-  <OnboardingNavigation visState={visState} />
-  {#if $activeOnboardingStage && $showBackdrop}
-    <Backdrop {visState} />
-  {/if}
-</div>
+  <div
+    transition:fade={{ duration: 150 }}
+    class="visahoi-onboarding-ui"
+    style="width:{$visWidth + 'px'}; height:{$visHeight +
+      'px'}; top:{$visYPosition + window.scrollY + 'px'}; left:{$visXPosition +
+      window.scrollX +
+      'px'}; position: 'absolute'"
+  >
+    <Markers {visState} />
+    <Tooltips {visElement} {visState} />
+    <OnboardingNavigation {visState} />
+    {#if $activeOnboardingStage && $showBackdrop}
+      <Backdrop {visState} />
+    {/if}
+  </div>
 {/if}
 
 <style>
