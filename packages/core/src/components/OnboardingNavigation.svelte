@@ -7,9 +7,7 @@
   import visahoiChevronUpIcon from "../assets/chevron-up-solid.svg";
   // @ts-ignore
   import visahoiChevronDownIcon from "../assets/chevron-down-solid.svg";
-
   import { VisahoiState } from "./state.js";
-
   export let visState: VisahoiState;
   const {
     visahoiIcons,
@@ -24,7 +22,6 @@
     showOnboardingNavigation,
     visHeight
   } = visState;
-
   const chevronUpIcon: string =
     $visahoiIcons?.chevronUp || visahoiChevronUpIcon;
   const chevronDownIcon: string =
@@ -42,9 +39,7 @@
       : $markerIndexId === $markerInformation.length - 1
       ? true
       : false;
-
   let index: number;
-
   const onNavigatePrevious = () => {
     if ($previousMarkerId) {
       const elementId = getNavigationMarkerDomId($previousMarkerId);
@@ -54,7 +49,6 @@
       }
     }
     isDisabledNextNavIcon = false;
-
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
@@ -64,7 +58,6 @@
           }
         }
       });
-
       selectedMarker.set($markerInformation[index]);
       if ($selectedMarker) {
         activeOnboardingStage.update(
@@ -82,7 +75,6 @@
       }
     }
   };
-
   const onNavigateNext = () => {
     if ($previousMarkerId) {
       const previousMarkerElementId =
@@ -95,18 +87,15 @@
       }
     }
     isDisabledPreviousNavIcon = false;
-
     if ($selectedMarker) {
       $markerInformation.map((marker, i) => {
         if (marker.marker.id === $selectedMarker?.marker.id) {
           index = i - 1;
-
           if (index === 0) {
             isDisabledNextNavIcon = true;
           }
         }
       });
-
       selectedMarker.set($markerInformation[index]);
       if ($selectedMarker) {
         activeOnboardingStage.update(
@@ -126,14 +115,12 @@
     }
   };
 </script>
-
 <div style="--height: {$visHeight};"
   class="visahoi-navigation-container {$navigationAlignment === 'horizontal'
     ? 'horizontal'
     : 'vertical'}"
 >
   {#key $markerInformation || $onboardingStages}
-
   {#if $activeOnboardingStage && $showOnboardingNavigation}
         <div
           id="navigation-next"
@@ -173,7 +160,6 @@
           {/if}
         </div>
       {/if}
-
     <div 
       style="--max-height: { $visHeight - 200 };"
       class="visahoi-navigation-marker-container {$navigationAlignment ===
@@ -197,18 +183,15 @@
           />
         {/each}
       {/if}
-
     </div>    
   
   {/key}
-
   {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
     <OnboardingNavigationItem {stage} {index} {visState} />
   {/each}
   <OnboardingNavigationMainItem {visState} />
   
 </div>
-
 <style lang="scss">
   .visahoi-navigation-marker-container {
     display: flex;
@@ -232,7 +215,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
   .visahoi-navigation-marker-container::-webkit-scrollbar {
     /* hide scrollbar */
     display: none;
@@ -242,12 +224,10 @@
     opacity: var(--opacity);
     pointer-events: var(--events);
   }
-
   .visahoi-navigation-previous {
     opacity: var(--opacity);
     pointer-events: var(--events);
   }
-
   .visahoi-navigation-container {
     position: absolute;
     bottom: 15px;
@@ -268,17 +248,14 @@
       right: 90px;
     }
   }
-
   .visahoi-navigation-next.horizontal,
   .visahoi-navigation-previous.horizontal {
     bottom: 0;
     margin-right: 15px;
   }
-
   .visahoi-navigation-next.vertical,
   .visahoi-navigation-previous.vertical {
     margin-bottom: 15px;   
   }
-
   
 </style>
