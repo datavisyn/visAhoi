@@ -2,8 +2,7 @@
   import OnboardingNavigationItem from "./OnboardingNavigationItem.svelte";
   import OnboardingNavigationMainItem from "./OnboardingNavigationMainItem.svelte";
   import NavigationMarker from "./NavigationMarker.svelte";
-  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils.js";
-  import { Svroller, Svrollbar } from 'svrollbar'
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils.js";  
   import { tick } from "svelte";
   // @ts-ignore
   import visahoiChevronUpIcon from "../assets/chevron-up-solid.svg";
@@ -30,10 +29,7 @@
   const chevronUpIcon: string =
     $visahoiIcons?.chevronUp || visahoiChevronUpIcon;
   const chevronDownIcon: string =
-    $visahoiIcons?.chevronDown || visahoiChevronDownIcon;
-
-    let viewport
-  let contents
+    $visahoiIcons?.chevronDown || visahoiChevronDownIcon;  
 
   $: nextHeight = $markerInformation.length * 35 + 85 + "px";
   $: prevHeight = $markerInformation.length * 35 + 60 + "px";
@@ -141,7 +137,7 @@
 >
   {#key $markerInformation || $onboardingStages}
   
-    <div bind:this={viewport}
+    <div 
     style="--max-height: {$visHeight};"
       class="visahoi-navigation-marker-container {$navigationAlignment ===
       'horizontal'
@@ -157,7 +153,7 @@
             return a.message.onboardingStage?.order > b.message.onboardingStage?.order ? -1 : 1;
           }
         }) as marker, index}
-          <NavigationMarker bind:this={contents}
+          <NavigationMarker 
             markerInformation={marker}
             order={index + 1}
             {visState}
@@ -251,7 +247,7 @@
     <OnboardingNavigationItem {stage} {index} {visState} />
   {/each}
   <OnboardingNavigationMainItem {visState} />
-  <!-- <Svrollbar {viewport} {contents} /> -->
+  
 </div>
 
 <style lang="scss">
@@ -289,19 +285,17 @@
   }
   
   .visahoi-navigation-next {
-    position: absolute;
-    bottom: var(--bottom-height);
+    
     opacity: var(--opacity);
     pointer-events: var(--events);
     margin-bottom: 15px;
   }
 
   .visahoi-navigation-previous {
-    position: absolute;
-    bottom: var(--bottom-height);
+    
     opacity: var(--opacity);
     pointer-events: var(--events);
-    margin-bottom: 15px;
+    // margin-bottom: 45px;
   }
 
   .visahoi-navigation-container {
@@ -312,7 +306,9 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
-    height: 60px;
+    // height: var(--height);
+    height: 400px;
+
     &.vertical {
       flex-direction: column;
       bottom: 30px;
