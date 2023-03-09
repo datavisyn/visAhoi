@@ -31,6 +31,8 @@
   const chevronDownIcon: string =
     $visahoiIcons?.chevronDown || visahoiChevronDownIcon;  
 
+  $: console.log('visHeight', $visHeight)
+
   $: nextHeight = $markerInformation.length * 35 + 85 + "px";
   $: prevHeight = $markerInformation.length * 35 + 60 + "px";
   $: isDisabledNextNavIcon =
@@ -130,15 +132,60 @@
   };
 </script>
 
-<div
+<div style="--height: {$visHeight};"
   class="visahoi-navigation-container {$navigationAlignment === 'horizontal'
     ? 'horizontal'
     : 'vertical'}"
 >
   {#key $markerInformation || $onboardingStages}
+
+  {#if $activeOnboardingStage && $showOnboardingNavigation}
+        <div
+          id="navigation-next"
+          style="--bottom-height: {nextHeight}; --opacity: {isDisabledNextNavIcon
+            ? 0.5
+            : 1}; --events: {isDisabledNextNavIcon ? 'none' : 'all'}"
+          class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
+            ? 'horizontal'
+            : 'vertical'}"
+          on:click={onNavigateNext}
+        >
+          {#if $navigationAlignment === "vertical"}
+            <span style="display: flex">{@html chevronUpIcon}</span>
+          {:else}
+            <span style="display: flex; transform: rotate(270deg)"
+              >{@html chevronUpIcon}</span
+            >
+          {/if}
+        </div>
+        <div
+          id="navigation-previous"
+          style="--bottom-height: {prevHeight}; --opacity: {isDisabledPreviousNavIcon
+            ? 0.5
+            : 1}; --events: {isDisabledPreviousNavIcon ? 'none' : 'all'}"
+          class="visahoi-navigation-previous {$navigationAlignment ===
+          'horizontal'
+            ? 'horizontal'
+            : 'vertical'}"
+          on:click={onNavigatePrevious}
+        >
+          {#if $navigationAlignment === "vertical"}
+            <span style="display: flex">{@html chevronDownIcon}</span>
+          {:else}
+            <span style="display: flex; transform: rotate(270deg)"
+              >{@html chevronDownIcon}</span
+            >
+          {/if}
+        </div>
+      {/if}
+
+
+
+
+
   
     <div 
-    style="--max-height: {$visHeight};"
+      style="--max-height: { $visHeight - 200 };"
       class="visahoi-navigation-marker-container {$navigationAlignment ===
       'horizontal'
         ? 'horizontal'
@@ -161,85 +208,9 @@
         {/each}
       {/if}
 
-      <!-- {#if $activeOnboardingStage && $showOnboardingNavigation}
-        <div
-          id="navigation-next"
-          style="--bottom-height: {nextHeight}; --opacity: {isDisabledNextNavIcon
-            ? 0.5
-            : 1}; --events: {isDisabledNextNavIcon ? 'none' : 'all'}"
-          class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
-            ? 'horizontal'
-            : 'vertical'}"
-          on:click={onNavigateNext}
-        >
-          {#if $navigationAlignment === "vertical"}
-            <span style="display: flex">{@html chevronUpIcon}</span>
-          {:else}
-            <span style="display: flex; transform: rotate(270deg)"
-              >{@html chevronUpIcon}</span
-            >
-          {/if}
-        </div>
-        <div
-          id="navigation-previous"
-          style="--bottom-height: {prevHeight}; --opacity: {isDisabledPreviousNavIcon
-            ? 0.5
-            : 1}; --events: {isDisabledPreviousNavIcon ? 'none' : 'all'}"
-          class="visahoi-navigation-previous {$navigationAlignment ===
-          'horizontal'
-            ? 'horizontal'
-            : 'vertical'}"
-          on:click={onNavigatePrevious}
-        >
-          {#if $navigationAlignment === "vertical"}
-            <span style="display: flex">{@html chevronDownIcon}</span>
-          {:else}
-            <span style="display: flex; transform: rotate(270deg)"
-              >{@html chevronDownIcon}</span
-            >
-          {/if}
-        </div>
-      {/if} -->
+      
     </div>
-    {#if $activeOnboardingStage && $showOnboardingNavigation}
-        <div
-          id="navigation-next"
-          style="--bottom-height: {nextHeight}; --opacity: {isDisabledNextNavIcon
-            ? 0.5
-            : 1}; --events: {isDisabledNextNavIcon ? 'none' : 'all'}"
-          class="visahoi-navigation-next {$navigationAlignment === 'horizontal'
-            ? 'horizontal'
-            : 'vertical'}"
-          on:click={onNavigateNext}
-        >
-          {#if $navigationAlignment === "vertical"}
-            <span style="display: flex">{@html chevronUpIcon}</span>
-          {:else}
-            <span style="display: flex; transform: rotate(270deg)"
-              >{@html chevronUpIcon}</span
-            >
-          {/if}
-        </div>
-        <div
-          id="navigation-previous"
-          style="--bottom-height: {prevHeight}; --opacity: {isDisabledPreviousNavIcon
-            ? 0.5
-            : 1}; --events: {isDisabledPreviousNavIcon ? 'none' : 'all'}"
-          class="visahoi-navigation-previous {$navigationAlignment ===
-          'horizontal'
-            ? 'horizontal'
-            : 'vertical'}"
-          on:click={onNavigatePrevious}
-        >
-          {#if $navigationAlignment === "vertical"}
-            <span style="display: flex">{@html chevronDownIcon}</span>
-          {:else}
-            <span style="display: flex; transform: rotate(270deg)"
-              >{@html chevronDownIcon}</span
-            >
-          {/if}
-        </div>
-      {/if}
+    
   
   {/key}
 
@@ -252,7 +223,7 @@
 
 <style lang="scss">
   .visahoi-navigation-marker-container {
-    position: absolute;
+    // position: absolute;
     display: flex;
     flex-direction: var(--flexDirection);
     align-items: center;
@@ -263,6 +234,7 @@
     right: var(--right);
     opacity: 1;
     max-height: 280px;
+    // max-height: var(--max-height);
     overflow-y: scroll;
     z-index: 15;
     bottom: 30px;    
@@ -306,8 +278,8 @@
     flex-direction: var(--flexDirection);
     align-items: center;
     pointer-events: all;
-    // height: var(--height);
-    height: 400px;
+    height: var(--height);
+    // height: 400px;
 
     &.vertical {
       flex-direction: column;
