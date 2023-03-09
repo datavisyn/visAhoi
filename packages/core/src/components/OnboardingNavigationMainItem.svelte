@@ -145,6 +145,7 @@
     opacity: 1;
     z-index: 15;
     bottom: 0;
+    right: 5px;
   }
 
   .visahoi-navigation-main-item {

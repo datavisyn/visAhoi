@@ -9,7 +9,7 @@
   export let visState: VisahoiState;
 
   const {visahoiIcons, activeOnboardingStage, showOnboardingSteps, navigationAlignment, onboardingStages} = visState;
-  const right: string = (index + 1) * 40 + index * 45 + "px";
+  const right: string = (index + 2) * 40 + index * 45 + "px";
 
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
 

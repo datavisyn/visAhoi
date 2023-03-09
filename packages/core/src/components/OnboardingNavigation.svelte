@@ -260,7 +260,7 @@
     
     opacity: var(--opacity);
     pointer-events: var(--events);
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
   }
 
   .visahoi-navigation-previous {
@@ -297,10 +297,14 @@
   .visahoi-navigation-previous.horizontal {
     right: var(--bottom-height);
     bottom: 0;
+    margin-right: 15px;
   }
 
   .visahoi-navigation-next.vertical,
   .visahoi-navigation-previous.vertical {
-    bottom: var(--bottom-height);
+    bottom: var(--bottom-height); 
+    margin-bottom: 15px;   
   }
+
+  
 </style>
