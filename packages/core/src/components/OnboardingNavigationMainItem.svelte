@@ -144,11 +144,11 @@
     /* height: 80px; */
     opacity: 1;
     z-index: 15;
-    bottom: 0;
+    bottom: -8px;
+    right: 5px;
   }
 
   .visahoi-navigation-main-item {
-    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -1,18 +1,23 @@
-<script lang="ts">  
+<script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
   // @ts-ignore
-  import visahoiCloseIcon from '../assets/xmark-solid.svg';
+  import visahoiCloseIcon from "../assets/xmark-solid.svg";
   import { VisahoiState } from "./state.js";
-  
+
   export let stage: IOnboardingStage;
   export let index: number;
   export let visState: VisahoiState;
 
-  const {visahoiIcons, activeOnboardingStage, showOnboardingSteps, navigationAlignment, onboardingStages} = visState;
-  const right: string = (index + 1) * 40 + index * 45 + "px";
+  const {
+    visahoiIcons,
+    activeOnboardingStage,
+    showOnboardingSteps,
+    navigationAlignment,
+    onboardingStages,
+  } = visState;
+  const right: string = (index + 2) * 40 + index * 45 + "px";
 
   const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
-
 
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
@@ -32,12 +37,12 @@
     on:click={handleClick}
   >
     {#key $onboardingStages || $onboardingStages === null}
-      <div class="visahoi-navigation-item-circle">        
+      <div class="visahoi-navigation-item-circle">
         {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
-        {@html stage.icon}
-      {:else}
-        {@html closeIcon}
-      {/if}
+          {@html stage.icon}
+        {:else}
+          {@html closeIcon}
+        {/if}
       </div>
     {/key}
     <span class="visahoi-stage-title">{stage.title}</span>
@@ -53,12 +58,12 @@
     on:click={handleClick}
   >
     {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
-      <div class="visahoi-navigation-item-circle">        
+      <div class="visahoi-navigation-item-circle">
         {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
-        {@html stage.icon}
-      {:else}
-        {@html closeIcon}
-      {/if}
+          {@html stage.icon}
+        {:else}
+          {@html closeIcon}
+        {/if}
       </div>
     {/key}
     <span class="visahoi-stage-title">{stage.title}</span>
@@ -124,7 +129,7 @@
     right: 0;
     opacity: 0;
     z-index: 1;
-  } 
+  }
 
   .visahoi-stage-title {
     font-weight: bold;
