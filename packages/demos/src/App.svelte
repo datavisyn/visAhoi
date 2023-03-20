@@ -1,11 +1,16 @@
 <script lang="ts">
+  import PlotlyBarchart from "./Components/Plotly/Barchart/Barchart.svelte";
 </script>
 
 <main>
-  <b>TODO: add demos here</b>
+  <b>TODO: add demos heress</b>
+  <PlotlyBarchart />
 </main>
 
 <style>
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+  }
   main {
     text-align: center;
     padding: 1em;
