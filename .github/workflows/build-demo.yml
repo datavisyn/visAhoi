@@ -53,9 +53,14 @@ jobs:
         with:
           name: demos
           path: ./demos
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          # Required
-          commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
-          # Optional branch to push to, defaults to the current branch
-          branch: gh-pages
+      - name: commit
+        run: |
+          git add .
+          git commit -m "Update demo files from GitHub Actions"
+          git push --set-upstream origin gh-pages
+      # - uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     # Required
+      #     commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
+      #     # Optional branch to push to, defaults to the current branch
+      #     branch: gh-pages
