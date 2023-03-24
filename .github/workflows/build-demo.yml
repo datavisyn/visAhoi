@@ -21,7 +21,7 @@ on:
 
 jobs:
   build:
-    if: ${{ inputs.build_demos == 'true' }}
+    if: inputs.build_demos == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
