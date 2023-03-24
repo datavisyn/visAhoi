@@ -17,17 +17,17 @@ export default [
     input: "./src/main.ts",
     output: [
       {
-        sourcemap: true,
+        // sourcemap: true,
         format: "umd",
         dir: "./dist",
         name: "demos",
       },
-      {
-        sourcemap: true,
-        format: "esm",
-        file: "./build/bundle.js",
-        name: "demos",
-      },
+      // {
+      //   // sourcemap: true,
+      //   format: "esm",
+      //   file: "./build/bundle.js",
+      //   name: "demos",
+      // },
     ],
     build: {
       commonjsOptions: {

@@ -6,14 +6,11 @@
 </script>
 
 <div>
-  <div
-    style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 10px"
-  >
-    <div>
-      <h3>Barchart</h3>
-      <VegaBarchart />
-    </div>
-    <!-- <div>
+  <div>
+    <h3>Barchart</h3>
+    <VegaBarchart />
+  </div>
+  <!-- <div>
       <h3>Change matrix</h3>
       <VegaChangeMatrix />
     </div>
@@ -25,7 +22,6 @@
       <h3>Scatter plot</h3>
       <VegaScatterplot />
     </div> -->
-  </div>
 </div>
 
 <style>

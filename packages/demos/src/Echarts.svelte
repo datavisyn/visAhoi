@@ -1,10 +1,10 @@
 <!-- <script lang="ts">
   import EchartsBarchart from "./Components/Echarts/Barchart/Barchart.svelte";
-  import EchartsChangeMatrix from "./Components/Echarts/ChangeMatrix/ChangeMatrix.svelte";
-  import EchartsHeatmap from "./Components/Echarts/Heatmap/Heatmap.svelte";
-  import EchartsHorizonGraph from "./Components/Echarts/HorizonGraph/HorizonGraph.svelte";
-  import EchartsScatterplot from "./Components/Echarts/Scatterplot/Scatterplot.svelte";
-  import EchartsTreemap from "./Components/Echarts/Treemap/Treemap.svelte";
+  // import EchartsChangeMatrix from "./Components/Echarts/ChangeMatrix/ChangeMatrix.svelte";
+  // import EchartsHeatmap from "./Components/Echarts/Heatmap/Heatmap.svelte";
+  // import EchartsHorizonGraph from "./Components/Echarts/HorizonGraph/HorizonGraph.svelte";
+  // import EchartsScatterplot from "./Components/Echarts/Scatterplot/Scatterplot.svelte";
+  // import EchartsTreemap from "./Components/Echarts/Treemap/Treemap.svelte";
 </script>
 
 <div>

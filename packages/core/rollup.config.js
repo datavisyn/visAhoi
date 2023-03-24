@@ -17,17 +17,17 @@ export default [
     input: "./src/index.ts",
     output: [
       {
-        sourcemap: true,
+        // sourcemap: true,
         format: "es",
         dir: "./dist",
         name: "core",
       },
-      {
-        sourcemap: true,
-        format: "esm",
-        file: "./build/bundle.js",
-        name: "core",
-      },
+      // {
+      //   // sourcemap: true,
+      //   format: "esm",
+      //   file: "./build/bundle.js",
+      //   name: "core",
+      // },
     ],
     plugins: [
       svelte({
