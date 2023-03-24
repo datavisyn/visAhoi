@@ -2,150 +2,180 @@ import {
   EVisualizationType,
   IOnboardingMessage,
   IOnboardingBarChartSpec,
-  generateMessages
-} from '@visahoi/core'
-import { Spec } from 'vega-typings'
+  generateMessages,
+} from "@visahoi/core";
+import { Spec } from "vega-typings";
 
-function getOrientation (scales) {
-  const [s1, s2] = scales
-  const { name: s1Name, type: s1Type } = s1
-  const { name: s2Name, type: s2Type } = s2
+function getOrientation(scales) {
+  const [s1, s2] = scales;
+  const { name: s1Name, type: s1Type } = s1;
+  const { name: s2Name, type: s2Type } = s2;
 
   return {
-    x: s1Type === 'band' ? 'horizontal' : 'vertical',
-    y: s2Type === 'band' ? 'horizontal' : 'vertical',
-    b: s1Type === 'band' ? 'height' : 'width'
-  }
+    x: s1Type === "band" ? "horizontal" : "vertical",
+    y: s2Type === "band" ? "horizontal" : "vertical",
+    b: s1Type === "band" ? "height" : "width",
+  };
 }
 
-export function getMinMax (data) {
-  const values = getPropertyValues(data)
-  const keys = Object.keys(values)
-  const res: {key: string, min: number, max: number}[] = []
+export function getMinMax(data) {
+  const values = getPropertyValues(data);
+  const keys = Object.keys(values);
+  const res: { key: string; min: number; max: number }[] = [];
 
   keys.forEach((k) => {
     res.push({
       key: k,
       min: Math.min(...values[k]),
-      max: Math.max(...values[k])
+      max: Math.max(...values[k]),
+    });
+  });
 
-    })
-  })
-
-  return res
+  return res;
 }
 
-function getPropertyValues (arr) {
-  const res = {}
-  const keys = Object.keys(arr[0])
+function getPropertyValues(arr) {
+  const res = {};
+  const keys = Object.keys(arr[0]);
 
   keys.forEach((k) => {
-    res[k] = arr.map((e) => e[k])
-  })
+    res[k] = arr.map((e) => e[k]);
+  });
 
-  return res
+  return res;
 }
 
-function extractOnboardingSpec (vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingBarChartSpec {
-  const v = vegaSpec
-  const a = aggregatedValues
+function extractOnboardingSpec(
+  vegaSpec: Spec,
+  aggregatedValues: any[],
+  elems: any[],
+  visElement
+): IOnboardingBarChartSpec {
+  const v = vegaSpec;
+  const a = aggregatedValues;
 
-  const { x, y, b } = getOrientation(v.scales)
-  const axesMinMax = getMinMax(a)
+  const { x, y, b } = getOrientation(v.scales);
+  const axesMinMax = getMinMax(a);
 
-  const dataArray = getPropertyValues(a)
-  const minIndex = dataArray?.temp?.indexOf(axesMinMax[0].min)
-  const maxIndex = dataArray?.temp?.indexOf(axesMinMax[0].max)
+  const dataArray = getPropertyValues(a);
+  const minIndex = dataArray?.temp?.indexOf(axesMinMax[0].min);
+  const maxIndex = dataArray?.temp?.indexOf(axesMinMax[0].max);
 
-  const rectBars = document.getElementsByClassName('mark-rect role-mark marks')
+  const rectBars = visElement.getElementsByClassName(
+    "mark-rect role-mark marks"
+  );
 
   return {
     chartTitle: {
-      value: typeof v.title === 'string' ? v.title : v.title?.text,
+      value: typeof v.title === "string" ? v.title : v.title?.text,
       anchor: {
-        sel: '.role-title-text',
-        offset: { left: -20 }
-      }
+        sel: ".role-title-text",
+        offset: { left: -20 },
+      },
     },
     type: {
       value: (<any>v.marks![0]).style,
       anchor: {
-        sel: 'svg',
+        sel: "svg",
         coords: {
           x: rectBars[0].childNodes[3]?.getBoundingClientRect()?.x,
-          y: rectBars[0].childNodes[3]?.getBoundingClientRect()?.y
-        }
-      }
+          y:
+            rectBars[0].childNodes[3]?.getBoundingClientRect()?.y -
+            visElement.getBoundingClientRect().top,
+        },
+      },
     },
     orientation: {
-      value: null
+      value: null,
     },
     xAxisOrientation: {
-      value: x
+      value: x,
     },
     yAxisOrientation: {
-      value: y
+      value: y,
     },
     barLength: {
-      value: b
+      value: b,
     },
     xMin: {
-      value: axesMinMax[1].min
+      value: axesMinMax[1].min,
     },
     xMax: {
-      value: axesMinMax[1].max
+      value: axesMinMax[1].max,
     },
     yMin: {
       value: axesMinMax[0].min.toFixed(1),
       anchor: {
-        sel: 'svg',
+        sel: "svg",
         coords: minIndex
           ? {
               x: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.x,
-              y: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.y
+              y:
+                rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.y -
+                visElement.getBoundingClientRect().top,
             }
-          : elems[2]
-      }
+          : elems[2],
+      },
     },
     yMax: {
       value: axesMinMax[0].max.toFixed(1),
       anchor: {
-        sel: 'svg',
+        sel: "svg",
         coords: maxIndex
           ? {
               x: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.x,
-              y: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.y
+              y:
+                rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.y -
+                visElement.getBoundingClientRect().top,
             }
-          : elems[7]
-      }
+          : elems[7],
+      },
     },
     xAxisTitle: {
       value: (<any>v.axes![1]).title,
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
-        offset: { left: -30, top: 10 }
-      }
+        offset: { left: -30, top: 10 },
+      },
     },
     yAxisTitle: {
       value: (<any>v.axes![2]).title,
       anchor: {
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
-        offset: { top: -30 }
-      }
+        offset: { top: -30 },
+      },
     },
     interactionDesc: {
       value: (<any>v.axes![2]).title,
       anchor: {
         coords: {
           x: rectBars[0].childNodes[2]?.getBoundingClientRect()?.x,
-          y: rectBars[0].childNodes[2]?.getBoundingClientRect()?.y
-        }
-      }
-    }
-  }
+          y:
+            rectBars[0].childNodes[2]?.getBoundingClientRect()?.y -
+            visElement.getBoundingClientRect().top,
+        },
+      },
+    },
+  };
 }
 
-export function barChartFactory (contextKey: string, vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElement: Element): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(vegaSpec, aggregatedValues, elems)
-  return generateMessages(contextKey, EVisualizationType.BAR_CHART, onbordingSpec, visElement)
+export function barChartFactory(
+  contextKey: string,
+  vegaSpec: Spec,
+  aggregatedValues: any[],
+  elems: any[],
+  visElement: Element
+): IOnboardingMessage[] {
+  const onbordingSpec = extractOnboardingSpec(
+    vegaSpec,
+    aggregatedValues,
+    elems,
+    visElement
+  );
+  return generateMessages(
+    contextKey,
+    EVisualizationType.BAR_CHART,
+    onbordingSpec,
+    visElement
+  );
 }

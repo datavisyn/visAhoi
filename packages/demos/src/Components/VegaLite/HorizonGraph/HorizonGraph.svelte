@@ -2,11 +2,11 @@
   import embed, { VisualizationSpec } from "vega-embed";
   import { ahoi, EVisualizationType } from "@visahoi/vega";
   import { onMount, onDestroy } from "svelte";
+  import spec from "./data.json";
 
   let onboardingUI;
   let plotDiv: HTMLElement;
   let runtimeObject: object;
-  const spec: VisualizationSpec = require("./data.json");
 
   onMount(async () => {
     runtimeObject = await embed(plotDiv, spec, {

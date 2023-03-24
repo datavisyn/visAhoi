@@ -49,7 +49,7 @@ export const generateBasicAnnotations = async (
 
   // ADDITIONAL (not used)
   // Get the individual nodes
-  const nodes = document.querySelectorAll(".role-mark > path");
+  const nodes = visElement.querySelectorAll(".role-mark > path");
 
   // Get the data of the individual bars
   const d3Data = Array.from(nodes).map((el: any) => el.__data__);
