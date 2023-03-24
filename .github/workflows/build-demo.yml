@@ -21,7 +21,7 @@ on:
 
 jobs:
   build:
-    if: ${{ build_demos_flag == 'true' }}
+    if: ${{ inputs.build_demos == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -40,8 +40,6 @@ jobs:
         with:
           name: demos
           path: packages/demos/dist
-    width:
-      build_demos_flag: ${{ inputs.build_demos == true }}
   # deploy:
   #   needs: [build]
   #   runs-on: ubuntu-latest
