@@ -2,18 +2,33 @@
   import * as echarts from "echarts";
   import { ahoi, EVisualizationType } from "@visahoi/echarts";
   import { onMount, onDestroy } from "svelte";
+  import data from "./data.json";
 
-  const data: echarts.EChartsOption = require("./data.json");
   let plotDiv: HTMLElement;
   let onboardingUI;
   let runtimeObject: echarts.ECharts;
+
+  const processData = (data) => {
+    const dataArr = [];
+    const obj = {};
+    if (data.children.length > 0) {
+      data.children.map((child, i) => {
+        obj[i] = child;
+        obj[i].itemStyle = {
+          color: child.color,
+        };
+        dataArr.push(obj[i]);
+      });
+    }
+    return dataArr;
+  };
 
   const options: echarts.EChartsCoreOption = {
     series: [
       {
         type: "treemap",
         name: "American Jobs Plan",
-        data: [data],
+        data: processData(data),
         levels: [
           {
             itemStyle: {
@@ -53,7 +68,7 @@
       onboardingUI.showOnboarding();
     } else {
       onboardingUI = await ahoi({
-        visType: EVisualizationType.HEATMAP,
+        visType: EVisualizationType.TREEMAP,
         chart: runtimeObject,
       });
     }
@@ -66,7 +81,7 @@
   });
 </script>
 
-<div bind:this={plotDiv} style="width: 500px; height: 500px;" />
+<div bind:this={plotDiv} style="width: 100%; height: 500px;" />
 
 <style>
   :global(*) {

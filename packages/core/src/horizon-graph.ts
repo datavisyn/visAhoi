@@ -44,7 +44,7 @@ function generateMessages(
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage;
 
-  const modebar = document.getElementsByClassName("modebar-btn");
+  const modebar = visElement.getElementsByClassName("modebar-btn");
   const modebarText = [];
 
   if (modebar) {
@@ -63,7 +63,6 @@ function generateMessages(
         : ""
     }`
   );
-
   const modeBar = getModeBarMessages(modebarInteractions);
   const messages: IOnboardingMessage[] = [
     {
@@ -177,9 +176,9 @@ function generateMessages(
       title: "Chart interactions",
       onboardingStage: using,
       marker: {
-        id: `visahoi-marker-${contextKey}-8`,
+        id: `visahoi-marker-${contextKey}-18`,
       },
-      id: `visahoi-message-${contextKey}-8`,
+      id: `visahoi-message-${contextKey}-18`,
       order: 2,
     },
   ];

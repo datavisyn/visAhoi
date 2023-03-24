@@ -275,7 +275,6 @@ export const addBasicOnboardingMessage = (
       ...message,
     };
     onboardingMessages.set([...get(onboardingMessages), onboardingMessage]);
-
     const newMarkerInfo = getMarkerInformation(
       get(visElement),
       get(onboardingMessages)
@@ -359,7 +358,6 @@ export const setOnboardingStage = (
       });
 
       onboardingMessages.set([...messages, ...updateMsg]);
-
       const newMarkerInfo = getMarkerInformation(
         get(visElement),
         get(onboardingMessages)

@@ -1,7 +1,7 @@
 <script lang="ts">
   import PlotlyDemos from "./Plotly.svelte";
   import VegaLiteDemos from "./VegaLite.svelte";
-  // import EchartsDemos from "./Echarts.svelte";
+  import EchartsDemos from "./Echarts.svelte";
 
   let selected: "plotly.js" | "vega-lite" | "apache-echarts" = "plotly.js";
 </script>
@@ -33,7 +33,7 @@
   {:else if selected === "vega-lite"}
     <VegaLiteDemos />
   {:else if selected === "apache-echarts"}
-    <!-- <EchartsDemos /> -->
+    <EchartsDemos />
   {/if}
 </main>
 

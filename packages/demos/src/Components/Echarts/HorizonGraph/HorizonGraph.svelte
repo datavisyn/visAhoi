@@ -272,7 +272,11 @@
   });
 </script>
 
-<div bind:this={plotDiv} style="width: 600px; height: 600px;" />
+<div
+  id="echars-horizongraph"
+  bind:this={plotDiv}
+  style="width: 100%; height: 500px;"
+/>
 
 <style>
   :global(*) {
