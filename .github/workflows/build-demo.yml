@@ -36,7 +36,7 @@ jobs:
       - name: Build packages in workspace
         run: npm run build
       - name: Upload demo build artifcats
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: demos
           path: packages/demos/dist
@@ -49,7 +49,7 @@ jobs:
           ref: gh-pages
       - name: Remove old demos
         run: rm -rf ./demos
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: demos
           path: ./demos
