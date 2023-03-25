@@ -56,7 +56,7 @@ jobs:
       - name: setup git config
         run: |
           git config --global user.name "GitHub Actions Bot"
-          git config --global user.email="daniela.moitzi@datavisyn.io"
+          git config --global user.email "daniela.moitzi@datavisyn.io"
       - name: commit
         run: |
           git add .
