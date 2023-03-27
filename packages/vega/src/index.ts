@@ -17,6 +17,7 @@ import { changeMatrixFactory } from "./change-matrix";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { v4 } from "uuid";
+import { treemapFactory } from "./treemap";
 
 // just pass them through
 export {
@@ -92,6 +93,15 @@ export const generateBasicAnnotations = async (
         origSpec,
         d3Data,
         aggregatedValues,
+        visElement
+      );
+      break;
+
+    case EVisualizationType.TREEMAP:
+      onboardingMessages = treemapFactory(
+        contextKey,
+        vegaSpec,
+        d3Data,
         visElement
       );
       break;
