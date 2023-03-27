@@ -38,7 +38,7 @@
         type: "quantitative",
         title: "Average temperature in °C",
       },
-      color: { value: "#5e5e5e" },
+      color: { value: "#D3D3D4" },
     },
     config: {},
   };

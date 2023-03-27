@@ -8,8 +8,11 @@
   let onboardingUI;
   let runtimeObject: Plotly;
 
-  const data: object[] = [
+  const data: Plotly.Data[] = [
     {
+      marker: {
+        color: "#D3D3D4",
+      },
       x: [
         "2018-01",
         "2018-02",
@@ -30,7 +33,7 @@
     },
   ];
 
-  const layout: object = {
+  const layout: Plotly.Layout = {
     title: "Average temperature in a month",
     xaxis: {
       title: "Month",

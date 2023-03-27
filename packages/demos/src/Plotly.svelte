@@ -12,22 +12,27 @@
     <div>
       <h3>Barchart</h3>
       <PlotlyBarchart />
+      <hr />
     </div>
     <div>
       <h3>Change matrix</h3>
       <PlotlyChangeMatrix />
+      <hr />
     </div>
     <div>
       <h3>Heatmap</h3>
       <PlotlyHeatmap />
+      <hr />
     </div>
     <div>
       <h3>Horizon graph</h3>
       <PlotlyHorizonGraph />
+      <hr />
     </div>
     <div>
       <h3>Scatter plot</h3>
       <PlotlyScatterplot />
+      <hr />
     </div>
     <div>
       <h3>Treemap</h3>
@@ -51,5 +56,9 @@
     main {
       max-width: none;
     }
+  }
+  hr {
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
 </style>

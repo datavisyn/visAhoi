@@ -9,6 +9,11 @@ export default defineConfig({
     port: 8080,
     open: true,
   },
+  build: {
+    watch: {
+      include: ["*.svelte", "*.ts", "*.js"],
+    },
+  },
   // The watched package must be excluded from optimization,
   // so that it can appear in the dependency graph and trigger hot reload.
   optimizeDeps: {

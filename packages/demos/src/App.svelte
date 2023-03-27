@@ -7,8 +7,8 @@
 </script>
 
 <main>
-  <header style="display: flex; justify-content: center">
-    <img src="./dist/assets/logo.png" height="50px" alt="VisAhoi logo" />VisAhoi
+  <header style="display: flex; justify-content: center;">
+    <img src="./dist/assets/logo.png" height="100%" alt="VisAhoi logo" />
   </header>
   <div
     class="visahoi-demo-container"
@@ -49,17 +49,29 @@
 
   button {
     border-radius: 4px;
-    background-color: rgb(196, 196, 196);
+    background-color: white;
+    border: #9e1664 solid 1px;
+    color: #9e1664;
+    height: 25px;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    height: 40px;
   }
 
   button.selected {
-    background-color: #6a9ac5;
+    background-color: #9e1664;
+    color: white;
   }
 
   @media (min-width: 1000px) {
     /* .visahoi-demo-container {
       grid-template-columns: 1fr 1fr 1fr;
     } */
+  }
+
+  header {
+    height: 130px;
+    margin-bottom: 50px;
   }
 </style>

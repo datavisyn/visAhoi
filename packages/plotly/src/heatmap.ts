@@ -77,7 +77,6 @@ function extractOnboardingSpec(
       value: t?.yaxis?.title?.text,
       anchor: {
         sel: ".infolayer > .g-ytitle",
-        offset: { bottom: -320, left: -50 },
       },
     },
     xAxis: {

@@ -9,14 +9,17 @@
   <div>
     <h3>Barchart</h3>
     <VegaBarchart />
+    <hr />
   </div>
   <div>
     <h3>Change matrix</h3>
     <VegaChangeMatrix />
+    <hr />
   </div>
   <div>
     <h3>Horizon graph</h3>
     <VegaHorizonGraph />
+    <hr />
   </div>
   <div>
     <h3>Scatter plot</h3>
@@ -27,5 +30,9 @@
 <style>
   * {
     font-family: Arial, Helvetica, sans-serif;
+  }
+  hr {
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
 </style>
