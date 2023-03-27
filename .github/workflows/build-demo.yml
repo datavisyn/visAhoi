@@ -4,9 +4,16 @@
 name: Build and deploy demos
 
 on:
-  push:
-    branches:
-      - develop
+  workflow_dispatch:
+    inputs:
+      build_demos:
+        description: "Build demos"
+        required: false
+        type: boolean
+        default: false
+  # push:
+  #   branches:
+  #     - develop
   # Only pushes to the develop branch should trigger the build and deploy of demos
   # pull_request:
   #   branches:
@@ -14,6 +21,7 @@ on:
 
 jobs:
   build:
+    if: ${{ build_demos_flag == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,10 +39,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: demos
-          path: |
-            packages/echarts-demo/build/
-            packages/plotly-demo/build/
-            packages/vega-demo/build/
+          path: packages/demos/dist
+    width:
+      build_demos_flag: ${{ inputs.build_demos == true }}
   # deploy:
   #   needs: [build]
   #   runs-on: ubuntu-latest
