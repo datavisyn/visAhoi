@@ -18,6 +18,7 @@ import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { v4 } from "uuid";
 import { treemapFactory } from "./treemap";
+import { heatmapFactory } from "./heatmap";
 
 // just pass them through
 export {
@@ -108,6 +109,15 @@ export const generateBasicAnnotations = async (
 
     case EVisualizationType.SCATTERPLOT:
       onboardingMessages = scatterplotFactory(
+        contextKey,
+        vegaSpec,
+        d3Data,
+        visElement
+      );
+      break;
+
+    case EVisualizationType.HEATMAP:
+      onboardingMessages = heatmapFactory(
         contextKey,
         vegaSpec,
         d3Data,

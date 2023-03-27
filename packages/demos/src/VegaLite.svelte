@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Treemap from "./Components/VegaLite/Treemap/Treemap.svelte";
+  import VegaTreemap from "./Components/VegaLite/Treemap/Treemap.svelte";
+  import VegaHeatmap from "./Components/VegaLite/Heatmap/Heatmap.svelte";
   import VegaBarchart from "./Components/VegaLite/Barchart/Barchart.svelte";
   import VegaChangeMatrix from "./Components/VegaLite/ChangeMatrix/ChangeMatrix.svelte";
   import VegaHorizonGraph from "./Components/VegaLite/HorizonGraph/HorizonGraph.svelte";
@@ -28,8 +29,13 @@
     <hr />
   </div>
   <div>
+    <h3>Heatmap</h3>
+    <VegaHeatmap />
+    <hr />
+  </div>
+  <div>
     <h3>Treemap</h3>
-    <Treemap />
+    <VegaTreemap />
   </div>
 </div>
 
