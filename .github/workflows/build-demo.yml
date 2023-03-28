@@ -21,7 +21,7 @@ on:
 
 jobs:
   build:
-    if: ${{ build_demos_flag == 'true' }}
+    if: inputs.build_demos == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,30 +34,37 @@ jobs:
       - name: Bootstrap lerna workspace
         run: npm run bootstrap
       - name: Build packages in workspace
-        run: npm run build
+        run: BASE_URL=/visAhoi/demos npm run build
       - name: Upload demo build artifcats
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: demos
           path: packages/demos/dist
-    width:
-      build_demos_flag: ${{ inputs.build_demos == true }}
-  # deploy:
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         ref: gh-pages
-  #     - name: Remove old demos
-  #       run: rm -rf ./demos
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: demos
-  #         path: ./demos
-  #     - uses: stefanzweifel/git-auto-commit-action@v4
-  #       with:
-  #         # Required
-  #         commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
-  #         # Optional branch to push to, defaults to the current branch
-  #         branch: gh-pages
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Remove old demos
+        run: rm -rf ./demos
+      - uses: actions/download-artifact@v3
+        with:
+          name: demos
+          path: ./demos
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "daniela.moitzi@datavisyn.io"
+      - name: commit
+        run: |
+          git add .
+          git commit -m "Update demo files from GitHub Actions"
+          git push --set-upstream origin gh-pages
+      # - uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     # Required
+      #     commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
+      #     # Optional branch to push to, defaults to the current branch
+      #     branch: gh-pages
