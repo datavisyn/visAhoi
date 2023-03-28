@@ -53,7 +53,7 @@ function generateMessages(
     EDefaultOnboardingStages.USING
   ) as IOnboardingStage;
 
-  const modebar = document.getElementsByClassName("modebar-btn");
+  const modebar = visElement.getElementsByClassName("modebar-btn");
   const modebarText = [];
 
   if (modebar) {
@@ -81,7 +81,7 @@ function generateMessages(
       // basic chart interactions for plotly
       anchor: getAnchor(spec.plotlyModebarPreMarker, visElement),
       requires: ["plotlyModebarPreMarker", "plotlyModebar"],
-      text: "When hovering over the visualization, a modebar appears on the top.",
+      text: "When hovering over the visualization, a modebar appears on the top that allows different interactions with the visualization.",
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
@@ -116,7 +116,7 @@ function generateMessages(
     {
       anchor: getAnchor(spec.plotlyLegendInteractions, visElement),
       requires: ["plotlyLegendInteractions"],
-      text: "It is possible to hide or show points of the same category by clicking on them in the legend.",
+      text: "It is possible to hide or show points of the same category by clicking on the corresponding category in the legend.",
       title: "Legend interactions",
       onboardingStage: interacting,
       marker: {

@@ -24,7 +24,8 @@ const getMinMax = (values): [number, number, number[]] => {
 
 function extractOnboardingSpec(
   chart: any,
-  coords
+  coords,
+  visElement: Element
 ): IOnboardingHorizonGraphSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
   const traceNodes = chart.querySelectorAll("g.fills");
@@ -49,7 +50,7 @@ function extractOnboardingSpec(
   const positiveColor = posAreaNodes[0]?.style.fill;
   const negativeColor = negAreaNodes[0]?.style.fill;
 
-  const xGrids = document.getElementsByClassName("x");
+  const xGrids = visElement.getElementsByClassName("x");
 
   if (t === undefined || t === null) {
     console.error(
@@ -89,7 +90,9 @@ function extractOnboardingSpec(
         coords: {
           // https://stackoverflow.com/questions/1461059/is-there-an-equivalent-to-getboundingclientrect-for-text-nodes
           x: xGrids[1].childNodes[maxIndex - 1]?.getBoundingClientRect().x,
-          y: traceNodes[1].childNodes[0].getBoundingClientRect().y,
+          y:
+            traceNodes[1].childNodes[0].getBoundingClientRect().y -
+            visElement.getBoundingClientRect().top,
         },
       },
     },
@@ -98,7 +101,9 @@ function extractOnboardingSpec(
       anchor: {
         coords: {
           x: xGrids[minIndex]?.getBoundingClientRect().x,
-          y: traceNodes[2].childNodes[0].getBoundingClientRect().y,
+          y:
+            traceNodes[2].childNodes[0].getBoundingClientRect().y -
+            visElement.getBoundingClientRect().top,
         },
       },
     },
@@ -122,7 +127,9 @@ function extractOnboardingSpec(
       anchor: {
         coords: {
           x: traceNodes[0].childNodes[0].getBoundingClientRect().width / 2,
-          y: traceNodes[1].childNodes[0].getBoundingClientRect().y,
+          y:
+            traceNodes[1].childNodes[0].getBoundingClientRect().y -
+            visElement.getBoundingClientRect().top,
         },
       },
     },
@@ -131,7 +138,9 @@ function extractOnboardingSpec(
       anchor: {
         coords: {
           x: traceNodes[0].childNodes[0].getBoundingClientRect().width / 2,
-          y: traceNodes[1].childNodes[0].getBoundingClientRect().y,
+          y:
+            traceNodes[1].childNodes[0].getBoundingClientRect().y -
+            visElement.getBoundingClientRect().top,
         },
       },
     },
@@ -140,7 +149,10 @@ function extractOnboardingSpec(
       anchor: {
         coords: {
           x: xGrids[minIndex]?.getBoundingClientRect().x,
-          y: traceNodes[2].childNodes[0].getBoundingClientRect().y + 30,
+          y:
+            traceNodes[2].childNodes[0].getBoundingClientRect().y -
+            visElement.getBoundingClientRect().top +
+            30,
         },
       },
     },
@@ -157,13 +169,13 @@ export function horizonGraphFactory(
   contextKey,
   chart,
   coords,
-  visElementId: Element
+  visElement: Element
 ): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  const onbordingSpec = extractOnboardingSpec(chart, coords, visElement);
   return generateMessages(
     contextKey,
     EVisualizationType.HORIZON_GRAPH,
     onbordingSpec,
-    visElementId
+    visElement
   );
 }

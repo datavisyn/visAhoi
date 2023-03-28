@@ -2,11 +2,11 @@
   import embed from "vega-embed";
   import { ahoi, EVisualizationType } from "@visahoi/vega";
   import { onMount, onDestroy } from "svelte";
+  import data from "./data.json";
 
   let plotDiv: HTMLElement;
   let onboardingUI;
   let runtimeObject: object;
-  const data: object[] = require("./data.json");
 
   onMount(async () => {
     runtimeObject = await embed(
@@ -60,7 +60,7 @@
   });
 </script>
 
-<div bind:this={plotDiv} style="width: 500px; height: 500px;" />
+<div bind:this={plotDiv} style="width: 100%; height: 500px;" />
 
 <style>
   :global(*) {

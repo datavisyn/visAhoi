@@ -1,24 +1,25 @@
 <script lang="ts">
-  import embed, { VisualizationSpec } from "vega-embed";
+  import embed from "vega-embed";
   import { ahoi, EVisualizationType } from "@visahoi/vega";
   import { onMount, onDestroy } from "svelte";
+  import { options } from "./options";
 
-  let onboardingUI;
   let plotDiv: HTMLElement;
+  let onboardingUI;
   let runtimeObject: object;
-  const spec: VisualizationSpec = require("./data.json");
 
   onMount(async () => {
-    runtimeObject = await embed(plotDiv, spec, {
+    runtimeObject = await embed(plotDiv, options, {
       actions: false,
       renderer: "svg",
     });
+    console.log("runtime obj: ", runtimeObject);
 
     if (onboardingUI) {
       onboardingUI.showOnboarding();
     } else {
       onboardingUI = await ahoi({
-        visType: EVisualizationType.HORIZON_GRAPH,
+        visType: EVisualizationType.TREEMAP,
         chart: runtimeObject,
       });
     }
@@ -31,7 +32,7 @@
   });
 </script>
 
-<div bind:this={plotDiv} style="width: 500px; height: 500px;" />
+<div bind:this={plotDiv} style="width: 100%; height: 500px;" />
 
 <style>
   :global(*) {

@@ -6,7 +6,11 @@ import {
 } from "@visahoi/core";
 import { IOnboardingScatterplotSpec } from "@visahoi/core/src/scatterplot";
 
-function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
+function extractOnboardingSpec(
+  chart: any,
+  coords,
+  visElement: Element
+): IOnboardingScatterplotSpec {
   const traceNodes = chart?.querySelectorAll("g.points");
   const areaNodes = traceNodes
     ? traceNodes?.[0]?.querySelectorAll("path.point")
@@ -18,7 +22,7 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
   const t = areaNodesData ? areaNodesData[0]?.trace : null;
   let maxX, maxY, minX, minY, minYValue, maxYValue, minXValue, maxXValue;
 
-  const grid = document
+  const grid = visElement
     .getElementsByClassName("nsewdrag drag")[0]
     .getBoundingClientRect();
 
@@ -31,10 +35,12 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
           point.getBoundingClientRect().y <= grid.height + grid.y
       )
     : null;
-
   if (points) {
     const xVals = points.map((point) => point.getBoundingClientRect().x);
-    const yVals = points.map((point) => point.getBoundingClientRect().y);
+    const yVals = points.map(
+      (point) =>
+        point.getBoundingClientRect().y - visElement.getBoundingClientRect().top
+    );
 
     const xData = points.map((point) => point.__data__.x);
     const yData = points.map((point) => point.__data__.y);
@@ -122,14 +128,14 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingScatterplotSpec {
       value: maxX,
       anchor: {
         coords: { x: maxX, y: maxY },
-        offset: { left: 25 },
+        offset: { left: 15 },
       },
     },
     minValue: {
       value: minX,
       anchor: {
         coords: { x: minX, y: minY },
-        // offset: { left: 25 }
+        offset: { left: 15 },
       },
     },
     maxX: {
@@ -177,13 +183,13 @@ export function scatterplotFactory(
   contextKey: string,
   chart: Element,
   coords,
-  visElementId: Element
+  visElement: Element
 ): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  const onbordingSpec = extractOnboardingSpec(chart, coords, visElement);
   return generateMessages(
     contextKey,
     EVisualizationType.SCATTERPLOT,
     onbordingSpec,
-    visElementId
+    visElement
   );
 }

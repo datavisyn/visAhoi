@@ -77,7 +77,7 @@
   });
 </script>
 
-<div bind:this={plotDiv} style="width: 500px; height: 500px;" />
+<div bind:this={plotDiv} style="width: 100%; height: 500px;" />
 
 <style>
   :global(*) {

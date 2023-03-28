@@ -43,7 +43,7 @@ function generateMessages(
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage;
 
-  const modebar = document.getElementsByClassName("modebar-btn");
+  const modebar = visElement.getElementsByClassName("modebar-btn");
   const modebarText = [];
 
   if (modebar) {
@@ -68,9 +68,8 @@ function generateMessages(
 
   function createColorRect(color = "white") {
     return `<div class="colorRect" style="background-color: ${color}; display: inline-block; position: relative; top: 4px;
-    margin: 0 0 2px 0; width: 20px; height: 10px; border-radius: 4px; border: 1px solid black;"></div>"></div>`;
+    margin: 0 0 2px 0; width: 20px; height: 10px; border-radius: 4px; border: 1px solid black;"></div>`;
   }
-
   const messages: IOnboardingMessage[] = [
     {
       anchor: getAnchor(spec.type, visElement),
@@ -167,9 +166,9 @@ function generateMessages(
       title: "Chart interactions",
       onboardingStage: interacting,
       marker: {
-        id: `visahoi-marker-${contextKey}-7`,
+        id: `visahoi-marker-${contextKey}-17`,
       },
-      id: `visahoi-message-${contextKey}-7`,
+      id: `visahoi-message-${contextKey}-17`,
       order: 2,
     },
   ];
@@ -183,9 +182,6 @@ function generateMessages(
       onboardingStage: reading,
       tooltipPosition: "top" as TooltipPosition, // this causes the "jumping" of the tooltip when resizing
       marker: {
-        radius: 8,
-        content: "",
-        fontSize: "20px",
         id: `visahoi-marker-${contextKey}-7`,
       },
       id: `visahoi-marker-${contextKey}-7`,

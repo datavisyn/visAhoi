@@ -163,7 +163,8 @@
       </div>
     {/if}
     <div
-      style="--max-height: {$visHeight - 200};"
+      style="--max-height: {$visHeight -
+        200}; padding-top: 15px; padding-bottom: 15px;"
       class="visahoi-navigation-marker-container {$navigationAlignment ===
       'horizontal'
         ? 'horizontal'

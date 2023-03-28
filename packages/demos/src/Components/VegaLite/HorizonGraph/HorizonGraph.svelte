@@ -1,11 +1,11 @@
 <script lang="ts">
-  import embed, { VisualizationSpec } from "vega-embed";
+  import embed from "vega-embed";
   import { ahoi, EVisualizationType } from "@visahoi/vega";
   import { onMount, onDestroy } from "svelte";
+  import spec from "./data.json";
 
-  const spec: VisualizationSpec = require("./data.json");
-  let plotDiv: HTMLElement;
   let onboardingUI;
+  let plotDiv: HTMLElement;
   let runtimeObject: object;
 
   onMount(async () => {
@@ -18,7 +18,7 @@
       onboardingUI.showOnboarding();
     } else {
       onboardingUI = await ahoi({
-        visType: EVisualizationType.CHANGE_MATRIX,
+        visType: EVisualizationType.HORIZON_GRAPH,
         chart: runtimeObject,
       });
     }
@@ -31,7 +31,7 @@
   });
 </script>
 
-<div bind:this={plotDiv} style="width: 500px; height: 500px;" />
+<div bind:this={plotDiv} style="width: 100%; height: 500px;" />
 
 <style>
   :global(*) {

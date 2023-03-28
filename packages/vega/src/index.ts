@@ -17,6 +17,8 @@ import { changeMatrixFactory } from "./change-matrix";
 import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { v4 } from "uuid";
+import { treemapFactory } from "./treemap";
+import { heatmapFactory } from "./heatmap";
 
 // just pass them through
 export {
@@ -49,7 +51,7 @@ export const generateBasicAnnotations = async (
 
   // ADDITIONAL (not used)
   // Get the individual nodes
-  const nodes = document.querySelectorAll(".role-mark > path");
+  const nodes = visElement.querySelectorAll(".role-mark > path");
 
   // Get the data of the individual bars
   const d3Data = Array.from(nodes).map((el: any) => el.__data__);
@@ -96,8 +98,26 @@ export const generateBasicAnnotations = async (
       );
       break;
 
+    case EVisualizationType.TREEMAP:
+      onboardingMessages = treemapFactory(
+        contextKey,
+        vegaSpec,
+        d3Data,
+        visElement
+      );
+      break;
+
     case EVisualizationType.SCATTERPLOT:
       onboardingMessages = scatterplotFactory(
+        contextKey,
+        vegaSpec,
+        d3Data,
+        visElement
+      );
+      break;
+
+    case EVisualizationType.HEATMAP:
+      onboardingMessages = heatmapFactory(
         contextKey,
         vegaSpec,
         d3Data,

@@ -33,7 +33,7 @@
       const elementId = document.getElementById(
         getNavigationMarkerDomId(marker.id)
       );
-      if(elementId) {
+      if (elementId) {
         elementId.style.opacity = "0.5";
       }
 

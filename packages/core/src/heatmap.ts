@@ -46,7 +46,7 @@ function generateMessages(
     EDefaultOnboardingStages.ANALYZING
   ) as IOnboardingStage;
 
-  const modebar = document.getElementsByClassName("modebar-btn");
+  const modebar = visElement.getElementsByClassName("modebar-btn");
   const modebarText = [];
 
   if (modebar) {
