@@ -7,4 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["@visahoi"],
   },
+  base: process.env.BASE_URL || "/", // is set in github action to have correct relative links to /visAhoi/demos
 });

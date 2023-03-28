@@ -45,18 +45,7 @@
   * {
     font-family: Arial, Helvetica, sans-serif;
   }
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
 
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
   hr {
     margin-top: 50px;
     margin-bottom: 50px;

@@ -34,7 +34,7 @@ jobs:
       - name: Bootstrap lerna workspace
         run: npm run bootstrap
       - name: Build packages in workspace
-        run: npm run build
+        run: BASE_URL=/visAhoi/demos npm run build
       - name: Upload demo build artifcats
         uses: actions/upload-artifact@v3
         with:
