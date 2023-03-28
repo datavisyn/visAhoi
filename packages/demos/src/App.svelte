@@ -2,13 +2,14 @@
   import PlotlyDemos from "./Plotly.svelte";
   import VegaLiteDemos from "./VegaLite.svelte";
   import EchartsDemos from "./Echarts.svelte";
+  import Logo from "./assets/logo.png";
 
   let selected: "plotly.js" | "vega-lite" | "apache-echarts" = "plotly.js";
 </script>
 
 <main>
   <header style="display: flex; justify-content: center;">
-    <img src="./dist/assets/logo.png" height="100%" alt="VisAhoi logo" />
+    <img src={Logo} height="100%" alt="VisAhoi logo" />
   </header>
   <div
     class="visahoi-demo-container"

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import embed, { VisualizationSpec } from "vega-embed";
+  import embed from "vega-embed";
   import { ahoi, EVisualizationType } from "@visahoi/vega";
   import { onMount, onDestroy } from "svelte";
   import spec from "./data.json";

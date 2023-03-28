@@ -1,21 +1,9 @@
 import { defineConfig } from "vite";
-// import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+
+// https://vitejs.dev/config/
 export default defineConfig({
-  // plugins: [svelte()],
-  server: {
-    watch: {
-      ignored: ["!**/node_modules/@visahoi/**"],
-    },
-    port: 8080,
-    open: true,
-  },
-  build: {
-    watch: {
-      include: ["*.svelte", "*.ts", "*.js"],
-    },
-  },
-  // The watched package must be excluded from optimization,
-  // so that it can appear in the dependency graph and trigger hot reload.
+  plugins: [svelte()],
   optimizeDeps: {
     exclude: ["@visahoi"],
   },

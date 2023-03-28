@@ -1,5 +1,5 @@
 <script lang="ts">
-  import embed, { VisualizationSpec } from "vega-embed";
+  import embed from "vega-embed";
   import { ahoi, EVisualizationType } from "@visahoi/vega";
   import { onMount, onDestroy } from "svelte";
   import data from "./data.json";
@@ -8,7 +8,7 @@
   let onboardingUI;
   let runtimeObject;
 
-  const spec: VisualizationSpec = {
+  const spec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     description: "A simple bar chart with embedded data.",
     title: "Average temperature in Oslo, Norway in 2018",
