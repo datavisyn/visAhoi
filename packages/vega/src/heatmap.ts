@@ -19,13 +19,6 @@ function extractOnboardingSpec(
         offset: { left: -20, top: -10 },
       },
     },
-    legendDescription: {
-      value: vegaSpec?.legends[0]?.title,
-      anchor: {
-        findDomNodeByValue: true,
-        offset: { left: -20, top: 5 },
-      },
-    },
     axisDescription: {
       value: vegaSpec?.axes[2]?.title,
       anchor: {
@@ -38,6 +31,20 @@ function extractOnboardingSpec(
     },
     xAxis: {
       value: vegaSpec?.axes[2]?.title,
+    },
+    legendDescription: {
+      value: vegaSpec?.legends[0]?.title,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -60, top: -20 },
+      },
+    },
+    hoverDescription: {
+      value: vegaSpec?.title?.text,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -20, top: -60 },
+      },
     },
   };
 }

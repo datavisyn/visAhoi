@@ -23,7 +23,6 @@ const render = async () => {
 }
 
 const processData = (data) => {
-  console.log(data, 'Data')
   const dataArr = []
   const obj = {}
   if (data.children.length > 0) {
