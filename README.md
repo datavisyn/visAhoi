@@ -5,6 +5,8 @@
   </a>
 </p>
 
+# Contributors
+Christina Stoiber contributed to the library regarding conceptual design, evaluation, and publication.
 
 # What is VisAhoi?
 
