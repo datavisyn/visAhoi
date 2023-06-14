@@ -171,7 +171,13 @@ export const getOnboardingMessages = (
   }
 };
 
-export const createBasicOnboardingStage = (
+/**
+ *
+ * @param contextKey
+ * @param stage
+ * @returns returns and stores an onboarding stage, and adds an id and order if not provided
+ */
+export const addBasicOnboardingStage = (
   contextKey: string,
   stage: IOnboardingStage
 ) => {
@@ -198,6 +204,23 @@ export const createBasicOnboardingStage = (
 };
 
 /**
+ *
+ * @param contextKey
+ * @param stage
+ * @returns an onboarding stage and adds id and order if not provided, but does not store it to the visahoi store
+ */
+export const createBasicOnboardingStage = (
+  contextKey: string,
+  stage: Pick<IOnboardingStage, "id" | "order" | "title">
+) => {
+  return {
+    ...stage,
+    id: stage.id || `visahoi-stage-${contextKey}-${v4()}`,
+    order: stage.order || -1,
+  };
+};
+
+/**
  * creates an onboarding message without adding it to the store
  */
 export const createBasicOnboardingMessage = (
@@ -214,7 +237,7 @@ export const createBasicOnboardingMessage = (
     title: message.title,
     onboardingStage: message.onboardingStage,
     marker: {
-      id: `visahoi-marker-${contextKey}- ${v4()}`,
+      id: `visahoi-marker-${contextKey}-${v4()}`,
     },
     order: message.order || -1,
   };

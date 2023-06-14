@@ -1,4 +1,4 @@
-import Plotly from 'plotly.js-dist'
+import Plotly from 'plotly.js-dist';
 import {
   generateBasicAnnotations,
   ahoi,
@@ -6,45 +6,46 @@ import {
   setOnboardingStage,
   setEditMode,
   createBasicOnboardingMessage,
-  createBasicOnboardingStage,
-  getOnboardingMessages
-} from '@visahoi/plotly'
-import { defaultOnboardingStages, EDefaultOnboardingStages } from '@visahoi/core'
+  addBasicOnboardingStage,
+  getOnboardingMessages,
+} from '@visahoi/plotly';
+import {
+  defaultOnboardingStages,
+  EDefaultOnboardingStages,
+} from '@visahoi/core';
 // @ts-ignore
 import editIcon from '@visahoi/core/src/assets/pen-solid.svg';
 
-import debounce from 'lodash.debounce'
+import debounce from 'lodash.debounce';
 
-let chart = null
-let showOnboarding = false
-let editMode = false
-let onboardingUI = null
-const deleteStageId = null
+let chart = null;
+let showOnboarding = false;
+let editMode = false;
+let onboardingUI = null;
+const deleteStageId = null;
 
 const debouncedResize = debounce((event) => {
-  onboardingUI?.updateOnboarding(getAhoiConfig())
-}, 250)
+  onboardingUI?.updateOnboarding(getAhoiConfig());
+}, 250);
 
-const reading = defaultOnboardingStages.get(
-  EDefaultOnboardingStages.READING
-)
+const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
 
-async function render () {
-  const response = await fetch('../data/cars.json')
-  const data = await response.json()
-  const { x, y } = processData(data)
-  chart = await makePlotly(x, y)
-  window.addEventListener('resize', debouncedResize)
+async function render() {
+  const response = await fetch('../data/cars.json');
+  const data = await response.json();
+  const { x, y } = processData(data);
+  chart = await makePlotly(x, y);
+  window.addEventListener('resize', debouncedResize);
 }
 
-function processData (allRows) {
-  const x = Object.values(allRows).map((d) => d.Horsepower)
-  const y = Object.values(allRows).map((d) => d.Miles_per_Gallon)
-  return { x, y }
+function processData(allRows) {
+  const x = Object.values(allRows).map((d) => d.Horsepower);
+  const y = Object.values(allRows).map((d) => d.Miles_per_Gallon);
+  return { x, y };
 }
 
-function makePlotly (x, y) {
-  document.getElementById('plot')
+function makePlotly(x, y) {
+  document.getElementById('plot');
   const traces = [
     {
       type: 'scatter',
@@ -52,26 +53,26 @@ function makePlotly (x, y) {
       x,
       y,
       marker: {
-        size: 5
-      }
-    }
-  ]
+        size: 5,
+      },
+    },
+  ];
 
   const layout = {
     title: 'Horsepower and miles per gallon for various cars',
     xaxis: {
-      title: 'Horsepower'
+      title: 'Horsepower',
     },
     yaxis: {
-      title: 'Miles per Gallon'
-    }
-  }
+      title: 'Miles per Gallon',
+    },
+  };
 
   const config = {
-    responsive: true
-  }
+    responsive: true,
+  };
 
-  return Plotly.newPlot('vis', traces, layout, config)
+  return Plotly.newPlot('vis', traces, layout, config);
 }
 
 // Customize icons
@@ -87,8 +88,8 @@ const getAhoiConfig = () => {
   const defaultOnboardingMessages = generateBasicAnnotations(
     chart.id,
     EVisualizationType.SCATTERPLOT,
-    chart
-  )
+    chart,
+  );
   defaultOnboardingMessages.push(
     createBasicOnboardingMessage(chart.id, {
       text: "This is the newly added onboarding message for the scatter chart. It's absolutely positioned.",
@@ -97,11 +98,11 @@ const getAhoiConfig = () => {
       anchor: {
         coords: {
           x: 250,
-          y: 250
-        }
-      }
-    })
-  )
+          y: 250,
+        },
+      },
+    }),
+  );
 
   // const extendedOnboardingMessages = defaultOnboardingMessages.map(
   //   (message) => ({
@@ -123,84 +124,86 @@ const getAhoiConfig = () => {
 
     onboardingMessages: deleteStageId
       ? defaultOnboardingMessages.filter(
-        (m) => m.onboardingStage.id !== deleteStageId
-      )
-      : defaultOnboardingMessages
+          (m) => m.onboardingStage.id !== deleteStageId,
+        )
+      : defaultOnboardingMessages,
     // showOnboardingNavigation: true,
-  }
+  };
 
-  return ahoiConfig
-}
+  return ahoiConfig;
+};
 
 const registerEventListener = () => {
-  const helpIcon = document.getElementById('show-onboarding')
-  const editButton = document.getElementById('editModeButton')
-  const newButton = document.getElementById('btn-test')
-  const newMessageBtn = document.getElementById('btn-message')
+  const helpIcon = document.getElementById('show-onboarding');
+  const editButton = document.getElementById('editModeButton');
+  const newButton = document.getElementById('btn-test');
+  const newMessageBtn = document.getElementById('btn-message');
 
   if (!helpIcon) {
-    return
+    return;
   }
   helpIcon.addEventListener('click', async () => {
-    showOnboarding = !showOnboarding
+    showOnboarding = !showOnboarding;
 
     if (showOnboarding) {
-      editButton.style.display = 'block'
+      editButton.style.display = 'block';
       onboardingUI = await ahoi(
         chart.id,
         EVisualizationType.SCATTERPLOT,
         chart,
-        getAhoiConfig()
+        getAhoiConfig(),
         // getIcons()
-      )
+      );
     } else {
-      onboardingUI?.removeOnboarding()
-      editButton.style.display = 'none'
+      onboardingUI?.removeOnboarding();
+      editButton.style.display = 'none';
     }
-  })
+  });
   editButton.addEventListener('click', async () => {
-    editMode = !editMode
+    editMode = !editMode;
     if (editMode) {
-      editButton.innerText = 'Exit edit mode'
+      editButton.innerText = 'Exit edit mode';
     } else {
-      editButton.innerText = 'Enter edit mode'
+      editButton.innerText = 'Enter edit mode';
     }
-    setEditMode(editMode)
-  })
+    setEditMode(editMode);
+  });
 
   newButton.addEventListener('click', async () => {
-    setOnboardingStage(chart.id, {      
+    setOnboardingStage(chart.id, {
       id: 'reading-the-chart',
       title: 'reading',
       icon: `<img src=${editIcon} />`,
       backgroundColor: 'red',
       activeBackgroundColor: 'purple',
-      hoverBackgroundColor: 'green'
-    })
-  })    
+      hoverBackgroundColor: 'green',
+    });
+  });
 
   newMessageBtn.addEventListener('click', async () => {
-    const newOnboardingStage = createBasicOnboardingStage(chart.id, {      
-      title: 'stage-1',      
+    const newOnboardingStage = addBasicOnboardingStage(chart.id, {
+      title: 'stage-1',
       icon: `<img src=${editIcon} />`,
-      backgroundColor: 'green'
-    })
+      backgroundColor: 'green',
+    });
 
-    const messages = getOnboardingMessages(chart.id)  
-    
-    messages.push(createBasicOnboardingMessage(chart.id,{    
-      text: 'Check the default order',
-      title: 'New message',
-      onboardingStage: newOnboardingStage,
-      anchor: {
-        coords: {
-          x: 250,
-          y: 250
-        }
-      },
-    }))
-  })
-}
+    const messages = getOnboardingMessages(chart.id);
 
-registerEventListener()
-render()
+    messages.push(
+      createBasicOnboardingMessage(chart.id, {
+        text: 'Check the default order',
+        title: 'New message',
+        onboardingStage: newOnboardingStage,
+        anchor: {
+          coords: {
+            x: 250,
+            y: 250,
+          },
+        },
+      }),
+    );
+  });
+};
+
+registerEventListener();
+render();
