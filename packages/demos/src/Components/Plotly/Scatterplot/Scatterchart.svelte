@@ -1,6 +1,6 @@
 <script lang="ts">
   import "@visahoi/plotly/build/css/main.css";
-  import Plotly from "plotly.js-dist";
+  import Plotly from "plotly.js-dist-min";
   import { onMount, onDestroy } from "svelte";
   import { ahoi, EVisualizationType } from "@visahoi/plotly";
   import type { PlotData } from "plotly.js";
