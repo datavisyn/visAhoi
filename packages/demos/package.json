@@ -2,6 +2,7 @@
   "name": "@visahoi/demos",
   "version": "3.0.0",
   "type": "module",
+  "private": true,
   "author": "FFG SEVA Consortium",
   "homepage": "https://datavisyn.github.io/visAhoi/",
   "license": "MIT",
