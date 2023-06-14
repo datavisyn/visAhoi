@@ -3,6 +3,7 @@ import {
   IAhoiConfig,
   injectOnboarding,
   IOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   createBasicOnboardingMessage,
   getOnboardingStages,
@@ -24,6 +25,7 @@ import { v4 } from "uuid";
 // just pass them through
 export {
   createBasicOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   getOnboardingStages,
   getOnboardingMessages,

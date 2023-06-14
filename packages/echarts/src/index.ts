@@ -4,6 +4,7 @@ import {
   injectOnboarding,
   IOnboardingMessage,
   createBasicOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   deleteOnboardingStage,
   getOnboardingMessages,
@@ -24,6 +25,7 @@ import { v4 } from "uuid";
 // just pass them through
 export {
   createBasicOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   getOnboardingStages,
   getOnboardingMessages,
