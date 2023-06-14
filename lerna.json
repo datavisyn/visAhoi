@@ -3,5 +3,5 @@
     "packages/*"
   ],
   "useWorkspaces": true,
-  "version": "fixed"
+  "version": "4.0.0"
 }
