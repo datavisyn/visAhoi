@@ -3,6 +3,7 @@ import {
   EDefaultOnboardingStages,
   ISpecProp,
   OnboardingAnchor,
+  SvgIcons,
 } from "./interfaces";
 
 /**
@@ -42,7 +43,6 @@ export const getAnchor = (
     return;
   } else if (prop.anchor?.findDomNodeByValue) {
     // the dom node should be found by it's content
-    // TODO: can findDomNodeByValue be removed?
     const targetDomNode = getDomNodeByTextContent(
       prop.domNodeValue ? prop.domNodeValue : prop.value,
       visElement
@@ -100,15 +100,115 @@ export const getMarkerDomId = (id: string): string => {
   return `visahoi-marker-${id}`;
 };
 
-
 /**
  * returns the markerId with the visahoi navigation prefix
  * this id is used for the navigation marker dom element
  * @param id
  * @returns
  */
- export const getNavigationMarkerDomId = (id: string): string => {
+export const getNavigationMarkerDomId = (id: string): string => {
   return `visahoi-marker-navigation-visahoi-marker-${id}`;
 };
 
+export const getGeneralChartInteractions = (text: string[]) => {
+  const modeBarDescriptions = new Map([
+    [
+      "Download plot as a png",
+      `${
+        text.includes("Download plot as a png")
+          ? `${SvgIcons.CAMERA} <b>Screenshot</b>: You can download a .png of the chart.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Zoom",
+      `${
+        text.includes("Zoom")
+          ? `${SvgIcons.ZOOM} <b>Zooming</b>: Click and drag the mouse over a certain part of the visualization to zoom in and get a more detailed view of the data.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Pan",
+      `${
+        text.includes("Pan")
+          ? `${SvgIcons.PAN} <b>Panning</b>: You can move the view left and right while dragging the mouse.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Box Select",
+      `${
+        text.includes("Box Select")
+          ? `${SvgIcons.BOX_SELECTION} <b>Selection</b>: Drag the mouse over the chart to select some data.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Lasso Select",
+      `${
+        text.includes("Lasso Select")
+          ? `${SvgIcons.LASSO_SELECTION} <b>Lasso Select</b>: Select the desired data by drawing a lasso loop.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Zoom in",
+      `${
+        text.includes("Zoom in")
+          ? `${SvgIcons.ZOOM_IN} <b>Zoom in</b>: Zoom in to get a more detailed view of the chart.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Zoom out",
+      `${
+        text.includes("Zoom out")
+          ? `${SvgIcons.ZOOM_OUT} <b>Zoom out</b>: Zoom out to get a better overview of the chart.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Autoscale",
+      `${
+        text.includes("Autoscale")
+          ? `${SvgIcons.AUTO_SCALE} <b>Autoscale</b>: Zooms out to get a view of the whole visualization.<br/><br/>`
+          : ""
+      }`,
+    ],
+    [
+      "Reset axes",
+      `${
+        text.includes("Reset axes")
+          ? `${SvgIcons.RESET} <b>Reset</b>: It takes the chart to the inital layout settings.<br/><br/>`
+          : ""
+      }`,
+    ],
+  ]);
+  return modeBarDescriptions;
+};
 
+export const getModeBarMessages = (
+  modebarInteractions: Map<string, string>
+) => {
+  const cameraIcon = modebarInteractions.get("Download plot as a png") || "";
+  const zoomIcon = modebarInteractions.get("Zoom") || "";
+  const panIcon = modebarInteractions.get("Pan") || "";
+  const selectionIcon = modebarInteractions.get("Box Select") || "";
+  const lassoSelectIcon = modebarInteractions.get("Lasso Select") || "";
+  const zoomInIcon = modebarInteractions.get("Zoom in") || "";
+  const zoomOutIcon = modebarInteractions.get("Zoom out") || "";
+  const autoScaleIcon = modebarInteractions.get("Autoscale") || "";
+  const resetIcon = modebarInteractions.get("Reset axes") || "";
+  return {
+    cameraIcon,
+    zoomIcon,
+    panIcon,
+    selectionIcon,
+    lassoSelectIcon,
+    zoomInIcon,
+    zoomOutIcon,
+    autoScaleIcon,
+    resetIcon,
+  };
+};

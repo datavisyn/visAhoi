@@ -5,20 +5,36 @@ import {
   generateMessages,
 } from "@visahoi/core";
 
-function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
+function extractOnboardingSpec(
+  chart: any,
+  coords,
+  visElement: Element
+): IOnboardingBarChartSpec {
   // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
-  const traceNodes = chart.querySelectorAll("g.points");
-  const barNodes = traceNodes[0].querySelectorAll("g.point");
+  const traceNodes = chart?.querySelectorAll("g.points");
+  const barNodes = traceNodes[0]?.querySelectorAll("g.point");
   const barNodesData = Array.from(barNodes).map((point: any) => point.__data__);
 
   const t = barNodesData[0].trace;
+  const min = t._extremes.y.min[0].val;
+  const max = t._extremes.y.max[0].val;
+  const minIndex = chart._fullData[0].y.indexOf(min);
+  const maxIndex = chart._fullData[0].y.indexOf(max);
+  const minX = barNodes[minIndex]?.getBoundingClientRect().x;
+  const minY =
+    barNodes[minIndex]?.getBoundingClientRect().y -
+    visElement.getBoundingClientRect().top;
+  const maxX = barNodes[maxIndex]?.getBoundingClientRect().x;
+  const maxY =
+    barNodes[maxIndex]?.getBoundingClientRect().y -
+    visElement.getBoundingClientRect().top;
 
   return {
     chartTitle: {
       value: chart?.layout?.title?.text,
       anchor: {
         findDomNodeByValue: true,
-        offset: { left: -20, top: 10 },
+        offset: { left: 10, top: 10 },
       },
     },
     type: {
@@ -40,15 +56,15 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
       value: t.orientation === "v" ? "height" : "width",
     },
     yMin: {
-      value: t._extremes.y.min[0].val.toFixed(1), // 0 = first trace
+      value: min.toFixed(1), // 0 = first trace
       anchor: {
-        sel: ".bars > .points > .point:nth-child(2)",
+        coords: { x: minX, y: minY },
       },
     },
     yMax: {
-      value: t._extremes.y.max[0].val.toFixed(1),
+      value: max.toFixed(1),
       anchor: {
-        sel: ".bars > .points > .point:nth-child(7)",
+        coords: { x: maxX, y: maxY },
       },
     },
     xMin: {
@@ -71,21 +87,48 @@ function extractOnboardingSpec(chart: any, coords): IOnboardingBarChartSpec {
         offset: { top: -25, right: 10 },
       },
     },
-    // xAxisLabel (e.g. 01, 02, …)
-    // yAxisLabel (e.g. -5, 0, 5, ...)
-    // Title (Average Temperature in Oslo)
+    interactionDesc: {
+      value: chart.layout.yaxis.title.text,
+      anchor: {
+        sel: ".bars > .points > .point:nth-child(1)",
+      },
+    },
+    plotlyModebarPreMarker: {
+      value: "",
+      anchor: {
+        sel: ".modebar--hover",
+        offset: {
+          left: -20,
+          top: -chart.offsetHeight / 2,
+        },
+      },
+    },
+    plotlyModebar: {
+      value: "",
+      anchor: {
+        sel: ".modebar--hover",
+      },
+    },
+    plotlyLegendInteractions: {
+      value: "",
+      anchor: {
+        sel: ".legend",
+      },
+    },
   };
 }
 
 export function barChartFactory(
+  contextKey: string,
   chart: Element,
   coords,
-  visElementId: Element
+  visElement: Element
 ): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  const onbordingSpec = extractOnboardingSpec(chart, coords, visElement);
   return generateMessages(
+    contextKey,
     EVisualizationType.BAR_CHART,
     onbordingSpec,
-    visElementId
+    visElement
   );
 }

@@ -21,7 +21,7 @@ function getOrientation(scales) {
 export function getMinMax(data) {
   const values = getPropertyValues(data);
   const keys = Object.keys(values);
-  const res: {key: string, min: number, max: number}[] = [];
+  const res: { key: string; min: number; max: number }[] = [];
 
   keys.forEach((k) => {
     res.push({
@@ -45,26 +45,44 @@ function getPropertyValues(arr) {
   return res;
 }
 
-function extractOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: any[]): IOnboardingBarChartSpec {
+function extractOnboardingSpec(
+  vegaSpec: Spec,
+  aggregatedValues: any[],
+  elems: any[],
+  visElement
+): IOnboardingBarChartSpec {
   const v = vegaSpec;
   const a = aggregatedValues;
 
   const { x, y, b } = getOrientation(v.scales);
   const axesMinMax = getMinMax(a);
 
+  const dataArray = getPropertyValues(a);
+  const minIndex = dataArray?.temp?.indexOf(axesMinMax[0].min);
+  const maxIndex = dataArray?.temp?.indexOf(axesMinMax[0].max);
+
+  const rectBars = visElement.getElementsByClassName(
+    "mark-rect role-mark marks"
+  );
+
   return {
     chartTitle: {
       value: typeof v.title === "string" ? v.title : v.title?.text,
       anchor: {
         sel: ".role-title-text",
-        offset: {left: -20}
+        offset: { left: -20 },
       },
     },
     type: {
       value: (<any>v.marks![0]).style,
       anchor: {
         sel: "svg",
-        coords: elems[4],
+        coords: {
+          x: rectBars[0].childNodes[3]?.getBoundingClientRect()?.x,
+          y:
+            rectBars[0].childNodes[3]?.getBoundingClientRect()?.y -
+            visElement.getBoundingClientRect().top,
+        },
       },
     },
     orientation: {
@@ -89,34 +107,75 @@ function extractOnboardingSpec(vegaSpec: Spec, aggregatedValues: any[], elems: a
       value: axesMinMax[0].min.toFixed(1),
       anchor: {
         sel: "svg",
-        coords: elems[2],
+        coords: minIndex
+          ? {
+              x: rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.x,
+              y:
+                rectBars[0].childNodes[minIndex]?.getBoundingClientRect()?.y -
+                visElement.getBoundingClientRect().top,
+            }
+          : elems[2],
       },
     },
     yMax: {
       value: axesMinMax[0].max.toFixed(1),
       anchor: {
         sel: "svg",
-        coords: elems[7],
+        coords: maxIndex
+          ? {
+              x: rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.x,
+              y:
+                rectBars[0].childNodes[maxIndex]?.getBoundingClientRect()?.y -
+                visElement.getBoundingClientRect().top,
+            }
+          : elems[7],
       },
     },
     xAxisTitle: {
       value: (<any>v.axes![1]).title,
       anchor: {
         sel: "g[aria-label~='x-axis' i] .role-axis-title > text",
-        offset: {left: -30, top: 10}
+        offset: { left: -30, top: 10 },
       },
     },
     yAxisTitle: {
       value: (<any>v.axes![2]).title,
       anchor: {
         sel: "g[aria-label~='y-axis' i] .role-axis-title > text",
-        offset: {top: -30}
+        offset: { top: -30 },
+      },
+    },
+    interactionDesc: {
+      value: (<any>v.axes![2]).title,
+      anchor: {
+        coords: {
+          x: rectBars[0].childNodes[2]?.getBoundingClientRect()?.x,
+          y:
+            rectBars[0].childNodes[2]?.getBoundingClientRect()?.y -
+            visElement.getBoundingClientRect().top,
+        },
       },
     },
   };
 }
 
-export function barChartFactory(vegaSpec: Spec, aggregatedValues: any[], elems: any[], visElement: Element): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(vegaSpec, aggregatedValues, elems);
-  return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElement);
+export function barChartFactory(
+  contextKey: string,
+  vegaSpec: Spec,
+  aggregatedValues: any[],
+  elems: any[],
+  visElement: Element
+): IOnboardingMessage[] {
+  const onbordingSpec = extractOnboardingSpec(
+    vegaSpec,
+    aggregatedValues,
+    elems,
+    visElement
+  );
+  return generateMessages(
+    contextKey,
+    EVisualizationType.BAR_CHART,
+    onbordingSpec,
+    visElement
+  );
 }

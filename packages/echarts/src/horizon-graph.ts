@@ -16,12 +16,19 @@ const getMinMax = (values) => {
       }
     });
   });
-  const min = Math.min(...unified);
-  const max = Math.max(...unified);
+  const removedUnifiedNaN = unified.filter((f) => !isNaN(f));
+  const min = Math.min(...removedUnifiedNaN);
+  const max = Math.max(...removedUnifiedNaN);
+
   return [min, max];
 };
 
-function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
+function extractOnboardingSpec(
+  chart,
+  coords,
+  visElement: Element
+): IOnboardingHorizonGraphSpec {
+  // TODO: It is now hardcoded to get the colors and position. It have to be changed.
   const xAxis = [
     chart._chartsViews[0]._points[6],
     chart._chartsViews[0]._points[7],
@@ -35,7 +42,18 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
     chart._chartsViews[2]._points[1],
   ];
   const options = chart._model.option;
-  const [min, max] = getMinMax(chart._model.option.series);
+
+  const [min, max] = getMinMax(options.series);
+
+  const tags = visElement.getElementsByTagName("g");
+
+  const minYPosition =
+    (tags[tags.length - 1].childNodes[0] as HTMLElement).getBoundingClientRect()
+      .top - visElement.getBoundingClientRect().top;
+  const maxYPosition =
+    (tags[tags.length - 2].childNodes[0] as HTMLElement).getBoundingClientRect()
+      .top - visElement.getBoundingClientRect().top;
+
   return {
     chartTitle: {
       value: options?.title[0]?.text,
@@ -56,12 +74,19 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
         findDomNodeByValue: true,
       },
     },
+    interactDesc: {
+      value: options.yAxis[0].name,
+      anchor: {
+        findDomNodeByValue: true,
+        offset: { left: -50 },
+      },
+    },
     yMin: {
       value: min,
       anchor: {
         coords: {
           x: chart._chartsViews[2]._points[2],
-          y: chart._chartsViews[2]._points[3],
+          y: minYPosition,
         },
       },
     },
@@ -70,7 +95,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
       anchor: {
         coords: {
           x: chart._chartsViews[1]._points[12],
-          y: chart._chartsViews[1]._points[13],
+          y: maxYPosition,
         },
       },
     },
@@ -84,7 +109,7 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
       value: chart._chartsViews[2].__model.option.color,
       anchor: {
         coords: { x: negativeColor[0], y: negativeColor[1] },
-        offset: { left: 20 },
+        offset: { left: -30, top: 30 },
       },
     },
     type: {
@@ -100,14 +125,16 @@ function extractOnboardingSpec(chart, coords): IOnboardingHorizonGraphSpec {
 }
 
 export function horizonGraphFactory(
+  contextKey,
   chart,
   coords,
-  visElementId: Element
+  visElement: Element
 ): IOnboardingMessage[] {
-  const onbordingSpec = extractOnboardingSpec(chart, coords);
+  const onbordingSpec = extractOnboardingSpec(chart, coords, visElement);
   return generateMessages(
+    contextKey,
     EVisualizationType.HORIZON_GRAPH,
     onbordingSpec,
-    visElementId
+    visElement
   );
 }

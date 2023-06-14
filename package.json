@@ -6,15 +6,11 @@
   "main": "index.js",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "start": "lerna run start",
-    "watch-plotly": "lerna run --parallel watch-plotly",
-    "watch-echarts": "lerna run --parallel watch-echarts",
-    "watch-vega": "lerna run --parallel watch-vega"
+    "build": "lerna run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
   },
   "keywords": [
     "onboarding",
@@ -26,17 +22,17 @@
   "author": "FFG SEVA Consortium",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+    "url": "https://github.com/datavisyn/visAhoi/issues"
   },
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype#readme",
+  "homepage": "https://github.com/datavisyn/visAhoi#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.28.3",
-    "@typescript-eslint/parser": "^4.28.3",
+    "@typescript-eslint/eslint-plugin": "4.28.3",
+    "@typescript-eslint/parser": "4.28.3",
     "eslint": "^7.30.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
     "lerna": "^5.4.3",
-    "typescript": "^4.3.5"
+    "typescript": "4.3.5"
   },
   "workspaces": [
     "packages/*"

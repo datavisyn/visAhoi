@@ -1,14 +1,18 @@
 <script lang="ts">
-  import {
+  import Marker from "./Marker.svelte";
+  import { VisahoiState } from "./state";
+
+  export let visState: VisahoiState;
+
+  const {
     activeOnboardingStage,
     visHeight,
     visWidth,
     visXPosition,
     visYPosition,
     markerInformation,
-  } from "./stores";
-  import Marker from "./Marker.svelte";
-  import Backdrop from "./Backdrop.svelte";
+    onboardingStages,
+  } = visState;
 
   $: viewBox = `${$visXPosition + window.scrollX} ${
     $visYPosition + window.scrollY
@@ -20,11 +24,15 @@
   });
 </script>
 
-<svg {viewBox} class="visahoi-markers">
-  {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
-    <Marker markerInformation={marker} order={index + 1} />
-  {/each}
-</svg>
+{#key $onboardingStages}
+  <svg {viewBox} class="visahoi-markers">
+    {#each $markerInformation
+      .filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id)
+      .sort((a, b) => (a.message?.order || -1) - (b.message?.order || -1)) as marker, index}
+      <Marker markerInformation={marker} order={index + 1} {visState} />
+    {/each}
+  </svg>
+{/key}
 
 <style>
   svg {

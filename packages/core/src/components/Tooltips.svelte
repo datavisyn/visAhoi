@@ -1,13 +1,27 @@
 <script lang="ts">
+  import Draggable from "./Draggable.svelte";
+  import { VisahoiState } from "./state";
+
   import Tooltip from "./Tooltip.svelte";
 
   export let visElement;
+  export let visState: VisahoiState;
+  let dragId: string;
 
+  const { onboardingStages } = visState;
+
+  const setDragId = (id) => {
+    dragId = id;
+  };
 </script>
 
-<div class="tooltips">
-      <Tooltip visElement={visElement} />
-</div>
+{#key $onboardingStages}
+  <div class="tooltips">
+    <Draggable {visState} {dragId}>
+      <Tooltip {visElement} {visState} {setDragId} />
+    </Draggable>
+  </div>
+{/key}
 
 <style>
   .tooltips {

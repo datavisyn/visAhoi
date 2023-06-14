@@ -4,9 +4,16 @@
 name: Build and deploy demos
 
 on:
-  push:
-    branches:
-      - develop
+  workflow_dispatch:
+    inputs:
+      build_demos:
+        description: "Build demos"
+        required: false
+        type: boolean
+        default: false
+  # push:
+  #   branches:
+  #     - develop
   # Only pushes to the develop branch should trigger the build and deploy of demos
   # pull_request:
   #   branches:
@@ -14,42 +21,50 @@ on:
 
 jobs:
   build:
+    if: inputs.build_demos == true
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
       - name: Install workspace dependencies
         run: npm install
       - name: Bootstrap lerna workspace
         run: npm run bootstrap
       - name: Build packages in workspace
-        run: npm run build
+        run: BASE_URL=/visAhoi/demos npm run build
       - name: Upload demo build artifcats
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: demos
-          path: |
-            packages/echarts-demo/build/
-            packages/plotly-demo/build/
-            packages/vega-demo/build/
-  # deploy:
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         ref: gh-pages
-  #     - name: Remove old demos
-  #       run: rm -rf ./demos
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: demos
-  #         path: ./demos
-  #     - uses: stefanzweifel/git-auto-commit-action@v4
-  #       with:
-  #         # Required
-  #         commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
-  #         # Optional branch to push to, defaults to the current branch
-  #         branch: gh-pages
+          path: packages/demos/dist
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Remove old demos
+        run: rm -rf ./demos
+      - uses: actions/download-artifact@v3
+        with:
+          name: demos
+          path: ./demos
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "daniela.moitzi@datavisyn.io"
+      - name: commit
+        run: |
+          git add .
+          git commit -m "Update demo files from GitHub Actions"
+          git push --set-upstream origin gh-pages
+      # - uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     # Required
+      #     commit_message: Update demo files from GitHub Actions # from source of commit $GITHUB_SHA
+      #     # Optional branch to push to, defaults to the current branch
+      #     branch: gh-pages

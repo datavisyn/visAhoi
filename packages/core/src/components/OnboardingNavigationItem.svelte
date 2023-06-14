@@ -1,44 +1,91 @@
 <script lang="ts">
   import { IOnboardingStage } from "../interfaces.js";
-  import {
-    navigationAlignment,
-    activeOnboardingStage,
-    showOnboardingSteps,
-  } from "./stores.js";
+  // @ts-ignore
+  import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  import { VisahoiState } from "./state.js";
+
   export let stage: IOnboardingStage;
   export let index: number;
+  export let visState: VisahoiState;
 
-  const bottom: string = (index + 1) * 75 + "px";
+  const {
+    visahoiIcons,
+    activeOnboardingStage,
+    showOnboardingSteps,
+    navigationAlignment,
+    onboardingStages,
+  } = visState;
+  const right: string = (index + 2) * 40 + index * 45 + "px";
+
+  const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
 
   const handleClick = () => {
     activeOnboardingStage.update((v) => (v?.id === stage.id ? null : stage));
   };
+
+  const bottom: string = (index + 1) * 75 + "px";
 </script>
 
-<div
-  style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
-    stage.backgroundColor}; --bottom:{bottom}"
-  class="visahoi-navigation-item {!$showOnboardingSteps ||
-  $activeOnboardingStage
-    ? 'removed'
-    : ''}
-    {$navigationAlignment === 'row' ? 'horizontal' : 'vertical'}"
-  on:click={handleClick}
->
-  {#key $activeOnboardingStage}
-    <div class="visahoi-navigation-item-circle">
-      <i
-        class={!$activeOnboardingStage ||
-        stage.id !== $activeOnboardingStage?.id
-          ? stage.iconClass
-          : "fas fa-times"}
-      />
-    </div>
-  {/key}
-  <span class="visahoi-stage-title">{stage.title}</span>
-</div>
+{#if $navigationAlignment === "vertical"}
+  <div
+    style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+      stage.backgroundColor}; --bottom:{bottom}"
+    class="visahoi-navigation-item {!$showOnboardingSteps ||
+    $activeOnboardingStage
+      ? 'removed'
+      : ''}"
+    on:click={handleClick}
+  >
+    {#key $onboardingStages || $onboardingStages === null}
+      <div class="visahoi-navigation-item-circle">
+        {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
+          {@html stage.icon}
+        {:else}
+          {@html closeIcon}
+        {/if}
+      </div>
+    {/key}
+    <span class="visahoi-stage-title">{stage.title}</span>
+  </div>
+{:else}
+  <div
+    style="--background-color:{stage.backgroundColor}; --hover-background-color:{stage.hoverBackgroundColor ||
+      stage.backgroundColor}; --right:{right}"
+    class="visahoi-horizontal-navigation-item {!$showOnboardingSteps ||
+    $activeOnboardingStage
+      ? 'removed-horizontal'
+      : ''}"
+    on:click={handleClick}
+  >
+    {#key $onboardingStages || $activeOnboardingStage || $onboardingStages === null}
+      <div class="visahoi-navigation-item-circle">
+        {#if !$activeOnboardingStage || stage.id !== $activeOnboardingStage?.id}
+          {@html stage.icon}
+        {:else}
+          {@html closeIcon}
+        {/if}
+      </div>
+    {/key}
+    <span class="visahoi-stage-title">{stage.title}</span>
+  </div>
+{/if}
 
 <style>
+  .visahoi-horizontal-navigation-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    right: var(--right);
+    transition: opacity 0.5s ease, right 0.5s ease;
+    margin: 5px;
+    width: 80px;
+    bottom: 0;
+    opacity: 1;
+    z-index: 15;
+  }
   .visahoi-navigation-item {
     position: absolute;
     display: flex;
@@ -78,18 +125,11 @@
     z-index: 1;
   }
 
-  .active {
-    bottom: 0;
-    z-index: 10;
+  .removed-horizontal {
+    right: 0;
+    opacity: 0;
+    z-index: 1;
   }
-
-  /* .horizontal {
-    right: calc(var(--order) * 100px);
-  }
-
-  .vertical {
-    bottom: calc(var(--order) * 100px);
-  } */
 
   .visahoi-stage-title {
     font-weight: bold;

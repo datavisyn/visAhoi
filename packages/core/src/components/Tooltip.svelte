@@ -1,5 +1,28 @@
 <script lang="ts">
-  import {
+  import { v4 } from "uuid";
+  import { IMarkerInformation, TooltipPosition } from "../interfaces";
+  import { createPopper } from "@popperjs/core/dist/esm/";
+  import { getMarkerDomId, getNavigationMarkerDomId } from "../utils";
+  import { tick } from "svelte";
+  import sanitizeHtml from "sanitize-html";
+  // @ts-ignore
+  import visahoiCheckIcon from "../assets/check-solid.svg";
+  // @ts-ignore
+  import visahoiEditIcon from "../assets/pen-solid.svg";
+  // @ts-ignore
+  import visahoiCloseIcon from "../assets/xmark-solid.svg";
+  // @ts-ignore
+  import visahoiTrashIcon from "../assets/trash-solid-white.svg";
+  // @ts-ignore
+  import { VisahoiState } from "./state";
+  import { stores } from "./stores";
+  import { get } from "svelte/store";
+
+  export let visElement;
+  export let visState: VisahoiState;
+  export let setDragId;
+
+  const {
     activeMarker,
     activeOnboardingStage,
     selectedMarker,
@@ -8,46 +31,64 @@
     isEditModeActive,
     onboardingStages,
     onboardingMessages,
-  } from "./stores";
-  import { v4 as uuidv4 } from "uuid";
-  import { IMarkerInformation, TooltipPosition } from "../interfaces";
-  import { createPopper } from "@popperjs/core/dist/esm/";
-  import sanitizeHtml from "sanitize-html";
-  import { getMarkerDomId } from "../utils";
-  import { onDestroy, onMount, tick } from "svelte";
-  import { getOnboardingMessages } from "../onboarding";
-  import { get } from "svelte/store";
+    editTooltip,
+    visahoiIcons,
+    dragTooltipId,
+    contextId,
+  } = visState;
 
-  export let visElement;
+  const trashIcon: string = $visahoiIcons?.trash || visahoiTrashIcon;
+  const closeIcon: string = $visahoiIcons?.close || visahoiCloseIcon;
+  const editIcon: string = $visahoiIcons?.edit || visahoiEditIcon;
+  const checkIcon: string = $visahoiIcons?.check || visahoiCheckIcon;
 
   let tempTitle = "";
   let tempText = "";
-  let editTooltip: boolean = false;
 
   const sanitizerOptions = {
-    allowedTags: ["span", "b", "em", "strong"],
+    allowedTags: false, // allow all tags
     allowedClasses: {
-      span: ["visahoi-tooltip-hover-text"],
+      "*": ["*"], // allow all classes for all tags
+    },
+    allowedAttributes: {
+      "*": ["style"], // allow style attribute for all tags
+      svg: ["*"],
+      path: ["*"],
     },
   };
 
   let activeMarkerInformation: IMarkerInformation | null = null;
 
-  const tooltipId = uuidv4();
+  const tooltipId = `visahoi-tooltip-${$contextId}-${v4()}`;
   const arrowId = tooltipId + "-arrow";
+  $: dragId = tooltipId;
+
+  // To set the dragTooltipId in the store
+  // Pass the dragId to the parent component tooltips.svelte
+
+  const onMouseDown = () => {
+    dragTooltipId.set(dragId);
+    setDragId(dragId);
+  };
+
+  // Set the dragId back to initial
+
+  const onMouseUp = () => {
+    setDragId("");
+  };
 
   const closeTooltip = () => {
     // The active marker is closed and navigation marker is not highlighted.
-    // The selectedMarker is set to the initial marker in the activeOnboarding stage.
-    const elementId = document.getElementById(
-      `visahoi-marker-navigation-visahoi-marker-${$activeMarker?.marker.id}`
+    // The selectedMarker is set to the active marker which is to be closed.
+    const oldActiveMarker = $activeMarker;
+    const navigationMarkerId = document.getElementById(
+      getNavigationMarkerDomId($activeMarker?.marker.id)
     );
-    elementId?.style.opacity = 0.5;
+    if (navigationMarkerId) {
+      navigationMarkerId.style.opacity = "0.5";
+    }
 
-    const activeOnboardingStageMarkers = $markerInformation.filter(
-      (m) => m.message.onboardingStage === $activeOnboardingStage
-    );
-    selectedMarker.set(activeOnboardingStageMarkers[0]);
+    selectedMarker.set(oldActiveMarker);
     $markerInformation.map((marker, i) => {
       if (marker.marker.id === $selectedMarker?.marker.id) {
         markerIndexId.set(i);
@@ -71,7 +112,7 @@
       }
     });
     markerInformation.set(tempMarkerInformation);
-    editTooltip = false;
+    $editTooltip = false;
   };
 
   const deleteOnboardingMessage = () => {
@@ -174,10 +215,12 @@
     : 'hidden'}"
   style="--stage-color: {activeMarkerInformation?.message.onboardingStage
     .backgroundColor}"
+  on:mousedown={onMouseDown}
+  on:mouseup={onMouseUp}
 >
   <div class="visahoi-tooltip-header">
     <div class="visahoi-tooltip-title">
-      {#if editTooltip}
+      {#if $editTooltip}
         <input class="visahoi-edit-title" type="text" bind:value={tempTitle} />
       {:else}
         <b>{$activeMarker?.tooltip.title}</b>
@@ -187,59 +230,55 @@
     <!--The trash icon is shown in the tooltip only isEditModeActive is set to true-->
 
     <div class="visahoi-header-icons">
-      {#if $isEditModeActive && !editTooltip}
+      {#if $isEditModeActive && !$editTooltip}
         <div
           class="visahoi-edit-tooltip"
           on:click={() => {
-            editTooltip = true;
+            $editTooltip = true;
             // set title of current tooltip
             tempTitle = $activeMarker?.tooltip.title || "";
           }}
         >
-          <span style="font-size: 13px"
-            ><i class="fas fa-pen" title="Edit" /></span
-          >
+          <span style="display: flex; font-size: 13px" title="Edit">
+            {@html editIcon}
+          </span>
         </div>
         <div class="visahoi-delete-tooltip" on:click={deleteOnboardingMessage}>
-          <span style="font-size: 13px"
-            ><i class="fas fa-trash" title="Delete" /></span
+          <span style="display: flex; font-size: 13px" title="Delete"
+            >{@html trashIcon}</span
           >
         </div>
       {/if}
 
-      {#if editTooltip}
+      {#if $editTooltip}
         <div class="visahoi-save-changes" on:click={saveChanges}>
-          <span style="font-size: 13px"
-            ><i class="fas fa-check" title="Save" /></span
+          <span style="display: flex; font-size: 13px" title="Save"
+            >{@html checkIcon}</span
           >
         </div>
       {/if}
 
       <div
         class="visahoi-close-tooltip"
-        on:click={editTooltip
+        on:click={$editTooltip
           ? () => {
-              editTooltip = false;
+              $editTooltip = false;
             }
           : closeTooltip}
       >
-        {#if editTooltip}
-          <span style="font-size: 13px">
-            <i class="fas fa-times" title="Cancel" /></span
-          >
+        {#if $editTooltip}
+          <span style="font-size: 13px" title="Cancel">{@html closeIcon}</span>
         {:else}
-          <span style="font-size: 13px">
-            <i class="fas fa-times" title="Close" /></span
-          >
+          <span style="font-size: 13px" title="Close">{@html closeIcon}</span>
         {/if}
       </div>
     </div>
   </div>
 
-  {#if editTooltip}
+  {#if $editTooltip}
     <textarea class="visahoi-tooltip-textarea" rows="4" bind:value={tempText} />
   {:else}
-    <div class="visahoi-tooltip-content">
+    <div id="tooltip-text" class="visahoi-tooltip-content">
       {@html sanitizeHtml(
         activeMarkerInformation?.tooltip.text,
         sanitizerOptions
@@ -260,7 +299,7 @@
   .visahoi-header-icons {
     background-color: var(--stage-color);
     display: flex;
-    justify-content: end;
+    align-items: center;
     color: white;
   }
   .visahoi-edit-tooltip {
@@ -318,7 +357,7 @@
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 3px;
     font-size: 13px;
   }
@@ -379,8 +418,10 @@
      The :global() is needed as the styles would be removed otherwise by rollup because they are not directly used in this component
   */
 
-  :global(.visahoi-tooltip[data-popper-placement^="top"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="top"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     left: -8px !important;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -391,12 +432,16 @@
     bottom: 8px !important;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="bottom"]
-      > .visahoi-popperjs-arrow) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="bottom"]
+        > .visahoi-popperjs-arrow
+    ) {
     top: -8px;
   }
-  :global(.visahoi-tooltip[data-popper-placement^="bottom"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="bottom"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     left: -8px;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -407,13 +452,16 @@
     top: 8px !important;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="left"]
-      > .visahoi-popperjs-arrow) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="left"] > .visahoi-popperjs-arrow
+    ) {
     right: 0;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="left"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="left"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-left: 8px solid var(--stage-color);
@@ -422,14 +470,17 @@
   :global(.visahoi-tooltip[data-popper-placement^="left"]) {
     right: 8px !important;
   }
-  :global(.visahoi-tooltip[data-popper-placement^="right"]
-      > .visahoi-popperjs-arrow) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="right"] > .visahoi-popperjs-arrow
+    ) {
     left: -8px;
     top: -8px !important;
   }
 
-  :global(.visahoi-tooltip[data-popper-placement^="right"]
-      > .visahoi-popperjs-arrow::before) {
+  :global(
+      .visahoi-tooltip[data-popper-placement^="right"]
+        > .visahoi-popperjs-arrow::before
+    ) {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-right: 8px solid var(--stage-color);

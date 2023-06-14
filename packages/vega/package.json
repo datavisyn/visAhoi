@@ -1,6 +1,6 @@
 {
   "name": "@visahoi/vega",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Vega adapter for the visualization onboarding library",
   "keywords": [
     "visualization",
@@ -8,14 +8,14 @@
     "vega"
   ],
   "author": "FFG SEVA Consortium",
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/vega#readme",
+  "homepage": "https://github.com/datavisyn/visAhoi/tree/master/packages/vega#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
   },
   "bugs": {
-    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+    "url": "https://github.com/datavisyn/visAhoi/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "8.2.5",
     "@tsconfig/svelte": "2.0.1",
     "postcss": "^8.3.9",
@@ -42,8 +42,8 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "^3.0.0",
-    "vega": "5.21.0",
+    "@visahoi/core": "^4.0.0",
+    "vega": "5.22.1",
     "vega-embed": "6.19.1",
     "vega-lite": "5.1.1"
   }

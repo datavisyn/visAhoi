@@ -1,6 +1,6 @@
 {
   "name": "@visahoi/echarts",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Echarts adapter for the visualization onboarding library",
   "keywords": [
     "visualization",
@@ -8,14 +8,14 @@
     "echarts"
   ],
   "author": "FFG SEVA Consortium",
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/echarts#readme",
+  "homepage": "https://github.com/datavisyn/visAhoi/tree/master/packages/echarts#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
   },
   "bugs": {
-    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+    "url": "https://github.com/datavisyn/visAhoi/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -42,7 +42,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "^3.0.0",
+    "@visahoi/core": "^4.0.0",
     "d3": "^7.0.0",
     "echarts": "^5.1.2"
   }

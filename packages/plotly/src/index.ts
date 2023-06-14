@@ -1,9 +1,9 @@
 import {
-  defaultOnboardingStages,
   EVisualizationType,
   IAhoiConfig,
   injectOnboarding,
   IOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   createBasicOnboardingMessage,
   getOnboardingStages,
@@ -12,6 +12,7 @@ import {
   setOnboardingStage,
   setEditMode,
   setOnboardingMessage,
+  // initializeOnboarding,
 } from "@visahoi/core";
 import { barChartFactory } from "./bar-chart";
 import { changeMatrixFactory } from "./change-matrix";
@@ -19,9 +20,12 @@ import { horizonGraphFactory } from "./horizon-graph";
 import { scatterplotFactory } from "./scatterplot";
 import { treemapFactory } from "./treemap";
 import { heatmapFactory } from "./heatmap";
+import { v4 } from "uuid";
+
 // just pass them through
 export {
   createBasicOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   getOnboardingStages,
   getOnboardingMessages,
@@ -38,10 +42,11 @@ export {
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
 export const generateBasicAnnotations = (
+  contextKey: string,
   visType: EVisualizationType,
   chart: any
 ): IOnboardingMessage[] => {
-  const coords = {};
+  const coords: any = {};
   const visElement = chart;
 
   if (chart === null) {
@@ -51,40 +56,75 @@ export const generateBasicAnnotations = (
 
   // TODO: coords
   const chartTitlePosition = chart?._fullLayout?._dfltTitle;
-  coords["chartTitle"] = {
+  coords.chartTitle = {
     x: chartTitlePosition?.x,
     y: chartTitlePosition?.y + 20,
   };
 
-  let onboardingMessages: IOnboardingMessage[];
+  let onboardingMessages: IOnboardingMessage[] = [];
 
   switch (visType) {
     case EVisualizationType.BAR_CHART:
-      onboardingMessages = barChartFactory(chart, coords, visElement);
+      onboardingMessages = barChartFactory(
+        contextKey,
+        chart,
+        coords,
+        visElement
+      );
       break;
 
     case EVisualizationType.CHANGE_MATRIX:
-      onboardingMessages = changeMatrixFactory(chart, coords, visElement);
+      onboardingMessages = changeMatrixFactory(
+        contextKey,
+        chart,
+        coords,
+        visElement
+      );
       break;
 
     case EVisualizationType.HORIZON_GRAPH:
-      onboardingMessages = horizonGraphFactory(chart, coords, visElement);
+      onboardingMessages = horizonGraphFactory(
+        contextKey,
+        chart,
+        coords,
+        visElement
+      );
       break;
 
     case EVisualizationType.SCATTERPLOT:
-      onboardingMessages = scatterplotFactory(chart, coords, visElement);
+      onboardingMessages = scatterplotFactory(
+        contextKey,
+        chart,
+        coords,
+        visElement
+      );
       break;
 
     case EVisualizationType.TREEMAP:
-      onboardingMessages = treemapFactory(chart, coords, visElement);
+      onboardingMessages = treemapFactory(
+        contextKey,
+        chart,
+        coords,
+        visElement
+      );
       break;
 
     case EVisualizationType.HEATMAP:
-      onboardingMessages = heatmapFactory(chart, coords, visElement);
+      onboardingMessages = heatmapFactory(
+        contextKey,
+        chart,
+        coords,
+        visElement
+      );
       break;
 
+    case EVisualizationType.GENERIC:
+      onboardingMessages = [];
+      break;
+
+    default:
       throw new Error(
-        `No onboarding for visualization type ${visType} available.`
+        `No onboarding for visualization type ${visType} available. Please use visualization type 'GENERIC' to create your own onboardings.`
       );
   }
   return onboardingMessages;
@@ -96,13 +136,37 @@ export const generateBasicAnnotations = (
  * @param chart
  * @param onboardingElement ID of the DOM Element where the onboarding Messages should be displayed
  */
-export async function ahoi(
-  visType: EVisualizationType,
-  chart: any,
-  ahoiConfig: IAhoiConfig
-) {
+export function ahoi({
+  visType,
+  chart,
+  ahoiConfig = {
+    contextKey: v4(),
+    alignment: "vertical",
+  },
+  customizeOnboardingMessages,
+}: {
+  visType: EVisualizationType;
+  chart: any;
+  ahoiConfig?: IAhoiConfig;
+  customizeOnboardingMessages?: (
+    defaultOnbaordingMessages: IOnboardingMessage[],
+    contextKey: string
+  ) => IOnboardingMessage[];
+}) {
   const visElement = chart;
-  return injectOnboarding(ahoiConfig, visElement, "column");
+  // initializeOnboarding(ahoiConfig.contextKey, visElement);
+  const defaultOnboardingMessages = generateBasicAnnotations(
+    ahoiConfig.contextKey,
+    visType,
+    chart
+  );
+  const customOnboardingMessages = customizeOnboardingMessages
+    ? customizeOnboardingMessages(
+        defaultOnboardingMessages,
+        ahoiConfig.contextKey
+      )
+    : defaultOnboardingMessages;
+  return injectOnboarding(ahoiConfig, visElement, customOnboardingMessages);
 }
 
 export { EVisualizationType };

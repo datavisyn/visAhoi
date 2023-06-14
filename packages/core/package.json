@@ -1,20 +1,20 @@
 {
   "name": "@visahoi/core",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Core library for the visualization onboarding",
   "keywords": [
     "visualization",
     "onboarding"
   ],
   "author": "FFG SEVA Consortium",
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/core#readme",
+  "homepage": "https://github.com/datavisyn/visAhoi/tree/master/packages/core#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
   },
   "bugs": {
-    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+    "url": "https://github.com/datavisyn/visAhoi/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,22 +32,24 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "8.2.5",
     "@tsconfig/svelte": "2.0.1",
+    "node-sass": "^8.0.0",
     "postcss": "^8.3.9",
     "postcss-import": "^14.0.2",
     "rollup": "^2.3.4",
+    "rollup-plugin-copy-assets": "^2.0.3",
+    "rollup-plugin-inline-svg": "^3.0.3",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.1",
     "rollup-plugin-svelte": "^7.0.0",
     "svelte": "^3.49.0",
     "svelte-preprocess": "4.7.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.3.5",
-    "uuid": "^8.3.2"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
     "@popperjs/core": "^2.10.2",
     "lodash.debounce": "^4.0.8",
-    "sanitize-html": "^2.6.1"
+    "sanitize-html": "^2.6.1",
+    "uuid": "^9.0.0"
   }
 }
