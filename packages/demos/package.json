@@ -1,8 +1,15 @@
 {
-  "name": "demos",
-  "private": true,
-  "version": "1.0.0",
+  "name": "@visahoi/demos",
+  "version": "3.0.0",
   "type": "module",
+  "private": true,
+  "author": "FFG SEVA Consortium",
+  "homepage": "https://datavisyn.github.io/visAhoi/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
+  },
   "scripts": {
     "start": "vite",
     "build": "vite build",

@@ -7,14 +7,14 @@
     "onboarding"
   ],
   "author": "FFG SEVA Consortium",
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype/tree/master/packages/core#readme",
+  "homepage": "https://github.com/datavisyn/visAhoi/tree/master/packages/core#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
   },
   "bugs": {
-    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+    "url": "https://github.com/datavisyn/visAhoi/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
