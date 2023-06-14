@@ -1,5 +1,6 @@
 import {
   createBasicOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   deleteOnboardingStage,
   EVisualizationType,
@@ -23,6 +24,7 @@ import { heatmapFactory } from "./heatmap";
 // just pass them through
 export {
   createBasicOnboardingMessage,
+  addBasicOnboardingStage,
   createBasicOnboardingStage,
   getOnboardingStages,
   getOnboardingMessages,
