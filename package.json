@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffg-seva/onboarding-prototype.git"
+    "url": "git+https://github.com/datavisyn/visAhoi.git"
   },
   "keywords": [
     "onboarding",
@@ -22,9 +22,9 @@
   "author": "FFG SEVA Consortium",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ffg-seva/onboarding-prototype/issues"
+    "url": "https://github.com/datavisyn/visAhoi/issues"
   },
-  "homepage": "https://github.com/ffg-seva/onboarding-prototype#readme",
+  "homepage": "https://github.com/datavisyn/visAhoi#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.28.3",
     "@typescript-eslint/parser": "4.28.3",
