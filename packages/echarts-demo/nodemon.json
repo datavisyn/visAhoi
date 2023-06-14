@@ -1,6 +1,0 @@
-{
-  "ignore" : [],
-  "verbose": true,
-  "ext": "js",
-  "ignoreRoot": [".git", "public"]
-}
