@@ -24,8 +24,8 @@ jobs:
       - name: Change version number
         id: version
         run: |
-          echo -n "::set-output name=next_tag::"
-          lerna version ${{ github.event.inputs.versionName }} --no-private --no-git-tag-version --yes --no-push
+          next_tag=$(lerna version ${{ github.event.inputs.versionName }} --no-private --no-git-tag-version --yes --no-push)
+          echo "next_tag=$next_tag" >> "$GITHUB_OUTPUT"
       - name: Create pull request into main
         uses: peter-evans/create-pull-request@v4
         with:

@@ -188,8 +188,7 @@ For a basic setup allowing you to build and run examples:
 
 ```
 git clone https://github.com/datavisyn/visAhoi.git
-cd onboarding-prototype
-npm install
+cd visAhoi
 npm run bootstrap
 ```
 
