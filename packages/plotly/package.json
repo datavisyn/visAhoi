@@ -1,6 +1,6 @@
 {
   "name": "@visahoi/plotly",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Plotly adapter for the visualization onboarding library",
   "keywords": [
     "visualization",
@@ -43,6 +43,6 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "^4.0.2"
+    "@visahoi/core": "^4.0.3"
   }
 }
