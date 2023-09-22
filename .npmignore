@@ -11,4 +11,5 @@ lerna-debug.log
 /packages/*/node_modules
 /packages/*/build
 /packages/*/LICENSE
+/packages/demos/*/**
 tsconfig.tsbuildinfo
