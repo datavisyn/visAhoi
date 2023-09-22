@@ -1,6 +1,6 @@
 {
   "name": "@visahoi/vega",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Vega adapter for the visualization onboarding library",
   "keywords": [
     "visualization",
@@ -42,7 +42,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "^4.0.3",
+    "@visahoi/core": "^4.0.4",
     "vega": "5.23.0",
     "vega-embed": "6.19.1",
     "vega-lite": "5.1.1"
