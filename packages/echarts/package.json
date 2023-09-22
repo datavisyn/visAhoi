@@ -1,6 +1,6 @@
 {
   "name": "@visahoi/echarts",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Echarts adapter for the visualization onboarding library",
   "keywords": [
     "visualization",
@@ -42,7 +42,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@visahoi/core": "^4.0.0",
+    "@visahoi/core": "^4.0.1",
     "d3": "^7.0.0",
     "echarts": "^5.1.2"
   }
