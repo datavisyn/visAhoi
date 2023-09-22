@@ -160,12 +160,6 @@ export const options = {
           size: 100,
         },
         {
-          id: 23,
-          name: "Workforce development",
-          parent: 4,
-          size: 100,
-        },
-        {
           id: 24,
           name: "Home/community-based care",
           parent: 5,
